@@ -1,0 +1,100 @@
+---
+language: node_js
+node_js:
+  - "8"
+
+sudo: required
+dist: trusty
+
+branches:
+  only:
+  - master
+
+services:
+  - docker
+
+stages:
+  - "Stage 1"
+  - test
+  - deploy
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - pip install --user awscli
+  - aws ecr --region us-east-1 get-login --no-include-email | bash
+
+install:
+  - cd deploy && yarn install && cd ..
+
+# This script block is actually the "Test" stage that is additionally executed for the "env" matrix above
+script:
+  - docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio:$TRAVIS_BUILD_ID
+  - docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/tests:$TRAVIS_BUILD_ID
+  - docker tag $(docker images | grep '\/portfolio' | sed -e 's/\s\+/ /g' | cut -d ' ' -f 3) portfolio
+  - docker tag $(docker images | grep '\/tests' | sed -e 's/\s\+/ /g' | cut -d ' ' -f 3) tests
+  - docker network create cardstack
+  - docker run -d --rm --network cardstack --name postgres cardstack/pg-test
+  - TARGET_ENV="travis-$TRAVIS_BUILD_NUMBER-$TEST" docker run -d --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --name portfolio --env PUBLIC_HUB_URL=http://portfolio:3000 --env TEST --env TARGET_ENV portfolio
+  - docker run --rm --network cardstack --env CI --env HUB_URL=http://portfolio:3000 --env PGHOST=postgres --workdir=/srv/hub/$TEST tests /srv/hub/node_modules/.bin/ember t
+
+jobs:
+  include:
+    - stage: "Stage 1"
+      name: "docker build"
+      script:
+        - node ./deploy/build.js
+        - docker build -f deploy/Dockerfile.tests -t tests .
+        - docker tag portfolio 680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio:$TRAVIS_BUILD_ID
+        - docker tag tests 680542703984.dkr.ecr.us-east-1.amazonaws.com/tests:$TRAVIS_BUILD_ID
+        - docker push 680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio:$TRAVIS_BUILD_ID
+        - docker push 680542703984.dkr.ecr.us-east-1.amazonaws.com/tests:$TRAVIS_BUILD_ID
+
+    - stage: "Stage 1"
+      name: linting
+      node_js: 10
+      install:
+        - yarn install
+        - cd deploy && yarn install && cd ..
+      script:
+        - node deploy/card-test-linter.js
+        - yarn lint
+
+    - stage: test
+      env: TEST=portfolio
+
+
+    - stage: deploy
+      if: branch IN (production, master, my_feature_branch) # use this to save on travis jobs, as we dont even want to kick off this stage's job if this branch is not being deployed
+      script:
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio:$TRAVIS_BUILD_ID; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/tests:$TRAVIS_BUILD_ID; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker tag $(docker images | grep '\/portfolio' | sed -e 's/\s\+/ /g' | cut -d ' ' -f 3) portfolio; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker tag $(docker images | grep '\/tests' | sed -e 's/\s\+/ /g' | cut -d ' ' -f 3) tests; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker network create cardstack; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker run -d --rm --network cardstack --name postgres cardstack/pg-test; fi
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then docker run -d --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --name portfolio --env PUBLIC_HUB_URL=http://portfolio:3000 --env TEST portfolio; fi
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
+          on:
+            branch: master
+
+        # This environment is used to test your own branches. All you have to do
+        # is just push a commit that has the `branch` field below set to the name
+        # of your branch, and update the `if branch IN ()` statement above to make
+        # sure your branch in included in the set of branch names that can have a
+        # deploy stage.
+        #
+        - provider: script
+          skip_cleanup: true
+          script: TARGET_NAME='sandbox-portfolio.stack.cards' deploy/deploy.sh sandbox $TRAVIS_BRANCH
+          on:
+            branch: my_feature_branch
+
+        # TODO add `portfolio-production` deploy
+
+notifications:
+  email: false

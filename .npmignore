@@ -1,0 +1,5 @@
+cards/*
+deploy/*
+bin/*
+card-test-runner.js
+node-test-runner.js

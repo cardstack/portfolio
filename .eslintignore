@@ -1,0 +1,12 @@
+/node_modules/
+/deploy/context
+/deploy/node_modules
+/portfolio/dist/
+/portfolio/tmp/
+/portfolio/node_modules/
+/packages/*/dist/
+/packages/*/node_modules/
+/packages/*/tmp/
+/cards/*/dist/
+/cards/*/node_modules/
+/cards/*/tmp/

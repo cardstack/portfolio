@@ -1,0 +1,16 @@
+<div class="cardstack-topnav--login">
+  {{#login-button as |session login|}}
+    {{#if session.isAuthenticated }}
+      <button {{action session.logout}} data-test-contains="Sign out">
+        {{avatar-image user=session.user}}
+        <span class="cardstack-topnav--username">Sign out {{session.user.name}}</span>
+      </button>
+    {{else}}
+      <button {{action login}} data-test-contains="Sign in">Sign in</button>
+    {{/if}}
+  {{/login-button}}
+</div>
+
+<div class="cardstack-topnav--search-bar">
+  {{search-bar}}
+</div>

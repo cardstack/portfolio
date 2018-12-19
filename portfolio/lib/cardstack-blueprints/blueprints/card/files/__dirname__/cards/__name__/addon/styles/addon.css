@@ -1,0 +1,2 @@
+@import "<%= dasherizedModuleName %>-embedded";
+@import "<%= dasherizedModuleName %>-isolated";

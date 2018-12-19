@@ -1,0 +1,27 @@
+<form onsubmit={{action "submitForm"}} data-type-search-form>
+  <label class="search-bar--label">Song View</label>
+  <button
+    type="submit"
+    class="search-bar--submit-button"
+    data-test-search-bar-submit
+  >
+    Search
+  </button>
+  <input
+    type="text"
+    placeholder="Search"
+    class="search-bar--input"
+    value={{queryString}}
+    oninput={{action (mut queryString) value="target.value"}}
+    data-test-search-bar-input
+  >
+  <button
+    type="reset"
+    class="search-bar--cancel-button icon icon__cancel"
+    onclick={{action "clearSearch"}}
+    data-test-search-bar-cancel
+  >
+    Cancel
+  </button>
+
+</form>

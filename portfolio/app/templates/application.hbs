@@ -1,0 +1,22 @@
+{{#cardstack-edges}}
+  {{#squishable-container}}
+
+    {{!-- fastboot guard --}}
+    {{#if (is-component "cardstack-session")}}
+      {{#cardstack-session as |session|}}
+        {{#mock-login as |login|}}
+          {{#if session.isAuthenticated }}
+            <button {{action session.logout}} data-test-contains="Sign out">
+              Sign out {{session.user.name}}
+            </button>
+          {{else}}
+            <button {{action login}} data-test-contains="Sign in">Sign in</button>
+          {{/if}}
+        {{/mock-login}}
+      {{/cardstack-session}}
+    {{/if}}
+
+    {{outlet}}
+
+  {{/squishable-container}}
+{{/cardstack-edges}}

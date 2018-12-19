@@ -1,0 +1,14 @@
+{{!-- fastboot guard --}}
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#if useGithubAuth}}
+      {{#github-login as |login|}}
+        {{yield session login}}
+      {{/github-login}}
+    {{else}}
+      {{#mock-login as |login|}}
+        {{yield session login}}
+      {{/mock-login}}
+    {{/if}}
+  {{/cardstack-session}}
+{{/if}}
