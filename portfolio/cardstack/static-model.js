@@ -1,14 +1,15 @@
 const JSONAPIFactory = require('@cardstack/test-support/jsonapi-factory');
-const { readdirSync, existsSync } = require('fs');
-const { join } = require('path');
-const cardDir = join(__dirname, '../../cards');
+// const { readdirSync, existsSync } = require('fs');
+// const { join } = require('path');
+// const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
-  let cardSchemas = new JSONAPIFactory();
+  // let cardSchemas = new JSONAPIFactory();
 
+  /* TODO add this after we've added some cards
   for (let cardName of readdirSync(cardDir)) {
     let schemaFile = join(cardDir, cardName, 'cardstack', 'static-model.js');
     if (existsSync(schemaFile)) {
@@ -17,6 +18,8 @@ module.exports = function () {
         .withAttributes({ sourceType: `portfolio-${cardName}` });
     }
   }
+  */
+
   // TODO probably only want to use this in the HUB_ENVIRONMENT == development env
   factory.addResource('data-sources', 'mock-auth')
     .withAttributes({
@@ -58,7 +61,6 @@ module.exports = function () {
   factory.addResource('content-types', 'app-cards')
     .withAttributes({ router });
   factory.addResource('app-cards', 'portfolio');
-
 
   factory.addResource('grants')
     .withRelated('who', [{ type: 'groups', id: 'everyone' }])
