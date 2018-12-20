@@ -9,6 +9,8 @@ dist: trusty
 branches:
   only:
   - master
+    # make sure to include any branches you want to deploy to sandbox env here as well
+  - my_feature_branch
 
 services:
   - docker
