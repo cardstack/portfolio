@@ -24,6 +24,7 @@
     "test": "ember test"
   },
   "devDependencies": {
+    "portfolio-asset": "*",
     "@cardstack/authentication": "^0.12.15",
     "@cardstack/data": "^0.12.15",
     "@cardstack/di": "^0.12.0",

@@ -1,0 +1,86 @@
+<div class="asset-isolated">
+  <button class="asset-isolated__back-button">Back to My Portfolio</button>
+
+  <h1 data-test-asset-isolated-title>{{content.title}} Asset Detail</h1>
+  <div class="asset-isolated__grid">
+    <div>
+      <section class="asset-isolated-main asset-isolated-group">
+        <div class="asset-isolated-hero">
+          <header>
+            <h2>{{content.title}}</h2>
+            Savings
+          </header>
+          <span class="asset-isolated-hero__wrapper">
+            <div>
+              <span class="asset-isolated-hero__value">2.1434</span>
+              <span class="asset-isolated-hero__unit" data-test-asset-isolated-unit>{{content.unit}}</span>
+            </div>
+            <div>
+              <span class="asset-isolated-hero__value--usd">$8509.30</span>
+              <span class="asset-isolated-hero__unit--usd">USD</span>
+            </div>
+          </span>
+          <div class="asset-isolated-hero__chart">
+            <div>
+              --- CHART HERE ---
+            </div>
+          </div>
+        </div>
+        <div class="asset-isolated-main__details">
+          <div class="asset-isolated-main__details-item">
+            <h4>Address</h4>
+            1HzkJMLmzFVj8ALj6mfBsbifRoD4miY36v
+          </div>
+          <div class="asset-isolated-main__details-item">
+            <h4>Established</h4>
+            Aug 12, 2017
+          </div>
+          <div class="asset-isolated-main__details-item">
+            <h4>Transactions</h4>
+            42
+          </div>
+          <div class="asset-isolated-main__details-item">
+            <h4>Last active</h4>
+            2m ago
+          </div>
+        </div>
+        <footer class="asset-isolated-main__buttons">
+          <button>Transfer Funds</button>
+          <button>Convert Currency</button>
+        </footer>
+      </section>
+      <section>
+        <h3>Transaction History</h3>
+        <div class="asset-isolated-group">
+          {{!-- EMBEDDED TRANSACTION CARDS HERE --}}
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section>
+        <h3>Wallet</h3>
+        <div class="asset-isolated-group">
+          <div class="asset-isolated-group__inner">ING Wallet</div>
+          <button class="asset-isolated-group__button">
+            Move funds to another wallet
+          </button>
+        </div>
+      </section>
+      <section>
+        <h3>Tags</h3>
+        <div class="asset-isolated-group">
+          <div class="asset-isolated-group__inner">
+            <span>Savings</span>
+            <span>Business Operations</span>
+            <span>International</span>
+            {{!-- TAGS HERE (embedded tag cards?) --}}
+          </div>
+          <button class="asset-isolated-group__button">
+            Add Custom Tag
+          </button>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
