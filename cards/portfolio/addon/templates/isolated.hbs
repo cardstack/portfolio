@@ -1,0 +1,6 @@
+<div class="portfolio-isolated">
+  <h1 data-test-portfolio-isolated-title>{{content.title}}</h1>
+  {{#each content.wallets as |wallet index|}}
+    {{cardstack-content content=wallet format="embedded"}}
+  {{/each}}
+</div>
