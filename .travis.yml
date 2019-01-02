@@ -65,6 +65,9 @@ jobs:
 
     - stage: test
       env: TEST=portfolio
+    - env: TEST=cards/asset
+    - env: TEST=cards/wallet
+    - env: TEST=cards/portfolio
 
 
     - stage: deploy

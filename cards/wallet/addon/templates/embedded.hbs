@@ -1,0 +1,18 @@
+<div class="wallet-embedded" href={{cardstack-url content}}>
+  <header>
+    <h2 data-test-wallet-embedded-title>{{content.title}}</h2>
+    <div>
+      <span>Approximate Value</span>
+      <span>$25,554.62</span>
+    </div>
+  </header>
+  <div>
+    Organize by
+  </div>
+  <div>
+    <h3>Active Assets</h3>
+    {{#each content.assets as |asset index|}}
+      {{cardstack-content content=asset format="embedded"}}
+    {{/each}}
+  </div>
+</div>
