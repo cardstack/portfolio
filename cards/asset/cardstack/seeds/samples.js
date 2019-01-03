@@ -6,7 +6,25 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withAttributes({
       title: 'Bitcoin',
       unit: 'BTC',
-      logo: 'https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png',
+      logo: 'bitcoin',
+    });
+  factory.addResource('assets', 'ether')
+    .withAttributes({
+      title: 'Ether',
+      unit: 'ETH',
+      logo: 'ether',
+    });
+  factory.addResource('assets', 'litecoin')
+    .withAttributes({
+      title: 'Litecoin',
+      unit: 'LIT',
+      logo: 'litecoin',
+    });
+  factory.addResource('assets', 'zcash')
+    .withAttributes({
+      title: 'Zcash',
+      unit: 'ZEC',
+      logo: 'zcash',
     });
 }
 

@@ -1,21 +1,22 @@
-<a class="asset-embedded" href={{cardstack-url content}} >
-  <header>
-    <h3 data-test-asset-embedded-title>{{content.title}}</h3>
-    Savings
+<a class="asset-embedded asset-embedded--{{title}}" href={{cardstack-url content}}>
+  <header class="asset-embedded__flex-row">
+    <h3 class="asset-embedded__title" data-test-asset-embedded-title>
+      {{svg-jar content.logo}} {{content.title}}
+    </h3>
+    <a class="asset-embedded__tag" href="/">Savings</a>
   </header>
-  <section>
-    <div>
+  <section class="asset-embedded__section">
+    <div class="asset-embedded__data-row">
       <span class="asset-embedded__value">2.1434</span>
       <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.unit}}</span>
     </div>
-    <div>--Chart--</div>
     <div>
-      <span class="asset-embedded__value--usd">$8509.30</span>
-      <span class="asset-embedded__unit--usd">USD</span>
+      <span class="asset-embedded__value--secondary">$8509.30</span>
+      <span>USD</span>
     </div>
   </section>
-  <footer>
-    <div>1Hzk...iY36v</div>
-    <div>Last active 3m ago</div>
+  <footer class="asset-embedded__flex-row asset-embedded__footer">
+    <div class="asset-embedded__address">1Hzk...iY36v</div>
+    <div class="asset-embedded__last-active">Last active 3m ago</div>
   </footer>
 </a>

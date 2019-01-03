@@ -1,4 +1,93 @@
 .wallet-embedded {
-  display: block;
-  text-decoration: none;
+  margin-bottom: 25px;
+  background-color: var(--portfolio-white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
+}
+
+.wallet-embedded-header {
+  padding: 25px;
+}
+.wallet-embedded-header__title-row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+}
+.wallet-embedded-header__title {
+  margin: 0;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xl-font);
+  font-weight: normal;
+  letter-spacing: -0.13px;
+  line-height: 1.1;
+}
+.wallet-embedded-header__title > svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+.wallet-embedded-header__label {
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-xs-font);
+  line-height: 2;
+}
+.wallet-embedded-header__amount {
+  color: var(--portfolio-green);
+  font-size: var(--portfolio-xl-font);
+  letter-spacing: 0.13px;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.wallet-embedded-header-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+}
+.wallet-embedded-header-filter__item {
+  padding: 10px;
+  text-align: center;
+  color: var(--portfolio-muted-gray);
+}
+.wallet-embedded-header-filter__item:hover,
+.wallet-embedded-header-filter__item:active {
+  background-color: var(--portfolio-highlight-gray);
+  color: var(--portfolio-black);
+  font-family: var(--portfolio-bold-text);
+  cursor: pointer;
+  user-select: none;
+}
+.wallet-embedded-header-filter__item:nth-last-of-type(2) {
+  border-right: 1px solid var(--portfolio-border-gray);
+  border-left: 1px solid var(--portfolio-border-gray);
+}
+
+.wallet-embedded-asset-section {
+  padding: 25px;
+  border-top: 1px solid var(--portfolio-light-gray);
+}
+.wallet-embedded-asset-section__title {
+  display: inline-block;
+  margin: 0;
+  font-size: var(--portfolio-med-font);
+  font-weight: normal;
+  letter-spacing: 0.18px;
+  line-height: 1.1;
+}
+.wallet-embedded-asset-section__count {
+  display: inline-block;
+  padding-left: 10px;
+  color: var(--portfolio-muted-gray);
+}
+.wallet-embedded-asset-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 25px;
+  padding-top: 25px;
 }

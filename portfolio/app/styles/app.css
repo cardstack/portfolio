@@ -6,13 +6,17 @@
   --portfolio-lighter-border-gray: #ccccd5;
   --portfolio-border-gray: #e5e5e9;
   --portfolio-light-gray: #f2f2f4;
-  --portfolio-button-gray: #757575;
+  --portfolio-highlight-gray: #f8f8f8;
+  --portfolio-muted-gray: #757575;
   --portfolio-purple-gray: #9999ab;
   --portfolio-light-purple: #676680;
   --portfolio-dark-purple: #01002c;
-  --portfolio-green-success: #3aa78f;
+  --portfolio-green: #3aa78f;
 
-  --portfolio-bitcoin-gradient: linear-gradient(45deg, #f76b1c 0%, #fad961 100%), #f9a23e;
+  --portfolio-bitcoin-gradient: linear-gradient(45deg, #f76b1c 0%, #fad961 100%), #f76b1c;
+  --portfolio-ether-gradient: linear-gradient(45deg, #003bff 0%, #00ff91 100%), #003bff;
+  --portfolio-litecoin-gradient: linear-gradient(45deg, #3023ae 0%, #c86dd7 100%), #3023ae;
+  --portfolio-zcash-gradient: linear-gradient(45deg, #8022ae 0%, #ff0000 100%), #8022ae;
 
   /* Fonts */
   --portfolio-regular-text: "Open Sans Regular", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -23,8 +27,8 @@
   --portfolio-sm-font: 14px;
   --portfolio-med-font: 16px;
   --portfolio-lg-font: 18px;
-  --portfolio-xl-font: 30px;
-  --portfolio-xxl-font: 54px;
+  --portfolio-xl-font: 20px;
+  --portfolio-xxl-font: 30px;
 
   /* Isolated card styles */
   --portfolio-isolated-container-max-width: 900px;

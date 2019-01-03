@@ -8,7 +8,8 @@ const scenario = new Fixtures({
     factory.addResource('assets', '123')
       .withAttributes({
         title: 'Bitcoin',
-        unit: 'BTC'
+        unit: 'BTC',
+        logo: 'bitcoin',
       })
   }
 });
@@ -26,7 +27,7 @@ module('Card | asset', function(hooks) {
 
   test('isolated format renders', async function(assert) {
     await renderCard('asset', '123', 'isolated');
-    assert.dom('[data-test-asset-isolated-title]').hasText('Bitcoin');
+    assert.dom('[data-test-asset-isolated-title]').hasText('Bitcoin Asset Detail');
     assert.dom('[data-test-asset-isolated-unit]').hasText('BTC');
   });
 });

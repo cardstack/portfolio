@@ -6,7 +6,10 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withAttributes({
       title: 'My Portfolio'
     })
-    .withRelated('wallets', [{ type: 'wallets', id: 'bitcoin-wallet' }]);
+    .withRelated('wallets', [
+      { type: 'wallets', id: 'ing-wallet' },
+      { type: 'wallets', id: 'trezor-wallet' },
+    ]);
 }
 
 module.exports = factory.getModels();

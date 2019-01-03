@@ -1,4 +1,98 @@
 .asset-embedded {
   display: block;
   text-decoration: none;
+  background-color: var(--portfolio-light-purple);
+  color: var(--portfolio-white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
 }
+.asset-embedded--bitcoin {
+  background: var(--portfolio-bitcoin-gradient);
+}
+.asset-embedded--ether {
+  background: var(--portfolio-ether-gradient);
+}
+.asset-embedded--litecoin {
+  background: var(--portfolio-litecoin-gradient);
+}
+.asset-embedded--zcash {
+  background: var(--portfolio-zcash-gradient);
+}
+.asset-embedded:hover,
+.asset-embedded:focus {
+  outline: none;
+  transform: scale3d(1.01, 1.01, 1.01);
+  filter: brightness(110%);
+}
+
+.asset-embedded__flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.asset-embedded__title {
+  margin: 0;
+  font-family: var(--portfolio-bold-text);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.asset-embedded__title > svg {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.asset-embedded__tag {
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 5px;
+  color: var(--portfolio-light-purple);
+  font-size: var(--portfolio-xs-font);
+  text-decoration: none;
+}
+
+.asset-embedded__section {
+  padding: 10px;
+  text-align: right;
+}
+.asset-embedded__section span {
+  display: inline-block;
+}
+
+.asset-embedded__data-row {
+  padding-bottom: 20px;
+  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
+}
+
+.asset-embedded__value {
+  padding: 0 10px;
+  font-size: 36px;
+}
+.asset-embedded__value--secondary {
+  padding: 0 10px;
+  font-family: var(--portfolio-bold-text);
+}
+
+.asset-embedded__footer {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 0 0 5px 5px;
+  color: var(--portfolio-light-purple);
+  font-size: var(--portfolio-xs-font);
+}
+
+.asset-embedded__address {
+  font-family: var(--portfolio-bold-text);
+}
+
