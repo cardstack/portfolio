@@ -15,13 +15,29 @@ let sources = [
   }
 ];
 
-// TODO use git data source in HUB_ENVIRONMENT=production
-sources.push({
-  type: 'data-sources',
-  id: 'default',
-  attributes: {
-    'source-type': '@cardstack/ephemeral'
-  }
-});
+if (process.env.HUB_ENVIRONMENT === 'production') {
+  sources.push({
+    type: 'data-sources',
+    id: 'default',
+    attributes: {
+      'source-type': '@cardstack/git',
+      params: {
+        branchPrefix: process.env.GIT_BRANCH_PREFIX,
+        remote: {
+          url: 'git@github.com:cardstack/portfolio.git',
+          privateKey: process.env.GIT_PRIVATE_KEY,
+        }
+      }
+    }
+  });
+} else {
+  sources.push({
+    type: 'data-sources',
+    id: 'default',
+    attributes: {
+      'source-type': '@cardstack/ephemeral'
+    }
+  });
+}
 
 module.exports = sources;
