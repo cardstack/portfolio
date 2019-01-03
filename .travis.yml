@@ -72,6 +72,7 @@ jobs:
 
     - stage: deploy
       if: branch IN (production, master, my_feature_branch) # use this to save on travis jobs, as we dont even want to kick off this stage's job if this branch is not being deployed
+      env: TEST=deploy # we use the env var to attribute the travis logs
       script:
         - docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio:$TRAVIS_BUILD_ID
         - docker pull 680542703984.dkr.ecr.us-east-1.amazonaws.com/tests:$TRAVIS_BUILD_ID
