@@ -1,0 +1,81 @@
+<div class="transaction-isolated">
+  <button class="transaction-isolated__button-row">Back to Bitcoin Asset Detail</button>
+
+  <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>{{content.title}}</h1>
+  <div class="transaction-isolated__grid">
+    <div>
+      <section class="transaction-isolated__main asset-isolated__group">
+        <header class="transaction-isolated__header">
+          <div>
+            Value
+            <span>0.65395 BTC ($2579.66 USD)</span>
+          </div>
+          <div>
+            Status
+            <span>Success</span>
+            {{svg-jar "check" class="transaction-isolated__header-icon"}}
+          </div>
+        </header>
+
+        <dl class="transaction-isolated__addresses">
+          <dt>From</dt>
+          <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
+          <div class="transaction-isolated__addresses-arrow" />
+          <dt>To</dt>
+          <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
+        </dl>
+
+        <dl class="transaction-isolated__details">
+          <dt>Time</dt>
+          <dd>1 min ago (Dec-23-2018 07:49:13 PM +UTC)</dd>
+          <dt>Block Height</dt>
+          <dd>6940145 (5 Block Confirmations)</dd>
+          <dt>Gas Limit</dt>
+          <dd>21000</dd>
+          <dt>Gas Used by Transaction</dt>
+          <dd>21000 (100%)</dd>
+          <dt>Gas Price</dt>
+          <dd>0.00000005 Ether (50 Gwei)</dd>
+          <dt>Actual Tx Cost/Fee</dt>
+          <dd>0.00105 Ether ($0.14)</dd>
+          <dt>Nonce & {Position}</dt>
+          <dd>3 | {33}</dd>
+        </dl>
+      </section>
+    </div>
+
+    <aside>
+      <section class="transaction-isolated__tags">
+        <h3 class="transaction-isolated__section-title transaction-isolated__tags-title">
+          Tags
+        </h3>
+        <div class="transaction-isolated__group">
+          <ul class="transaction-isolated__tags-list">
+            <li><a href="/">Savings</a></li>
+            <li><a href="/">Business Operations</a></li>
+            <li><a href="/">International</a></li>
+            {{!-- TAGS HERE --}}
+          </ul>
+          <button class="transaction-isolated__group-button">
+            Add custom tag
+          </button>
+        </div>
+      </section>
+
+      <section class="transaction-isolated__notes">
+        <h3 class="transaction-isolated__section-title transaction-isolated__notes-title">
+          Notes
+        </h3>
+        <div class="transaction-isolated__group">
+          <ul class="transaction-isolated__notes-list">
+            <li><p>Lorem ipsum dolor sit amet, consectetur</p></li>
+            <li><p>Proin sagittis bibendum purus sit amet elementum erat</p></li>
+          </ul>
+          <button class="transaction-isolated__group-button">
+            Add new note
+          </button>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>

@@ -84,6 +84,7 @@
     "portfolio-portfolio": "*",
     "portfolio-user": "*",
     "portfolio-register": "*",
+    "portfolio-transaction": "*",
     "portfolio-wallet": "*",
     "prember": "^1.0.0",
     "qunit-dom": "^0.8.0",
