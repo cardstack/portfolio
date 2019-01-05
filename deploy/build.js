@@ -30,7 +30,6 @@ copySync(join(root, 'yarn.lock'), join(context, 'dep-layer/yarn.lock'));
 // code-layer contains everything else, which is much cheaper to rebuild (no yarn install)
 copySync(join(root, 'node-test-runner.js'), join(context, 'code-layer/node-test-runner.js'));
 copySync(join(root, 'portfolio/cardstack'), join(context, 'code-layer/portfolio/cardstack'));
-copySync(join(root, 'portfolio/node-tests'), join(context, 'code-layer/portfolio/node-tests'));
 moduleRootFolders.forEach(moduleRoot => {
   codeLayerFiles.forEach(serverFile => {
     glob.sync(join(root, `${moduleRoot}/*/${serverFile}`)).forEach(filename => {
