@@ -4,6 +4,7 @@ const prepare = require('@cardstack/test-support/prepare-node-tests');
 
 module.exports = function() {
   let patterns = [
+    'portfolio/node-tests/**/*-test.js',
     'packages/*/node-tests/**/*-test.js',
     'cards/*/node-tests/**/*-test.js',
   ];

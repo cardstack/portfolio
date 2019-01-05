@@ -17,8 +17,23 @@ module.exports = function () {
         .withAttributes({ sourceType: `portfolio-${cardName}` });
     }
   }
+  factory.addResource('content-types', 'portfolio-users')
+    .withRelated('fields', [
+      factory.addResource('fields', 'email-address').withAttributes({
+        fieldType: '@cardstack/core-types::case-insensitive'
+      }),
+      factory.addResource('fields', 'password-hash').withAttributes({
+        fieldType: '@cardstack/core-types::string'
+      }),
+      factory.addResource('fields', 'name').withAttributes({
+        fieldType: '@cardstack/core-types::string'
+      }),
+    ]);
 
-  // TODO probably only want to use this in the HUB_ENVIRONMENT == development env
+  // TODO update this to mock a 'portfolio-users' model
+  // probably also wanna seed with a user that has a matching preset password
+  // when process.env.HUB_ENVIRONMENT === 'development'
+  // (note that tests declare mock-auth data sources explicitly in their fixtures)
   factory.addResource('data-sources', 'mock-auth')
     .withAttributes({
       sourceType: '@cardstack/mock-auth',
@@ -60,10 +75,35 @@ module.exports = function () {
     .withAttributes({ router });
   factory.addResource('app-cards', 'portfolio');
 
-  factory.addResource('grants')
+  factory.addResource('grants', 'portfolio-users-self-read-grant')
+    .withRelated('who', [{ type: 'fields', id: 'id' }])
+    .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
+    .withRelated('fields', [
+      { type: 'fields', id: 'name' },
+      { type: 'fields', id: 'email-address' }
+    ])
+    .withAttributes({
+      'may-read-resource': true,
+      'may-read-fields': true,
+    });
+
+  factory.addResource('grants', 'portfolio-users-login-grant')
     .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+    .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
     .withAttributes({
       'may-login': true,
+    });
+
+  factory.addResource('grants')
+    // TODO we need to lock these down to self CRUD, and add tests...
+    // .withRelated('who', [{ type: 'fields', id: 'id' }])
+    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+    .withRelated('types', [
+      { type: 'content-types', id: 'portfolios' },
+      { type: 'content-types', id: 'wallets' },
+      { type: 'content-types', id: 'assets' }
+    ])
+    .withAttributes({
       'may-read-resource': true,
       'may-read-fields': true,
       'may-create-resource': true,
