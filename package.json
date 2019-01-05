@@ -26,9 +26,9 @@
     "start": "cd portfolio && node ./node_modules/.bin/ember serve",
     "start-hub": "cd portfolio && ember hub:start",
     "start-ember": "cd portfolio && HUB_URL=http://localhost:3000 node ./node_modules/.bin/ember s",
-    "test": "mocha ./bin/run.js --timeout 10000 && node ./node_modules/@cardstack/test-support/ember-test-runner.js cards && node ./node_modules/@cardstack/test-support/ember-test-runner.js packages && cd portfolio && node ./node_modules/.bin/ember test",
+    "test": "mocha ./node-test-runner.js --timeout 10000 && node ./node_modules/@cardstack/test-support/ember-test-runner.js cards && node ./node_modules/@cardstack/test-support/ember-test-runner.js packages && cd portfolio && node ./node_modules/.bin/ember test",
     "card-tests": "node ./node_modules/@cardstack/test-support/ember-test-runner.js cards",
-    "node-tests": "mocha ./bin/run.js --timeout 10000",
+    "node-tests": "mocha ./node-test-runner.js --timeout 10000",
     "lint": "eslint . --cache"
   },
   "dependencies": {},

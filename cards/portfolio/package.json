@@ -15,7 +15,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "node-tests": "mocha ../../node-test-runner.js --timeout 10000"
   },
   "dependencies": {
     "@cardstack/rendering": "^0.12.18",

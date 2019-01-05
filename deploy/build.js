@@ -8,6 +8,7 @@ const context = join(root, 'deploy/context');
 const specialBranches = [ 'master', 'staging', 'production' ];
 const moduleRootFolders = [ 'cards', 'packages' ];
 const depLayerFiles = [ 'cardstack', 'index.js', 'package.json' ];
+const codeLayerFiles = [ 'node-tests' ];
 
 emptyDirSync(context);
 
@@ -23,12 +24,20 @@ moduleRootFolders.forEach(moduleRoot => {
 });
 
 copySync(join(root, 'portfolio/package.json'), join(context, 'dep-layer/portfolio/package.json'));
-
 copySync(join(root, 'package.json'), join(context, 'dep-layer/package.json'));
 copySync(join(root, 'yarn.lock'), join(context, 'dep-layer/yarn.lock'));
 
 // code-layer contains everything else, which is much cheaper to rebuild (no yarn install)
+copySync(join(root, 'node-test-runner.js'), join(context, 'code-layer/node-test-runner.js'));
 copySync(join(root, 'portfolio/cardstack'), join(context, 'code-layer/portfolio/cardstack'));
+copySync(join(root, 'portfolio/node-tests'), join(context, 'code-layer/portfolio/node-tests'));
+moduleRootFolders.forEach(moduleRoot => {
+  codeLayerFiles.forEach(serverFile => {
+    glob.sync(join(root, `${moduleRoot}/*/${serverFile}`)).forEach(filename => {
+      copySync(filename, join(context, 'code-layer', filename.replace(root, '')));
+    });
+  });
+});
 
 let dockerImageLabel = specialBranches.includes(process.env.TRAVIS_BRANCH) ? process.env.TRAVIS_BRANCH : process.env.TRAVIS_BUILD_ID || 'latest';
 try {

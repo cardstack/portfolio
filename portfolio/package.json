@@ -21,7 +21,8 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test"
+    "test": "ember test",
+    "node-tests": "mocha ../node-test-runner.js --timeout 10000"
   },
   "devDependencies": {
     "@cardstack/authentication": "^0.12.18",
