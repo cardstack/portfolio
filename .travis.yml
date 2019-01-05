@@ -40,8 +40,8 @@ script:
   - docker run -d --rm --network cardstack --name postgres cardstack/pg-test
   - sleep 10 # give postgres a moment to startup before the node-tests start hitting it (the ember build was previously hiding this booting time)
   - docker run --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --env TEST --env TARGET_ENV --name portfolio-node-tests --workdir=/srv/hub/$TEST portfolio yarn node-tests
-  - TARGET_ENV="travis-$TRAVIS_BUILD_NUMBER-$TEST" docker run -d --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --name portfolio --env PUBLIC_HUB_URL=http://portfolio:3000 --env TEST --env TARGET_ENV portfolio
-  - docker run --rm --network cardstack --env CI --env HUB_URL=http://portfolio:3000 --env PGHOST=postgres --workdir=/srv/hub/$TEST tests /srv/hub/node_modules/.bin/ember t
+  - if [ -z "$ONLY_NODE_TESTS" ]; then TARGET_ENV="travis-$TRAVIS_BUILD_NUMBER-$TEST" docker run -d --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --name portfolio --env PUBLIC_HUB_URL=http://portfolio:3000 --env TEST --env TARGET_ENV portfolio; fi
+  - if [ -z "$ONLY_NODE_TESTS" ]; then docker run --rm --network cardstack --env CI --env HUB_URL=http://portfolio:3000 --env PGHOST=postgres --workdir=/srv/hub/$TEST tests /srv/hub/node_modules/.bin/ember t; fi
 
 jobs:
   include:
@@ -71,7 +71,7 @@ jobs:
     - env: TEST=cards/wallet
     - env: TEST=cards/portfolio
     - env: TEST=cards/register
-    - env: TEST=cards/user
+    - env: TEST=cards/user ONLY_NODE_TESTS=true
     - env: TEST=cards/user-profile
 
 
