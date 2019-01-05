@@ -19,6 +19,9 @@ factory.addResource('content-types', 'wallets')
     factory.addResource('fields', 'title').withAttributes({
       fieldType: '@cardstack/core-types::string'
     }),
+    factory.addResource('fields', 'logo').withAttributes({
+      fieldType: '@cardstack/core-types::string'
+    }),
     factory.addResource('fields', 'assets').withAttributes({
       fieldType: '@cardstack/core-types::has-many',
       editorComponent: 'field-editors/dropdown-multi-select-editor'

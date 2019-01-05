@@ -1,18 +1,47 @@
 <div class="wallet-embedded" href={{cardstack-url content}}>
-  <header>
-    <h2 data-test-wallet-embedded-title>{{content.title}}</h2>
+  <header class="wallet-embedded-header">
+    <div class="wallet-embedded-header__title-row">
+      <h2 class="wallet-embedded-header__title" data-test-wallet-embedded-title>
+        {{svg-jar content.logo}} {{content.title}}
+      </h2>
+      <div>
+        <div class="wallet-embedded-header__label">Approximate Value</div>
+        <div class="wallet-embedded-header__amount">≈ $25,554.62</div>
+      </div>
+    </div>
     <div>
-      <span>Approximate Value</span>
-      <span>$25,554.62</span>
+      <div class="wallet-embedded-header__label">Organize by</div>
+      <div class="wallet-embedded-header-filter">
+        <div class="wallet-embedded-header-filter__item">Wallets</div>
+        <div class="wallet-embedded-header-filter__item">Assets</div>
+        <div class="wallet-embedded-header-filter__item">Tags</div>
+      </div>
     </div>
   </header>
-  <div>
-    Organize by
-  </div>
-  <div>
-    <h3>Active Assets</h3>
-    {{#each content.assets as |asset index|}}
-      {{cardstack-content content=asset format="embedded"}}
-    {{/each}}
-  </div>
+
+  {{#if content.assets.length}}
+    <section class="wallet-embedded-asset-section">
+      <header>
+        <h3 class="wallet-embedded-asset-section__title">Active Assets</h3>
+        <div class="wallet-embedded-asset-section__count" data-test-wallet-embedded-asset-count>{{content.assets.length}}</div>
+      </header>
+      <div class="wallet-embedded-asset-section__grid">
+        {{#each content.assets as |asset index|}}
+          <div data-test-wallet-embedded-asset={{index}}>
+            {{cardstack-content content=asset format="embedded"}}
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{!-- if inactive assets --}}
+    <section class="wallet-embedded-asset-section">
+      <header>
+        <h3 class="wallet-embedded-asset-section__title">Inactive Assets</h3>
+        <div class="wallet-embedded-asset-section__count">2</div>
+      </header>
+      {{!-- embed inactive assets --}}
+    </section>
+  {{!-- end if --}}
 </div>

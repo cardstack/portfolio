@@ -1,5 +1,15 @@
 .portfolio-isolated {
-  width: 50%;
+  max-width: var(--portfolio-isolated-container-max-width);
   margin-left: auto;
   margin-right: auto;
+}
+
+.portfolio-isolated__title {
+  margin: 0;
+  padding: 25px 0;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xxl-font);
+  font-weight: normal;
+  letter-spacing: -0.2px;
+  line-height: 1;
 }

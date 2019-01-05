@@ -50,6 +50,7 @@
     "ember-resolver": "^5.0.1",
     "ember-source": "https://s3.amazonaws.com/builds.emberjs.com/canary/shas/9ab6fae0e49e510260d321dcdf5a685190a333d4.tgz",
     "ember-source-channel-url": "^1.1.0",
+    "ember-svg-jar": "^1.2.2",
     "ember-test-selectors": "^2.0.0",
     "ember-try": "^1.0.0",
     "eslint-plugin-ember": "^5.2.0",
