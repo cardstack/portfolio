@@ -11,7 +11,7 @@ const { hashPassword, comparePassword } = require('portfolio-crypto');
 
 const cardDir = join(__dirname, '../../');
 
-let factory, env, searchers, request, auth;
+let factory, env, searchers, request;
 
 async function createUser(email, password = 'my secrets', name = 'Van Gogh') {
   let writers = env.lookup('hub:writers');
@@ -26,10 +26,7 @@ async function createUser(email, password = 'my secrets', name = 'Van Gogh') {
     }
   });
 
-  let { id, type } = user;
-  let { token } = await auth.createToken({ id, type }, 30);
-
-  return { user, token };
+  return user;
 }
 
 describe('portfolio-register', function () {
@@ -45,7 +42,6 @@ describe('portfolio-register', function () {
 
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
     searchers = env.lookup('hub:searchers');
-    auth = env.lookup('plugin-middleware:@cardstack/authentication/cardstack/middleware');
     let app = new Koa();
     app.use(env.lookup('hub:middleware-stack').middleware());
     request = supertest(app.callback());

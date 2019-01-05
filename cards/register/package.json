@@ -32,7 +32,6 @@
     "portfolio-user": "*"
   },
   "devDependencies": {
-    "@cardstack/authentication": "^0.12.18",
     "@cardstack/di": "^0.12.0",
     "@cardstack/eslint-config": "^0.12.0",
     "@cardstack/jsonapi": "^0.12.15",
