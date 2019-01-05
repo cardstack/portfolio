@@ -83,7 +83,6 @@
     "portfolio-asset": "*",
     "portfolio-portfolio": "*",
     "portfolio-user": "*",
-    "portfolio-user-profile": "*",
     "portfolio-register": "*",
     "portfolio-wallet": "*",
     "prember": "^1.0.0",

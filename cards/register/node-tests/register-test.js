@@ -32,7 +32,7 @@ async function createUser(email, password = 'my secrets', name = 'Van Gogh') {
   return { user, token };
 }
 
-describe('portfolio-users', function () {
+describe('portfolio-register', function () {
   beforeEach(async function () {
     factory = new JSONAPIFactory();
 
