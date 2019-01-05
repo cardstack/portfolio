@@ -70,6 +70,9 @@ jobs:
     - env: TEST=cards/asset
     - env: TEST=cards/wallet
     - env: TEST=cards/portfolio
+    - env: TEST=cards/register
+    - env: TEST=cards/user
+    - env: TEST=cards/user-profile
 
 
     - stage: deploy

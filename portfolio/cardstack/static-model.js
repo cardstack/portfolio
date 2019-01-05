@@ -75,25 +75,6 @@ module.exports = function () {
     .withAttributes({ router });
   factory.addResource('app-cards', 'portfolio');
 
-  factory.addResource('grants', 'portfolio-users-self-read-grant')
-    .withRelated('who', [{ type: 'fields', id: 'id' }])
-    .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
-    .withRelated('fields', [
-      { type: 'fields', id: 'name' },
-      { type: 'fields', id: 'email-address' }
-    ])
-    .withAttributes({
-      'may-read-resource': true,
-      'may-read-fields': true,
-    });
-
-  factory.addResource('grants', 'portfolio-users-login-grant')
-    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
-    .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
-    .withAttributes({
-      'may-login': true,
-    });
-
   factory.addResource('grants')
     // TODO we need to lock these down to self CRUD, and add tests...
     // .withRelated('who', [{ type: 'fields', id: 'id' }])

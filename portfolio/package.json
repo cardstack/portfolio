@@ -78,19 +78,17 @@
     "ember-test-selectors": "^2.0.0",
     "ember-welcome-page": "^3.2.0",
     "eslint-plugin-ember": "^6.0.1",
-    "koa": "2",
-    "koa-better-route": "^0.1.0",
-    "koa-compose": "^3.2.1",
-    "koa-json-body": "^5.3.0",
     "loader.js": "^4.7.0",
     "lodash": "^4.17.11",
     "portfolio-asset": "*",
     "portfolio-portfolio": "*",
+    "portfolio-user": "*",
+    "portfolio-user-profile": "*",
+    "portfolio-register": "*",
     "portfolio-wallet": "*",
     "prember": "^1.0.0",
     "qunit-dom": "^0.8.0",
-    "squishable-container": "^0.1.0",
-    "supertest": "^2.0.1"
+    "squishable-container": "^0.1.0"
   },
   "workspaces": {
     "nohoist": [

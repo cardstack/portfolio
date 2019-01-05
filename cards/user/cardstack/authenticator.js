@@ -1,4 +1,4 @@
-const { comparePassword } = require('./crypto');
+const { comparePassword } = require('portfolio-crypto');
 
 module.exports = class {
   static create(...args) {

@@ -1,0 +1,37 @@
+{
+  "name": "portfolio-user",
+  "version": "0.0.0",
+  "keywords": [
+    "cardstack-plugin"
+  ],
+  "cardstack-plugin": {
+    "api-version": 1,
+    "src": "cardstack"
+  },
+  "scripts": {
+    "lint:js": "eslint .",
+    "test": "echo 'this module has no ember tests'",
+    "node-tests": "mocha ../../node-test-runner.js --timeout 10000"
+  },
+  "dependencies": {
+    "portfolio-crypto": "*"
+  },
+  "devDependencies": {
+    "@cardstack/authentication": "^0.12.18",
+    "@cardstack/eslint-config": "^0.12.0",
+    "@cardstack/test-support": "^0.12.16",
+    "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-node": "^7.0.1",
+    "koa": "2",
+    "supertest": "^2.0.1"
+  },
+  "engines": {
+    "node": "8.* || >= 10.*"
+  },
+  "private": true,
+  "workspaces": {
+    "nohoist": [
+      "babel-preset-env"
+    ]
+  }
+}

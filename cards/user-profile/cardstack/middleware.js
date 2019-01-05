@@ -5,7 +5,7 @@ const { get } = require('lodash');
 const compose = require('koa-compose');
 const route = require('koa-better-route');
 const koaJSONBody = require('koa-json-body');
-const { comparePassword, hashPassword } = require('../crypto');
+const { hashPassword, comparePassword } = require('portfolio-crypto');
 
 const { withJsonErrorHandling } = Error;
 const prefix = 'update-profile';
