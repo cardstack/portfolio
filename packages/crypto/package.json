@@ -1,0 +1,18 @@
+{
+  "name": "portfolio-crypto",
+  "version": "0.0.0",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "ember-auto-import": "^1.2.10",
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-htmlbars": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-node": "^7.0.1"
+  },
+  "engines": {
+    "node": "8.* || >= 10.*"
+  },
+  "private": true
+}

@@ -10,6 +10,7 @@ let travis = yaml.safeLoad(readFileSync(travisYml, 'utf8'));
 let testedCards = travis.jobs.include
   .map(it => it.env)
   .filter(Boolean)
+  .map(it => it.split(' ').find(i => i.indexOf('TEST=') > -1))
   .filter(it => it.indexOf('TEST=cards/') === 0)
   .map(i => i.replace(/TEST=cards\//g, ''));
 

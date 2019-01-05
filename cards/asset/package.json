@@ -15,10 +15,11 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "node-tests": "mocha ../../node-test-runner.js --timeout 10000"
   },
   "dependencies": {
-    "@cardstack/rendering": "^0.12.7",
+    "@cardstack/rendering": "^0.12.18",
     "babel-preset-env": "^1.7.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli-babel": "^6.6.0",
@@ -26,11 +27,11 @@
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.12.0",
-    "@cardstack/jsonapi": "^0.12.15",
-    "@cardstack/mobiledoc": "^0.12.16",
-    "@cardstack/models": "^0.12.15",
-    "@cardstack/routing": "^0.12.15",
-    "@cardstack/test-support": "^0.12.16",
+    "@cardstack/jsonapi": "^0.12.18",
+    "@cardstack/mobiledoc": "^0.12.18",
+    "@cardstack/models": "^0.12.18",
+    "@cardstack/routing": "^0.12.18",
+    "@cardstack/test-support": "^0.12.18",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.1",
     "broccoli-asset-rev": "^2.7.0",
