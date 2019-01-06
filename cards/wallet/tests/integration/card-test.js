@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { render } from '@ember/test-helpers';
 import Fixtures from '@cardstack/test-support/fixtures';
-import { setupURLs, renderCard } from '@cardstack/test-support/test-helpers';
+import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 
 const scenario = new Fixtures({
   create(factory) {
@@ -26,12 +27,12 @@ const scenario = new Fixtures({
 });
 
 module('Card | wallet', function(hooks) {
-  setupRenderingTest(hooks);
+  setupCardTest(hooks);
   setupURLs(hooks);
   scenario.setupTest(hooks);
 
   test('embedded format renders', async function(assert) {
-    await renderCard('wallet', '123', 'embedded');
+    await render(hbs`{{cardstack-card-test "wallet" "123" format="embedded"}}`);
     assert.dom('[data-test-wallet-embedded-title]').hasText('ING Wallet');
     assert.dom('[data-test-wallet-embedded-asset-count]').hasText('2');
     assert.dom('[data-test-wallet-embedded-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
@@ -39,7 +40,7 @@ module('Card | wallet', function(hooks) {
   });
 
   test('isolated format renders', async function(assert) {
-    await renderCard('wallet', '123', 'isolated');
+    await render(hbs`{{cardstack-card-test "wallet" "123" format="isolated"}}`);
     assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
   });
 });

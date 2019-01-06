@@ -133,6 +133,23 @@ describe('portfolio-register', function () {
       });
     });
 
+    it('does not register a user when the password is less than 8 characters', async function () {
+      let response = await request.post('/register').send({
+        data: {
+          type: 'portfolio-users',
+          attributes: {
+            name: 'Hassan',
+            'email-address': 'hassan@example.com',
+            password: '1234567'
+          }
+        }
+      });
+      expect(response).hasStatus(400);
+      expect(response.body.errors).collectionContains({
+        detail: "The password length must be at least 8 characters"
+      });
+    });
+
     it('does not register a user when the supplied email address already exists in a user model in the backing store', async function () {
       await createUser('HASSAN@EXAMPLE.COM');
 

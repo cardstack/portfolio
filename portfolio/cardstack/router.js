@@ -1,4 +1,12 @@
 module.exports = [{
+  path: '/register',
+  query: {
+    filter: {
+      type: { exact: 'registers' },
+      id: { exact: 'portfolio-users' }
+    }
+  },
+},{
   path: '/',
   query: {
     filter: {

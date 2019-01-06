@@ -9,6 +9,7 @@ const { hashPassword } = require('portfolio-crypto');
 
 const { withJsonErrorHandling } = Error;
 const prefix = 'register';
+const minPasswordLength = 8;
 
 function addCorsHeaders(response) {
   response.set('Access-Control-Allow-Origin', '*');
@@ -64,6 +65,15 @@ module.exports = declareInjections({
                 errors: [{
                   title: "Bad format",
                   detail: "The register request is missing the password in the data.attributes.password field"
+                }]
+              };
+              return;
+            } else if (password.length < minPasswordLength) {
+              ctxt.status = 400;
+              ctxt.body = {
+                errors: [{
+                  title: "Bad format",
+                  detail: "The password length must be at least 8 characters"
                 }]
               };
               return;
