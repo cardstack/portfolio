@@ -1,7 +1,8 @@
 import { module, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { render } from '@ember/test-helpers';
 import Fixtures from '@cardstack/test-support/fixtures';
-import { setupURLs, renderCard } from '@cardstack/test-support/test-helpers';
+import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 
 const scenario = new Fixtures({
   create(/*factory*/) {
@@ -9,17 +10,17 @@ const scenario = new Fixtures({
 });
 
 module('Card | user', function(hooks) {
-  setupRenderingTest(hooks);
+  setupCardTest(hooks);
   setupURLs(hooks);
   scenario.setupTest(hooks);
 
   skip('embedded format renders', async function(assert) {
-    await renderCard('user', '123', 'embedded');
+    await render(hbs`{{cardstack-card-test "user" "123" format="embedded"}}`);
     assert.dom('[data-test-user-embedded-title]').hasText('Hello');
   });
 
   skip('isolated format renders', async function(assert) {
-    await renderCard('user', '123', 'isolated');
+    await render(hbs`{{cardstack-card-test "user" "123" format="isolated"}}`);
     assert.dom('[data-test-user-isolated-title]').hasText('Hello');
   });
 });

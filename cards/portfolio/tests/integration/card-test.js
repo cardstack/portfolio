@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { render } from '@ember/test-helpers';
 import Fixtures from '@cardstack/test-support/fixtures';
-import { setupURLs, renderCard } from '@cardstack/test-support/test-helpers';
+import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 
 const scenario = new Fixtures({
   create(factory) {
@@ -24,17 +25,17 @@ const scenario = new Fixtures({
 });
 
 module('Card | portfolio', function(hooks) {
-  setupRenderingTest(hooks);
+  setupCardTest(hooks);
   setupURLs(hooks);
   scenario.setupTest(hooks);
 
   test('embedded format renders', async function(assert) {
-    await renderCard('portfolio', '123', 'embedded');
+    await render(hbs`{{cardstack-card-test "portfolio" "123" format="embedded"}}`);
     assert.dom('[data-test-portfolio-embedded-title]').hasText('My Portfolio Test');
   });
 
   test('isolated format renders', async function(assert) {
-    await renderCard('portfolio', '123', 'isolated');
+    await render(hbs`{{cardstack-card-test "portfolio" "123" format="isolated"}}`);
     assert.dom('[data-test-portfolio-isolated-title]').hasText('My Portfolio Test');
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Wallet 1');
     assert.dom('[data-test-portfolio-isolated-wallet="1"] [data-test-wallet-embedded-title]').hasText('Wallet 2');

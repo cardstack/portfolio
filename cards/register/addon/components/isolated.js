@@ -22,7 +22,8 @@ export default Component.extend({
         data: {
           type: 'portfolio-users',
           attributes: {
-            password, name,
+            name,
+            password,
             'email-address': email,
           }
         }

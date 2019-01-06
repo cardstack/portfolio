@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { waitFor, click, fillIn } from '@ember/test-helpers';
+import hbs from 'htmlbars-inline-precompile';
+import { render, waitFor, click, fillIn } from '@ember/test-helpers';
 import Fixtures from '@cardstack/test-support/fixtures';
-import { setupURLs, renderCard } from '@cardstack/test-support/test-helpers';
+import { setupCardTest, setupURLs } from '@cardstack/test-support/test-helpers';
 import { ciSessionId } from '@cardstack/test-support/environment';
 import { hubURL } from '@cardstack/plugin-utils/environment';
 
@@ -30,19 +30,19 @@ async function searchForUser(email) {
 }
 
 module('Card | register', function(hooks) {
-  setupRenderingTest(hooks);
+  setupCardTest(hooks);
   setupURLs(hooks);
   scenario.setupTest(hooks);
 
   test('isolated format renders', async function(assert) {
-    await renderCard('register', 'portfolio-users', 'isolated');
+    await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-name]').exists();
     assert.dom('[data-test-registration-email]').exists();
     assert.dom('[data-test-registration-password]').exists();
   });
 
   test('submit button is enabled after all fields are filled in', async function(assert) {
-    await renderCard('register', 'portfolio-users', 'isolated');
+    await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
 
     assert.dom('[data-test-registration-submit]').isDisabled();
     await fillIn('[data-test-registration-name]', 'Van Gogh');
@@ -55,7 +55,7 @@ module('Card | register', function(hooks) {
   });
 
   test('can successfully register a user', async function(assert) {
-    await renderCard('register', 'portfolio-users', 'isolated');
+    await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-success]').doesNotExist();
 
     await fillIn('[data-test-registration-name]', 'Van Gogh');
@@ -74,7 +74,7 @@ module('Card | register', function(hooks) {
     let users = await searchForUser('hassan@example.com');
     assert.equal(users.length, 1);
 
-    await renderCard('register', 'portfolio-users', 'isolated');
+    await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-error]').doesNotExist();
 
     await fillIn('[data-test-registration-name]', 'Van Gogh');
@@ -93,7 +93,7 @@ module('Card | register', function(hooks) {
   });
 
   test('it shows an error when password is too short', async function(assert) {
-    await renderCard('register', 'portfolio-users', 'isolated');
+    await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-error]').doesNotExist();
 
     await fillIn('[data-test-registration-name]', 'Van Gogh');
