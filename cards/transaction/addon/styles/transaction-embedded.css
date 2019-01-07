@@ -55,6 +55,14 @@
   font-size: var(--portfolio-med-font);
 }
 
+.transaction-embedded__label--sent {
+  background-image: url("/assets/images/sent-arrow.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 22px 24px;
+  padding-left: 45px;
+}
+
 .transaction-embedded__amount {
   font-family: var(--portfolio-bold-text);
 }
@@ -87,6 +95,9 @@
 }
 
 .transaction-embedded__details {
-  color: var(--portfolio-white);
-  text-decoration: none;
+  padding-right: 15px;
+  background-image: url("/assets/images/chevron-right.svg");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 6px 10px;
 }

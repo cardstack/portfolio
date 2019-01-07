@@ -4,58 +4,49 @@
   margin-right: auto;
 }
 
-.transaction-isolated__button-row {
+/* .transaction-isolated__breadcrumbs {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+.transaction-isolated__breadcrumbs-button {
   display: block;
-  width: 100%;
-  padding: 15px 25px;
-
-  background-color: transparent;
-  background-image: url("/assets/images/back-arrow.png");
-  background-position: 25px center;
-  background-repeat: no-repeat;
-  background-size: 16px 14px;
-  text-indent: 30px;
-
-  color: var(--portfolio-muted-gray);
+  margin-right: 25px;
+  padding: 10px 25px;
+  background-color: var(--portfolio-white);
+  color: var(--portfolio-black);
   border: 1px solid var(--portfolio-lighter-border-gray);
   border-radius: 5px;
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-med-font);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+  font-weight: 600;
   letter-spacing: -0.1px;
   line-height: 1.1;
   text-align: left;
 }
-.transaction-isolated__button-row:hover,
-.transaction-isolated__button-row:focus {
+.transaction-isolated__breadcrumbs-button:hover,
+.transaction-isolated__breadcrumbs-button:focus {
   outline: none;
   background-color: var(--portfolio-highlight-gray);
-  color: var(--portfolio-dark-purple);
   cursor: pointer;
   user-select: none;
 }
-
-.transaction-isolated__title {
-  margin: 0;
-  padding: 25px 0;
-
-  background-image: url("/assets/images/transaction.png");
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 33px 33px;
-  text-indent: 43px;
-
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-xxl-font);
-  font-weight: normal;
-  letter-spacing: -0.2px;
-  line-height: 1;
-}
+.transaction-isolated__breadcrumbs-button > span {
+  margin-left: 20px;
+  color: var(--portfolio-muted-gray);
+} */
 
 .transaction-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   justify-content: center;
   grid-gap: 30px;
+}
+
+.transaction-isolated__main {
+  padding: 25px;
 }
 
 .transaction-isolated__section-title {
@@ -77,9 +68,8 @@
 .transaction-isolated__group {
   margin-bottom: 40px;
   background-color: var(--portfolio-white);
-  border: none;
+  border: 1px solid var(--portfolio-border-gray);
   border-radius: 5px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
 }
 .transaction-isolated__group-button {
   display: block;
@@ -116,42 +106,76 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 25px;
-  background-color: var(--portfolio-green);
-  border-radius: 5px 5px 0 0;
-  color: var(--portfolio-white);
 }
-.transaction-isolated__header span {
-  display: inline-block;
-  padding: 10px;
-  font-family: var(--portfolio-semibold-text);
+
+.transaction-isolated__title {
+  margin: 0;
   font-size: var(--portfolio-med-font);
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.transaction-isolated__time {
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+  font-weight: 600;
   letter-spacing: 0.2px;
 }
-.transaction-isolated__header-icon {
-  width: 18px;
-  height: 12px;
+
+.transaction-isolated__amount {
+  padding: 50px 0;
+  font-family: var(--portfolio-bold-text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+.transaction-isolated__amount-label {
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+}
+.transaction-isolated__amount-label--received {
+  display: inline-block;
+  width: 25px;
+  height: 35px;
+  background-image: url("/assets/images/received-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transaction-isolated__amount-value {
+  font-size: 54px;
+}
+.transaction-isolated__amount-value > span {
+  font-size: var(--portfolio-xl-font);
+}
+.transaction-isolated__amount-value--usd {
+  color: var(--portfolio-muted-gray);
 }
 
 .transaction-isolated__addresses {
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   align-items: center;
-  width: 75%;
-  min-width: 400px;
-  margin: 0 auto;
-  padding: 50px 25px;
-  text-align: center;
+  margin: 0;
+  padding: 35px 0;
+  border-top: 1px solid var(--portfolio-border-gray);
 }
-.transaction-isolated__addresses > dt {
+
+.transaction-isolated__address {
+  max-width: 45%;
+}
+.transaction-isolated__address > dt {
+  padding-bottom: 10px;
   color: var(--portfolio-light-purple);
   letter-spacing: 0.2px;
-  line-height: 2;
   text-transform: uppercase;
 }
-.transaction-isolated__addresses > dd {
+.transaction-isolated__address > dd {
   margin: 0;
   font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-med-font);
@@ -160,21 +184,24 @@
   word-wrap: break-word;
   word-break: break-all;
 }
-.transaction-isolated__addresses-arrow {
-  width: 40px;
-  height: 40px;
-  margin: 50px;
-  background-image: url("/assets/images/arrow-down.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-color: var(--portfolio-purple-gray);
-  border-radius: 50%;
+
+.transaction-isolated__status {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--portfolio-green);
+  color: var(--portfolio-white);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+}
+.transaction-isolated__status-icon {
+  width: 14px;
+  height: 10px;
+  margin-left: 10px;
 }
 
 .transaction-isolated__details {
-  padding: 50px 25px;
-  border-top: 1px solid var(--portfolio-border-gray);
+  margin: 0;
+  padding: 35px 0 15px;
 }
 .transaction-isolated__details > dt {
   color: var(--portfolio-light-purple);
@@ -183,10 +210,14 @@
 }
 .transaction-isolated__details > dd {
   margin: 0;
+  padding-bottom: 20px;
   letter-spacing: 0.2px;
 }
-.transaction-isolated__details > dd + dt {
+
+.transaction-isolated__qr-code {
   padding-top: 25px;
+  text-align: center;
+  border-top: 1px solid var(--portfolio-border-gray);
 }
 
 .transaction-isolated__tags-title {
