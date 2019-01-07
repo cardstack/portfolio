@@ -56,8 +56,12 @@
 
       <section>
         <h3 class="asset-isolated__section-title">Transaction History</h3>
-        <div class="asset-isolated__group">
-          {{!-- EMBEDDED TRANSACTION CARDS HERE --}}
+        <div class="asset-isolated__group asset-isolated__transactions">
+          {{#each content.transactions as |transaction index|}}
+            <div asset-isolated-transaction={{index}}>
+              {{cardstack-content content=transaction format="embedded"}}
+            </div>
+          {{/each}}
         </div>
       </section>
     </div>

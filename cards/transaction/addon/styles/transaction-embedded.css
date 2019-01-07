@@ -1,4 +1,92 @@
 .transaction-embedded {
   display: block;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: var(--portfolio-white);
+  color: var(--portfolio-black);
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+  text-decoration: none;
+}
+.transaction-embedded:hover,
+.transaction-embedded:focus {
+  outline: none;
+  background-color: var(--portfolio-highlight-gray);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
+}
+
+.transaction-embedded__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-embedded__title {
+  margin: 0;
+  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
+}
+
+.transaction-embedded__time {
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-xs-font);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.transaction-embedded__data {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 30px 0;
+  letter-spacing: 0.2px;
+}
+.transaction-embedded__data dt {
+  padding-bottom: 10px;
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  text-transform: uppercase;
+}
+.transaction-embedded__data dd {
+  margin: 0;
+  font-size: var(--portfolio-med-font);
+}
+
+.transaction-embedded__amount {
+  font-family: var(--portfolio-bold-text);
+}
+.transaction-embedded__amount--usd {
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-xs-font);
+}
+
+.transaction-embedded__address {
+  font-family: var(--portfolio-semibold-text);
+}
+
+.transaction-embedded__status {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+
+  border-radius: 5px;
+  background-color: var(--portfolio-green);
+  color: var(--portfolio-white);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-xs-font);
+}
+.transaction-embedded__status-icon {
+  width: 14px;
+  height: 10px;
+  margin-left: 10px;
+}
+
+.transaction-embedded__details {
+  color: var(--portfolio-white);
   text-decoration: none;
 }

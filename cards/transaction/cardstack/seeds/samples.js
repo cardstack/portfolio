@@ -6,6 +6,11 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withAttributes({
       title: 'Transaction 31'
     });
+
+  factory.addResource('transactions', '32')
+    .withAttributes({
+      title: 'Transaction 32'
+    });
 }
 
 module.exports = factory.getModels();
