@@ -2,7 +2,7 @@
     {{!-- fastboot guard --}}
     {{#if (is-component "cardstack-session")}}
       {{#cardstack-session as |session|}}
-        {{#unless session.is-component}}
+        {{#unless session.isAuthenticated}}
           <a data-test-registration-page-link href="/register">Register</a>
         {{/unless}}
         {{#password-login onAuthenticationSuccess=(action doOnAuthenticationSuccess)

@@ -44,169 +44,192 @@ module('Acceptance | user-profile', function(hooks) {
   setupApplicationTest(hooks);
   scenario.setupTest(hooks);
 
-  hooks.beforeEach(async function() {
-    delete localStorage['cardstack-tools'];
-    await login('hassan@example.com', 'password');
+  module('not logged in', function () {
+    hooks.beforeEach(async function () {
+      delete localStorage['cardstack-tools'];
+    });
+
+    hooks.afterEach(function () {
+      delete localStorage['cardstack-tools'];
+    });
+
+    test('user profile when not logged in', async function(assert) {
+      await visit('/portfolio-users/test-user');
+      if (document.querySelector('[data-test-signout-button]')) {
+        await click('[data-test-signout-button]');
+      }
+      assert.dom('[data-test-user-form]').doesNotExist();
+    });
   });
 
-  hooks.afterEach(function() {
-    delete localStorage['cardstack-tools'];
-  });
+  module('logged in', function () {
+    hooks.beforeEach(async function () {
+      delete localStorage['cardstack-tools'];
+      await login('hassan@example.com', 'password');
+    });
 
-  test('the name and email can be updated', async function(assert) {
-    // TODO we'll adjust routing to use session based routing so we dont
-    // need the user ID in the URL
-    await visit('/portfolio-users/test-user');
+    hooks.afterEach(async function () {
+      if (document.querySelector('[data-test-signout-button]')) {
+        await click('[data-test-signout-button]');
+      }
+      delete localStorage['cardstack-tools'];
+    });
 
-    assert.dom('[data-test-user-submit]').isNotDisabled();
-    await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
-    await fillIn('[data-test-user-email]', 'musa@example.com');
-    assert.dom('[data-test-user-submit]').isNotDisabled();
+    test('the name and email can be updated', async function (assert) {
+      // TODO we'll adjust routing to use session based routing so we dont
+      // need the user ID in the URL
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-success]');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+      await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+      await fillIn('[data-test-user-email]', 'musa@example.com');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
 
-    let users = await searchForUser('musa@example.com');
-    assert.equal(users.length, 1);
-    assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
 
-  test('password can be updated', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('musa@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
+    });
 
-    assert.dom('[data-test-user-submit]').isNotDisabled();
-    await fillIn('[data-test-user-current-password]', 'password');
-    assert.dom('[data-test-user-submit]').isDisabled();
-    await fillIn('[data-test-user-new-password]', 'password2');
-    assert.dom('[data-test-user-submit]').isDisabled();
-    await fillIn('[data-test-user-confirm-new-password]', 'password2');
-    assert.dom('[data-test-user-submit]').isNotDisabled();
+    test('password can be updated', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-success]');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+      await fillIn('[data-test-user-current-password]', 'password');
+      assert.dom('[data-test-user-submit]').isDisabled();
+      await fillIn('[data-test-user-new-password]', 'password2');
+      assert.dom('[data-test-user-submit]').isDisabled();
+      await fillIn('[data-test-user-confirm-new-password]', 'password2');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-    assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
 
-  test('all fields can be updated', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
-    await fillIn('[data-test-user-email]', 'musa@example.com');
-    await fillIn('[data-test-user-current-password]', 'password');
-    await fillIn('[data-test-user-new-password]', 'password2');
-    await fillIn('[data-test-user-confirm-new-password]', 'password2');
+    test('all fields can be updated', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-success]');
+      await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+      await fillIn('[data-test-user-email]', 'musa@example.com');
+      await fillIn('[data-test-user-current-password]', 'password');
+      await fillIn('[data-test-user-new-password]', 'password2');
+      await fillIn('[data-test-user-confirm-new-password]', 'password2');
 
-    let users = await searchForUser('musa@example.com');
-    assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
-    assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
 
-  test('does not update when new password is different than confirmation password', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('musa@example.com');
+      assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
+      assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-current-password]', 'password');
-    await fillIn('[data-test-user-new-password]', 'password2');
-    await fillIn('[data-test-user-confirm-new-password]', 'password3');
+    test('does not update when new password is different than confirmation password', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-error]');
-    assert.dom('[data-test-user-update-error]').containsText(`The 'New Password' and 'Confirm New Password' fields do not match`);
+      await fillIn('[data-test-user-current-password]', 'password');
+      await fillIn('[data-test-user-new-password]', 'password2');
+      await fillIn('[data-test-user-confirm-new-password]', 'password3');
 
-    await fillIn('[data-test-user-confirm-new-password]', 'password3');
-    assert.dom('[data-test-user-update-error]').doesNotExist();
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-error]');
+      assert.dom('[data-test-user-update-error]').containsText(`The 'New Password' and 'Confirm New Password' fields do not match`);
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-    assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await fillIn('[data-test-user-confirm-new-password]', 'password3');
+      assert.dom('[data-test-user-update-error]').doesNotExist();
 
-  test('does not update when new password is same as old password', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-current-password]', 'password');
-    await fillIn('[data-test-user-new-password]', 'password');
-    await fillIn('[data-test-user-confirm-new-password]', 'password');
+    test('does not update when new password is same as old password', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-error]');
-    assert.dom('[data-test-user-update-error]').containsText(`The new password should be different than the old password.`);
+      await fillIn('[data-test-user-current-password]', 'password');
+      await fillIn('[data-test-user-new-password]', 'password');
+      await fillIn('[data-test-user-confirm-new-password]', 'password');
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-    assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-error]');
+      assert.dom('[data-test-user-update-error]').containsText(`The new password should be different than the old password.`);
 
-  test('does not update when new password is less than 8 characters', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-current-password]', 'password');
-    await fillIn('[data-test-user-new-password]', '1234567');
-    await fillIn('[data-test-user-confirm-new-password]', '1234567');
+    test('does not update when new password is less than 8 characters', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-error]');
-    assert.dom('[data-test-user-update-error]').containsText(`The new password must be at least 8 characters.`);
+      await fillIn('[data-test-user-current-password]', 'password');
+      await fillIn('[data-test-user-new-password]', '1234567');
+      await fillIn('[data-test-user-confirm-new-password]', '1234567');
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-    assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-error]');
+      assert.dom('[data-test-user-update-error]').containsText(`The new password must be at least 8 characters.`);
 
-  test('does not update when email changed to existing user`s email', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-email]', 'anotheruser@example.com');
+    test('does not update when email changed to existing user`s email', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-error]');
-    assert.dom('[data-test-user-update-error]').containsText(`A user with this email address already exists`);
+      await fillIn('[data-test-user-email]', 'anotheruser@example.com');
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-error]');
+      assert.dom('[data-test-user-update-error]').containsText(`A user with this email address already exists`);
 
-  test('does not update when current password is incorrect', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+    });
 
-    await fillIn('[data-test-user-current-password]', 'not my password');
-    await fillIn('[data-test-user-new-password]', 'password2');
-    await fillIn('[data-test-user-confirm-new-password]', 'password2');
+    test('does not update when current password is incorrect', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-    await click('[data-test-user-submit]');
-    await waitFor('[data-test-user-update-error]');
-    assert.dom('[data-test-user-update-error]').containsText(`The provided current-password does not match the current password`);
+      await fillIn('[data-test-user-current-password]', 'not my password');
+      await fillIn('[data-test-user-new-password]', 'password2');
+      await fillIn('[data-test-user-confirm-new-password]', 'password2');
 
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
-    assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
-  });
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-error]');
+      assert.dom('[data-test-user-update-error]').containsText(`The provided current-password does not match the current password`);
 
-  test('submit button is disabled if email is missing', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
+    });
 
-    await fillIn('[data-test-user-email]', '');
-    assert.dom('[data-test-user-submit]').isDisabled();
-  });
+    test('submit button is disabled if email is missing', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-  test('submit button is disabled if name is missing', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      await fillIn('[data-test-user-email]', '');
+      assert.dom('[data-test-user-submit]').isDisabled();
+    });
 
-    await fillIn('[data-test-user-name]', '');
-    assert.dom('[data-test-user-submit]').isDisabled();
-  });
+    test('submit button is disabled if name is missing', async function (assert) {
+      await visit('/portfolio-users/test-user');
 
-  test('submit button is disabled if some but not all password fields are filled ou', async function(assert) {
-    await visit('/portfolio-users/test-user');
+      await fillIn('[data-test-user-name]', '');
+      assert.dom('[data-test-user-submit]').isDisabled();
+    });
 
-    await fillIn('[data-test-user-current-password]', 'password');
-    assert.dom('[data-test-user-submit]').isDisabled();
-    await fillIn('[data-test-user-new-password]', 'password2');
-    assert.dom('[data-test-user-submit]').isDisabled();
+    test('submit button is disabled if some but not all password fields are filled ou', async function (assert) {
+      await visit('/portfolio-users/test-user');
+
+      await fillIn('[data-test-user-current-password]', 'password');
+      assert.dom('[data-test-user-submit]').isDisabled();
+      await fillIn('[data-test-user-new-password]', 'password2');
+      assert.dom('[data-test-user-submit]').isDisabled();
+    });
   });
 });
