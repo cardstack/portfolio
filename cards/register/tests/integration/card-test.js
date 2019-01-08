@@ -10,7 +10,7 @@ const scenario = new Fixtures({
   create(factory) {
     factory.addResource('registers', 'portfolio-users');
     factory.addResource('portfolio-users', 'existing-user').withAttributes({
-      'email-address': 'hassan@example.com'
+      'email-address': 'existing@example.com'
     })
   },
   destroy() {
@@ -71,21 +71,21 @@ module('Card | register', function(hooks) {
   });
 
   test('it shows an error when email belongs to a user that already exists', async function(assert) {
-    let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1, 'the test starts out with just one "hassan@example.com"');
+    let users = await searchForUser('existing@example.com');
+    assert.equal(users.length, 1, 'the test starts out with just one "existing@example.com"');
 
     await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-error]').doesNotExist();
 
     await fillIn('[data-test-registration-name]', 'Van Gogh');
-    await fillIn('[data-test-registration-email]', 'hassan@example.com');
+    await fillIn('[data-test-registration-email]', 'existing@example.com');
     await fillIn('[data-test-registration-password]', 'password');
     await click('[data-test-registration-submit]');
 
     await waitFor('[data-test-registration-error]');
     assert.dom('[data-test-registration-error]').hasTextContaining('User already exists with this email address');
 
-    users = await searchForUser('hassan@example.com');
+    users = await searchForUser('existing@example.com');
     assert.equal(users.length, 1, "A new user account was not created");
 
     await fillIn('[data-test-registration-email]', 'vangogh@example.com');
