@@ -1,0 +1,269 @@
+.transaction-isolated {
+  max-width: var(--portfolio-isolated-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .transaction-isolated__breadcrumbs {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+.transaction-isolated__breadcrumbs-button {
+  display: block;
+  margin-right: 25px;
+  padding: 10px 25px;
+  background-color: var(--portfolio-white);
+  color: var(--portfolio-black);
+  border: 1px solid var(--portfolio-lighter-border-gray);
+  border-radius: 5px;
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  line-height: 1.1;
+  text-align: left;
+}
+.transaction-isolated__breadcrumbs-button:hover,
+.transaction-isolated__breadcrumbs-button:focus {
+  outline: none;
+  background-color: var(--portfolio-highlight-gray);
+  cursor: pointer;
+  user-select: none;
+}
+.transaction-isolated__breadcrumbs-button > span {
+  margin-left: 20px;
+  color: var(--portfolio-muted-gray);
+} */
+
+.transaction-isolated__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-content: center;
+  grid-gap: 30px;
+}
+
+.transaction-isolated__main {
+  padding: 25px;
+}
+
+.transaction-isolated__section-title {
+  margin: 0 0 20px;
+
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+  text-indent: 35px;
+
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-med-font);
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+/* data group with white background */
+.transaction-isolated__group {
+  margin-bottom: 40px;
+  background-color: var(--portfolio-white);
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+}
+.transaction-isolated__group-button {
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+
+  background-color: transparent;
+  background-image: url("/assets/images/plus.svg");
+  background-position: 25px center;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  text-indent: 25px;
+  text-align: left;
+
+  border: none;
+  border-top: 1px solid var(--portfolio-border-gray);
+  border-radius: 0 0 5px 5px;
+
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xs-font);
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+}
+.transaction-isolated__group-button:hover,
+.transaction-isolated__group-button:focus {
+  outline: none;
+  background-color: var(--portfolio-highlight-gray);
+  color: var(--portfolio-dark-purple);
+  cursor: pointer;
+  user-select: none;
+}
+
+.transaction-isolated__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-isolated__title {
+  margin: 0;
+  font-size: var(--portfolio-med-font);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.transaction-isolated__time {
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.transaction-isolated__amount {
+  padding: 50px 0;
+  font-family: var(--portfolio-bold-text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+.transaction-isolated__amount-label {
+  color: var(--portfolio-light-purple);
+  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+}
+.transaction-isolated__amount-label--received {
+  display: inline-block;
+  width: 25px;
+  height: 35px;
+  background-image: url("/assets/images/received-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transaction-isolated__amount-value {
+  font-size: 54px;
+}
+.transaction-isolated__amount-value > span {
+  font-size: var(--portfolio-xl-font);
+}
+.transaction-isolated__amount-value--usd {
+  color: var(--portfolio-muted-gray);
+}
+
+.transaction-isolated__addresses {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 35px 0;
+  border-top: 1px solid var(--portfolio-border-gray);
+}
+
+.transaction-isolated__address {
+  max-width: 45%;
+}
+.transaction-isolated__address > dt {
+  padding-bottom: 10px;
+  color: var(--portfolio-light-purple);
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+.transaction-isolated__address > dd {
+  margin: 0;
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-med-font);
+  font-weight: 500;
+  letter-spacing: 0.7px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.transaction-isolated__status {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--portfolio-green);
+  color: var(--portfolio-white);
+  font-family: var(--portfolio-semibold-text);
+  font-size: var(--portfolio-sm-font);
+}
+.transaction-isolated__status-icon {
+  width: 14px;
+  height: 10px;
+  margin-left: 10px;
+}
+
+.transaction-isolated__details {
+  margin: 0;
+  padding: 35px 0 15px;
+}
+.transaction-isolated__details > dt {
+  color: var(--portfolio-light-purple);
+  letter-spacing: 0.2px;
+  line-height: 2;
+}
+.transaction-isolated__details > dd {
+  margin: 0;
+  padding-bottom: 20px;
+  letter-spacing: 0.2px;
+}
+
+.transaction-isolated__qr-code {
+  padding-top: 25px;
+  text-align: center;
+  border-top: 1px solid var(--portfolio-border-gray);
+}
+
+.transaction-isolated__tags-title {
+  background-image: url("/assets/images/tag.png");
+}
+.transaction-isolated__tags-list {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+  padding: 25px;
+  list-style-type: none;
+}
+.transaction-isolated__tags-list > li {
+  padding: 5px;
+  background: none;
+}
+.transaction-isolated__tags-list > li > a {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: var(--portfolio-light-gray);
+  border: none;
+  border-radius: 5px;
+  color: var(--portfolio-light-purple);
+  font-size: var(--portfolio-xs-font);
+  text-decoration: none;
+}
+.transaction-isolated__tags-list > li > a:hover,
+.transaction-isolated__tags-list > li > a:focus {
+  outline: none;
+  color: var(--portfolio-dark-purple);
+}
+
+.transaction-isolated__notes-title {
+  background-image: url("/assets/images/notes.png");
+}
+.transaction-isolated__notes-list {
+  margin: 0 0 0 25px;
+  padding: 25px;
+  font-size: var(--portfolio-xs-font);
+}
+.transaction-isolated__notes-list > li + li {
+  padding-top: 25px;
+}
+.transaction-isolated__notes-list p {
+  margin: 0;
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
+}

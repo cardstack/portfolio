@@ -57,7 +57,8 @@ module.exports = function () {
     .withRelated('types', [
       { type: 'content-types', id: 'portfolios' },
       { type: 'content-types', id: 'wallets' },
-      { type: 'content-types', id: 'assets' }
+      { type: 'content-types', id: 'assets' },
+      { type: 'content-types', id: 'transactions' }
     ])
     .withAttributes({
       'may-read-resource': true,

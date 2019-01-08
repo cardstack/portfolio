@@ -7,7 +7,12 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
       title: 'Bitcoin',
       unit: 'BTC',
       logo: 'bitcoin',
-    });
+    })
+    .withRelated('transactions', [
+      { type: 'transactions', id: '31' },
+      { type: 'transactions', id: '32' },
+    ]);
+
   factory.addResource('assets', 'ether')
     .withAttributes({
       title: 'Ether',

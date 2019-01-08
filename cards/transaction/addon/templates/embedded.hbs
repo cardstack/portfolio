@@ -1,0 +1,27 @@
+<a class="transaction-embedded" href={{cardstack-url content}}>
+  <header class="transaction-embedded__header">
+    <h4 class="transaction-embedded__title" data-test-transaction-embedded-title>{{content.title}}</h4>
+    <time class="transaction-embedded__datetime" datetime="">Dec 23, 2018 7:49 PM</time>
+  </header>
+  <dl class="transaction-embedded__data">
+    <div class="transaction-embedded__label--sent">
+      <dt>Sent</dt>
+      <dd class="transaction-embedded__amount">
+        -0.13 BTC
+        <span class="transaction-embedded__amount--usd">≈ $500 USD</span>
+      </dd>
+    </div>
+    <div>
+      <dt>To</dt>
+      <dd class="transaction-embedded__address">0x1234...4321</dd>
+    </div>
+  </dl>
+  <footer class="transaction-embedded__status">
+    <div>
+      Status:
+      <span>Successful</span>
+      {{svg-jar "check" class="transaction-embedded__status-icon"}}
+    </div>
+    <div class="transaction-embedded__details">Details</div>
+  </footer>
+</a>

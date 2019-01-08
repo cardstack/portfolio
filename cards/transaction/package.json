@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-asset",
+  "name": "portfolio-transaction",
   "version": "0.0.0",
   "keywords": [
     "cardstack-plugin",
@@ -57,7 +57,6 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "portfolio-transaction": "*",
     "qunit-dom": "^0.8.0"
   },
   "engines": {

@@ -1,0 +1,99 @@
+<div class="transaction-isolated">
+  {{!-- Move this out as common component
+  <div class="transaction-isolated__breadcrumbs">
+    <button class="transaction-isolated__breadcrumbs-button">My Portfolio <span>2 Wallets</span></button>
+    <button class="transaction-isolated__breadcrumbs-button">ING Wallet <span>8 Assets</span></button>
+    <button class="transaction-isolated__breadcrumbs-button">Bitcoin <span>1Hz9…8tHJ</span></button>
+  </div> --}}
+
+  <div class="transaction-isolated__grid">
+    <div>
+      <section class="transaction-isolated__main transaction-isolated__group">
+        <header class="transaction-isolated__header">
+          <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>{{content.title}}</h1>
+          <time class="transaction-isolated__time" datetime="">Dec 23, 2018 7:49 PM</time>
+        </header>
+
+        <div class="transaction-isolated__amount">
+          <div class="transaction-isolated__amount-label">
+            <span class="transaction-isolated__amount-label--received" />
+            <div>Received</div>
+          </div>
+          <div class="transaction-isolated__amount-value">+0.13 <span>BTC</span></div>
+          <div class="transaction-isolated__amount-value--usd">≈ $500 USD</div>
+        </div>
+
+        <dl class="transaction-isolated__addresses">
+          <div class="transaction-isolated__address">
+            <dt>From</dt>
+            <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
+          </div>
+          <div class="transaction-isolated__address">
+            <dt>To</dt>
+            <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
+          </div>
+        </dl>
+
+        <div class="transaction-isolated__status">
+          Status: <span>Successful</span>
+          {{svg-jar "check" class="transaction-isolated__status-icon"}}
+        </div>
+
+        <dl class="transaction-isolated__details">
+          <dt>Time</dt>
+          <dd>Dec-23-2018 07:49:13 PM +UTC</dd>
+          <dt>Block Height</dt>
+          <dd>6940145 (5 Block Confirmations)</dd>
+          <dt>Gas Limit</dt>
+          <dd>21000</dd>
+          <dt>Gas Used by Transaction</dt>
+          <dd>21000 (100%)</dd>
+          <dt>Gas Price</dt>
+          <dd>0.00000005 Ether (50 Gwei)</dd>
+          <dt>Actual Tx Cost/Fee</dt>
+          <dd>0.00105 Ether ($0.14)</dd>
+          <dt>Nonce & {Position}</dt>
+          <dd>3 | {33}</dd>
+        </dl>
+
+        <div class="transaction-isolated__qr-code">
+          [QR CODE]
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section class="transaction-isolated__tags">
+        <h3 class="transaction-isolated__section-title transaction-isolated__tags-title">
+          Tags
+        </h3>
+        <div class="transaction-isolated__group">
+          <ul class="transaction-isolated__tags-list">
+            <li><a href="/">Savings</a></li>
+            <li><a href="/">Business Operations</a></li>
+            <li><a href="/">International</a></li>
+            {{!-- TAGS HERE --}}
+          </ul>
+          <button class="transaction-isolated__group-button">
+            Add custom tag
+          </button>
+        </div>
+      </section>
+
+      <section class="transaction-isolated__notes">
+        <h3 class="transaction-isolated__section-title transaction-isolated__notes-title">
+          Notes
+        </h3>
+        <div class="transaction-isolated__group">
+          <ul class="transaction-isolated__notes-list">
+            <li><p>Lorem ipsum dolor sit amet, consectetur</p></li>
+            <li><p>Proin sagittis bibendum purus sit amet elementum erat</p></li>
+          </ul>
+          <button class="transaction-isolated__group-button">
+            Add new note
+          </button>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
