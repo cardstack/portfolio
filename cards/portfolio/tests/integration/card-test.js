@@ -37,6 +37,7 @@ module('Card | portfolio', function(hooks) {
   test('isolated format renders', async function(assert) {
     await render(hbs`{{cardstack-card-test "portfolio" "123" format="isolated"}}`);
     assert.dom('[data-test-portfolio-isolated-title]').hasText('My Portfolio Test');
+    assert.dom('[data-test-portfolio-isolated-wallets-count]').hasText('2 Wallets');
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Wallet 1');
     assert.dom('[data-test-portfolio-isolated-wallet="1"] [data-test-wallet-embedded-title]').hasText('Wallet 2');
   });

@@ -1,4 +1,6 @@
 .asset-embedded {
+  --asset-embedded-logo-size: 22px;
+
   display: block;
   text-decoration: none;
   background-color: var(--portfolio-light-purple);
@@ -9,6 +11,14 @@
   font-size: var(--portfolio-sm-font);
   letter-spacing: 0.2px;
 }
+.asset-embedded:hover,
+.asset-embedded:focus {
+  outline: none;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 25%);
+  filter: brightness(110%);
+}
+
+/* There's probably a better way to generate these gradients */
 .asset-embedded--bitcoin {
   background: var(--portfolio-bitcoin-gradient);
 }
@@ -21,21 +31,25 @@
 .asset-embedded--zcash {
   background: var(--portfolio-zcash-gradient);
 }
-.asset-embedded:hover,
-.asset-embedded:focus {
-  outline: none;
-  transform: scale3d(1.01, 1.01, 1.01);
-  filter: brightness(110%);
-}
 
-.asset-embedded__flex-row {
+.asset-embedded__header {
   display: flex;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
 }
 
+.asset-embedded__title-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 70%;
+}
+
 .asset-embedded__title {
+  width: calc(100% - (var(--asset-embedded-logo-size) + 10px));
   margin: 0;
   font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-sm-font);
@@ -43,12 +57,11 @@
   line-height: 1.5;
   text-transform: uppercase;
 }
-.asset-embedded__title > svg {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  vertical-align: middle;
-  margin-right: 5px;
+
+.asset-embedded__logo {
+  width: var(--asset-embedded-logo-size);
+  height: var(--asset-embedded-logo-size);
+  margin-right: 10px;
 }
 
 .asset-embedded__tag {
@@ -85,6 +98,12 @@
 }
 
 .asset-embedded__footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 0 0 5px 5px;

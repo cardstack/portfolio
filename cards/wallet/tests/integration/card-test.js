@@ -34,13 +34,15 @@ module('Card | wallet', function(hooks) {
   test('embedded format renders', async function(assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="embedded"}}`);
     assert.dom('[data-test-wallet-embedded-title]').hasText('ING Wallet');
-    assert.dom('[data-test-wallet-embedded-asset-count]').hasText('2');
-    assert.dom('[data-test-wallet-embedded-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
-    assert.dom('[data-test-wallet-embedded-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
+    assert.dom('[data-test-wallet-embedded-count]').hasText('2 Assets');
   });
 
   test('isolated format renders', async function(assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="isolated"}}`);
     assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
+    assert.dom('[data-test-wallet-isolated-assets-count]').hasText('2 Assets');
+    assert.dom('[data-test-wallet-isolated-section-active-count]').hasText('2');
+    assert.dom('[data-test-wallet-isolated-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
+    assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
   });
 });
