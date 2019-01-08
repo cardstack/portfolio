@@ -1,1 +1,41 @@
-<h1>This is the Portfolio Application card. Welcome to Cardstack Portfolio</h1>
+
+    {{!-- fastboot guard --}}
+    {{#if (is-component "cardstack-session")}}
+      {{#cardstack-session as |session|}}
+        {{#unless session.is-component}}
+          <a data-test-registration-page-link href="/register">Register</a>
+        {{/unless}}
+        {{#password-login onAuthenticationSuccess=(action doOnAuthenticationSuccess)
+                          onAuthenticationFailed=(action doOnAuthenticationFailed)
+                          as |login|}}
+          {{#if session.isAuthenticated}}
+            {{!-- TODO is there something we want to show here --}}
+          {{else}}
+            {{#if loginError}}
+              <div data-test-login-error><b>The email and password provided do not match a valid account.</b></div>
+            {{/if}}
+            <div>
+              <label>
+                <span>Email Address:</span>
+                <input data-test-login-email
+                       type="text"
+                       value={{email}}
+                       oninput={{action doOnInput 'email'}}>
+              </label>
+            </div>
+            <div>
+              <label>
+                <span>Password</span>
+                <input data-test-login-password
+                       type="password"
+                       value={{password}}
+                       oninput={{action doOnInput 'password'}}>
+              </label>
+            </div>
+            <div>
+              <button {{action login email password}} disabled={{not canLogin}} data-test-login-button>Sign in</button>
+            </div>
+          {{/if}}
+        {{/password-login}}
+      {{/cardstack-session}}
+    {{/if}}

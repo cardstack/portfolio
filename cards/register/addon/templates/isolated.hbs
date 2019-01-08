@@ -7,6 +7,7 @@
 <div class="register-isolated">
   <h1>Register User</h1>
   {{#if registrationSuccessful}}
+    {{!-- TODO eventually we should get rid of this and just automatically authenticate user and transition to app card --}}
     <div data-test-registration-success>You have been registered. Please login to application.</div>
     <button data-test-registration-success-dismiss {{action transitionToAppCard}}>Ok</button>
   {{else}}

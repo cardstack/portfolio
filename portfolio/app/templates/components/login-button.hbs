@@ -1,10 +1,12 @@
 {{!-- fastboot guard --}}
 {{#if (is-component "cardstack-session")}}
   {{#cardstack-session as |session|}}
-    {{#if useGithubAuth}}
-      {{#github-login as |login|}}
+    {{#if usePasswordAuth}}
+      {{#password-login onAuthenticationSuccess=onAuthenticationSuccess
+                        onAuthenticationFailed=onAuthenticationFailed
+                        as |login|}}
         {{yield session login}}
-      {{/github-login}}
+      {{/password-login}}
     {{else}}
       {{#mock-login as |login|}}
         {{yield session login}}
