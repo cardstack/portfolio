@@ -29,6 +29,14 @@ module('Acceptance | register', function(hooks) {
   setupApplicationTest(hooks);
   scenario.setupTest(hooks);
 
+  hooks.beforeEach(function() {
+    delete localStorage['cardstack-tools'];
+  });
+
+  hooks.afterEach(function() {
+    delete localStorage['cardstack-tools'];
+  });
+
   test('register user', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');

@@ -4,7 +4,6 @@ const { join } = require('path');
 const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
-const { hashPasswordSync } = require('portfolio-crypto');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
@@ -23,17 +22,6 @@ module.exports = function () {
     .withAttributes({
       sourceType: 'portfolio-user',
     });
-
-  // Create a user to test login here as
-  // the crypto package is for node.js only
-  // for non-login tests we can use a normal
-  // mock auth user created in the test fixtures
-  if (process.env.HUB_ENVIRONMENT === 'test') {
-    factory.addResource('portfolio-users', 'test-user').withAttributes({
-      'email-address': 'hassan@example.com',
-      'password-hash': hashPasswordSync('password')
-    });
-  }
 
   let router = process.env.HUB_ENVIRONMENT === 'test' &&
                process.env.TEST &&

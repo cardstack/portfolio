@@ -1,26 +1,14 @@
-import { findAll, click, waitUntil, visit } from '@ember/test-helpers';
-import { getContext } from '@ember/test-helpers';
-import { run } from '@ember/runloop';
+import { click, fillIn, waitFor, visit } from '@ember/test-helpers';
 
-const timeout = 5000;
-
-function setMockUser(userId) {
-  let { owner } = getContext();
-  let mockLogin = owner.lookup('service:mock-login');
-  run(() => mockLogin.set('mockUserId', userId));
-}
-
-async function login(userId) {
-  setMockUser(userId);
+async function login(email, password) {
   await visit('/');
 
-  await click('[data-test-contains="Sign in"]');
+  await fillIn('[data-test-login-email]', email)
+  await fillIn('[data-test-login-password]', password);
+  await click('[data-test-login-button]');
 
-  await waitUntil(() => findAll('[data-test-contains="Sign out"]').length), { timeout };
+  await waitFor('[data-test-signout-button]');
 }
 
-export {
-  setMockUser,
-  login
-}
+export { login }
 

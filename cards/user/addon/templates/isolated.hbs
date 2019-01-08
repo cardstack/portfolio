@@ -1,3 +1,75 @@
+{{!--
+  Sorry, this is super raw and skeletal. I'm only adding
+  enough into this template in order for it to functionally
+  work and test it. Please someone give this some UX love.
+--}}
+
 <div class="user-isolated">
-  <h1 data-test-user-isolated-title>{{content.title}}</h1>
+  <h1>User Profile</h1>
+  {{#if updateSuccessful}}
+    <div data-test-user-update-success><b>User profile has been upated.</b></div>
+  {{else if formError}}
+    <div data-test-user-update-error><b>{{formError}}</b></div>
+  {{/if}}
+  <form onsubmit={{action submitForm}} data-test-user-form>
+    <div>
+      <label>
+        <span>Name:</span>
+        <input
+            type="text"
+            placeholder="Full name"
+            value={{name}}
+            oninput={{action doOnInput 'name'}}
+            data-test-user-name
+            />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>Email:</span>
+        <input
+            type="email"
+            placeholder="hello@cardstack.com"
+            value={{email}}
+            oninput={{action doOnInput 'email'}}
+            data-test-user-email
+            />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>Current Password:</span>
+        <input
+            type="password"
+            value={{currentPassword}}
+            oninput={{action doOnInput 'currentPassword'}}
+            data-test-user-current-password
+            />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>New Password (minimum 8 characters):</span>
+        <input
+            type="password"
+            value={{newPassword}}
+            oninput={{action doOnInput 'newPassword'}}
+            data-test-user-new-password
+            />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>Confirm New Password:</span>
+        <input
+            type="password"
+            value={{confirmNewPassword}}
+            oninput={{action doOnInput 'confirmNewPassword'}}
+            data-test-user-confirm-new-password
+            />
+      </label>
+    </div>
+    <button data-test-user-reset {{action resetForm}}>Reset</button>
+    <button disabled={{not formCanBeSubmitted}} type="submit" data-test-user-submit>Update</button>
+  </form>
 </div>

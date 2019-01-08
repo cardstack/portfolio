@@ -6,9 +6,16 @@ import { setupURLs } from '@cardstack/test-support/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
 const scenario = new Fixtures({
-  async create(/*factory*/) {
-    // Note that the test user is actually created in the dummy app seeds
-    // since we can only hash the password for the user in node
+  async create(factory) {
+    factory.addResource('data-sources', 'portfolio-user')
+      .withAttributes({
+        sourceType: 'portfolio-user',
+      });
+    factory.addResource('portfolio-users', 'test-user').withAttributes({
+      name: 'Hassan Abdel-Rahman',
+      'email-address': 'hassan@example.com',
+      'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
+    });
   },
 });
 

@@ -123,6 +123,21 @@ describe('portfolio-users', function () {
       expect(user).to.have.deep.property('attributes.email-address', 'vangogh@example.com');
     });
 
+    it('can set the email to the current value', async function () {
+      let { token, user: { id, type } } = await createUser('hassan@example.com');
+      let { body: { data: user } } = await request.post('/update-profile').set('authorization', `Bearer ${token}`).send({
+        data: {
+          type, id,
+          attributes: { 'email-address': 'hassan@example.com' }
+        }
+      });
+
+      expect(user).to.have.deep.property('attributes.email-address', 'hassan@example.com');
+      user = (await searchers.getFromControllingBranch(env.session, type, id)).data;
+
+      expect(user).to.have.deep.property('attributes.email-address', 'hassan@example.com');
+    });
+
     it('does not honor profile update requests that have no session', async function () {
       let { user: { id, type } } = await createUser('hassan@example.com');
       let response = await request.post('/update-profile').send({

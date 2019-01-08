@@ -1,18 +1,20 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, fillIn, waitFor, getContext } from '@ember/test-helpers';
+import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
-import { run } from '@ember/runloop';
 
 const scenario = new Fixtures({
   create(factory) {
-    // Note that the test user is actually created in the static model
-    // since we can only hash the password for the user in node
-
     factory.addResource('data-sources', 'portfolio-user')
       .withAttributes({
         sourceType: 'portfolio-user',
       });
+
+    factory.addResource('portfolio-users', 'test-user').withAttributes({
+      name: 'Hassan Abdel-Rahman',
+      'email-address': 'hassan@example.com',
+      'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
+    });
   },
 });
 
@@ -21,9 +23,11 @@ module('Acceptance | login', function(hooks) {
   scenario.setupTest(hooks);
 
   hooks.beforeEach(function() {
-    let mockLogin =  getContext().owner.lookup('service:mock-login');
-    // use password auth for these tests
-    run(() => mockLogin.set('disabled', true));
+    delete localStorage['cardstack-tools'];
+  });
+
+  hooks.afterEach(function() {
+    delete localStorage['cardstack-tools'];
   });
 
   test('user can login with valid credentials', async function(assert) {

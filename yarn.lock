@@ -772,18 +772,6 @@
     ember-mobiledoc-editor "^0.5.10"
     mobiledoc-text-renderer "^0.3.2"
 
-"@cardstack/mock-auth@^0.12.18":
-  version "0.12.18"
-  resolved "https://registry.yarnpkg.com/@cardstack/mock-auth/-/mock-auth-0.12.18.tgz#8f0b532cdfe6388b4f21fed02d9b585f4cbfd5e6"
-  integrity sha512-Zrog/kpWhGVYB7521GWgjjdg5Y05b9KPbXv3hiMcuaHZzQ0c40V4R4hUN88TouhMi+RPVzoTNMiJQDjvCHMAcw==
-  dependencies:
-    "@cardstack/logger" "^0.1.0"
-    "@cardstack/plugin-utils" "0.12.7"
-    ember-cli-babel "^6.8.2"
-    ember-cli-htmlbars "^2.0.1"
-    ember-concurrency "^0.8.17"
-    lodash "^4.17.11"
-
 "@cardstack/models@0.12.18", "@cardstack/models@^0.12.15", "@cardstack/models@^0.12.18":
   version "0.12.18"
   resolved "https://registry.yarnpkg.com/@cardstack/models/-/models-0.12.18.tgz#c8dfa3d7a70ee260df145ed51476c104d71f4b06"
