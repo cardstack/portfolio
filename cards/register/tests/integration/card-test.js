@@ -59,15 +59,15 @@ module('Card | register', function(hooks) {
     assert.dom('[data-test-registration-success]').doesNotExist();
 
     await fillIn('[data-test-registration-name]', 'Van Gogh');
-    await fillIn('[data-test-registration-email]', 'vangogh@example.com');
+    await fillIn('[data-test-registration-email]', 'ringo@example.com');
     await fillIn('[data-test-registration-password]', 'password');
     await click('[data-test-registration-submit]');
 
     await waitFor('[data-test-registration-success]');
 
-    let users = await searchForUser('vangogh@example.com');
+    let users = await searchForUser('ringo@example.com');
     assert.equal(users.length, 1);
-    assert.equal(users[0].attributes['email-address'], 'vangogh@example.com');
+    assert.equal(users[0].attributes['email-address'], 'ringo@example.com');
   });
 
   test('it shows an error when email belongs to a user that already exists', async function(assert) {
