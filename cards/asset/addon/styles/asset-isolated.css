@@ -9,7 +9,7 @@
   width: 100%;
   background: none;
   color: var(--portfolio-muted-gray);
-  border: 1px solid var(--portfolio-lighter-border-gray);
+  border: 1px solid var(--portfolio-darker-border-gray);
   border-radius: 5px;
   font-size: var(--portfolio-med-font);
   padding: 15px 25px;
