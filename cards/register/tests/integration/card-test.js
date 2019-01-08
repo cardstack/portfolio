@@ -72,7 +72,7 @@ module('Card | register', function(hooks) {
 
   test('it shows an error when email belongs to a user that already exists', async function(assert) {
     let users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
+    assert.equal(users.length, 1, 'the test starts out with just one "hassan@example.com"');
 
     await render(hbs`{{cardstack-card-test "register" "portfolio-users" format="isolated"}}`);
     assert.dom('[data-test-registration-error]').doesNotExist();
@@ -86,7 +86,7 @@ module('Card | register', function(hooks) {
     assert.dom('[data-test-registration-error]').hasTextContaining('User already exists with this email address');
 
     users = await searchForUser('hassan@example.com');
-    assert.equal(users.length, 1);
+    assert.equal(users.length, 1, "A new user account was not created");
 
     await fillIn('[data-test-registration-email]', 'vangogh@example.com');
     assert.dom('[data-test-registration-error]').doesNotExist();
