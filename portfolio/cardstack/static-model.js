@@ -4,6 +4,7 @@ const { join } = require('path');
 const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
+const { hashPasswordSync } = require('portfolio-crypto');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
@@ -18,50 +19,21 @@ module.exports = function () {
     }
   }
 
-  // TODO update this to mock a 'portfolio-users' model
-  // probably also wanna seed with a user that has a matching preset password
-  // when process.env.HUB_ENVIRONMENT === 'development'
-  // (note that tests declare mock-auth data sources explicitly in their fixtures)
-  factory.addResource('data-sources', 'mock-auth')
+  factory.addResource('data-sources', 'portfolio-user')
     .withAttributes({
-      sourceType: '@cardstack/mock-auth',
-      'user-rewriter': './cardstack/mock-auth-rewriter.js',
-      params: {
-        provideUserSchema: false,
-        mockedTypes: ['mock-users'],
-        users: {
-          'mock-user': {
-            type: 'mock-users',
-            id: 'mock-user',
-            attributes: {
-              name: "Mock User",
-              'email': 'hassan.abdelrahman@gmail.com',
-              'avatar-url': "https://avatars2.githubusercontent.com/u/61075?v=4",
-            },
-          },
-        }
-      }
+      sourceType: 'portfolio-user',
     });
 
-  factory.addResource('content-types', 'mock-users')
-    .withRelated('fields', [
-      factory.addResource('fields', 'name').withAttributes({
-        fieldType: '@cardstack/core-types::string'
-      }),
-      factory.addResource('fields', 'email').withAttributes({
-        fieldType: '@cardstack/core-types::string'
-      }),
-      factory.addResource('fields', 'avatar-url').withAttributes({
-        fieldType: '@cardstack/core-types::string'
-      }),
-    ]);
-
-  factory.addResource('grants', 'mock-user-login-grant')
-    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
-    .withRelated('types', [{ type: 'content-types', id: 'mock-users' }])
-    .withAttributes({
-      'may-login': true,
+  // Create a user to test login here as
+  // the crypto package is for node.js only
+  // for non-login tests we can use a normal
+  // mock auth user created in the test fixtures
+  if (process.env.HUB_ENVIRONMENT === 'test') {
+    factory.addResource('portfolio-users', 'test-user').withAttributes({
+      'email-address': 'hassan@example.com',
+      'password-hash': hashPasswordSync('password')
     });
+  }
 
   let router = process.env.HUB_ENVIRONMENT === 'test' &&
                process.env.TEST &&

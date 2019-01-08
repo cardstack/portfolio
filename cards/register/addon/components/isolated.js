@@ -31,6 +31,8 @@ export default Component.extend({
     });
 
     if (response.status === 200) {
+      // TODO we should authenticate the user's session after registering
+      // and then transition to the app card
       this.set('registrationSuccessful', true);
     } else  {
       let body = yield response.json();
