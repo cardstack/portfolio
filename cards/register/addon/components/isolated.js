@@ -18,6 +18,9 @@ export default Component.extend({
 
     let response = yield fetch(`${adapter.host}/register`, {
       method: 'POST',
+      headers: {
+        "content-type": 'application/vnd.api+json'
+      },
       body: JSON.stringify({
         data: {
           type: 'portfolio-users',

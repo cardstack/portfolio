@@ -35,7 +35,6 @@
     "@cardstack/jsonapi": "^0.12.18",
     "@cardstack/logger": "^0.1.0",
     "@cardstack/mobiledoc": "^0.12.18",
-    "@cardstack/mock-auth": "^0.12.18",
     "@cardstack/models": "^0.12.18",
     "@cardstack/plugin-utils": "^0.12.7",
     "@cardstack/routing": "^0.12.18",

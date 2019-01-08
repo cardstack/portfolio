@@ -104,6 +104,8 @@ module.exports = declareInjections({
                 },
                 page: { size: 1 }
               });
+              existingEmails = existingEmails.filter(i => i.id !== requestedId);
+
               if (existingEmails.length) {
                 ctxt.status = 400;
                 ctxt.body = {
