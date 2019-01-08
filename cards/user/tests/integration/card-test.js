@@ -15,6 +15,16 @@ const scenario = new Fixtures({
       'email-address': 'musa@example.com',
       'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
     });
+
+
+    // use world read grant solely for the purposes of testing the card template
+    factory.addResource('grants', 'portfolio-users-world-read-grant')
+      .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+      .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
+      .withAttributes({
+        'may-read-resource': true,
+        'may-read-fields': true,
+      });
   }
 });
 
