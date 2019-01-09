@@ -1,8 +1,44 @@
 <div class="portfolio-isolated">
-  <h1 class="portfolio-isolated__title" data-test-portfolio-isolated-title>{{content.title}}</h1>
-  {{#each content.wallets as |wallet index|}}
-    <div data-test-portfolio-isolated-wallet={{index}}>
-      {{cardstack-content content=wallet format="embedded"}}
+  <header class="portfolio-isolated__header">
+    <div class="portfolio-isolated__row">
+      <h2 class="portfolio-isolated__title" data-test-portfolio-isolated-title>
+        {{!-- Add portfolio icon --}}
+        {{content.title}}
+      </h2>
+      <div class="portfolio-isolated__wallets">
+        <div class="portfolio-isolated__wallets-count" data-test-portfolio-isolated-wallets-count>
+          {{or content.wallets.length "0"}} Wallets
+        </div>
+        <div class="portfolio-isolated__wallets-value" data-test-portfolio-isolated-wallets-value>
+          ≈ $ 33,971
+        </div>
+        {{!-- Add more button and modal --}}
+      </div>
     </div>
-  {{/each}}
+    <div class="portfolio-isolated-filters">
+      <div class="portfolio-isolated-filters__label">Organize by</div>
+      <div class ="portfolio-isolated-filters__grid">
+        {{!-- Highlight selected filter --}}
+        <div class="portfolio-isolated-filters__item">Wallets</div>
+        <div class="portfolio-isolated-filters__item">Assets</div>
+        <div class="portfolio-isolated-filters__item">Tags</div>
+      </div>
+    </div>
+  </header>
+
+  {{#if content.wallets.length}}
+    <section class="portfolio-isolated-section">
+      <header>
+        <h3 class="portfolio-isolated-section__title">Wallets</h3>
+        <div class="portfolio-isolated-section__count">{{content.wallets.length}}</div>
+      </header>
+      <div class="portfolio-isolated-section__grid">
+        {{#each content.wallets as |wallet index|}}
+          <div data-test-portfolio-isolated-wallet={{index}}>
+            {{cardstack-content content=wallet format="embedded"}}
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
 </div>

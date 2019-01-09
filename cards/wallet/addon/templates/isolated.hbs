@@ -1,3 +1,50 @@
 <div class="wallet-isolated">
-  <h1 data-test-wallet-isolated-title>{{content.title}}</h1>
+  <header class="wallet-isolated__header">
+    <div class="wallet-isolated__row">
+      <div class="wallet-isolated__title-row">
+        {{svg-jar content.logo class="wallet-isolated__logo"}}
+        <h2 class="wallet-isolated__title" data-test-wallet-isolated-title>{{content.title}}</h2>
+      </div>
+      <div class="wallet-isolated__assets">
+        <div class="wallet-isolated__assets-count" data-test-wallet-isolated-assets-count>
+          {{or content.assets.length "0"}} Assets
+        </div>
+        <div class="wallet-isolated__assets-value" data-test-wallet-isolated-assets-value>
+          ≈ $ 25,554.62
+        </div>
+        {{!-- Add more buttons --}}
+      </div>
+    </div>
+  </header>
+
+  {{#if content.assets.length}}
+    <section class="wallet-isolated-section">
+      {{!-- Hide/dislay option --}}
+      <header>
+        <h3 class="wallet-isolated-section__title">Active Assets</h3>
+        <div class="wallet-isolated-section__count" data-test-wallet-isolated-section-active-count>
+          {{content.assets.length}}
+        </div>
+      </header>
+      <div class="wallet-isolated-section__grid">
+        {{#each content.assets as |asset index|}}
+          <div data-test-wallet-isolated-asset={{index}}>
+            {{cardstack-content content=asset format="embedded"}}
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{!-- if inactive assets --}}
+    <section class="wallet-isolated-section">
+      <header>
+        <h3 class="wallet-isolated-section__title">Inactive Assets</h3>
+        <div class="wallet-isolated-section__count" data-test-wallet-isolated-section-inactive-count>
+          2
+        </div>
+      </header>
+      {{!-- embed inactive assets --}}
+    </section>
+  {{!-- end if --}}
 </div>
