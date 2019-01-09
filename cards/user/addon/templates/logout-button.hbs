@@ -1,0 +1,12 @@
+{{!-- fastboot guard --}}
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#password-login as |login|}}
+      {{#if session.isAuthenticated }}
+        <button {{action doLogout}} data-test-signout-button>
+          Sign out {{session.user.name}}
+        </button>
+      {{/if}}
+    {{/password-login}}
+  {{/cardstack-session}}
+{{/if}}

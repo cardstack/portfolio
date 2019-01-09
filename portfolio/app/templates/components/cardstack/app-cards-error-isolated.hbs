@@ -1,0 +1,12 @@
+{{#if isFastBoot}}
+  {{!-- empty application UI shell goes here, anything that make sense to render that is not based on session --}}
+{{else if (and isAuthenticated (not isTransitioning))}}
+  {{#if (eq content.id 'not-found')}}
+    <h1>Not Found</h1>
+    <p>Oops, there was no content at this address.</p>
+  {{else}}
+    <h1>Error encountered</h1>
+  {{/if}}
+{{else}}
+  <LoginForm @doAfterLogin={{action doAfterLogin}}></LoginForm>
+{{/if}}

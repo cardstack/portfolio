@@ -16,6 +16,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   }
 
   factory.addResource('portfolio-users', 'test-user').withAttributes({
+    'name': 'Carl Stack',
     'email-address': 'user@cardstack.com',
     'password-hash': hashPasswordSync('password')
   });

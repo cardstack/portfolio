@@ -7,6 +7,14 @@ module.exports = [{
     }
   },
 },{
+  path: '/profile',
+  query: {
+    filter: {
+      type: { exact: ':session:type' },
+      id: { exact: ':session:id' }
+    }
+  },
+},{
   path: '/',
   query: {
     filter: {
