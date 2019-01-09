@@ -14,6 +14,17 @@ factory.addResource('content-types', 'portfolio-users')
     }),
   ]);
 
+factory.addResource('content-types', 'app-cards-errors');
+factory.addResource('app-cards-errors', 'not-found');
+
+factory.addResource('grants', 'app-cards-errors-grant')
+.withAttributes({
+  'may-read-fields': true,
+  'may-read-resource': true
+})
+.withRelated('who', [{ type: 'groups', id: 'everyone' }])
+.withRelated('types', [{ type: 'content-types', id: 'app-cards-errors' }]);
+
 factory.addResource('grants', 'portfolio-users-self-read-grant')
   .withRelated('who', [{ type: 'fields', id: 'id' }])
   .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])

@@ -1,0 +1,38 @@
+{{!-- fastboot guard --}}
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#unless session.isAuthenticated}}
+      <a data-test-registration-page-link href="/register">Register</a>
+      {{#password-login onAuthenticationSuccess=(action doOnAuthenticationSuccess)
+                        onAuthenticationFailed=(action doOnAuthenticationFailed)
+                        as |login|}}
+        {{#if loginError}}
+          <div data-test-login-error><b>The email and password provided do not match a valid account.</b></div>
+        {{/if}}
+        <form onsubmit={{action submitForm login email password}} data-test-login-form>
+          <div>
+            <label>
+              <span>Email Address:</span>
+              <input data-test-login-email
+                      type="text"
+                      value={{email}}
+                      oninput={{action doOnInput 'email'}}>
+            </label>
+          </div>
+          <div>
+            <label>
+              <span>Password</span>
+              <input data-test-login-password
+                      type="password"
+                      value={{password}}
+                      oninput={{action doOnInput 'password'}}>
+            </label>
+          </div>
+          <div>
+            <button type="submit" disabled={{not canLogin}} data-test-login-button>Sign in</button>
+          </div>
+        </form>
+      {{/password-login}}
+    {{/unless}}
+  {{/cardstack-session}}
+{{/if}}

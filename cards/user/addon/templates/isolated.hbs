@@ -4,12 +4,14 @@
   work and test it. Please someone give this some UX love.
 --}}
 
-<div class="user-isolated">
-  <h1>User Profile</h1>
-  {{!-- fastboot guard --}}
-  {{#if (is-component "cardstack-session")}}
-    {{#cardstack-session as |session|}}
-      {{#if session.isAuthenticated}}
+{{!-- When the session does not exist then the error card takes over and renders the login form --}}
+
+{{!-- fastboot guard --}}
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#if session.isAuthenticated}}
+      <div class="user-isolated">
+        <h1>User Profile</h1>
         {{#if updateSuccessful}}
           <div data-test-user-update-success><b>User profile has been upated.</b></div>
         {{else if formError}}
@@ -76,11 +78,7 @@
           <button data-test-user-reset {{action resetForm}}>Reset</button>
           <button disabled={{not formCanBeSubmitted}} type="submit" data-test-user-submit>Update</button>
         </form>
-      {{else}}
-       {{!-- TODO non logged in --}}
-      {{/if}}
-    {{/cardstack-session}}
-  {{else}}
-    {{!-- TODO fastboot env --}}
-  {{/if}}
-</div>
+      </div>
+    {{/if}}
+  {{/cardstack-session}}
+{{/if}}
