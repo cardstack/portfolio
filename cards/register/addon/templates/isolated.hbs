@@ -5,53 +5,79 @@
 --}}
 
 <div class="register-isolated">
-  <h1>Register User</h1>
+  <h1 class="register-isolated__title">Register User</h1>
   {{#if registrationSuccessful}}
     {{!-- TODO eventually we should get rid of this and just automatically authenticate user and transition to app card --}}
-    <div data-test-registration-success>You have been registered. Please login to application.</div>
-    <button data-test-registration-success-dismiss {{action transitionToAppCard}}>Ok</button>
+    <p class="register-isolated__success" data-test-registration-success>
+      You have been registered. Please login to application.
+    </p>
+    <button
+      {{action transitionToAppCard}}
+      class="register-isolated__button register-isolated__button--dismiss"
+      data-test-registration-success-dismiss
+    >
+      Ok
+    </button>
   {{else}}
     {{#if registrationError}}
-      <div data-test-registration-error><b>{{registrationError}}</b></div>
+      <p class="register-isolated__error" data-test-registration-error>{{registrationError}}</p>
     {{/if}}
-    <form onsubmit={{action submitForm}} data-test-registration-form>
-      <div>
+    <form onsubmit={{action submitForm}} class="register-isolated__form" data-test-registration-form>
+      <div class="register-isolated__form-row">
         <label>
-          <span>Name:</span>
+          <span class="register-isolated__label">Name</span>
           <input
               type="text"
-              placeholder="Full name"
+              placeholder="Full Name"
               value={{name}}
               oninput={{action doOnInput 'name'}}
+              class="register-isolated__input"
               data-test-registration-name
               />
         </label>
       </div>
-      <div>
+      <div class="register-isolated__form-row">
         <label>
-          <span>Email:</span>
+          <span class="register-isolated__label">Email</span>
           <input
               type="email"
               placeholder="hello@cardstack.com"
               value={{email}}
               oninput={{action doOnInput 'email'}}
+              class="register-isolated__input"
               data-test-registration-email
               />
         </label>
       </div>
-      <div>
+      <div class="register-isolated__form-row">
         <label>
-          <span>Password (minimum 8 characters):</span>
+          <span class="register-isolated__label">Password (minimum 8 characters)</span>
           <input
               type="password"
               value={{password}}
               oninput={{action doOnInput 'password'}}
+              class="register-isolated__input"
               data-test-registration-password
               />
         </label>
       </div>
-      <button data-test-registration-cancel {{action transitionToAppCard}}>Cancel</button>
-      <button disabled={{not formCanBeSubmitted}} type="submit" data-test-registration-submit>Register</button>
+      <div class="register-isolated__button-row">
+        <button
+          type="submit"
+          class="register-isolated__button {{if (not formCanBeSubmitted) "disabled"}}"
+          disabled={{not formCanBeSubmitted}}
+          data-test-registration-submit
+        >
+          Register
+        </button>
+        <button
+          class="register-isolated__button register-isolated__button--cancel"
+          {{action transitionToAppCard}}
+          data-test-registration-cancel
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   {{/if}}
 </div>

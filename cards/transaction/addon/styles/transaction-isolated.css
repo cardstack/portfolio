@@ -17,7 +17,7 @@
   padding: 10px 25px;
   background-color: var(--portfolio-white);
   color: var(--portfolio-black);
-  border: 1px solid var(--portfolio-lighter-border-gray);
+  border: 1px solid var(--portfolio-darker-border-gray);
   border-radius: 5px;
   font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-sm-font);
