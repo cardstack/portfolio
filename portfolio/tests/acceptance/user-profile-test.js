@@ -75,6 +75,38 @@ module('Acceptance | user-profile', function(hooks) {
       delete localStorage['cardstack-tools'];
     });
 
+    test('the card is initialy rendered correctly', async function (assert) {
+      // TODO we'll adjust routing to use session based routing so we dont
+      // need the user ID in the URL
+      await visit('/portfolio-users/test-user');
+
+      assert.dom('[data-test-user-name').hasValue('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email').hasValue('hassan@example.com');
+      assert.dom('[data-test-user-current-password').hasValue('');
+      assert.dom('[data-test-user-new-password').hasValue('');
+      assert.dom('[data-test-user-confirm-new-password').hasValue('');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+    });
+
+    test('reset button resets the form', async function (assert) {
+      await visit('/portfolio-users/test-user');
+
+      await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+      await fillIn('[data-test-user-email]', 'musa@example.com');
+      await fillIn('[data-test-user-current-password]', 'password');
+      await fillIn('[data-test-user-new-password]', 'password2');
+      await fillIn('[data-test-user-confirm-new-password]', 'password2');
+
+      await click('[data-test-user-reset]');
+
+      assert.dom('[data-test-user-name').hasValue('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email').hasValue('hassan@example.com');
+      assert.dom('[data-test-user-current-password').hasValue('');
+      assert.dom('[data-test-user-new-password').hasValue('');
+      assert.dom('[data-test-user-confirm-new-password').hasValue('');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+    });
+
     test('the name and email can be updated', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
