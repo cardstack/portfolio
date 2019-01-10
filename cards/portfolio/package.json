@@ -23,7 +23,9 @@
     "babel-preset-env": "^1.7.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli-babel": "^6.6.0",
-    "ember-cli-htmlbars": "^3.0.0"
+    "ember-cli-htmlbars": "^3.0.0",
+    "portfolio-user": "*",
+    "portfolio-wallet": "*"
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.12.0",

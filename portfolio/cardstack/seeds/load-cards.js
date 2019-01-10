@@ -1,7 +1,6 @@
 const { readdirSync, existsSync } = require('fs');
 const { join } = require('path');
 const JSONAPIFactory = require('@cardstack/test-support/jsonapi-factory');
-const { hashPasswordSync } = require('portfolio-crypto');
 
 const cardDir = join(__dirname, '../../../cards');
 
@@ -14,12 +13,6 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
       factory.importModels(require(sampleFile));
     }
   }
-
-  factory.addResource('portfolio-users', 'test-user').withAttributes({
-    'name': 'Carl Stack',
-    'email-address': 'user@cardstack.com',
-    'password-hash': hashPasswordSync('password')
-  });
 }
 
 module.exports = factory.getModels();

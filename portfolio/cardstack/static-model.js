@@ -39,12 +39,10 @@ module.exports = function () {
     });
 
   factory.addResource('grants')
-    // TODO we need to lock these down to self CRUD, and add tests...
-    // .withRelated('who', [{ type: 'fields', id: 'id' }])
-    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
-    .withRelated('types', [
-      { type: 'content-types', id: 'portfolios' },
-      { type: 'content-types', id: 'wallets' },
+  // TODO we need to lock these down and add tests...
+  .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+  .withRelated('types', [
+      { type: 'content-types', id: 'wallets' }, // TODO move this to wallet card and lock it down and add grant tests (see portfolio card for examples)
       { type: 'content-types', id: 'assets' },
       { type: 'content-types', id: 'transactions' }
     ])

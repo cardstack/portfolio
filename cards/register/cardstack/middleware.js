@@ -121,6 +121,17 @@ module.exports = declareInjections({
                 }
               }
             });
+            await this.writers.create(branch, Session.INTERNAL_PRIVILEGED, 'portfolios', {
+              data: {
+                type: 'portfolios',
+                attributes: { title: 'My Portfolio' },
+                relationships: {
+                  wallets: { data: [] },
+                  user: { data: { type, id } }
+                }
+              }
+            });
+
             let userSession = this.sessions.create(type, id);
             let readAuthorizedUser = await this.searchers.getFromControllingBranch(userSession, type, id);
 
