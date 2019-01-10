@@ -15,6 +15,16 @@ module.exports = [{
     }
   },
 },{
+  path: '/wallets/:id',
+  query: {
+    filter: {
+      type: { exact: 'wallets' },
+      id: { exact: ':id' },
+      'user.type': { exact: ':session:type' },
+      'user.id': { exact: ':session:id' }
+    }
+  },
+},{
   path: '/',
   query: {
     filter: {

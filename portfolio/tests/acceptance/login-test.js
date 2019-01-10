@@ -45,18 +45,6 @@ module('Acceptance | login', function(hooks) {
     await waitFor('[data-test-signout-button]');
   });
 
-  test('user sees their portfolio after they login from the index route', async function(assert) {
-    await visit('/');
-    assert.equal(currentURL(), '/');
-
-    await fillIn('[data-test-login-email]', 'hassan@example.com');
-    await fillIn('[data-test-login-password]', 'password');
-    await click('[data-test-login-button]');
-
-    await waitFor('.portfolio-isolated');
-    assert.dom('[data-test-portfolio-isolated-title').hasText('My Portfolio');
-  });
-
   test('user sees error message when they login with invalid credentials', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');

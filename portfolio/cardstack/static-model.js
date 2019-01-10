@@ -39,10 +39,9 @@ module.exports = function () {
     });
 
   factory.addResource('grants')
-  // TODO we need to lock these down and add tests...
+  // TODO we need to lock these down and add tests, lets do that as part of integrating with the ethereum data source...
   .withRelated('who', [{ type: 'groups', id: 'everyone' }])
   .withRelated('types', [
-      { type: 'content-types', id: 'wallets' }, // TODO move this to wallet card and lock it down and add grant tests (see portfolio card for examples)
       { type: 'content-types', id: 'assets' },
       { type: 'content-types', id: 'transactions' }
     ])
