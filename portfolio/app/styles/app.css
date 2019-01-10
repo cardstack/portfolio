@@ -1,4 +1,5 @@
-/* To do: Move common styles to a packages */
+@import "./components/login-form.css";
+
 :root {
   /* Colors */
   --portfolio-white: #fff;

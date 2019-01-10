@@ -1,5 +1,5 @@
 <div class="register-isolated">
-  <h1 class="register-isolated__title">Register User</h1>
+  <h1 class="register-isolated__title">Create your account</h1>
   {{#if registrationSuccessful}}
     {{!-- TODO eventually we should get rid of this and just automatically authenticate user and transition to app card --}}
     <p class="register-isolated__success" data-test-registration-success>
@@ -19,10 +19,9 @@
     <form onsubmit={{action submitForm}} class="register-isolated__form" data-test-registration-form>
       <div class="register-isolated__form-row">
         <label>
-          <span class="register-isolated__label">Name</span>
+          <span class="register-isolated__label">Full Name</span>
           <input
               type="text"
-              placeholder="Full Name"
               value={{name}}
               oninput={{action doOnInput 'name'}}
               class="register-isolated__input"
@@ -35,7 +34,6 @@
           <span class="register-isolated__label">Email</span>
           <input
               type="email"
-              placeholder="hello@cardstack.com"
               value={{email}}
               oninput={{action doOnInput 'email'}}
               class="register-isolated__input"
