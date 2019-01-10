@@ -18,8 +18,9 @@ module.exports = [{
   path: '/',
   query: {
     filter: {
-      type: { exact: ':card:type' },
-      id: { exact: ':card:id' }
+      type: { exact: 'portfolios' },
+      'user.type': { exact: ':session:type' },
+      'user.id': { exact: ':session:id' }
     }
   },
 },{

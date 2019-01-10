@@ -21,6 +21,16 @@ const scenario = new Fixtures({
         title: 'My Portfolio Test'
       })
       .withRelated('wallets', [ wallet1, wallet2 ]);
+
+    factory.addResource('grants')
+      .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+      .withRelated('types', [
+        { type: 'content-types', id: 'portfolios' }
+      ])
+      .withAttributes({
+        'may-read-resource': true,
+        'may-read-fields': true,
+      })
   }
 });
 
