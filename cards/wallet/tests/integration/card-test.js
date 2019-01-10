@@ -23,6 +23,16 @@ const scenario = new Fixtures({
         title: 'ING Wallet'
       })
       .withRelated('assets', [ btc, eth ]);
+
+    factory.addResource('grants')
+      .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+      .withRelated('types', [
+        { type: 'content-types', id: 'wallets' }
+      ])
+      .withAttributes({
+        'may-read-resource': true,
+        'may-read-fields': true,
+      })
   }
 });
 

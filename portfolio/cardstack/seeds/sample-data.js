@@ -4,6 +4,13 @@ const { hashPasswordSync } = require('portfolio-crypto');
 let factory = new JSONAPIFactory();
 
 if (process.env.HUB_ENVIRONMENT === 'development') {
+  let user = factory.addResource('portfolio-users', 'test-user')
+    .withAttributes({
+      'name': 'Carl Stack',
+      'email-address': 'user@cardstack.com',
+      'password-hash': hashPasswordSync('password')
+    });
+
   let bitcoinAsset = factory.addResource('assets', 'bitcoin')
     .withAttributes({
       title: 'Bitcoin',
@@ -45,19 +52,14 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
     title: 'My Portfolio'
   })
-    .withRelated('user',
-      factory.addResource('portfolio-users', 'test-user')
-        .withAttributes({
-          'name': 'Carl Stack',
-          'email-address': 'user@cardstack.com',
-          'password-hash': hashPasswordSync('password')
-        }))
+    .withRelated('user', user)
     .withRelated('wallets', [
       factory.addResource('wallets', 'ing-wallet')
         .withAttributes({
           title: 'ING Wallet',
           logo: 'ing-logo'
         })
+        .withRelated('user', user)
         .withRelated('assets', [
           bitcoinAsset,
           ethereumAsset,
@@ -70,6 +72,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
           title: 'Trezor Wallet Model T',
           logo: 'trezor-logo'
         })
+        .withRelated('user', user)
         .withRelated('assets', [
           bitcoinAsset,
           ethereumAsset,

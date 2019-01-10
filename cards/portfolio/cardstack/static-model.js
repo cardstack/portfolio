@@ -16,6 +16,7 @@ factory.addResource('content-types', 'portfolios')
     }),
     factory.addResource('fields', 'wallets').withAttributes({
       fieldType: '@cardstack/core-types::has-many',
+      // TODO need to create a custom field editor that adds a user relation to newly created wallets
       editorComponent: 'field-editors/dropdown-multi-select-editor'
     }).withRelated('related-types', [{ type: 'content-types', id: 'wallets' }]),
     factory.addResource('fields', 'user').withAttributes({
@@ -23,7 +24,7 @@ factory.addResource('content-types', 'portfolios')
     }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }])
   ]);
 
-  factory.addResource('grants', 'portfolio-self-read-grant')
+  factory.addResource('grants', 'portfolio-self-grant')
     .withRelated('who', [{ type: 'fields', id: 'user' }])
     .withRelated('types', [
       { type: 'content-types', id: 'portfolios' },
@@ -31,19 +32,6 @@ factory.addResource('content-types', 'portfolios')
     .withAttributes({
       'may-read-resource': true,
       'may-read-fields': true,
-    });
-
-  factory.addResource('grants', 'portfolio-self-write-grant')
-    .withRelated('who', [{ type: 'fields', id: 'user' }])
-    .withRelated('types', [
-      { type: 'content-types', id: 'portfolios' },
-    ])
-    .withRelated('fields', [
-      // note that 'user' is not a self editable field
-      { type: 'fields', id: 'title' },
-      { type: 'fields', id: 'wallets' }
-    ])
-    .withAttributes({
       'may-update-resource': true,
       'may-write-fields': true,
     });
