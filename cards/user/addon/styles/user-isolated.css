@@ -1,5 +1,115 @@
 .user-isolated {
-  width: 50%;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
+  padding: 30px;
+  background-color: var(--portfolio-white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
 }
+
+.user-isolated__title {
+  margin: 0;
+  font-weight: 400;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xl-font);
+  letter-spacing: -0.1px;
+}
+
+.user-isolated__error {
+  margin: 0;
+  padding-top: 30px;
+  color: var(--portfolio-error-red);
+  text-align: center;
+}
+
+.user-isolated__success {
+  margin: 0;
+  padding: 30px;
+  text-align: center;
+}
+
+.user-isolated__form {
+  padding-top: 30px;
+  padding-bottom: 15px;
+}
+
+.user-isolated__form-row {
+  letter-spacing: 0.2px;
+}
+.user-isolated__form-row + .user-isolated__form-row {
+  padding-top: 15px;
+}
+
+.user-isolated__label {
+  display: block;
+  line-height: 2;
+}
+
+.user-isolated__input {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: var(--portfolio-off-white);
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 25%);
+  font-size: var(--portfolio-sm-font);
+}
+.user-isolated__input:focus {
+  outline: none;
+  border-color: var(--portfolio-purple-gray);
+}
+
+.user-isolated__button-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.user-isolated__button {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--portfolio-dark-purple);
+  color: var(--portfolio-white);
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-sm-font);
+}
+.user-isolated__button + .user-isolated__button {
+  margin-left: 20px;
+}
+.user-isolated__button:hover,
+.user-isolated__button:focus {
+  outline: none;
+  background-color: var(--portfolio-highlight-purple);
+  cursor: pointer;
+  user-select: none;
+}
+.user-isolated__button.disabled {
+  background-color: var(--portfolio-highlight-purple);
+  color: var(--portfolio-off-white);
+  cursor: not-allowed;
+}
+
+.user-isolated__button--cancel {
+  border: 1px solid var(--portfolio-darker-border-gray);
+  background-color: var(--portfolio-white);
+  color: var(--portfolio-black);
+}
+.user-isolated__button--cancel:hover,
+.user-isolated__button--cancel:focus {
+  background-color: var(--portfolio-white);
+  border-color: var(--portfolio-border-highlight-gray);
+}
+
+.user-isolated__button--dismiss {
+  display: block;
+  width: 185px;
+  margin: 0 auto;
+  text-align: center;
+}
+

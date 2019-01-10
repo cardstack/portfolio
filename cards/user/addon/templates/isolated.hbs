@@ -1,9 +1,3 @@
-{{!--
-  Sorry, this is super raw and skeletal. I'm only adding
-  enough into this template in order for it to functionally
-  work and test it. Please someone give this some UX love.
---}}
-
 {{!-- When the session does not exist then the error card takes over and renders the login form --}}
 
 {{!-- fastboot guard --}}
@@ -11,72 +5,94 @@
   {{#cardstack-session as |session|}}
     {{#if session.isAuthenticated}}
       <div class="user-isolated">
-        <h1>User Profile</h1>
+        <h1 class="user-isolated__title">Profile</h1>
         {{#if updateSuccessful}}
-          <div data-test-user-update-success><b>User profile has been upated.</b></div>
+          <p class="user-isolated__success" data-test-user-update-success>
+            User profile has been upated.
+          </p>
         {{else if formError}}
-          <div data-test-user-update-error><b>{{formError}}</b></div>
+          <p class="user-isolated__error" data-test-user-update-error>{{formError}}</p>
         {{/if}}
-        <form onsubmit={{action submitForm}} data-test-user-form>
-          <div>
-            <label>
-              <span>Name:</span>
+        <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
+          <div class="user-isolated__form-row">
+            <label class="user-isolated__label">
+              <span class="user-isolated__label">Name:</span>
               <input
                   type="text"
                   placeholder="Full name"
                   value={{name}}
                   oninput={{action doOnInput 'name'}}
+                  class="user-isolated__input"
                   data-test-user-name
                   />
             </label>
           </div>
-          <div>
+          <div class="user-isolated__form-row">
             <label>
-              <span>Email:</span>
+              <span class="user-isolated__label">Email:</span>
               <input
                   type="email"
                   placeholder="hello@cardstack.com"
                   value={{email}}
                   oninput={{action doOnInput 'email'}}
+                  class="user-isolated__input"
                   data-test-user-email
                   />
             </label>
           </div>
-          <div>
+          <div class="user-isolated__form-row">
             <label>
-              <span>Current Password:</span>
+              <span class="user-isolated__label">Current Password:</span>
               <input
                   type="password"
                   value={{currentPassword}}
                   oninput={{action doOnInput 'currentPassword'}}
+                  class="user-isolated__input"
                   data-test-user-current-password
                   />
             </label>
           </div>
-          <div>
+          <div class="user-isolated__form-row">
             <label>
-              <span>New Password (minimum 8 characters):</span>
+              <span class="user-isolated__label">New Password (minimum 8 characters):</span>
               <input
                   type="password"
                   value={{newPassword}}
                   oninput={{action doOnInput 'newPassword'}}
+                  class="user-isolated__input"
                   data-test-user-new-password
                   />
             </label>
           </div>
-          <div>
+          <div class="user-isolated__form-row">
             <label>
-              <span>Confirm New Password:</span>
+              <span class="user-isolated__label">Confirm New Password:</span>
               <input
                   type="password"
                   value={{confirmNewPassword}}
                   oninput={{action doOnInput 'confirmNewPassword'}}
+                  class="user-isolated__input"
                   data-test-user-confirm-new-password
                   />
             </label>
           </div>
-          <button data-test-user-reset {{action resetForm}}>Reset</button>
-          <button disabled={{not formCanBeSubmitted}} type="submit" data-test-user-submit>Update</button>
+          <div class="user-isolated__button-row">
+            <button
+              type="submit"
+              class="user-isolated__button {{if (not formCanBeSubmitted) "disabled"}}"
+              disabled={{not formCanBeSubmitted}}
+              data-test-user-submit
+            >
+              Update
+            </button>
+            <button
+              class="user-isolated__button user-isolated__button--cancel"
+              {{action resetForm}}
+              data-test-user-reset
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     {{/if}}
