@@ -10,7 +10,7 @@
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
   font-size: var(--portfolio-sm-font);
   letter-spacing: 0.2px;
-  transition: transform 250ms ease, box-shadow 250ms ease, filter 250ms ease;
+  /* transition: transform 250ms ease, box-shadow 250ms ease, filter 250ms ease; */
 }
 .asset-embedded:hover,
 .asset-embedded:focus {

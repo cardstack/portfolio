@@ -1,14 +1,21 @@
 <div class="asset-isolated">
   <button class="asset-isolated__button-row">Back to My Portfolio</button>
-
+  <button onclick={{action (mut showTheStuff) (not showTheStuff)}}>Show</button>
   <h1 class="asset-isolated__title" data-test-asset-isolated-title>{{content.title}} Asset Detail</h1>
   <div class="asset-isolated__grid">
     <div>
       <section class="asset-isolated__main asset-isolated__group">
+        <AnimatedContainer>
+        {{#animated-value content group="background" use=offscreenLeft initialInsertion=true finalRemoval=true}}
         <div class="asset-isolated__gradient asset-isolated__gradient--{{title}}">
+          <AnimatedContainer>
+          {{#animated-value content group="insides" use=dontScale initialInsertion=true finalRemoval=true }}
           <div class="asset-isolated__gradient-header">
             <h2 class="asset-isolated__gradient-title">
-              {{svg-jar content.logo}} {{title}}
+              {{#animated-value content group="logo" use=logoTransition initialInsertion=true finalRemoval=true }}
+                {{svg-jar content.logo}}
+              {{/animated-value}}
+              {{title}}
             </h2>
             <div class="asset-isolated__tag">Savings</div>
           </div>
@@ -27,7 +34,11 @@
               --- CHART HERE ---
             </div>
           </div>
+          {{/animated-value}}
+          </AnimatedContainer>
         </div>
+        {{/animated-value}}
+        </AnimatedContainer>
 
         <div class="asset-isolated__details">
           <div class="asset-isolated__details-item">

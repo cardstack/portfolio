@@ -1,7 +1,12 @@
+<AnimatedContainer>
+{{#animated-value content group="background" use=offscreenLeft initialInsertion=true finalRemoval=true }}
 <a class="asset-embedded asset-embedded--{{title}}" href={{cardstack-url content}}>
+  {{#animated-value content group="insides" use=dontScale initialInsertion=true finalRemoval=true}}
   <header class="asset-embedded__header">
     <div class="asset-embedded__title-row">
-      {{svg-jar content.logo class="asset-embedded__logo"}}
+      {{#animated-value content group="logo" use=logoTransition initialInsertion=true finalRemoval=true }}
+       {{svg-jar content.logo class="asset-embedded__logo"}}
+      {{/animated-value}}
       <h3 class="asset-embedded__title" data-test-asset-embedded-title>
         {{content.title}}
       </h3>
@@ -23,4 +28,7 @@
     <div class="asset-embedded__address">1Hzk...iY36v</div>
     <div class="asset-embedded__last-active">Last active 3m ago</div>
   </footer>
+  {{/animated-value}}
 </a>
+{{/animated-value}}
+</AnimatedContainer>
