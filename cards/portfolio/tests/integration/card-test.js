@@ -25,7 +25,8 @@ const scenario = new Fixtures({
     factory.addResource('grants')
       .withRelated('who', [{ type: 'groups', id: 'everyone' }])
       .withRelated('types', [
-        { type: 'content-types', id: 'portfolios' }
+        { type: 'content-types', id: 'portfolios' },
+        { type: 'content-types', id: 'wallets' }
       ])
       .withAttributes({
         'may-read-resource': true,
