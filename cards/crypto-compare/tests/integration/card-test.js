@@ -12,7 +12,14 @@ const scenario = new Fixtures({
         'to-fiat-currency': 'USD',
         'gmt-date': '2018-01-01',
         'cents': 74823
-      })
+      });
+    factory.addResource('grants', 'crypto-compare-grant')
+      .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+      .withRelated('types', [{ type: 'content-types', id: 'crypto-compares' }])
+      .withAttributes({
+        'may-read-resource': true,
+        'may-read-fields': true,
+      });
   }
 });
 
