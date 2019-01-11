@@ -88,7 +88,7 @@ class CryptoCompareSearcher {
       let basis = 500;
       let randomOffsetPercentage = 0.1;
       responseBody = {
-        [toFiatCurrency]: basis + (Math.floor(Math.random() * Math.floor(basis * randomOffsetPercentage)) - (basis * randomOffsetPercentage * 2))
+        [toFiatCurrency]: basis - Math.floor(Math.random() * Math.round(basis * randomOffsetPercentage))
       };
     } else {
       let response = await fetch(`${url}&api_key=${this.apiKey}`);
