@@ -73,4 +73,12 @@ module('Acceptance | login', function(hooks) {
     await fillIn('[data-test-login-email]', 'hassan@example.com');
     assert.dom('[data-test-login-button]').isDisabled();
   });
+
+  test('transition to registration', async function (assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await click('[data-test-registration-page-link]');
+    assert.equal(currentURL(), '/register');
+  });
 });

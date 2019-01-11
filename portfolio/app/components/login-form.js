@@ -1,7 +1,10 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  router: service(),
+
   canLogin: computed('email', 'password', function () {
     return this.get('email') && this.get('password');
   }),
@@ -27,5 +30,9 @@ export default Component.extend({
 
   doOnAuthenticationFailed() {
     this.set('loginError', true);
+  },
+
+  transitionToRegister() {
+    this.router.transitionTo('cardstack.content', 'register');
   }
 });
