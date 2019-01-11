@@ -82,6 +82,7 @@
     "lodash": "^4.17.11",
     "portfolio-asset": "*",
     "portfolio-crypto": "*",
+    "portfolio-crypto-compare": "*",
     "portfolio-portfolio": "*",
     "portfolio-register": "*",
     "portfolio-transaction": "*",
