@@ -83,13 +83,21 @@ class CryptoCompareSearcher {
 
     let timestamp = moment.utc(date).unix();
     let url = `${this.cryptoCompareDailyAverageApiUrl}?fsym=${fromCryptoCurrency}&tsym=${toFiatCurrency}&toTs=${timestamp}`;
-    let response = await fetch(`${url}&api_key=${this.apiKey}`);
-
-    if (!response.ok) {
-      throw new Error(`Could not get crypto currency rate for URL ${url}: ${response.statusText}`, response.status);
+    let responseBody;
+    if (process.env.HUB_ENVIRONMENT === 'development' && !this.apiKey) {
+      let basis = 500;
+      let randomOffsetPercentage = 0.1;
+      responseBody = {
+        [toFiatCurrency]: basis + (Math.floor(Math.random() * Math.floor(basis * randomOffsetPercentage)) - (basis * randomOffsetPercentage * 2))
+      };
+    } else {
+      let response = await fetch(`${url}&api_key=${this.apiKey}`);
+      if (!response.ok) {
+        throw new Error(`Could not get crypto currency rate for URL ${url}: ${response.statusText}`, response.status);
+      }
+      responseBody = await response.json();
     }
 
-    let responseBody = await response.json();
     let cents = Math.round(responseBody[toFiatCurrency] * (centsMultiplier[toFiatCurrency] || 100));
 
     return {
