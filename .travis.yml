@@ -73,6 +73,7 @@ jobs:
     - env: TEST=cards/user
     - env: TEST=cards/transaction
     - env: TEST=cards/wallet
+    - env: TEST=cards/crypto-compare
 
     - stage: deploy
       if: branch IN (production, master, my_feature_branch) # use this to save on travis jobs, as we dont even want to kick off this stage's job if this branch is not being deployed

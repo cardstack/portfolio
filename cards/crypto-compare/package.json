@@ -23,13 +23,19 @@
     "babel-preset-env": "^1.7.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli-babel": "^6.6.0",
-    "ember-cli-htmlbars": "^3.0.0"
+    "ember-cli-htmlbars": "^3.0.0",
+    "lodash": "^4.17.11",
+    "moment-timezone": "^0.5.11",
+    "node-fetch": "^2.3.0"
   },
   "devDependencies": {
+    "@cardstack/di": "^0.12.0",
     "@cardstack/eslint-config": "^0.12.7",
     "@cardstack/jsonapi": "^0.12.20",
+    "@cardstack/logger": "^0.1.0",
     "@cardstack/mobiledoc": "^0.12.21",
     "@cardstack/models": "^0.12.21",
+    "@cardstack/plugin-utils": "^0.12.7",
     "@cardstack/routing": "^0.12.21",
     "@cardstack/test-support": "^0.12.21",
     "@ember/jquery": "^0.5.2",
@@ -56,6 +62,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
+    "nock": "^10.0.0",
     "qunit-dom": "^0.8.0"
   },
   "engines": {
