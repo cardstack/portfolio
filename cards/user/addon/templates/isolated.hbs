@@ -8,29 +8,37 @@
         <h1 class="user-isolated__title">Profile</h1>
         {{#if updateSuccessful}}
           <p class="user-isolated__success" data-test-user-update-success>
-            User profile has been upated.
+            User profile has been updated.
           </p>
         {{else if formError}}
           <p class="user-isolated__error" data-test-user-update-error>{{formError}}</p>
         {{/if}}
+
         <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
-          <div class="user-isolated__form-row">
-            <label class="user-isolated__label">
-              <span class="user-isolated__label">Name:</span>
-              <input
-                  type="text"
-                  placeholder="Full name"
-                  value={{name}}
-                  oninput={{action doOnInput 'name'}}
-                  class="user-isolated__input"
-                  data-test-user-name
-                  />
-            </label>
-          </div>
+          {{#if editName}}
+            <div class="user-isolated__form-row">
+              <label class="user-isolated__label">
+                <span class="user-isolated__label">Name</span>
+                <input
+                    type="text"
+                    placeholder="Full name"
+                    value={{name}}
+                    oninput={{action doOnInput 'name'}}
+                    class="user-isolated__input"
+                    data-test-user-name
+                    />
+              </label>
+            </div>
+          {{else}}
+            {{name}}
+            <button {{action editField 'editName'}}>Edit</button>
+          {{/if}}
+
           <div class="user-isolated__form-row">
             <label>
-              <span class="user-isolated__label">Email:</span>
-              <input
+              <span class="user-isolated__label">Email</span>
+              {{#if editEmail}}
+                <input
                   type="email"
                   placeholder="hello@cardstack.com"
                   value={{email}}
@@ -38,61 +46,75 @@
                   class="user-isolated__input"
                   data-test-user-email
                   />
+              {{else}}
+                {{email}}
+                <button {{action editField 'editEmail'}}>Edit</button>
+              {{/if}}
             </label>
           </div>
-          <div class="user-isolated__form-row">
-            <label>
-              <span class="user-isolated__label">Current Password:</span>
-              <input
-                  type="password"
-                  value={{currentPassword}}
-                  oninput={{action doOnInput 'currentPassword'}}
-                  class="user-isolated__input"
-                  data-test-user-current-password
-                  />
-            </label>
-          </div>
-          <div class="user-isolated__form-row">
-            <label>
-              <span class="user-isolated__label">New Password (minimum 8 characters):</span>
-              <input
-                  type="password"
-                  value={{newPassword}}
-                  oninput={{action doOnInput 'newPassword'}}
-                  class="user-isolated__input"
-                  data-test-user-new-password
-                  />
-            </label>
-          </div>
-          <div class="user-isolated__form-row">
-            <label>
-              <span class="user-isolated__label">Confirm New Password:</span>
-              <input
-                  type="password"
-                  value={{confirmNewPassword}}
-                  oninput={{action doOnInput 'confirmNewPassword'}}
-                  class="user-isolated__input"
-                  data-test-user-confirm-new-password
-                  />
-            </label>
-          </div>
-          <div class="user-isolated__button-row">
-            <button
-              type="submit"
-              class="user-isolated__button {{if (not formCanBeSubmitted) "disabled"}}"
-              disabled={{not formCanBeSubmitted}}
-              data-test-user-submit
-            >
-              Update
-            </button>
-            <button
-              class="user-isolated__button user-isolated__button--cancel"
-              {{action resetForm}}
-              data-test-user-reset
-            >
-              Cancel
-            </button>
-          </div>
+
+          {{#if editPassword}}
+            <div class="user-isolated__form-row">
+              <label>
+                <span class="user-isolated__label">Current Password</span>
+                <input
+                    type="password"
+                    value={{currentPassword}}
+                    oninput={{action doOnInput 'currentPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-current-password
+                    />
+              </label>
+            </div>
+            <div class="user-isolated__form-row">
+              <label>
+                <span class="user-isolated__label">New Password (minimum 8 characters)</span>
+                <input
+                    type="password"
+                    value={{newPassword}}
+                    oninput={{action doOnInput 'newPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-new-password
+                    />
+              </label>
+            </div>
+            <div class="user-isolated__form-row">
+              <label>
+                <span class="user-isolated__label">Confirm New Password:</span>
+                <input
+                    type="password"
+                    value={{confirmNewPassword}}
+                    oninput={{action doOnInput 'confirmNewPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-confirm-new-password
+                    />
+              </label>
+            </div>
+          {{else}}
+            Password
+            ********
+            <button {{action editField 'editPassword'}}>Edit</button>
+          {{/if}}
+
+          {{#if isEditable}}
+            <div class="user-isolated__button-row">
+              <button
+                type="submit"
+                class="user-isolated__button {{if (not formCanBeSubmitted) "disabled"}}"
+                disabled={{not formCanBeSubmitted}}
+                data-test-user-submit
+              >
+                Update
+              </button>
+              <button
+                class="user-isolated__button user-isolated__button--cancel"
+                {{action resetForm}}
+                data-test-user-reset
+              >
+                Cancel
+              </button>
+            </div>
+          {{/if}}
         </form>
       </div>
     {{/if}}

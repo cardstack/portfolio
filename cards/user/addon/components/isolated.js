@@ -62,6 +62,7 @@ export default Component.extend({
 
     if (response.status === 200) {
       this.set('updateSuccessful', true);
+      this.resetEditing();
     } else  {
       let body = yield response.json();
       let message = get(body, 'errors[0].detail') || 'Errors encountered while updating profile';
@@ -80,6 +81,18 @@ export default Component.extend({
     );
   }),
 
+  editField(field) {
+    this.set(field, true);
+    this.set('isEditable', true);
+  },
+
+  resetEditing() {
+    this.set('isEditable', false);
+    this.set('editName', false);
+    this.set('editEmail', false);
+    this.set('editPassword', false);
+  },
+
   resetForm() {
     this.set('formError', null);
     this.set('updateSuccessful', false);
@@ -90,6 +103,7 @@ export default Component.extend({
       newPassword: '',
       confirmNewPassword: ''
     });
+    this.resetEditing();
   },
 
   doOnInput(field, {target:{value}}) {
