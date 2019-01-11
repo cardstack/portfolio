@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { get } from 'lodash';
 import layout from '../templates/isolated';
+import { getOwner } from '@ember/application';
 
 const passwordMinLength = 8;
 
@@ -11,6 +12,7 @@ export default Component.extend({
   layout,
   store: service(),
   session: service(),
+  router: service(),
 
   init() {
     this._super();
@@ -62,6 +64,17 @@ export default Component.extend({
 
     if (response.status === 200) {
       this.set('updateSuccessful', true);
+
+      let routeName = this.router.get('currentRouteName');
+      let currentRoute = getOwner(this).lookup(`route:${routeName}`);
+      currentRoute.refresh();
+
+      this.setProperties({
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: ''
+      });
+
       this.resetEditing();
     } else  {
       let body = yield response.json();
