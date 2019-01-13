@@ -4,6 +4,7 @@ const { join } = require('path');
 const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
+const mockEthereumSchema = require('../../shared-data/mock-ethereum-schema');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
@@ -24,8 +25,8 @@ module.exports = function () {
     });
 
   let router = process.env.HUB_ENVIRONMENT === 'test' &&
-               process.env.TEST &&
-               process.env.TEST.includes('cards/') ? defaultRouter : portfolioRouter;
+    process.env.TEST &&
+    process.env.TEST.includes('cards/') ? defaultRouter : portfolioRouter;
   factory.addResource('content-types', 'app-cards')
     .withAttributes({ router });
   factory.addResource('app-cards', 'portfolio');
@@ -38,21 +39,12 @@ module.exports = function () {
       'may-read-fields': true,
     });
 
-  factory.addResource('grants')
-  // TODO we need to lock these down and add tests, lets do that as part of integrating with the ethereum data source...
-  .withRelated('who', [{ type: 'groups', id: 'everyone' }])
-  .withRelated('types', [
-      { type: 'content-types', id: 'assets' },
-      { type: 'content-types', id: 'transactions' }
-    ])
-    .withAttributes({
-      'may-read-resource': true,
-      'may-read-fields': true,
-      'may-create-resource': true,
-      'may-update-resource': true,
-      'may-delete-resource': true,
-      'may-write-fields': true,
-    });
+  if (!process.env.JSON_RPC_URL && process.env.HUB_ENVIRONMENT !== 'production') {
+    factory.importModels(mockEthereumSchema);
+  } else if (!process.env.JSON_RPC_URL) {
+    // dont blow up if ethereum data source is disabled because JSON_RPC_URL is not set
+    factory.addResource('content-types', 'ethereum-addresses');
+  }
 
   return factory.getModels();
 };

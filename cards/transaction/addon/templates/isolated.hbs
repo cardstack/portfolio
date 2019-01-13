@@ -11,7 +11,7 @@
       <section class="transaction-isolated__main transaction-isolated__group">
         <header class="transaction-isolated__header">
           <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>{{content.title}}</h1>
-          <time class="transaction-isolated__time" datetime="">Dec 23, 2018 7:49 PM</time>
+          <time class="transaction-isolated__time" datetime="" data-test-transaction-isolated-date>{{date}}</time>
         </header>
 
         <div class="transaction-isolated__amount">
@@ -19,31 +19,39 @@
             <span class="transaction-isolated__amount-label--received" />
             <div>Received</div>
           </div>
-          <div class="transaction-isolated__amount-value">+0.13 <span>BTC</span></div>
+          <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>+{{transactionValue}}<span>ETH</span></div>
+          {{!-- TODO the +/- sign is problematic we should remove this and make it more clear what is going on --}}
           <div class="transaction-isolated__amount-value--usd">≈ $500 USD</div>
         </div>
 
         <dl class="transaction-isolated__addresses">
-          <div class="transaction-isolated__address">
+          <div class="transaction-isolated__address" data-test-transaction-isolated-from>
             <dt>From</dt>
-            <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
+            <dd>{{content.transactionFrom}}</dd>
           </div>
-          <div class="transaction-isolated__address">
-            <dt>To</dt>
-            <dd>0xa5ad29003eccdba50987d1c9d43661d5551f0e175c57170edb6c918d91902542</dd>
-          </div>
+          {{#if content.transactionTo}}
+            <div class="transaction-isolated__address" data-test-transaction-isolated-to>
+              <dt>To</dt>
+              <dd>{{content.transactionTo}}</dd>
+            </div>
+          {{/if}}
         </dl>
 
-        <div class="transaction-isolated__status">
-          Status: <span>Successful</span>
-          {{svg-jar "check" class="transaction-isolated__status-icon"}}
+        <div class="transaction-isolated__status" data-test-transaction-isolated-status>
+          Status: <span>{{#if content.transactionSuccessful}} Successful {{else}} Failed {{/if}}</span>
+          {{#if content.transactionSuccessful}}
+            {{svg-jar "check" class="transaction-isolated__status-icon"}}
+          {{else}}
+            {{!-- TODO we need an icon for a failed transaction --}}
+            {{svg-jar "fail" class="transaction-isolated__status-icon"}}
+          {{/if}}
         </div>
 
         <dl class="transaction-isolated__details">
           <dt>Time</dt>
           <dd>Dec-23-2018 07:49:13 PM +UTC</dd>
           <dt>Block Height</dt>
-          <dd>6940145 (5 Block Confirmations)</dd>
+          <dd>6940145</dd>
           <dt>Gas Limit</dt>
           <dd>21000</dd>
           <dt>Gas Used by Transaction</dt>
@@ -51,6 +59,7 @@
           <dt>Gas Price</dt>
           <dd>0.00000005 Ether (50 Gwei)</dd>
           <dt>Actual Tx Cost/Fee</dt>
+          {{!-- it's imperative that you use web3.utils.BN to do this math --}}
           <dd>0.00105 Ether ($0.14)</dd>
           <dt>Nonce & {Position}</dt>
           <dd>3 | {33}</dd>

@@ -12,7 +12,7 @@ module.exports = Object.assign({}, browserBase, {
       'cards/*/cardstack/**/*.js',
       'deploy/build.js',
       'deploy/card-test-linter.js',
-      'bin/*.js'
+      'shared-data/*.js'
     ]
   })]
 });

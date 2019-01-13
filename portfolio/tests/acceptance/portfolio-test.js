@@ -1,5 +1,5 @@
 
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -17,19 +17,6 @@ const scenario = new Fixtures({
       'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
     });
 
-    let bitcoinAsset = factory.addResource('assets', 'bitcoin')
-      .withAttributes({
-        title: 'Bitcoin',
-        unit: 'BTC',
-        logo: 'bitcoin',
-      });
-    let ethereumAsset = factory.addResource('assets', 'ether')
-      .withAttributes({
-        title: 'Ether',
-        unit: 'ETH',
-        logo: 'ether',
-      });
-
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
       title: 'My Portfolio'
     })
@@ -39,10 +26,6 @@ const scenario = new Fixtures({
           logo: 'ing-logo'
         })
           .withRelated('user', user)
-          .withRelated('assets', [
-            bitcoinAsset,
-            ethereumAsset,
-          ]),
       ])
       .withRelated('user', user);
   },
@@ -53,32 +36,32 @@ async function login() {
   await fillIn('[data-test-login-password]', 'password');
   await click('[data-test-login-button]');
 
-  await waitFor('.wallet-isolated');
+  await waitFor('.portfolio-isolated');
 }
 
-module('Acceptance | portfolio', function (hooks) {
+module('Acceptance | portfolio', function(hooks) {
   setupApplicationTest(hooks);
   scenario.setupTest(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(function() {
     delete localStorage['cardstack-tools'];
   });
 
-  hooks.afterEach(function () {
+  hooks.afterEach(function() {
     delete localStorage['cardstack-tools'];
   });
 
-  test('user sees their wallet after they login from the wallet route', async function (assert) {
-    await visit('/wallets/ing-wallet');
-    assert.equal(currentURL(), '/wallets/ing-wallet');
+  test('user sees their portfolio after they login from the index route', async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
 
     await login();
 
-    assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
+    assert.dom('[data-test-portfolio-isolated-title').hasText('My Portfolio');
   });
 
-  test('user sees the login form when they log out from the portfolio page', async function (assert) {
-    await visit('/wallets/ing-wallet');
+  test('user sees the login form when they log out from the portfolio page', async function(assert) {
+    await visit('/');
     await login();
     await click('[data-test-signout-button]');
 
@@ -88,17 +71,14 @@ module('Acceptance | portfolio', function (hooks) {
     assert.dom('[data-test-login-password]').exists();
   });
 
-  test('user sees isolated asset card after clicking on the embedded asset card', async function(assert) {
-    await visit('/wallets/ing-wallet');
+  test('user sees isolated wallet card after clicking on the embedded wallet card', async function(assert) {
+    await visit('/');
     await login();
 
-    await click('.asset-embedded--bitcoin');
+    await click('.wallet-embedded');
 
-    assert.equal(currentURL(), '/assets/bitcoin');
-    assert.dom('.asset-isolated').exists();
-    assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Bitcoin');
-  });
-
-  skip('TODO user can navigate to isolated portfolio card from their isolated wallet card', async function(/*assert*/){
+    assert.equal(currentURL(), '/wallets/ing-wallet');
+    assert.dom('.wallet-isolated').exists();
+    assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
   });
 });

@@ -22,6 +22,7 @@ services:
       - TARGET_NAME
       - TEST
       - NODE_OPTIONS
+      - JSON_RPC_URL
       - HUB_ENVIRONMENT
       - PUBLIC_HUB_URL
       - CRYPTO_COMPARE_API_KEY
