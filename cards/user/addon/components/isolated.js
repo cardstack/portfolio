@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { get } from 'lodash';
 import layout from '../templates/isolated';
-import { getOwner } from '@ember/application';
 
 const passwordMinLength = 8;
 
@@ -12,7 +11,6 @@ export default Component.extend({
   layout,
   store: service(),
   session: service(),
-  router: service(),
 
   init() {
     this._super();
@@ -62,22 +60,13 @@ export default Component.extend({
       })
     });
 
+    let body = yield response.json();
+
     if (response.status === 200) {
+      this.store.pushPayload('portfolio-user', body);
+      this.resetForm();
       this.set('updateSuccessful', true);
-
-      let routeName = this.router.get('currentRouteName');
-      let currentRoute = getOwner(this).lookup(`route:${routeName}`);
-      currentRoute.refresh();
-
-      this.setProperties({
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: ''
-      });
-
-      this.resetEditing();
-    } else  {
-      let body = yield response.json();
+    } else {
       let message = get(body, 'errors[0].detail') || 'Errors encountered while updating profile';
       this.set('formError', message);
     }
@@ -99,13 +88,6 @@ export default Component.extend({
     this.set('isEditable', true);
   },
 
-  resetEditing() {
-    this.set('isEditable', false);
-    this.set('editName', false);
-    this.set('editEmail', false);
-    this.set('editPassword', false);
-  },
-
   resetForm() {
     this.set('formError', null);
     this.set('updateSuccessful', false);
@@ -116,7 +98,10 @@ export default Component.extend({
       newPassword: '',
       confirmNewPassword: ''
     });
-    this.resetEditing();
+    this.set('isEditable', false);
+    this.set('editName', false);
+    this.set('editEmail', false);
+    this.set('editPassword', false);
   },
 
   doOnInput(field, {target:{value}}) {
