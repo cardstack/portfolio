@@ -51,7 +51,7 @@
 .user-isolated__error {
   margin: 0;
   padding-top: 30px;
-  color: var(--portfolio-error-red);
+  color: var(--portfolio-red);
   text-align: center;
 }
 
@@ -59,6 +59,38 @@
   margin: 0;
   padding: 30px;
   text-align: center;
+}
+
+.user-isolated__picture {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--portfolio-border-gray);
+  text-align: center;
+}
+
+.user-isolated__picture-frame {
+  padding: 30px;
+  color: var(--portfolio-purple-gray);
+  background-color: var(--portfolio-light-gray);
+  border: none;
+  border-radius: 50%;
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.user-isolated__logout > button {
+  padding: 15px;
+  background: var(--portfolio-white);
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-sm-font);
+  color: var(--portfolio-red);
 }
 
 .user-isolated__form {

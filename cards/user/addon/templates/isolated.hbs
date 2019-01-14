@@ -20,6 +20,15 @@
           <p class="user-isolated__error" data-test-user-update-error>{{formError}}</p>
         {{/if}}
 
+        <div class="user-isolated__picture">
+          <label>
+            {{!-- TODO: photo upload --}}
+            <div class="user-isolated__picture-frame">CS</div>
+            <span class="user-isolated__label">Upload a Photo</span>
+          </label>
+          <LogoutButton class="user-isolated__logout"></LogoutButton>
+        </div>
+
         <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
           <div class="user-isolated__form-row">
             <label>
