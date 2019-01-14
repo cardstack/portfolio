@@ -9,12 +9,43 @@
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
 }
 
+.user-isolated__header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .user-isolated__title {
   margin: 0;
   font-weight: 400;
   font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xl-font);
   letter-spacing: -0.1px;
+  background-image: url("/assets/images/profile.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 18px 20px;
+  padding-left: 30px;
+}
+
+.user-isolated__close-button {
+  padding: 15px;
+  background: none;
+  border: none;
+}
+.user-isolated__close-button > svg {
+  fill: var(--portfolio-muted-gray);
+}
+.user-isolated__close-button:hover,
+.user-isolated__close-button:focus {
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+.user-isolated__close-button:hover > svg,
+.user-isolated__close-button:focus > svg {
+  fill: var(--portfolio-highlight-purple);
 }
 
 .user-isolated__error {
@@ -44,17 +75,55 @@
 
 .user-isolated__label {
   display: block;
+  color: var(--portfolio-light-purple);
   line-height: 2;
+}
+
+.user-isolated__display {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--portfolio-border-gray);
+}
+.user-isolated__display:hover {
+  cursor: pointer;
+  user-select: none;
+}
+.user-isolated__display-info {
+  padding: 15px 0;
+  font-size: var(--portfolio-med-font);
+}
+.user-isolated__display-button {
+  border: none;
+  background: none;
+  align-self: flex-start;
+  padding: 15px;
+}
+.user-isolated__display-button > svg {
+  fill: var(--portfolio-muted-gray);
+}
+.user-isolated__display-button:hover,
+.user-isolated__display-button:focus {
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+.user-isolated__display-button:hover > svg,
+.user-isolated__display-button:focus > svg {
+  fill: var(--portfolio-highlight-purple);
 }
 
 .user-isolated__input {
   width: 100%;
+  margin-bottom: 15px;
   padding: 10px 15px;
   background-color: var(--portfolio-off-white);
   border: 1px solid var(--portfolio-border-gray);
   border-radius: 5px;
   box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 25%);
-  font-size: var(--portfolio-sm-font);
+  font-size: var(--portfolio-med-font);
 }
 .user-isolated__input:focus {
   outline: none;

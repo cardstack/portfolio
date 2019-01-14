@@ -9,6 +9,7 @@ const passwordMinLength = 8;
 
 export default Component.extend({
   layout,
+  router: service(),
   store: service(),
   session: service(),
 
@@ -113,5 +114,9 @@ export default Component.extend({
   submitForm(ev) {
     ev.preventDefault();
     this.get('updateUser').perform();
+  },
+
+  transitionToPortfolio() {
+    this.router.transitionTo('cardstack.index');
   }
 });

@@ -5,7 +5,13 @@
   {{#cardstack-session as |session|}}
     {{#if session.isAuthenticated}}
       <div class="user-isolated">
-        <h1 class="user-isolated__title">Profile</h1>
+        <header class="user-isolated__header">
+          <h1 class="user-isolated__title">Profile</h1>
+          <button onclick={{action transitionToPortfolio}} class="user-isolated__close-button">
+            {{svg-jar "close" width="12px" height="12px"}}
+          </button>
+        </header>
+
         {{#if updateSuccessful}}
           <p class="user-isolated__success" data-test-user-update-success>
             User profile has been updated.
@@ -17,8 +23,8 @@
         <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
           <div class="user-isolated__form-row">
             <label>
+              <span class="user-isolated__label">Full Name</span>
               {{#if editName}}
-                <span class="user-isolated__label">Name</span>
                 <input
                   type="text"
                   placeholder="Full name"
@@ -28,15 +34,23 @@
                   data-test-user-name
                   />
               {{else}}
-                <span class="user-isolated__user-info" data-test-user-name-display>{{name}}</span>
-                <button {{action editField 'editName'}} data-test-user-name-edit-button>Edit</button>
+                <div class="user-isolated__display">
+                  <div class="user-isolated__display-info" data-test-user-name-display>{{name}}</div>
+                  <button
+                    {{action editField 'editName'}}
+                    class="user-isolated__display-button"
+                    data-test-user-name-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
               {{/if}}
             </label>
           </div>
 
           <div class="user-isolated__form-row">
             <label>
-              <span class="user-isolated__label">Email</span>
+              <span class="user-isolated__label">Email Address</span>
               {{#if editEmail}}
                 <input
                   type="email"
@@ -47,16 +61,24 @@
                   data-test-user-email
                   />
               {{else}}
-                <span class="user-isolated__user-info" data-test-user-email-display>{{email}}</span>
-                <button {{action editField 'editEmail'}} data-test-user-email-edit-button>Edit</button>
+                <div class="user-isolated__display">
+                  <span class="user-isolated__display-info" data-test-user-email-display>{{email}}</span>
+                    <button
+                    {{action editField 'editEmail'}}
+                    class="user-isolated__display-button"
+                    data-test-user-email-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
               {{/if}}
             </label>
           </div>
 
           <div class="user-isolated__form-row">
             <label>
+              <span class="user-isolated__label">{{if editPassword "Current "}}Password</span>
               {{#if editPassword}}
-                <span class="user-isolated__label">Current Password</span>
                 <input
                     type="password"
                     value={{currentPassword}}
@@ -65,9 +87,16 @@
                     data-test-user-current-password
                     />
               {{else}}
-                <span class="user-isolated__label">Password</span>
-                <span class="user-isolated__user-info">********</span>
-                <button {{action editField 'editPassword'}} data-test-user-password-edit-button>Edit</button>
+                <div class="user-isolated__display">
+                  <div class="user-isolated__display-info">********</div>
+                  <button
+                    {{action editField 'editPassword'}}
+                    class="user-isolated__display-button"
+                    data-test-user-password-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
               {{/if}}
             </label>
           </div>
