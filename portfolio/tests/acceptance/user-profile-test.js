@@ -85,11 +85,21 @@ module('Acceptance | user-profile', function(hooks) {
 
       assert.equal(currentURL(), '/profile');
 
-      assert.dom('[data-test-user-name').hasValue('Hassan Abdel-Rahman');
-      assert.dom('[data-test-user-email').hasValue('hassan@example.com');
-      assert.dom('[data-test-user-current-password').hasValue('');
-      assert.dom('[data-test-user-new-password').hasValue('');
-      assert.dom('[data-test-user-confirm-new-password').hasValue('');
+      assert.dom('[data-test-user-name-display]').hasText('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email-display]').hasText('hassan@example.com');
+      assert.dom('[data-test-user-submit]').doesNotExist();
+
+      await click('[data-test-user-name-edit-button]');
+      assert.dom('[data-test-user-name]').hasValue('Hassan Abdel-Rahman');
+
+      await click('[data-test-user-email-edit-button]');
+      assert.dom('[data-test-user-email]').hasValue('hassan@example.com');
+
+      await click('[data-test-user-password-edit-button]');
+      assert.dom('[data-test-user-current-password]').hasValue('');
+      assert.dom('[data-test-user-new-password]').hasValue('');
+      assert.dom('[data-test-user-confirm-new-password]').hasValue('');
+
       assert.dom('[data-test-user-submit]').isNotDisabled();
     });
   });
@@ -113,39 +123,79 @@ module('Acceptance | user-profile', function(hooks) {
       await visit('/profile');
 
       assert.equal(currentURL(), '/profile');
-      assert.dom('[data-test-user-name').hasValue('Hassan Abdel-Rahman');
-      assert.dom('[data-test-user-email').hasValue('hassan@example.com');
-      assert.dom('[data-test-user-current-password').hasValue('');
-      assert.dom('[data-test-user-new-password').hasValue('');
-      assert.dom('[data-test-user-confirm-new-password').hasValue('');
-      assert.dom('[data-test-user-submit]').isNotDisabled();
+      assert.dom('[data-test-user-name-display]').hasText('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email-display]').hasText('hassan@example.com');
+      assert.dom('[data-test-user-submit]').doesNotExist();
     });
 
     test('reset button resets the form', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-name-edit-button]');
       await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+
+      await click('[data-test-user-email-edit-button]');
       await fillIn('[data-test-user-email]', 'musa@example.com');
+
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'password');
       await fillIn('[data-test-user-new-password]', 'password2');
       await fillIn('[data-test-user-confirm-new-password]', 'password2');
 
       await click('[data-test-user-reset]');
 
-      assert.dom('[data-test-user-name').hasValue('Hassan Abdel-Rahman');
-      assert.dom('[data-test-user-email').hasValue('hassan@example.com');
-      assert.dom('[data-test-user-current-password').hasValue('');
-      assert.dom('[data-test-user-new-password').hasValue('');
-      assert.dom('[data-test-user-confirm-new-password').hasValue('');
+      assert.dom('[data-test-user-name-display]').hasText('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email-display]').hasText('hassan@example.com');
+      assert.dom('[data-test-user-submit]').doesNotExist();
+
+      await click('[data-test-user-name-edit-button]');
+      assert.dom('[data-test-user-name]').hasValue('Hassan Abdel-Rahman');
+
+      await click('[data-test-user-email-edit-button]');
+      assert.dom('[data-test-user-email]').hasValue('hassan@example.com');
+
+      await click('[data-test-user-password-edit-button]');
+      assert.dom('[data-test-user-current-password]').hasValue('');
+      assert.dom('[data-test-user-new-password]').hasValue('');
+      assert.dom('[data-test-user-confirm-new-password]').hasValue('');
       assert.dom('[data-test-user-submit]').isNotDisabled();
     });
 
-    test('the name and email can be updated', async function (assert) {
+    test('reset button resets form to latest update', async function (assert) {
+      await visit('/profile');
+
+      assert.dom('[data-test-user-name-display]').hasText('Hassan Abdel-Rahman');
+      assert.dom('[data-test-user-email-display]').hasText('hassan@example.com');
+
+      await click('[data-test-user-name-edit-button]');
+      await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+
+      await click('[data-test-user-email-edit-button]');
+      await fillIn('[data-test-user-email]', 'musa@example.com');
+
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
+
+      await click('[data-test-user-name-edit-button]');
+      await fillIn('[data-test-user-name]', 'Hassan');
+
+      await click('[data-test-user-email-edit-button]');
+      await fillIn('[data-test-user-email]', 'hassannew@example.com');
+
+      await click('[data-test-user-reset]');
+      assert.dom('[data-test-user-name-display]').hasText('Musa Abdel-Rahman');
+      assert.dom('[data-test-user-email-display]').hasText('musa@example.com');
+    });
+
+    test('the name and email can be updated together', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
       await visit('/profile');
 
+      await click('[data-test-user-name-edit-button]');
+      await click('[data-test-user-email-edit-button]');
       assert.dom('[data-test-user-submit]').isNotDisabled();
+
       await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
       await fillIn('[data-test-user-email]', 'musa@example.com');
       assert.dom('[data-test-user-submit]').isNotDisabled();
@@ -158,9 +208,49 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
     });
 
+    test('the name can be individually updated', async function (assert) {
+      // TODO we'll adjust routing to use session based routing so we dont
+      // need the user ID in the URL
+      await visit('/profile');
+
+      await click('[data-test-user-name-edit-button]');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+
+      await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
+
+      let users = await searchForUser('hassan@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
+    });
+
+    test('the email can be individually updated', async function (assert) {
+      // TODO we'll adjust routing to use session based routing so we dont
+      // need the user ID in the URL
+      await visit('/profile');
+
+      await click('[data-test-user-email-edit-button]');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+
+      await fillIn('[data-test-user-email]', 'musa@example.com');
+      assert.dom('[data-test-user-submit]').isNotDisabled();
+
+      await click('[data-test-user-submit]');
+      await waitFor('[data-test-user-update-success]');
+
+      let users = await searchForUser('musa@example.com');
+      assert.equal(users.length, 1);
+      assert.equal(users[0].attributes['name'], 'Hassan Abdel-Rahman');
+    });
+
     test('password can be updated', async function (assert) {
       await visit('/profile');
 
+      assert.dom('[data-test-user-current-password]').doesNotExist();
+      await click('[data-test-user-password-edit-button]');
       assert.dom('[data-test-user-submit]').isNotDisabled();
       await fillIn('[data-test-user-current-password]', 'password');
       assert.dom('[data-test-user-submit]').isDisabled();
@@ -180,6 +270,10 @@ module('Acceptance | user-profile', function(hooks) {
     test('all fields can be updated', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-name-edit-button]');
+      await click('[data-test-user-email-edit-button]');
+      await click('[data-test-user-password-edit-button]');
+
       await fillIn('[data-test-user-name]', 'Musa Abdel-Rahman');
       await fillIn('[data-test-user-email]', 'musa@example.com');
       await fillIn('[data-test-user-current-password]', 'password');
@@ -197,6 +291,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('does not update when new password is different than confirmation password', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'password');
       await fillIn('[data-test-user-new-password]', 'password2');
       await fillIn('[data-test-user-confirm-new-password]', 'password3');
@@ -216,6 +311,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('does not update when new password is same as old password', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'password');
       await fillIn('[data-test-user-new-password]', 'password');
       await fillIn('[data-test-user-confirm-new-password]', 'password');
@@ -232,6 +328,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('does not update when new password is less than 8 characters', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'password');
       await fillIn('[data-test-user-new-password]', '1234567');
       await fillIn('[data-test-user-confirm-new-password]', '1234567');
@@ -248,6 +345,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('does not update when email changed to existing user`s email', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-email-edit-button]');
       await fillIn('[data-test-user-email]', 'anotheruser@example.com');
 
       await click('[data-test-user-submit]');
@@ -261,6 +359,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('does not update when current password is incorrect', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'not my password');
       await fillIn('[data-test-user-new-password]', 'password2');
       await fillIn('[data-test-user-confirm-new-password]', 'password2');
@@ -277,6 +376,7 @@ module('Acceptance | user-profile', function(hooks) {
     test('submit button is disabled if email is missing', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-email-edit-button]');
       await fillIn('[data-test-user-email]', '');
       assert.dom('[data-test-user-submit]').isDisabled();
     });
@@ -284,13 +384,15 @@ module('Acceptance | user-profile', function(hooks) {
     test('submit button is disabled if name is missing', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-name-edit-button]');
       await fillIn('[data-test-user-name]', '');
       assert.dom('[data-test-user-submit]').isDisabled();
     });
 
-    test('submit button is disabled if some but not all password fields are filled ou', async function (assert) {
+    test('submit button is disabled if some but not all password fields are filled out', async function (assert) {
       await visit('/profile');
 
+      await click('[data-test-user-password-edit-button]');
       await fillIn('[data-test-user-current-password]', 'password');
       assert.dom('[data-test-user-submit]').isDisabled();
       await fillIn('[data-test-user-new-password]', 'password2');

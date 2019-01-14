@@ -15,24 +15,24 @@
         {{/if}}
 
         <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
-          {{#if editName}}
-            <div class="user-isolated__form-row">
-              <label class="user-isolated__label">
+          <div class="user-isolated__form-row">
+            <label>
+              {{#if editName}}
                 <span class="user-isolated__label">Name</span>
                 <input
-                    type="text"
-                    placeholder="Full name"
-                    value={{name}}
-                    oninput={{action doOnInput 'name'}}
-                    class="user-isolated__input"
-                    data-test-user-name
-                    />
-              </label>
-            </div>
-          {{else}}
-            {{name}}
-            <button {{action editField 'editName'}}>Edit</button>
-          {{/if}}
+                  type="text"
+                  placeholder="Full name"
+                  value={{name}}
+                  oninput={{action doOnInput 'name'}}
+                  class="user-isolated__input"
+                  data-test-user-name
+                  />
+              {{else}}
+                <span class="user-isolated__user-info" data-test-user-name-display>{{name}}</span>
+                <button {{action editField 'editName'}} data-test-user-name-edit-button>Edit</button>
+              {{/if}}
+            </label>
+          </div>
 
           <div class="user-isolated__form-row">
             <label>
@@ -47,15 +47,15 @@
                   data-test-user-email
                   />
               {{else}}
-                {{email}}
-                <button {{action editField 'editEmail'}}>Edit</button>
+                <span class="user-isolated__user-info" data-test-user-email-display>{{email}}</span>
+                <button {{action editField 'editEmail'}} data-test-user-email-edit-button>Edit</button>
               {{/if}}
             </label>
           </div>
 
-          {{#if editPassword}}
-            <div class="user-isolated__form-row">
-              <label>
+          <div class="user-isolated__form-row">
+            <label>
+              {{#if editPassword}}
                 <span class="user-isolated__label">Current Password</span>
                 <input
                     type="password"
@@ -64,8 +64,14 @@
                     class="user-isolated__input"
                     data-test-user-current-password
                     />
-              </label>
-            </div>
+              {{else}}
+                <span class="user-isolated__label">Password</span>
+                <span class="user-isolated__user-info">********</span>
+                <button {{action editField 'editPassword'}} data-test-user-password-edit-button>Edit</button>
+              {{/if}}
+            </label>
+          </div>
+          {{#if editPassword}}
             <div class="user-isolated__form-row">
               <label>
                 <span class="user-isolated__label">New Password (minimum 8 characters)</span>
@@ -90,10 +96,6 @@
                     />
               </label>
             </div>
-          {{else}}
-            Password
-            ********
-            <button {{action editField 'editPassword'}}>Edit</button>
           {{/if}}
 
           {{#if isEditable}}
