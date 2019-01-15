@@ -1,0 +1,10 @@
+{
+  "relationships": {
+    "network": {
+      "data": {
+        "type": "networks",
+        "id": "bitcoin"
+      }
+    }
+  }
+}
