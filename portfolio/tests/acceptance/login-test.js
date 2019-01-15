@@ -10,11 +10,13 @@ const scenario = new Fixtures({
         sourceType: 'portfolio-user',
       });
 
-    factory.addResource('portfolio-users', 'test-user').withAttributes({
+    factory.addResource('portfolios', 'test-portfolio').withAttributes({
+      title: 'My Portfolio'
+    }).withRelated('user', factory.addResource('portfolio-users', 'test-user').withAttributes({
       name: 'Hassan Abdel-Rahman',
       'email-address': 'hassan@example.com',
       'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
-    });
+    }));
   },
 });
 
@@ -35,7 +37,7 @@ module('Acceptance | login', function(hooks) {
     assert.equal(currentURL(), '/');
 
     await fillIn('[data-test-login-email]', 'hassan@example.com');
-    await fillIn('[data-test-login-password]', 'password')
+    await fillIn('[data-test-login-password]', 'password');
     assert.dom('[data-test-login-button]').isNotDisabled();
 
     await click('[data-test-login-button]');
@@ -48,7 +50,7 @@ module('Acceptance | login', function(hooks) {
     assert.equal(currentURL(), '/');
 
     await fillIn('[data-test-login-email]', 'hassan@example.com');
-    await fillIn('[data-test-login-password]', 'pas')
+    await fillIn('[data-test-login-password]', 'pas');
     await click('[data-test-login-button]');
 
     await waitFor('[data-test-login-error]');
@@ -59,7 +61,7 @@ module('Acceptance | login', function(hooks) {
     assert.equal(currentURL(), '/');
     assert.dom('[data-test-login-button]').isDisabled();
 
-    await fillIn('[data-test-login-password]', 'password')
+    await fillIn('[data-test-login-password]', 'password');
     assert.dom('[data-test-login-button]').isDisabled();
   });
 
@@ -70,5 +72,13 @@ module('Acceptance | login', function(hooks) {
 
     await fillIn('[data-test-login-email]', 'hassan@example.com');
     assert.dom('[data-test-login-button]').isDisabled();
+  });
+
+  test('transition to registration', async function (assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await click('[data-test-registration-page-link]');
+    assert.equal(currentURL(), '/register');
   });
 });

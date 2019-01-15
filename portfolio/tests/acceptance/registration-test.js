@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -57,6 +57,9 @@ module('Acceptance | register', function(hooks) {
 
     await click('[data-test-registration-success-dismiss]');
     assert.equal(currentURL(), '/');
+  });
+
+  skip('TODO user is logged in after registration and transitioned to their portfolio card', async function(/*assert*/) {
   });
 
   test('cancel registration', async function(assert) {

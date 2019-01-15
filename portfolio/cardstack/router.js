@@ -7,11 +7,30 @@ module.exports = [{
     }
   },
 },{
+  path: '/profile',
+  query: {
+    filter: {
+      type: { exact: ':session:type' },
+      id: { exact: ':session:id' }
+    }
+  },
+},{
+  path: '/wallets/:id',
+  query: {
+    filter: {
+      type: { exact: 'wallets' },
+      id: { exact: ':id' },
+      'user.type': { exact: ':session:type' },
+      'user.id': { exact: ':session:id' }
+    }
+  },
+},{
   path: '/',
   query: {
     filter: {
-      type: { exact: ':card:type' },
-      id: { exact: ':card:id' }
+      type: { exact: 'portfolios' },
+      'user.type': { exact: ':session:type' },
+      'user.id': { exact: ':session:id' }
     }
   },
 },{

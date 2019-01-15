@@ -22,8 +22,10 @@ services:
       - TARGET_NAME
       - TEST
       - NODE_OPTIONS
+      - JSON_RPC_URL
       - HUB_ENVIRONMENT
       - PUBLIC_HUB_URL
+      - CRYPTO_COMPARE_API_KEY
       - CARDSTACK_SESSIONS_KEY
       - INITIAL_DATA_DIR
       - TRAVIS_BRANCH

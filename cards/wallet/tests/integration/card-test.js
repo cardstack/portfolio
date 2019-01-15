@@ -6,38 +6,51 @@ import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 
 const scenario = new Fixtures({
   create(factory) {
-    let btc = factory.addResource('assets')
-      .withAttributes({
-        title: 'Bitcoin',
-        unit: 'BTC'
-      });
-
-    let eth = factory.addResource('assets')
-      .withAttributes({
-        title: 'Ether',
-        unit: 'ETH'
-      });
+    let eth = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+      .withRelated('network', factory.addResource('networks', 'ether')
+        .withAttributes({
+          title: 'Ether',
+          unit: 'ETH',
+          'asset-type': 'ethereum-addresses',
+          'address-field': 'ethereum-address'
+        }));
+    let btc = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
+      .withRelated('network', factory.addResource('networks', 'bitcoin')
+        .withAttributes({
+          title: 'Bitcoin',
+          unit: 'BTC',
+        }));
 
     factory.addResource('wallets', '123')
       .withAttributes({
         title: 'ING Wallet'
       })
-      .withRelated('assets', [ btc, eth ]);
+      .withRelated('assets', [btc, eth]);
+
+    factory.addResource('grants')
+      .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+      .withRelated('types', [
+        { type: 'content-types', id: 'wallets' }
+      ])
+      .withAttributes({
+        'may-read-resource': true,
+        'may-read-fields': true,
+      })
   }
 });
 
-module('Card | wallet', function(hooks) {
+module('Card | wallet', function (hooks) {
   setupCardTest(hooks);
   setupURLs(hooks);
   scenario.setupTest(hooks);
 
-  test('embedded format renders', async function(assert) {
+  test('embedded format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="embedded"}}`);
     assert.dom('[data-test-wallet-embedded-title]').hasText('ING Wallet');
     assert.dom('[data-test-wallet-embedded-count]').hasText('2 Assets');
   });
 
-  test('isolated format renders', async function(assert) {
+  test('isolated format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="isolated"}}`);
     assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
     assert.dom('[data-test-wallet-isolated-assets-count]').hasText('2 Assets');

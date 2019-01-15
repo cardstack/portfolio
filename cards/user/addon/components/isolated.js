@@ -9,6 +9,7 @@ const passwordMinLength = 8;
 
 export default Component.extend({
   layout,
+  router: service(),
   store: service(),
   session: service(),
 
@@ -60,10 +61,13 @@ export default Component.extend({
       })
     });
 
+    let body = yield response.json();
+
     if (response.status === 200) {
+      this.store.pushPayload('portfolio-user', body);
+      this.resetForm();
       this.set('updateSuccessful', true);
-    } else  {
-      let body = yield response.json();
+    } else {
       let message = get(body, 'errors[0].detail') || 'Errors encountered while updating profile';
       this.set('formError', message);
     }
@@ -80,6 +84,11 @@ export default Component.extend({
     );
   }),
 
+  editField(field) {
+    this.set(field, true);
+    this.set('isEditable', true);
+  },
+
   resetForm() {
     this.set('formError', null);
     this.set('updateSuccessful', false);
@@ -90,6 +99,10 @@ export default Component.extend({
       newPassword: '',
       confirmNewPassword: ''
     });
+    this.set('isEditable', false);
+    this.set('editName', false);
+    this.set('editEmail', false);
+    this.set('editPassword', false);
   },
 
   doOnInput(field, {target:{value}}) {
@@ -101,5 +114,9 @@ export default Component.extend({
   submitForm(ev) {
     ev.preventDefault();
     this.get('updateUser').perform();
+  },
+
+  transitionToPortfolio() {
+    this.router.transitionTo('cardstack.index');
   }
 });

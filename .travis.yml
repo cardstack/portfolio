@@ -68,10 +68,12 @@ jobs:
     - stage: test
       env: TEST=portfolio
     - env: TEST=cards/asset
+    - env: TEST=cards/crypto-compare
+    - env: TEST=cards/network
     - env: TEST=cards/portfolio
     - env: TEST=cards/register
-    - env: TEST=cards/user
     - env: TEST=cards/transaction
+    - env: TEST=cards/user
     - env: TEST=cards/wallet
 
     - stage: deploy

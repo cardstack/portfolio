@@ -1,0 +1,61 @@
+{{!-- fastboot guard --}}
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#unless session.isAuthenticated}}
+      <section class="login-form">
+        <h1 class="login-form__title">Log in to your account</h1>
+        {{#password-login onAuthenticationSuccess=(action doOnAuthenticationSuccess)
+                          onAuthenticationFailed=(action doOnAuthenticationFailed)
+                          as |login|}}
+          {{#if loginError}}
+            <p class="login-form__error" data-test-login-error>The email and password provided do not match a valid account.</p>
+          {{/if}}
+          <form onsubmit={{action submitForm login email password}} class="login-form__form" data-test-login-form>
+            <div class="login-form__form-row">
+              <label>
+                <span class="login-form__label">Email Address</span>
+                <input
+                  type="text"
+                  value={{email}}
+                  oninput={{action doOnInput 'email'}}
+                  class="login-form__input"
+                  data-test-login-email
+                />
+              </label>
+            </div>
+            <div class="login-form__form-row">
+              <label>
+                <span>Password</span>
+                <input
+                  type="password"
+                  value={{password}}
+                  oninput={{action doOnInput 'password'}}
+                  class="login-form__input"
+                  data-test-login-password
+                />
+              </label>
+            </div>
+            <div class="login-form__button-row">
+              <button
+                type="submit"
+                class="login-form__button {{if (not canLogin) "disabled"}}"
+                disabled={{not canLogin}}
+                data-test-login-button
+              >
+                Log In
+              </button>
+              <span class="login-form__button-or">OR</span>
+              <button
+                {{action transitionToRegister}}
+                class="login-form__button login-form__button--create"
+                data-test-registration-page-link
+              >
+                Create Account
+              </button>
+            </div>
+          </form>
+        {{/password-login}}
+      </section>
+    {{/unless}}
+  {{/cardstack-session}}
+{{/if}}

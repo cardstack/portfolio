@@ -82,6 +82,35 @@ describe('portfolio-register', function () {
       expect(await comparePassword('my secrets', users[0].attributes['password-hash'])).to.equal(true);
     });
 
+    it('creates a new portfolio instance and relates to newly created portfolio-user', async function() {
+      await request.post('/register').send({
+        data: {
+          type: 'portfolio-users',
+          attributes: {
+            name: 'Hassan',
+            'email-address': 'hassan@example.com',
+            password: 'my secrets'
+          }
+        }
+      });
+
+      let { data: [ { id, type } ] } = await searchers.search(env.session, 'master', {
+        filter: { type: { exact: 'portfolio-users' } }
+      });
+
+      let { data: portfolios } = await searchers.search(env.session, 'master', {
+        filter: {
+          type: { exact: 'portfolios' },
+          'user.id': { exact: id },
+          'user.type': { exact: type }
+        }
+      });
+
+      expect(portfolios.length).to.equal(1);
+      expect(portfolios[0]).to.have.deep.property('attributes.title', 'My Portfolio');
+      expect(portfolios[0].relationships.wallets.data).to.eql([]);
+    });
+
     it('does not register a user when the email is missing in register request', async function () {
       let response = await request.post('/register').send({
         data: {

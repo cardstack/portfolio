@@ -19,15 +19,13 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
                   GITHUB_CLIENT_ID \
                   GITHUB_CLIENT_SECRET \
                   GITHUB_TOKEN \
+                  JSON_RPC_URL \
                   PUBLIC_HUB_URL \
                   SWARM_CONTROLLER \
                   LOG_LEVELS \
                   GIT_PRIVATE_KEY \
                   GIT_BRANCH_PREFIX \
-                  GITCHAIN_REST_ENDPOINT \
-                  GITCHAIN_BLOB_STORAGE \
-                  SAWTOOTH_PRIVATE_KEY \
-                  BLOB_STORAGE_TEMP_PATH \
+                  CRYPTO_COMPARE_API_KEY \
                   CARDSTACK_SESSIONS_KEY; do
       command="export ${variable}=\$${target_env}_${variable}"
       eval $command
