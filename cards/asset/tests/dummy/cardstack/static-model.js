@@ -1,0 +1,1 @@
+module.exports = require('../../../../../shared-data/mock-ethereum-schema');

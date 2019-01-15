@@ -11,43 +11,45 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
       'password-hash': hashPasswordSync('password')
     });
 
-  let bitcoinAsset = factory.addResource('assets', 'bitcoin')
+  // TODO: add networks to contents/ folder
+
+  let bitcoinNetwork = factory.addResource('networks', 'bitcoin')
     .withAttributes({
       title: 'Bitcoin',
       unit: 'BTC',
-      logo: 'bitcoin',
-    })
-    .withRelated('transactions', [
-      factory.addResource('transactions', '31')
-        .withAttributes({
-          title: 'Transaction 31'
-        }),
-      factory.addResource('transactions', '32')
-        .withAttributes({
-          title: 'Transaction 32'
-        })
-    ]);
-
-  let ethereumAsset = factory.addResource('assets', 'ether')
+    });
+  let ethereumNetwork = factory.addResource('networks', 'ether')
     .withAttributes({
       title: 'Ether',
       unit: 'ETH',
-      logo: 'ether',
+      'asset-type': 'ethereum-addresses',
+      'address-field': 'ethereum-address'
     });
-
-  let litecoinAsset = factory.addResource('assets', 'litecoin')
+  let litecoinNetwork = factory.addResource('networks', 'litecoin')
     .withAttributes({
       title: 'Litecoin',
       unit: 'LIT',
-      logo: 'litecoin',
     });
-
-  let zcashAsset = factory.addResource('assets', 'zcash')
+  let zcashNetwork = factory.addResource('networks', 'zcash')
     .withAttributes({
       title: 'Zcash',
       unit: 'ZEC',
-      logo: 'zcash',
     });
+
+  let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
+    .withRelated('network', bitcoinNetwork);
+
+  let simpleEthereumAsset = factory.addResource('assets', '0x04C945B74E46F1D142A760863012aC802058449e')
+    .withRelated('network', ethereumNetwork);
+
+  let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+    .withRelated('network', ethereumNetwork);
+
+  let litecoinAsset = factory.addResource('assets', 'LXA3i9eEAVDbgDqkThCa4D6BUJ3SEULkEr')
+    .withRelated('network', litecoinNetwork);
+
+  let zcashAsset = factory.addResource('assets', 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs')
+    .withRelated('network', zcashNetwork);
 
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
     title: 'My Portfolio'
@@ -61,8 +63,8 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         })
         .withRelated('user', user)
         .withRelated('assets', [
-          bitcoinAsset,
-          ethereumAsset,
+          mockedEthereumAsset,
+          simpleEthereumAsset,
           litecoinAsset,
           zcashAsset,
           bitcoinAsset
@@ -75,7 +77,8 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         .withRelated('user', user)
         .withRelated('assets', [
           bitcoinAsset,
-          ethereumAsset,
+          mockedEthereumAsset,
+          simpleEthereumAsset,
           litecoinAsset
         ])
   ]);

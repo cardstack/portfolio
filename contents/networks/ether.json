@@ -1,0 +1,8 @@
+{
+  "attributes": {
+    "title": "Ether",
+    "unit": "ETH",
+    "asset-type": "ethereum-addresses",
+    "address-field": "ethereum-address"
+  }
+}

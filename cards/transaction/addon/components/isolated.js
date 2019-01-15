@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import TransactionBase from './transaction-base';
 import layout from '../templates/isolated';
 
-export default Component.extend({ layout });
+export default TransactionBase.extend({ layout });

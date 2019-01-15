@@ -1,10 +1,6 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import AssetBase from './asset-base';
 import layout from '../templates/embedded';
 
-export default Component.extend({
+export default AssetBase.extend({
   layout,
-  title: computed('content.title', function () {
-    return this.get('content.title').toLowerCase();
-  }),
 });

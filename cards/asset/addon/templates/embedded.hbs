@@ -1,17 +1,23 @@
-<a class="asset-embedded asset-embedded--{{title}}" href={{cardstack-url content}}>
+<a class="asset-embedded asset-embedded--{{networkId}}" data-test-asset-embedded-link href={{cardstack-url content}}>
   <header class="asset-embedded__header">
     <div class="asset-embedded__title-row">
-      {{svg-jar content.logo class="asset-embedded__logo"}}
+      {{svg-jar content.networkId class="asset-embedded__logo"}}
       <h3 class="asset-embedded__title" data-test-asset-embedded-title>
-        {{content.title}}
+        {{content.networkTitle}}
       </h3>
     </div>
-    <a class="asset-embedded__tag" href="/">Savings</a>
+    <a class="asset-embedded__tag" href={{cardstack-url content}}>Savings</a>
   </header>
   <section class="asset-embedded__section">
-    <div class="asset-embedded__data-row">
-      <span class="asset-embedded__value">2.1434</span>
-      <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.unit}}</span>
+    <div class="asset-embedded__data-row" data-test-asset-embedded-balance>
+      <span class="asset-embedded__value">
+        {{#if etherBalance}}
+          {{etherBalance}}
+        {{else}}
+          2.1434
+        {{/if}}
+      </span>
+      <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.networkUnit}}</span>
       {{!-- Add arrow icon and modal --}}
     </div>
     <div>
@@ -20,7 +26,9 @@
     </div>
   </section>
   <footer class="asset-embedded__footer">
-    <div class="asset-embedded__address">1Hzk...iY36v</div>
-    <div class="asset-embedded__last-active">Last active 3m ago</div>
+    <div class="asset-embedded__address" data-test-asset-embedded-address>{{abbreviatedAddress}}</div>
+    <div class="asset-embedded__last-active" data-test-asset-embedded-last-active>
+      {{lastActiveDate}}
+      </div>
   </footer>
 </a>
