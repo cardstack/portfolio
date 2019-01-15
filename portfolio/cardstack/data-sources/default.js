@@ -24,7 +24,7 @@ if (process.env.HUB_ENVIRONMENT === 'production') {
       params: {
         branchPrefix: process.env.GIT_BRANCH_PREFIX,
         remote: {
-          url: 'git@github.com:cardstack/portfolio.git',
+          url: 'git@github.com:cardstack/portfolio-data.git',
           privateKey: process.env.GIT_PRIVATE_KEY,
         }
       }
