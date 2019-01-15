@@ -21,7 +21,7 @@
 .register-isolated__error {
   margin: 0;
   padding-top: 30px;
-  color: var(--portfolio-error-red);
+  color: var(--portfolio-red);
   text-align: center;
 }
 

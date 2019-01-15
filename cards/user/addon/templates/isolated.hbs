@@ -1,9 +1,3 @@
-{{!--
-  Sorry, this is super raw and skeletal. I'm only adding
-  enough into this template in order for it to functionally
-  work and test it. Please someone give this some UX love.
---}}
-
 {{!-- When the session does not exist then the error card takes over and renders the login form --}}
 
 {{!-- fastboot guard --}}
@@ -11,72 +5,156 @@
   {{#cardstack-session as |session|}}
     {{#if session.isAuthenticated}}
       <div class="user-isolated">
-        <h1>User Profile</h1>
+        <header class="user-isolated__header">
+          <h1 class="user-isolated__title">Profile</h1>
+          <button onclick={{action transitionToPortfolio}} class="user-isolated__close-button">
+            {{svg-jar "close" width="12px" height="12px"}}
+          </button>
+        </header>
+
         {{#if updateSuccessful}}
-          <div data-test-user-update-success><b>User profile has been upated.</b></div>
+          <p class="user-isolated__success" data-test-user-update-success>
+            User profile has been updated.
+          </p>
         {{else if formError}}
-          <div data-test-user-update-error><b>{{formError}}</b></div>
+          <p class="user-isolated__error" data-test-user-update-error>{{formError}}</p>
         {{/if}}
-        <form onsubmit={{action submitForm}} data-test-user-form>
-          <div>
+
+        <div class="user-isolated__picture">
+          <label>
+            {{!-- TODO: photo upload --}}
+            <div class="user-isolated__picture-frame">CS</div>
+            <span class="user-isolated__label">Upload a Photo</span>
+          </label>
+          <LogoutButton class="user-isolated__logout"></LogoutButton>
+        </div>
+
+        <form onsubmit={{action submitForm}} class="user-isolated__form" data-test-user-form>
+          <div class="user-isolated__form-row">
             <label>
-              <span>Name:</span>
-              <input
+              <span class="user-isolated__label">Full Name</span>
+              {{#if editName}}
+                <input
                   type="text"
                   placeholder="Full name"
                   value={{name}}
                   oninput={{action doOnInput 'name'}}
+                  class="user-isolated__input"
                   data-test-user-name
                   />
+              {{else}}
+                <div class="user-isolated__display">
+                  <div class="user-isolated__display-info" data-test-user-name-display>{{name}}</div>
+                  <button
+                    {{action editField 'editName'}}
+                    class="user-isolated__display-button"
+                    data-test-user-name-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
+              {{/if}}
             </label>
           </div>
-          <div>
+
+          <div class="user-isolated__form-row">
             <label>
-              <span>Email:</span>
-              <input
+              <span class="user-isolated__label">Email Address</span>
+              {{#if editEmail}}
+                <input
                   type="email"
                   placeholder="hello@cardstack.com"
                   value={{email}}
                   oninput={{action doOnInput 'email'}}
+                  class="user-isolated__input"
                   data-test-user-email
                   />
+              {{else}}
+                <div class="user-isolated__display">
+                  <span class="user-isolated__display-info" data-test-user-email-display>{{email}}</span>
+                    <button
+                    {{action editField 'editEmail'}}
+                    class="user-isolated__display-button"
+                    data-test-user-email-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
+              {{/if}}
             </label>
           </div>
-          <div>
+
+          <div class="user-isolated__form-row">
             <label>
-              <span>Current Password:</span>
-              <input
-                  type="password"
-                  value={{currentPassword}}
-                  oninput={{action doOnInput 'currentPassword'}}
-                  data-test-user-current-password
-                  />
+              <span class="user-isolated__label">{{if editPassword "Current "}}Password</span>
+              {{#if editPassword}}
+                <input
+                    type="password"
+                    value={{currentPassword}}
+                    oninput={{action doOnInput 'currentPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-current-password
+                    />
+              {{else}}
+                <div class="user-isolated__display">
+                  <div class="user-isolated__display-info">********</div>
+                  <button
+                    {{action editField 'editPassword'}}
+                    class="user-isolated__display-button"
+                    data-test-user-password-edit-button
+                  >
+                  {{svg-jar "edit" width="20px" height="20px"}}
+                </button>
+                </div>
+              {{/if}}
             </label>
           </div>
-          <div>
-            <label>
-              <span>New Password (minimum 8 characters):</span>
-              <input
-                  type="password"
-                  value={{newPassword}}
-                  oninput={{action doOnInput 'newPassword'}}
-                  data-test-user-new-password
-                  />
-            </label>
-          </div>
-          <div>
-            <label>
-              <span>Confirm New Password:</span>
-              <input
-                  type="password"
-                  value={{confirmNewPassword}}
-                  oninput={{action doOnInput 'confirmNewPassword'}}
-                  data-test-user-confirm-new-password
-                  />
-            </label>
-          </div>
-          <button data-test-user-reset {{action resetForm}}>Reset</button>
-          <button disabled={{not formCanBeSubmitted}} type="submit" data-test-user-submit>Update</button>
+          {{#if editPassword}}
+            <div class="user-isolated__form-row">
+              <label>
+                <span class="user-isolated__label">New Password (minimum 8 characters)</span>
+                <input
+                    type="password"
+                    value={{newPassword}}
+                    oninput={{action doOnInput 'newPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-new-password
+                    />
+              </label>
+            </div>
+            <div class="user-isolated__form-row">
+              <label>
+                <span class="user-isolated__label">Confirm New Password:</span>
+                <input
+                    type="password"
+                    value={{confirmNewPassword}}
+                    oninput={{action doOnInput 'confirmNewPassword'}}
+                    class="user-isolated__input"
+                    data-test-user-confirm-new-password
+                    />
+              </label>
+            </div>
+          {{/if}}
+
+          {{#if isEditable}}
+            <div class="user-isolated__button-row">
+              <button
+                type="submit"
+                class="user-isolated__button {{if (not formCanBeSubmitted) "disabled"}}"
+                disabled={{not formCanBeSubmitted}}
+                data-test-user-submit
+              >
+                Update
+              </button>
+              <button
+                class="user-isolated__button user-isolated__button--cancel"
+                {{action resetForm}}
+                data-test-user-reset
+              >
+                Cancel
+              </button>
+            </div>
+          {{/if}}
         </form>
       </div>
     {{/if}}
