@@ -12,6 +12,9 @@ factory.addResource('content-types', 'portfolio-users')
     factory.addResource('fields', 'name').withAttributes({
       fieldType: '@cardstack/core-types::string'
     }),
+    factory.addResource('fields', 'avatar-url').withAttributes({
+      fieldType: '@cardstack/core-types::string'
+    }),
   ]);
 
 factory.addResource('content-types', 'app-cards-errors');
@@ -30,7 +33,8 @@ factory.addResource('grants', 'portfolio-users-self-read-grant')
   .withRelated('types', [{ type: 'content-types', id: 'portfolio-users' }])
   .withRelated('fields', [
     { type: 'fields', id: 'name' },
-    { type: 'fields', id: 'email-address' }
+    { type: 'fields', id: 'email-address' },
+    { type: 'fields', id: 'avatar-url' }
   ])
   .withAttributes({
     'may-read-resource': true,

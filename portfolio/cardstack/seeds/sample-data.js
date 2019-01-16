@@ -8,7 +8,8 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withAttributes({
       'name': 'Carl Stack',
       'email-address': 'user@cardstack.com',
-      'password-hash': hashPasswordSync('password')
+      'password-hash': hashPasswordSync('password'),
+      'avatarUrl': '/portfolio-common/images/avatar.png'
     });
 
   // TODO: add networks to contents/ folder

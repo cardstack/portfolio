@@ -25,6 +25,7 @@
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^3.0.0",
     "portfolio-asset": "*",
+    "portfolio-common": "*",
     "portfolio-user": "*"
   },
   "devDependencies": {
@@ -58,7 +59,6 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "portfolio-asset": "*",
     "qunit-dom": "^0.8.0"
   },
   "engines": {

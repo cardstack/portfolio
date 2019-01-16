@@ -81,6 +81,7 @@
     "loader.js": "^4.7.0",
     "lodash": "^4.17.11",
     "portfolio-asset": "*",
+    "portfolio-common": "*",
     "portfolio-crypto": "*",
     "portfolio-crypto-compare": "*",
     "portfolio-network": "*",

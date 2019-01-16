@@ -1,0 +1,95 @@
+.portfolio-top-header {
+  --header-wrapper-max-width: 1440px;
+
+  width: 100%;
+  margin-bottom: 60px;
+  padding: 10px 30px;
+  background-color: var(--portfolio-purple);
+  color: var(--portfolio-white);
+}
+
+.portfolio-top-header__wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--header-wrapper-max-width);
+  margin: 0 auto;
+  /* padding to prevent overlap with edges launcher icon */
+  padding-right: 50px;
+}
+
+.portfolio-top-header__home {
+  color: var(--portfolio-white);
+  text-decoration: none;
+}
+.portfolio-top-header__home:focus {
+  outline-color: var(--portfolio-light-purple);
+}
+
+.portfolio-top-header__title {
+  margin: 0;
+  padding: 5px;
+  padding-left: 40px;
+  background-image: url("/portfolio-common/images/portfolio-logo.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.portfolio-top-header__user {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  max-width: 200px;
+  padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+}
+.portfolio-top-header__user:hover,
+.portfolio-top-header__user:focus {
+  outline-color: var(--portfolio-light-purple);
+  color: var(--portfolio-white);
+  cursor: pointer;
+  user-select: none;
+  filter: brightness(120%);
+}
+
+.portfolio-top-header__user-avatar {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.portfolio-top-header__user-avatar--default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  color: var(--portfolio-purple-gray);
+  background-color: var(--portfolio-light-gray);
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  line-height: 1;
+  text-transform: uppercase;
+}

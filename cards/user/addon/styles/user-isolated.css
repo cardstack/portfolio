@@ -61,7 +61,7 @@
   text-align: center;
 }
 
-.user-isolated__picture {
+.user-isolated__section {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -71,16 +71,39 @@
   text-align: center;
 }
 
-.user-isolated__picture-frame {
+.user-isolated__picture {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-isolated__picture-avatar {
+  width: 100px;
+  height: 100px;
   padding: 30px;
-  color: var(--portfolio-purple-gray);
-  background-color: var(--portfolio-light-gray);
   border: none;
   border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-isolated__picture-default {
+  padding: 30px;
+  border: none;
+  border-radius: 50%;
+  color: var(--portfolio-purple-gray);
+  background-color: var(--portfolio-light-gray);
   font-weight: 700;
   font-family: var(--portfolio-bold-text);
   font-size: 40px;
   line-height: 1;
+}
+
+.user-isolated__upload-photo {
+  margin-left: 10px;
+  color: var(--portfolio-light-purple);
 }
 
 .user-isolated__logout > button {
