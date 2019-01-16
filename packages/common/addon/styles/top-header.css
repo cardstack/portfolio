@@ -47,12 +47,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  width: auto;
-  max-width: 200px;
   padding: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.5);
@@ -71,9 +66,16 @@
   filter: brightness(120%);
 }
 
+.portfolio-top-header__user-name {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .portfolio-top-header__user-avatar {
-  width: 30px;
-  height: 30px;
+  width: 33px;
+  height: 33px;
   margin-left: 10px;
   border: none;
   border-radius: 50%;
@@ -81,15 +83,19 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .portfolio-top-header__user-avatar--default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
+  width: 35px;
   color: var(--portfolio-purple-gray);
   background-color: var(--portfolio-light-gray);
   font-weight: 700;
   font-family: var(--portfolio-bold-text);
   line-height: 1;
   text-transform: uppercase;
+}
+.portfolio-top-header__user-avatar--default > svg {
+  fill: var(--portfolio-light-purple);
 }

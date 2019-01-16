@@ -6,36 +6,24 @@
     {{#if session.isAuthenticated}}
       <div class="user-isolated">
         <header class="user-isolated__header">
-          <h1 class="user-isolated__title">Profile</h1>
+          <h1 class="user-isolated__title">{{svg-jar "user-icon" width="18px" height="20px"}} Profile</h1>
           <button onclick={{action transitionToPortfolio}} class="user-isolated__close-button">
             {{svg-jar "close" width="12px" height="12px"}}
           </button>
         </header>
 
-        {{#if updateSuccessful}}
-          <p class="user-isolated__success" data-test-user-update-success>
-            User profile has been updated.
-          </p>
-        {{else if formError}}
-          <p class="user-isolated__error" data-test-user-update-error>{{formError}}</p>
-        {{/if}}
-
         <div class="user-isolated__section">
-          {{#if (is-component "cardstack-session")}}
-            {{#cardstack-session as |session|}}
-              {{#if session.isAuthenticated}}
-                <div class="user-isolated__picture">
-                  {{#if session.user.avatarUrl}}
-                    <div style={{css-url "background-image" session.user.avatarUrl}} class="user-isolated__picture-avatar" />
-                  {{else}}
-                    <div class="user-isolated__picture-default">CS</div>
-                  {{/if}}
-                  <div class="user-isolated__upload-photo">Upload a Photo</div>
-                  {{!-- TODO: use cardstack photo upload tool --}}
-                </div>
-              {{/if}}
-            {{/cardstack-session}}
-          {{/if}}
+          <div class="user-isolated__picture">
+            {{#if content.avatarUrl}}
+              <div style={{css-url "background-image" content.avatarUrl}} class="user-isolated__picture-avatar" />
+            {{else}}
+              <div class="user-isolated__picture-avatar user-isolated__picture-avatar--default">
+                {{or userInitials (svg-jar "user-icon" width="40px" height="40px")}}
+              </div>
+            {{/if}}
+            <div class="user-isolated__upload-photo">Upload a Photo</div>
+            {{!-- TODO: use cardstack photo upload tool --}}
+          </div>
 
           <LogoutButton class="user-isolated__logout"></LogoutButton>
         </div>
@@ -103,7 +91,7 @@
                     type="password"
                     value={{currentPassword}}
                     oninput={{action doOnInput 'currentPassword'}}
-                    class="user-isolated__input"
+                    class="user-isolated__input {{if oldPasswordError "user-isolated__input--error"}}"
                     data-test-user-current-password
                     />
               {{else}}
@@ -128,7 +116,7 @@
                     type="password"
                     value={{newPassword}}
                     oninput={{action doOnInput 'newPassword'}}
-                    class="user-isolated__input"
+                    class="user-isolated__input {{if newPasswordError "user-isolated__input--error"}}"
                     data-test-user-new-password
                     />
               </label>
@@ -140,11 +128,21 @@
                     type="password"
                     value={{confirmNewPassword}}
                     oninput={{action doOnInput 'confirmNewPassword'}}
-                    class="user-isolated__input"
+                    class="user-isolated__input {{if newPasswordError "user-isolated__input--error"}}"
                     data-test-user-confirm-new-password
                     />
               </label>
             </div>
+          {{/if}}
+
+          {{#if updateSuccessful}}
+            <p class="user-isolated__message user-isolated__message--success" data-test-user-update-success>
+              User profile has been updated.
+            </p>
+          {{else if formError}}
+            <p class="user-isolated__message user-isolated__message--error" data-test-user-update-error>
+              {{formError}}
+            </p>
           {{/if}}
 
           {{#if isEditable}}
