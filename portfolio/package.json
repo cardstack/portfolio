@@ -30,7 +30,7 @@
     "@cardstack/di": "^0.13.0",
     "@cardstack/ephemeral": "^0.13.0",
     "@cardstack/eslint-config": "^0.13.0",
-    "@cardstack/ethereum": "^0.13.7",
+    "@cardstack/ethereum": "^0.13.8",
     "@cardstack/git": "^0.13.6",
     "@cardstack/hub": "^0.13.6",
     "@cardstack/jsonapi": "^0.13.6",
