@@ -29,7 +29,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   let litecoinNetwork = factory.addResource('networks', 'litecoin')
     .withAttributes({
       title: 'Litecoin',
-      unit: 'LIT',
+      unit: 'LTC',
     });
   let zcashNetwork = factory.addResource('networks', 'zcash')
     .withAttributes({

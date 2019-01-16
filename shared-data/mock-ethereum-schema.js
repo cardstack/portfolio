@@ -167,6 +167,17 @@ module.exports = [{
 }, {
   type: 'content-types',
   id: 'ethereum-transactions',
+  attributes: {
+    defaultIncludes: [ 'todays-rates' ],
+    fieldsets: {
+      embedded: [
+        { field: 'todays-rates', format: 'embedded' },
+      ],
+      isolated: [
+        { field: 'todays-rates', format: 'embedded' },
+      ]
+    }
+  },
   relationships: {
     fields: {
       data: [
@@ -187,6 +198,7 @@ module.exports = [{
         { type: "fields", id: "transaction-successful" },
         { type: "fields", id: "gas-used" },
         { type: "fields", id: "cumulative-gas-used" },
+        { type: "computed-fields", id: "todays-rates" },
       ]
     },
   }

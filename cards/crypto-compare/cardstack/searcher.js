@@ -13,7 +13,7 @@ const centsMultiplier = {
   GBP: 100,
   CHF: 100,
   JPY: 1,
-  CNY: 1
+  CNY: 1,
 };
 
 module.exports = declareInjections({
@@ -65,6 +65,8 @@ class CryptoCompareSearcher {
   }
 
   async _lookupRateById(id) {
+    if (!this.toFiatCurrencies || !this.fromCryptoCurrencies) { return; }
+
     let [ fromCryptoCurrency, toFiatCurrency, date ] = id.split('_');
     if (!fromCryptoCurrency || !toFiatCurrency || !date) { return; }
     if (!this.toFiatCurrencies.includes(toFiatCurrency) ||
@@ -89,6 +91,10 @@ class CryptoCompareSearcher {
       let randomOffsetPercentage = 0.1;
       responseBody = {
         [toFiatCurrency]: basis - Math.floor(Math.random() * Math.round(basis * randomOffsetPercentage))
+      };
+    } else if (process.env.HUB_ENVIRONMENT === 'test' && !this.apiKey) {
+      responseBody = {
+        [toFiatCurrency]: 500
       };
     } else {
       let response = await fetch(`${url}&api_key=${this.apiKey}`);
