@@ -9,9 +9,16 @@ export default Component.extend({
     let timestamp = this.get('content.timestamp');
     if (!timestamp) { return; }
 
-    return moment.unix(timestamp).format('MMM D, YYYY h:mm a');
+    return moment.unix(timestamp).format('MMM D, YYYY h:mm A');
   }),
-  
+
+  datetime: computed('content.timestamp', function() {
+    let timestamp = this.get('content.timestamp');
+    if (!timestamp) { return; }
+
+    return moment.unix(timestamp).format('MMM D, YYYY hh:mm:ss A Z');
+  }),
+
   firstTransactionDate: computed('content.firstTransactionTimestamp', function() {
     let timestamp = this.get('content.firstTransactionTimestamp');
     if (!timestamp) { return; }
@@ -26,6 +33,24 @@ export default Component.extend({
     return parseFloat(Web3.utils.fromWei(value, 'ether')).toFixed(4);
   }),
 
+  transactionCost: computed('content.{gasPrice,gasUsed}', function() {
+    let gasPrice = this.get('content.gasPrice');
+    let gasUsed = this.get('content.gasUsed');
+    if (!gasPrice || !gasUsed) { return; }
+
+    let BN = Web3.utils.BN;
+    let price = new BN(gasPrice);
+    let used = new BN(gasUsed);
+
+    return Web3.utils.fromWei(price.mul(used), 'Gwei');
+  }),
+
+  transactionHashLink: computed('content.transactionHash', function() {
+    let hash = this.get('content.transactionHash');
+
+    return `https://etherscan.io/tx/${hash}`;
+  }),
+
   abbreviatedFromAddress: computed('content.transactionFrom', function() {
     let address = this.get('content.transactionFrom');
 
@@ -33,6 +58,11 @@ export default Component.extend({
   }),
   abbreviatedToAddress: computed('content.transactionTo', function() {
     let address = this.get('content.transactionTo');
+
+    return this.abbreviatedAddress(address);
+  }),
+  abbreviatedTransactionHash: computed('content.transactionHash', function() {
+    let address = this.get('content.transactionHash');
 
     return this.abbreviatedAddress(address);
   }),
