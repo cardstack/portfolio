@@ -45,4 +45,4 @@ RUN apt-get update \
 
 CMD remote_syslog --hostname "${TARGET_ENV:-unknown_env}_$(hostname)" && yarn start-hub 2>&1 | tee -a /srv/hub/logs/node.log
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=3 CMD curl -f http://localhost:3000/api/content-types || exit 1
+HEALTHCHECK --interval=45s --timeout=45s --start-period=45s --retries=4 CMD curl -f http://localhost:3000/api/content-types || exit 1
