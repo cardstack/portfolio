@@ -2,7 +2,6 @@
   --header-wrapper-max-width: 1440px;
 
   width: 100%;
-  margin-bottom: 60px;
   padding: 10px 30px;
   background-color: var(--portfolio-purple);
   color: var(--portfolio-white);
@@ -30,16 +29,21 @@
 .portfolio-top-header__title {
   margin: 0;
   padding: 5px;
-  padding-left: 40px;
-  background-image: url("/portfolio-common/images/portfolio-logo.svg");
-  background-position: left center;
-  background-repeat: no-repeat;
   font-weight: 700;
   font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-sm-font);
   letter-spacing: 0.3px;
   line-height: 1.4;
   text-transform: uppercase;
+}
+.portfolio-top-header__title > svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.portfolio-top-header__title > span {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .portfolio-top-header__user {
