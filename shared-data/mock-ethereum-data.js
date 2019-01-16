@@ -37,7 +37,7 @@ module.exports = [
       "type": "ethereum-transactions",
       "attributes": {
         "transaction-successful": true,
-        "transaction-index": 0,
+        "transaction-index": 17,
         "cumulative-gas-used": 21000,
         "transaction-data": "0x0",
         "timestamp": 1547478615,
@@ -72,7 +72,7 @@ module.exports = [
       "type": "ethereum-transactions",
       "attributes": {
         "transaction-successful": true,
-        "transaction-index": 0,
+        "transaction-index": 23,
         "cumulative-gas-used": 21000,
         "transaction-data": "0x0",
         "timestamp": 1547478616,
@@ -106,13 +106,12 @@ module.exports = [
       "id": "0x6efc3a61e5fac700a8d992f4bad4bfa62763601b05b04d27f2f96607ce097259",
       "type": "ethereum-transactions",
       "attributes": {
-        "transaction-successful": true,
-        "transaction-index": 0,
+        "transaction-successful": false,
+        "transaction-index": 37,
         "cumulative-gas-used": 21000,
         "transaction-data": "0x0",
         "timestamp": 1547478615,
         "transaction-nonce": 0,
-        "block-number": 7,
         "gas-used": 21000,
         "transaction-from": "0xaefa57a8b9ddb56229ae57d61559fc2a4c5af0cd",
         "block-hash": "0xa8e29d6436116184de229b501854e502009669985724ce53e8c240cfe43ef1e4",
@@ -142,7 +141,7 @@ module.exports = [
       "type": "ethereum-transactions",
       "attributes": {
         "transaction-successful": true,
-        "transaction-index": 0,
+        "transaction-index": 47,
         "cumulative-gas-used": 21000,
         "transaction-data": "0x0",
         "timestamp": 1547478616,

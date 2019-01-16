@@ -1,27 +1,36 @@
 <a class="transaction-embedded" data-test-transaction-embedded-link href={{cardstack-url content}}>
   <header class="transaction-embedded__header">
-    <h4 class="transaction-embedded__title" data-test-transaction-embedded-title>{{content.title}}</h4>
+    <h4 class="transaction-embedded__title" data-test-transaction-embedded-title>Transaction {{content.transactionIndex}}</h4>
     <time class="transaction-embedded__datetime" datetime="" data-test-transaction-embedded-date>{{date}}</time>
   </header>
-  <dl class="transaction-embedded__data">
-    <div class="transaction-embedded__label--sent">
-      <dt>Sent</dt>
-      <dd class="transaction-embedded__amount">
-        {{!-- TODO the +/- sign is problematic we should remove this and make it more clear what is going on --}}
-        -{{transactionValue}} ETH
-        <span class="transaction-embedded__amount--usd">≈ $500 USD</span>
-      </dd>
+  <div class="transaction-embedded__data">
+    <div class="transaction-embedded__amount">
+      <div data-test-transaction-embedded-value>
+        <span class="transaction-embedded__amount--value">{{transactionValue}}</span>
+        <span class="transaction-embedded__amount--currency">ETH</span>
+      </div>
+      <div class="transaction-embedded__amount--usd">≈ $500 USD</div>
     </div>
-    <div>
-      <dt>To</dt>
-      <dd class="transaction-embedded__address">0x1234...4321</dd>
+    <div class="transaction-embedded__addresses">
+      <div data-test-transaction-embedded-from>
+        <div class="transaction-embedded__label">From</div>
+        <div class="transaction-embedded__address">{{abbreviatedFromAddress}}</div>
+      </div>
+      <div data-test-transaction-embedded-to>
+        <div class="transaction-embedded__label">To</div>
+        <div class="transaction-embedded__address">{{abbreviatedToAddress}}</div>
+      </div>
     </div>
-  </dl>
-  <footer class="transaction-embedded__status">
-    <div>
+  </div>
+  <footer class="transaction-embedded__status {{if content.transactionSuccessful 'transaction-successful' 'transaction-failed'}}">
+    <div data-test-transaction-embedded-status>
       Status:
-      <span>Successful</span>
-      {{svg-jar "check" class="transaction-embedded__status-icon"}}
+      {{#if content.transactionSuccessful}}
+        <span>Successful</span>
+        {{svg-jar "check" class="transaction-embedded__status-icon"}}
+      {{else}}
+        <span>Failed</span>
+      {{/if}}
     </div>
     <div class="transaction-embedded__details">Details</div>
   </footer>

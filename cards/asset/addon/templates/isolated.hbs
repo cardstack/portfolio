@@ -57,7 +57,6 @@
       <section>
         <h3 class="asset-isolated__section-title">Transaction History</h3>
         <div class="asset-isolated__group asset-isolated__transactions">
-          [TODO show embedded transaction cards here based on ethereum transactions]
           {{#each content.networkAsset.transactions as |transaction index|}}
             <div data-test-asset-isolated-transaction={{index}}>
               {{cardstack-content content=transaction format="embedded"}}
