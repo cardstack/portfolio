@@ -95,5 +95,6 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-isolated-from]').hasText('From 0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5');
     assert.dom('[data-test-transaction-isolated-to]').hasText('To 0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde');
     assert.dom('[data-test-transaction-isolated-status]').hasText('Status: Successful');
+    assert.dom('[data-test-portfolio-top-header]').exists();
   });
 });

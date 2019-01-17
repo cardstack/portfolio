@@ -51,5 +51,6 @@ module('Card | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-wallets-count]').hasText('2 Wallets');
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Wallet 1');
     assert.dom('[data-test-portfolio-isolated-wallet="1"] [data-test-wallet-embedded-title]').hasText('Wallet 2');
+    assert.dom('[data-test-portfolio-top-header]').exists();
   });
 });

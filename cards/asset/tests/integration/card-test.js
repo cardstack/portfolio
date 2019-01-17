@@ -100,5 +100,6 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     // TODO add assertion for USD value after we integrate crypto compare with the ethereum models
     // TODO add assertion for historic chart
+    assert.dom('[data-test-portfolio-top-header]').exists();
   });
 });

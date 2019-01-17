@@ -908,7 +908,7 @@
     resolve "^1.3.3"
     temp "^0.8.3"
 
-"@cardstack/tools@^0.13.6":
+"@cardstack/tools@^0.13.1", "@cardstack/tools@^0.13.6":
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/@cardstack/tools/-/tools-0.13.6.tgz#8ea88f2dec16649bc39da4a2ffdfe247a8d4a654"
   integrity sha512-P7D9BL+EbwPPhwKRPzEdXB2GfddbEVgDlHcPpPex6dHDAHw+gjxDsOk071VBZEDzEo0qOQXGFlYsETwrQwLyeg==
@@ -5477,6 +5477,13 @@ ember-css-url@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ember-css-url/-/ember-css-url-0.2.0.tgz#109a04a93a2e3af71c8ac3b56aec42407eb35d0b"
   integrity sha512-cJIjutYn+x9+LH++gvQwIUFDtH5scb2fSTpkiTytT7YX564uEaStJWIvKXXFT+q7184LakLMsQJ6EVrAQx9VsQ==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
+ember-css-url@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ember-css-url/-/ember-css-url-0.2.1.tgz#7740bb4e0b807d7dd1e123bac3bc28fd12ca937e"
+  integrity sha512-XJ+aTreQvRGYw0T1f+epLUbks27sl4GDUm3cV9KkCS+t9ctqvKtl2DGLRgzr40EszwtTCI5TEvdOzrpP6AKLjQ==
   dependencies:
     ember-cli-babel "^6.6.0"
 
