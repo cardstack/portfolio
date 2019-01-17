@@ -1,0 +1,33 @@
+:root {
+  --portfolio-regular-text: "Open Sans Regular", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --portfolio-semibold-text: "Open Sans Semibold", var(--portfolio-regular-text);
+  --portfolio-bold-text: "Open Sans Bold", var(--portfolio-semibold-text);
+
+  --portfolio-xs-font: 12px;
+  --portfolio-sm-font: 14px;
+  --portfolio-med-font: 16px;
+  --portfolio-lg-font: 18px;
+  --portfolio-xl-font: 20px;
+  --portfolio-xxl-font: 30px;
+}
+
+@font-face {
+  font-family: "Open Sans Regular";
+  src: url("/portfolio-common/fonts/OpenSans-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open Sans Semibold";
+  src: url("/portfolio-common/fonts/OpenSans-SemiBold.ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open Sans Bold";
+  src: url("/portfolio-common/fonts/OpenSans-Bold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}

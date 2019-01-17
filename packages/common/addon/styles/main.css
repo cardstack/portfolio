@@ -1,0 +1,13 @@
+:root {
+  --portfolio-isolated-container-max-width: 960px;
+}
+
+body {
+  background-color: var(--portfolio-light-gray);
+  color: var(--portfolio-black);
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-sm-font);
+  line-height: 1.3;
+  letter-spacing: 0;
+  margin: 0;
+}
