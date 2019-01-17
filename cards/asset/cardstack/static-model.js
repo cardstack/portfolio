@@ -7,6 +7,7 @@ factory.addResource('content-types', 'assets')
   .withAttributes({
     defaultIncludes: [
       'transactions',
+      'todays-rates',
       'network',
       'network-asset',
       'network-asset.transactions'
@@ -15,12 +16,14 @@ factory.addResource('content-types', 'assets')
       isolated: [
         { field: 'transactions', format: 'embedded' },
         { field: 'network', format: 'embedded' },
+        { field: 'todays-rates', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
         { field: 'network-asset.transactions', format: 'embedded' },
       ],
       embedded: [
         { field: 'network', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
+        { field: 'todays-rates', format: 'embedded' },
       ]
     }
   })
@@ -60,6 +63,9 @@ factory.addResource('content-types', 'assets')
     }),
     factory.addResource('computed-fields', 'first-transaction-timestamp').withAttributes({
       'computed-field-type': 'portfolio-asset::first-transaction-timestamp',
+    }),
+    factory.addResource('computed-fields', 'todays-rates').withAttributes({
+      'computed-field-type': 'portfolio-crypto-compare::todays-rates',
     }),
 
     // For the future when we have a bitcoin indexer....

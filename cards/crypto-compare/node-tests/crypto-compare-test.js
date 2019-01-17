@@ -44,6 +44,20 @@ describe('crypto-compare', function () {
       factory.importModels(require(schemaFile)());
     }
 
+    factory.addResource('content-types', 'puppies')
+      .withAttributes({ defaultIncludes: ['todays-rates', 'poop-rates']})
+      .withRelated('fields', [
+        factory.addResource('fields', 'pooped-on-the-floor-timestamp').withAttributes({
+          'field-type': '@cardstack/core-types::integer'
+        }),
+        factory.addResource('computed-fields', 'todays-rates').withAttributes({
+          'computed-field-type': 'portfolio-crypto-compare::todays-rates'
+        }),
+        factory.addResource('computed-fields', 'poop-rates').withAttributes({
+          'computed-field-type': 'portfolio-crypto-compare::rates-from-timestamp'
+        })
+      ]);
+
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
     searchers = env.lookup('hub:searchers');
   });
@@ -322,6 +336,7 @@ describe('crypto-compare', function () {
       }
       expect(error.status).to.equal(404);
     });
+
   });
 
 });

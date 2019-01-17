@@ -16,11 +16,23 @@
           </div>
           <div class="asset-isolated_gradient-wrapper">
             <div>
-              <span class="asset-isolated__value">2.1434</span>
+              <span class="asset-isolated__value">
+                {{#if content.networkAsset.balance}}
+                  {{wei-to-ethers content.networkAsset.balance}}
+                {{else}}
+                  2.1434
+                {{/if}}
+              </span>
               <span class="asset-isolated__unit" data-test-asset-isolated-unit>{{content.networkUnit}}</span>
             </div>
             <div>
-              <span class="asset-isolated__value--secondary">$8509.30</span>
+              <span class="asset-isolated__value--secondary" data-test-asset-isolated-fiat-value>
+                {{#if content.networkAsset.balance}}
+                  {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRates}}
+                {{else}}
+                  $8509.30
+                {{/if}}
+              </span>
               <span class="asset-isolated__unit--secondary">USD</span>
             </div>
           </div>

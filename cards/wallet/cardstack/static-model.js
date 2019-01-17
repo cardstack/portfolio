@@ -4,14 +4,16 @@ let factory = new JSONAPIFactory();
 factory.addResource('content-types', 'wallets')
   .withAttributes({
     defaultIncludes: [
-      'assets', 'user',
+      'assets', 'user', 'todays-rates',
     ],
     fieldsets: {
       embedded: [
         { field: 'assets', format: 'embedded' },
+        { field: 'todays-rates', format: 'embedded' },
       ],
       isolated: [
         { field: 'assets', format: 'embedded' },
+        { field: 'todays-rates', format: 'embedded' },
       ]
     }
   })
@@ -28,7 +30,10 @@ factory.addResource('content-types', 'wallets')
     }).withRelated('related-types', [{ type: 'content-types', id: 'assets' }]),
     factory.addResource('fields', 'user').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to',
-    }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }])
+    }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
+    factory.addResource('computed-fields', 'todays-rates').withAttributes({
+      'computed-field-type': 'portfolio-crypto-compare::todays-rates',
+    }),
   ]);
 
   factory.addResource('grants', 'wallet-self-grant')

@@ -1,8 +1,6 @@
-
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import moment from 'moment';
-import Web3 from 'web3';
 
 const { readOnly } = computed;
 
@@ -26,10 +24,4 @@ export default Component.extend({
 
     return moment.unix(timestamp).format('MMM D,YYYY')
   }),
-  etherBalance: computed('content.networkAsset.balance', function() {
-    let balance = this.get('content.networkAsset.balance');
-    if (!balance) { return; }
-
-    return parseFloat(Web3.utils.fromWei(balance, 'ether')).toFixed(4);
-  })
 });
