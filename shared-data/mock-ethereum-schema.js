@@ -198,7 +198,7 @@ module.exports = [{
         { type: "fields", id: "transaction-successful" },
         { type: "fields", id: "gas-used" },
         { type: "fields", id: "cumulative-gas-used" },
-        { type: "computed-fields", id: "todays-rates" },
+        { type: "computed-fields", id: "todays-rates-lookup" },
       ]
     },
   }

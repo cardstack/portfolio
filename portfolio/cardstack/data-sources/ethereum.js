@@ -17,18 +17,18 @@ if (process.env.JSON_RPC_URL) {
             'ethereum-transactions': [{
               op: 'add',
               path: '/relationships/fields/data/-',
-              value: { type: 'computed-fields', id: 'todays-rates' }
+              value: { type: 'computed-fields', id: 'todays-rates-lookup' }
             },{
               op: 'add',
               path: '/attributes',
               value: {
-                defaultIncludes: [ 'todays-rates' ],
+                defaultIncludes: [ 'todays-rates-lookup.rates' ],
                 fieldsets: {
                   embedded: [
-                    { field: 'todays-rates', format: 'embedded' },
+                    { field: 'todays-rates-lookup.rates', format: 'embedded' },
                   ],
                   isolated: [
-                    { field: 'todays-rates', format: 'embedded' },
+                    { field: 'todays-rates-lookup.rates', format: 'embedded' },
                   ]
                 }
               }

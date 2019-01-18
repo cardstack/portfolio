@@ -44,26 +44,45 @@ describe('crypto-compare', function () {
       factory.importModels(require(schemaFile)());
     }
 
-    factory.addResource('content-types', 'puppies')
-      .withAttributes({ defaultIncludes: ['todays-rates', 'poop-rates']})
-      .withRelated('fields', [
-        factory.addResource('fields', 'pooped-on-the-floor-timestamp').withAttributes({
-          'field-type': '@cardstack/core-types::integer'
-        }),
-        factory.addResource('computed-fields', 'todays-rates').withAttributes({
-          'computed-field-type': 'portfolio-crypto-compare::todays-rates'
-        }),
-        factory.addResource('computed-fields', 'poop-rates').withAttributes({
-          'computed-field-type': 'portfolio-crypto-compare::rates-from-timestamp'
-        })
-      ]);
-
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
     searchers = env.lookup('hub:searchers');
   });
 
   afterEach(async function () {
     await destroyDefaultEnvironment(env);
+  });
+
+  describe('indexer', function () {
+    it('creates a crypto-compare-current-rates/today resource when the indexers update', async function() {
+      const now = moment.utc();
+      const today = now.format('YYYY-MM-DD');
+      const expectedTimestamp = now.startOf('day').unix();
+      for (let fromCurrency of ['BTC', 'ETH']) {
+        for (let toCurrency of ['USD', 'EUR']) {
+          nock(cryptoCompareHost)
+            .get(`${cryptoComparePath}?fsym=${fromCurrency}&tsym=${toCurrency}&toTs=${expectedTimestamp}&api_key=TEST_KEY`)
+            .reply(200, ETH_EUR_1514764800);
+        }
+      }
+
+      let { data, included } = await searchers.get(env.session, 'master', 'crypto-compare-current-rates', 'today');
+
+      let rates = data.relationships.rates.data;
+      expect(rates).to.have.deep.members([
+        { type: 'crypto-compares', id: `BTC_USD_${today}` },
+        { type: 'crypto-compares', id: `ETH_USD_${today}` },
+        { type: 'crypto-compares', id: `BTC_EUR_${today}` },
+        { type: 'crypto-compares', id: `ETH_EUR_${today}` },
+      ]);
+
+      let includedRates = included.map(i => `${i.type}/${i.id}`);
+      expect(includedRates).to.have.members([
+        `crypto-compares/BTC_USD_${today}`,
+        `crypto-compares/ETH_USD_${today}`,
+        `crypto-compares/BTC_EUR_${today}`,
+        `crypto-compares/ETH_EUR_${today}`,
+      ]);
+    });
   });
 
   describe('searcher', function () {

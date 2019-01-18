@@ -7,7 +7,7 @@ factory.addResource('data-sources', 'crypto-compare')
     params: {
       'cryptoCompareDailyAverageApiUrl': 'https://min-api.cryptocompare.com/data/dayAvg', // TODO move env var
       'apiKey': process.env.CRYPTO_COMPARE_API_KEY,
-      'toFiatCurrencies': ['USD', 'EUR', 'BTC'],
+      'toFiatCurrencies': ['USD', 'EUR'],
       'fromCryptoCurrencies': ['BTC', 'ETH', 'LTC', 'ZEC']
     }
   });
