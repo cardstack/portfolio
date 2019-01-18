@@ -1,10 +1,10 @@
 <nav class="portfolio-breadcrumbs">
   <ul>
     <li><a href="/">My Portfolio</a></li>
-    {{#if (or asset transaction)}}
+    {{#if (or isAsset isTransaction)}}
       <li><a href="">[Wallet Title]</a></li>
     {{/if}}
-    {{#if transaction}}
+    {{#if isTransaction}}
       <li><a href="">[Asset Title]</a></li>
     {{/if}}
   </ul>

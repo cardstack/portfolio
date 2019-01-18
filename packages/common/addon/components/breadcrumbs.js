@@ -5,6 +5,6 @@ import layout from '../templates/breadcrumbs';
 export default Component.extend({
   layout,
   tagName: '',
-  asset: equal('content.type', 'asset'),
-  transaction: match('content.type', /.*?-transaction/)
+  isAsset: equal('content.type', 'asset'),
+  isTransaction: match('content.type', /.*?-transaction/)
 });
