@@ -170,13 +170,19 @@ module.exports = [{
   attributes: {
     defaultIncludes: [
       'rates-at-transaction-timestamp',
+      'to-address',
+      'from-address'
     ],
     fieldsets: {
       embedded: [
         { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+        { field: 'to-address', format: 'embedded' },
+        { field: 'from-address', format: 'embedded' },
       ],
       isolated: [
         { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+        { field: 'to-address', format: 'embedded' },
+        { field: 'from-address', format: 'embedded' },
       ]
     }
   },
