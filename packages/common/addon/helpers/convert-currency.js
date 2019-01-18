@@ -38,8 +38,7 @@ export function convertCurrency(fromCurrency, toCurrency, fromValue, rates) {
 
   let factor = Math.pow(10, decimalsPrecision); // BigNumber doesn't handle decimals so everything needs to be converted to whole numbers
   let rateAsCents = new BN(rateCents || rate.get('cents'));
-  let fromAsEthFactor = new BN(Web3.utils.fromWei(fromValue, 'ether')).mul(new BN(factor));
-  let centsFactor = fromAsEthFactor.div(rateAsCents);
+  let centsFactor = (new BN(Web3.utils.fromWei(fromValue, 'ether')).mul(new BN(factor))).div(rateAsCents);
   // ok, the BigNumber should be in safe javascript territory now, so let do normal js math
   let currencyDecimalPlaces = displayDecimalPlaces[toCurrency] || 2;
   let toCurrenyUnits = ((parseFloat(centsFactor, 10) / parseFloat(factor)) / Math.pow(10, currencyDecimalPlaces)).toFixed(currencyDecimalPlaces);
