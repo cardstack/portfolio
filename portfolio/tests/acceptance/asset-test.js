@@ -81,13 +81,6 @@ module('Acceptance | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`)
   });
 
-  test('currency conversion works on embedded asset card', async function (assert) {
-    await visit(`/assets/${address}`);
-    assert.equal(currentURL(), `/assets/${address}`);
-
-    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$13.06');
-  });
-
   test('user can navigate to isolated transaction card', async function(assert) {
     await visit(`/assets/${address}`);
 

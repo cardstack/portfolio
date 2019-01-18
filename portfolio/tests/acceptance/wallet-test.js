@@ -145,13 +145,6 @@ module('Acceptance | wallet', function (hooks) {
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
   });
 
-  test('currency conversion works on embedded asset card', async function (assert) {
-    await visit('/wallets/ing-wallet');
-    await login();
-
-    assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-fiat-value]').hasText('$13.06');
-  });
-
   skip('TODO user can navigate to isolated portfolio card from their isolated wallet card', async function (/*assert*/) {
   });
 });

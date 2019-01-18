@@ -7,15 +7,6 @@ import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 const address = '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE';
 const scenario = new Fixtures({
   create(factory) {
-    factory.addResource('data-sources', 'crypto-compare')
-      .withAttributes({
-        sourceType: 'portfolio-crypto-compare',
-        params: {
-          'cryptoCompareDailyAverageApiUrl': 'http://nowhere',
-          'toFiatCurrencies': ['USD', 'EUR'],
-          'fromCryptoCurrencies': ['BTC', 'ETH', 'LTC', 'ZEC']
-        }
-      });
 
     factory.addResource('assets', address)
       .withRelated('network', factory.addResource('networks', 'ether')
@@ -97,7 +88,7 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7...1fDE');
     assert.dom('[data-test-asset-embedded-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-embedded-balance]').hasText('0.2009 ETH');
-    // currency conversion needs to be tested in the accepance tests as it relies on more hub machinery than is available in the integration tests
+    assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$13.06');
   });
 
   test('isolated format renders', async function (assert) {
@@ -108,7 +99,7 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-established-date]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
-    // currency conversion needs to be tested in the accepance tests as it relies on more hub machinery than is available in the integration tests
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$13.06');
 
     // TODO add assertion for historic chart
     assert.dom('[data-test-portfolio-top-header]').exists();
