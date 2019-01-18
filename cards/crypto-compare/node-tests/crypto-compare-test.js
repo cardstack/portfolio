@@ -20,7 +20,9 @@ const cryptoCompareHost = 'https://min-api.cryptocompare.com';
 const cryptoComparePath = `/data/dayAvg`;
 const cryptoCompareUrl = `${cryptoCompareHost}${cryptoComparePath}`;
 
-let factory, env, searchers;
+let factory, env, searchers, now;
+let toCurrencies = ['USD', 'EUR'];
+let fromCurrencies = ['BTC', 'ETH'];
 
 describe('crypto-compare', function () {
   beforeEach(async function () {
@@ -32,8 +34,8 @@ describe('crypto-compare', function () {
         params: {
           'cryptoCompareDailyAverageApiUrl': cryptoCompareUrl,
           'apiKey': 'TEST_KEY',
-          'toFiatCurrencies': ['USD', 'EUR'],
-          'fromCryptoCurrencies': ['BTC', 'ETH']
+          'toFiatCurrencies': toCurrencies,
+          'fromCryptoCurrencies': fromCurrencies
         }
       });
 
@@ -42,6 +44,17 @@ describe('crypto-compare', function () {
       let schemaFile = join(cardDir, cardName, 'cardstack', 'static-model.js');
       if (!existsSync(schemaFile)) { continue; }
       factory.importModels(require(schemaFile)());
+    }
+
+    // setup nocks for the indexer
+    now = moment.utc();
+    const expectedTimestamp = now.startOf('day').unix();
+    for (let fromCurrency of fromCurrencies) {
+      for (let toCurrency of toCurrencies) {
+        nock(cryptoCompareHost)
+          .get(`${cryptoComparePath}?fsym=${fromCurrency}&tsym=${toCurrency}&toTs=${expectedTimestamp}&api_key=TEST_KEY`)
+          .reply(200, ETH_EUR_1514764800);
+      }
     }
 
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
@@ -54,16 +67,7 @@ describe('crypto-compare', function () {
 
   describe('indexer', function () {
     it('creates a crypto-compare-current-rates/today resource when the indexers update', async function() {
-      const now = moment.utc();
       const today = now.format('YYYY-MM-DD');
-      const expectedTimestamp = now.startOf('day').unix();
-      for (let fromCurrency of ['BTC', 'ETH']) {
-        for (let toCurrency of ['USD', 'EUR']) {
-          nock(cryptoCompareHost)
-            .get(`${cryptoComparePath}?fsym=${fromCurrency}&tsym=${toCurrency}&toTs=${expectedTimestamp}&api_key=TEST_KEY`)
-            .reply(200, ETH_EUR_1514764800);
-        }
-      }
 
       let { data, included } = await searchers.get(env.session, 'master', 'crypto-compare-current-rates', 'today');
 
