@@ -7,7 +7,7 @@ factory.addResource('content-types', 'assets')
   .withAttributes({
     defaultIncludes: [
       'transactions',
-      'todays-rates',
+      'todays-rates-lookup.rates',
       'network',
       'network-asset',
       'network-asset.transactions'
@@ -16,18 +16,20 @@ factory.addResource('content-types', 'assets')
       isolated: [
         { field: 'transactions', format: 'embedded' },
         { field: 'network', format: 'embedded' },
-        { field: 'todays-rates', format: 'embedded' },
+        { field: 'todays-rates-lookup.rates', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
         { field: 'network-asset.transactions', format: 'embedded' },
       ],
       embedded: [
         { field: 'network', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
-        { field: 'todays-rates', format: 'embedded' },
+        { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }
   })
   .withRelated('fields', [
+    { type: 'computed-fields', id: 'todays-rates-lookup' },
+
     // TODO use default on create for relationship to ethereum network?
     factory.addResource('fields', 'network').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to'
@@ -63,9 +65,6 @@ factory.addResource('content-types', 'assets')
     }),
     factory.addResource('computed-fields', 'first-transaction-timestamp').withAttributes({
       'computed-field-type': 'portfolio-asset::first-transaction-timestamp',
-    }),
-    factory.addResource('computed-fields', 'todays-rates').withAttributes({
-      'computed-field-type': 'portfolio-crypto-compare::todays-rates',
     }),
 
     // For the future when we have a bitcoin indexer....

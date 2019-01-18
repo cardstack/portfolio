@@ -20,7 +20,9 @@ const cryptoCompareHost = 'https://min-api.cryptocompare.com';
 const cryptoComparePath = `/data/dayAvg`;
 const cryptoCompareUrl = `${cryptoCompareHost}${cryptoComparePath}`;
 
-let factory, env, searchers;
+let factory, env, searchers, now;
+let toCurrencies = ['USD', 'EUR'];
+let fromCurrencies = ['BTC', 'ETH'];
 
 describe('crypto-compare', function () {
   beforeEach(async function () {
@@ -32,8 +34,8 @@ describe('crypto-compare', function () {
         params: {
           'cryptoCompareDailyAverageApiUrl': cryptoCompareUrl,
           'apiKey': 'TEST_KEY',
-          'toFiatCurrencies': ['USD', 'EUR'],
-          'fromCryptoCurrencies': ['BTC', 'ETH']
+          'toFiatCurrencies': toCurrencies,
+          'fromCryptoCurrencies': fromCurrencies
         }
       });
 
@@ -44,19 +46,16 @@ describe('crypto-compare', function () {
       factory.importModels(require(schemaFile)());
     }
 
-    factory.addResource('content-types', 'puppies')
-      .withAttributes({ defaultIncludes: ['todays-rates', 'poop-rates']})
-      .withRelated('fields', [
-        factory.addResource('fields', 'pooped-on-the-floor-timestamp').withAttributes({
-          'field-type': '@cardstack/core-types::integer'
-        }),
-        factory.addResource('computed-fields', 'todays-rates').withAttributes({
-          'computed-field-type': 'portfolio-crypto-compare::todays-rates'
-        }),
-        factory.addResource('computed-fields', 'poop-rates').withAttributes({
-          'computed-field-type': 'portfolio-crypto-compare::rates-from-timestamp'
-        })
-      ]);
+    // setup nocks for the indexer
+    now = moment.utc();
+    const expectedTimestamp = now.startOf('day').unix();
+    for (let fromCurrency of fromCurrencies) {
+      for (let toCurrency of toCurrencies) {
+        nock(cryptoCompareHost)
+          .get(`${cryptoComparePath}?fsym=${fromCurrency}&tsym=${toCurrency}&toTs=${expectedTimestamp}&api_key=TEST_KEY`)
+          .reply(200, ETH_EUR_1514764800);
+      }
+    }
 
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
     searchers = env.lookup('hub:searchers');
@@ -64,6 +63,30 @@ describe('crypto-compare', function () {
 
   afterEach(async function () {
     await destroyDefaultEnvironment(env);
+  });
+
+  describe('indexer', function () {
+    it('creates a crypto-compare-current-rates/today resource when the indexers update', async function() {
+      const today = now.format('YYYY-MM-DD');
+
+      let { data, included } = await searchers.get(env.session, 'master', 'crypto-compare-current-rates', 'today');
+
+      let rates = data.relationships.rates.data;
+      expect(rates).to.have.deep.members([
+        { type: 'crypto-compares', id: `BTC_USD_${today}` },
+        { type: 'crypto-compares', id: `ETH_USD_${today}` },
+        { type: 'crypto-compares', id: `BTC_EUR_${today}` },
+        { type: 'crypto-compares', id: `ETH_EUR_${today}` },
+      ]);
+
+      let includedRates = included.map(i => `${i.type}/${i.id}`);
+      expect(includedRates).to.have.members([
+        `crypto-compares/BTC_USD_${today}`,
+        `crypto-compares/ETH_USD_${today}`,
+        `crypto-compares/BTC_EUR_${today}`,
+        `crypto-compares/ETH_EUR_${today}`,
+      ]);
+    });
   });
 
   describe('searcher', function () {
