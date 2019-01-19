@@ -16,7 +16,7 @@
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each",
-    "node-tests": "mocha ../../node-test-runner.js --timeout 10000"
+    "node-tests": "HUB_ENVIRONMENT=test mocha ../../node-test-runner.js --timeout 10000"
   },
   "dependencies": {
     "@cardstack/rendering": "^0.13.0",

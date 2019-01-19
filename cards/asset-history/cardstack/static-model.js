@@ -1,12 +1,21 @@
 const JSONAPIFactory = require('@cardstack/test-support/jsonapi-factory');
+const mockEthereumSchema = require('../../../shared-data/mock-ethereum-schema');
 
 let factory = new JSONAPIFactory();
-factory.addResource('content-types', 'asset-historys')
-  .withRelated('fields', [
-    factory.addResource('fields', 'title').withAttributes({
-      fieldType: '@cardstack/core-types::string'
-    })
-  ]);
+
+factory.addResource('grants', 'asset-history-read')
+  .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+  .withRelated('types', [
+    { type: 'content-types', id: 'assets-histories' },
+    { type: 'content-types', id: 'assets-history-values' },
+  ])
+  .withAttributes({
+    'may-read-resource': true,
+    'may-read-fields': true,
+  });
 
 let models = factory.getModels();
-module.exports = function() { return models; };
+if (!process.env.JSON_RPC_URL) {
+  models = mockEthereumSchema.concat(models);
+}
+module.exports = function () { return models; };

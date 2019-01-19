@@ -22,7 +22,7 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "node-tests": "mocha ../node-test-runner.js --timeout 10000"
+    "node-tests": "HUB_ENVIRONMENT=test mocha ../../node-test-runner.js --timeout 10000"
   },
   "devDependencies": {
     "@cardstack/authentication": "^0.13.6",
@@ -83,6 +83,7 @@
     "loader.js": "^4.7.0",
     "lodash": "^4.17.11",
     "portfolio-asset": "*",
+    "portfolio-asset-history": "*",
     "portfolio-common": "*",
     "portfolio-crypto": "*",
     "portfolio-crypto-compare": "*",
