@@ -92,7 +92,7 @@ module.exports = declareInjections({
         }
         await this._processAsset(result.data, result.included);
       } else {
-        let { included=[], data: assets } = await this._getAssets();
+        let { included=[], data: assets=[] } = await this._getAssets() || {};
         for (asset of assets) {
           let transactionsIdentifiers = (get(asset, 'relationships.transactions.data') || []).map(i => `${i.type}/${i.id}`);
           let transactions = included.filter(i => transactionsIdentifiers.includes(`${i.type}/${i.id}`));
