@@ -420,7 +420,6 @@ describe('asset-histories', function () {
     describe("using indexer's Updater.updateContent()", function () {
 
       beforeEach(setup(factory => {
-        factory.addResource('assets', address).withRelated('network', { type: 'networks', id: 'ether'});
         factory.addResource('ethereum-addresses', assetWithoutTxns.toLowerCase())
           .withAttributes({
             "balance": "0",
