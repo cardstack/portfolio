@@ -92,7 +92,7 @@ class CryptoCompareSearcher {
       responseBody = {
         [toFiatCurrency]: basis - Math.floor(Math.random() * Math.round(basis * randomOffsetPercentage))
       };
-    } else if (process.env.HUB_ENVIRONMENT === 'test' && !this.apiKey) {
+    } else if ((!process.env.HUB_ENVIRONMENT || process.env.HUB_ENVIRONMENT === 'test') && !this.apiKey) {
       responseBody = {
         [toFiatCurrency]: 500
       };

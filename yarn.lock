@@ -756,7 +756,7 @@
     tar-fs "^1.16.0"
     tar-stream "^1.5.4"
 
-"@cardstack/jsonapi@^0.13.6":
+"@cardstack/jsonapi@^0.13.0", "@cardstack/jsonapi@^0.13.6":
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/@cardstack/jsonapi/-/jsonapi-0.13.6.tgz#22ceef60c7e13b9c159d6e02dd4b93edd9b899af"
   integrity sha512-LcBR67iw+k0UfTlGnVLy1hrSQDIG1Eq0cYOaNDc4sC4y5rxlgdROVEgVzqTODA99PdAlai8L13f2f3+B/KEr8g==

@@ -19,12 +19,12 @@ module('Card | <%= dasherizedModuleName %>', function(hooks) {
   scenario.setupTest(hooks);
 
   test('embedded format renders', async function(assert) {
-    await render(hbs`{{cardstack-card-test <%= dasherizedModuleName %>' '123' format="embedded"}}`);
+    await render(hbs`{{cardstack-card-test '<%= dasherizedModuleName %>' '123' format="embedded"}}`);
     assert.dom('[data-test-<%= dasherizedModuleName %>-embedded-title]').hasText('Hello');
   });
 
   test('isolated format renders', async function(assert) {
-    await render(hbs`{{cardstack-card-test <%= dasherizedModuleName %>' '123' format="isolated"}}`);
+    await render(hbs`{{cardstack-card-test '<%= dasherizedModuleName %>' '123' format="isolated"}}`);
     assert.dom('[data-test-<%= dasherizedModuleName %>-isolated-title]').hasText('Hello');
   });
 });

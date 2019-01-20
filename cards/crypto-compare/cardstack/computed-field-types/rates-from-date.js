@@ -1,5 +1,3 @@
-const moment = require('moment-timezone');
-
 exports.type = '@cardstack/core-types::has-many';
 
 const conversions = {
@@ -9,13 +7,12 @@ const conversions = {
   // ZEC: ['USD', 'EUR'],
 };
 
-exports.compute = async function(model, { timestampField }) {
-  if (!timestampField) { return; }
+exports.compute = async function(model, { dateField }) {
+  if (!dateField) { return; }
 
-  let timestamp = await model.getField(timestampField);
-  if (!timestamp) { return; }
+  let date = await model.getField(dateField);
+  if (!date) { return; }
 
-  let date = moment(timestamp, 'X').utc().format('YYYY-MM-DD');
   let results = [];
   for (let fromCurrency of Object.keys(conversions)) {
     for (let toCurrency of conversions[fromCurrency]) {
