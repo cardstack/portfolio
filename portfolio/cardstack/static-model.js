@@ -5,7 +5,6 @@ const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
 const mockEthereumSchema = require('../../shared-data/mock-ethereum-schema');
-const log = require('@cardstack/logger')('portfolio');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
@@ -18,7 +17,7 @@ module.exports = function () {
   }
   let dataSourceTypes = dataSources.getModels().filter(i => i.type === 'data-sources')
                                                .map(i => i.attributes.sourceType || i.attributes['source-type']);
-  log.info(`====> found data source types: ${JSON.stringify(dataSourceTypes)}`);
+  console.log(`====> found data source types: ${JSON.stringify(dataSourceTypes)}`); // eslint-disable-line  no-console
   for (let cardName of readdirSync(cardDir)) {
     let packageJsonFile = join(cardDir, cardName, 'package.json');
     if (!existsSync(packageJsonFile)) { continue; }
