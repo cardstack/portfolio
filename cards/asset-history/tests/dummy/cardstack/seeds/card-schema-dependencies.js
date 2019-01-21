@@ -3,6 +3,7 @@ const { existsSync } = require('fs');
 const { join } = require('path');
 const cardDir = join(__dirname, '../../../../../');
 const thisCardsSchema = require('../../../../cardstack/static-model')();
+const mockEthereumSchema = require('../../../../../../shared-data/mock-ethereum-schema');
 
 const cardDependencies = ['network', 'crypto-compare'];
 
@@ -15,4 +16,4 @@ for (let cardName of cardDependencies) {
 }
   factory.importModels(thisCardsSchema);
 
-module.exports = factory.getModels();
+module.exports = factory.getModels().concat(mockEthereumSchema);

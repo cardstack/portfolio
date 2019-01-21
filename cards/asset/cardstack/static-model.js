@@ -19,6 +19,7 @@ factory.addResource('content-types', 'assets')
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
         { field: 'network-asset.transactions', format: 'embedded' },
+        { field: 'asset-history', format: 'embedded' },
       ],
       embedded: [
         { field: 'network', format: 'embedded' },
@@ -52,6 +53,14 @@ factory.addResource('content-types', 'assets')
     }),
     factory.addResource('computed-fields', 'network-asset').withAttributes({
       'computed-field-type': 'portfolio-asset::network-asset',
+    }),
+    factory.addResource('computed-fields', 'asset-history').withAttributes({
+      'computed-field-type': '@cardstack/core-types::correlate-by-field',
+      params: {
+        relationshipType: 'asset-histories',
+        field: 'id',
+        toLowerCase: true
+      }
     }),
     factory.addResource('computed-fields', 'ethereum-asset-id').withAttributes({
       'computed-field-type': 'portfolio-asset::network-address',

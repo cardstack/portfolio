@@ -24,8 +24,11 @@
     "ember-auto-import": "^1.2.10",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^3.0.0",
+    "ember-highcharts": "^1.1.0",
+    "highcharts": "^7.0.2",
     "lodash": "^4.17.11",
     "moment-timezone": "^0.5.11",
+    "portfolio-common": "*",
     "portfolio-crypto-compare": "*",
     "web3": "^1.0.0-beta.37"
   },

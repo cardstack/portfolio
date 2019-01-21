@@ -87,14 +87,14 @@ class CryptoCompareSearcher {
     let url = `${this.cryptoCompareDailyAverageApiUrl}?fsym=${fromCryptoCurrency}&tsym=${toFiatCurrency}&toTs=${timestamp}`;
     let responseBody;
     if (process.env.HUB_ENVIRONMENT === 'development' && !this.apiKey) {
-      let basis = 500;
+      let basis = 10000;
       let randomOffsetPercentage = 0.1;
       responseBody = {
         [toFiatCurrency]: basis - Math.floor(Math.random() * Math.round(basis * randomOffsetPercentage))
       };
     } else if ((!process.env.HUB_ENVIRONMENT || process.env.HUB_ENVIRONMENT === 'test') && !this.apiKey) {
       responseBody = {
-        [toFiatCurrency]: 500
+        [toFiatCurrency]: 10000
       };
     } else {
       let response = await fetch(`${url}&api_key=${this.apiKey}`);

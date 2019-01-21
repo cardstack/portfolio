@@ -1,4 +1,5 @@
 /* eslint-env node */
+const moment = require('moment-timezone');
 
 module.exports = [
   {
@@ -15,6 +16,29 @@ module.exports = [
     id: 0,
     attributes: {
       'source-type': '@cardstack/ephemeral',
+    }
+  },
+  {
+    type: 'data-sources',
+    id: 'crypto-compare',
+    attributes: {
+      'source-type': 'portfolio-crypto-compare',
+      params: {
+        'cryptoCompareDailyAverageApiUrl': 'http://nowhere',
+        'toFiatCurrencies': ['USD', 'EUR'],
+        'fromCryptoCurrencies': ['BTC', 'ETH']
+      }
+    }
+  },
+  {
+    type: 'data-sources',
+    id: 'asset-history',
+    attributes: {
+      'source-type': 'portfolio-asset-history',
+      params: {
+        assetContentTypes: ['ethereum-addresses'],
+        mockNow: moment('2019-01-20', 'YYYY-MM-DD').utc().valueOf()
+      }
     }
   },
   {

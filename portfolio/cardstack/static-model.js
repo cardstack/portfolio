@@ -9,8 +9,22 @@ const mockEthereumSchema = require('../../shared-data/mock-ethereum-schema');
 module.exports = function () {
   let factory = new JSONAPIFactory();
   let cardSchemas = new JSONAPIFactory();
+  let dataSources = new JSONAPIFactory();
+
+  for (let dataSourceFile of readdirSync(join(__dirname, 'data-sources'))) {
+    let filePath = join(__dirname, 'data-sources', dataSourceFile);
+    dataSources.importModels(require(filePath));
+  }
+  let dataSourceTypes = dataSources.getModels().filter(i => i.type === 'data-sources')
+                                               .map(i => i.attributes.sourceType || i.attributes['source-type']);
 
   for (let cardName of readdirSync(cardDir)) {
+    let packageJsonFile = join(cardDir, cardName, 'package.json');
+    if (!existsSync(packageJsonFile)) { continue; }
+
+    let packageJson = require(packageJsonFile);
+    if (dataSourceTypes.includes(packageJson.name)) { continue; }
+
     let schemaFile = join(cardDir, cardName, 'cardstack', 'static-model.js');
     if (existsSync(schemaFile)) {
       cardSchemas.importModels(require(schemaFile)());
@@ -18,11 +32,6 @@ module.exports = function () {
         .withAttributes({ sourceType: `portfolio-${cardName}` });
     }
   }
-
-  factory.addResource('data-sources', 'portfolio-user')
-    .withAttributes({
-      sourceType: 'portfolio-user',
-    });
 
   let router = process.env.HUB_ENVIRONMENT === 'test' &&
     process.env.TEST &&

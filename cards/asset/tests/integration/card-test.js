@@ -17,10 +17,10 @@ const scenario = new Fixtures({
         'address-field': 'ethereum-address'
       }));
 
-    factory.addResource('ethereum-addresses', '0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde')
+    factory.addResource('ethereum-addresses', address.toLowerCase())
       .withAttributes({
         "balance": "200895000000000000",
-        "ethereum-address": "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE"
+        "ethereum-address": address
       })
       .withRelated('transactions', [
         factory.addResource('ethereum-transactions', '0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572')
@@ -35,7 +35,7 @@ const scenario = new Fixtures({
             "gas-used": 21000,
             "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
             "block-hash": "0x62c48a107a96894248726dba13d114a1760fa9eef5370e98a0651ccb0ba0c41f",
-            "transaction-to": "0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde",
+            "transaction-to": address.toLowerCase(),
             "gas-price": "5000000000",
             "transaction-hash": "0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572",
             "gas": 90000,
@@ -51,7 +51,7 @@ const scenario = new Fixtures({
             "transaction-nonce": 0,
             "block-number": 8,
             "gas-used": 21000,
-            "transaction-from": "0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde",
+            "transaction-from": address.toLowerCase(),
             "block-hash": "0x4abacac4089661d1ba407ff4286f768bdaa58a95a7db5770b15a6f6bb1843af6",
             "transaction-to": "0xaefa57a8b9ddb56229ae57d61559fc2a4c5af0cd",
             "gas-price": "5000000000",
@@ -64,6 +64,7 @@ const scenario = new Fixtures({
       .withRelated('who', [{ type: 'groups', id: 'everyone' }])
       .withRelated('types', [
         { type: 'content-types', id: 'assets' },
+        { type: 'content-types', id: 'asset-histories' },
         { type: 'content-types', id: 'networks' },
         { type: 'content-types', id: 'ethereum-addresses' },
         { type: 'content-types', id: 'ethereum-transactions' }
@@ -82,24 +83,24 @@ module('Card | asset', function (hooks) {
 
   test('embedded format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="embedded"}}`);
-    assert.dom('[data-test-asset-embedded-link]').hasAttribute('href', '/assets/0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+    assert.dom('[data-test-asset-embedded-link]').hasAttribute('href', `/assets/${address}`)
     assert.dom('[data-test-asset-embedded-title]').hasText('Ether');
     assert.dom('[data-test-asset-embedded-unit]').hasText('ETH');
     assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7...1fDE');
     assert.dom('[data-test-asset-embedded-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-embedded-balance]').hasText('0.2009 ETH');
-    assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$100.45');
+    assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$2008.95');
   });
 
   test('isolated format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="isolated"}}`);
     assert.dom('[data-test-asset-isolated-title]').hasText('Ether Asset Detail');
     assert.dom('[data-test-asset-isolated-unit]').hasText('ETH');
-    assert.dom('[data-test-asset-isolated-address]').hasText('Address 0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
+    assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`);
     assert.dom('[data-test-asset-isolated-established-date]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
-    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$100.45');
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$2008.95');
 
     // TODO add assertion for historic chart
     assert.dom('[data-test-portfolio-top-header]').exists();

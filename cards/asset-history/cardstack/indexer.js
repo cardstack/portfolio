@@ -64,22 +64,37 @@ class Updater {
         }
       },
     }, {
+      type: 'computed-fields',
+      id: 'timestamp-ms',
+      attributes: {
+        'computed-field-type': 'portfolio-asset-history::date-to-ms',
+        params: {
+          dateField: 'gmt-date'
+        }
+      },
+    }, {
+      type: 'computed-fields',
+      id: 'timeseries',
+      attributes: {
+        'computed-field-type': 'portfolio-asset-history::timeseries-from-history-values',
+        params: {
+          historyValuesField: 'history-values',
+          fromCurrency: 'ETH',
+          toCurrencies: ['USD', 'EUR', 'BTC']
+        }
+      },
+    }, {
       type: 'content-types',
       id: 'asset-histories',
       attributes: {
         'default-includes': ['history-values', 'history-values.historic-rates', 'history-values.transactions'],
-        fieldsets: {
-          // we dont currenty have an isolated view for this content type
-          embedded: [
-            { field: 'history-values.historic-rates', format: 'embedded' }
-          ]
-        }
       },
       relationships: {
         fields: {
           data: [
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'history-values' },
+            { type: 'computed-fields', id: 'timeseries' },
           ]
         },
         'data-source': {
@@ -99,6 +114,7 @@ class Updater {
             { type: 'fields', id: 'transactions' },
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'balance' },
+            { type: 'computed-fields', id: 'timestamp-ms' },
             { type: 'computed-fields', id: 'historic-rates' },
           ]
         },

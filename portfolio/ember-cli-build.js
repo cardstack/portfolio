@@ -20,6 +20,10 @@ module.exports = function(defaults) {
     },
     'ember-fetch': {
       preferNative: true
+    },
+    emberHighCharts: {
+      includeHighCharts: false,
+      includeHighStock: true
     }
   });
 
