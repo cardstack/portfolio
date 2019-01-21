@@ -14,21 +14,37 @@ if (process.env.JSON_RPC_URL) {
         },
         patch: {
           'content-types': {
+            'ethereum-addresses': [{
+              op: 'add',
+              path: '/attributes',
+              value: {
+                fieldsets: {
+                  isolated: [
+                    { field: 'transactions', format: 'embedded' },
+                  ],
+                  embedded: [
+                    { field: 'transactions', format: 'embedded' },
+                  ]
+                }
+              }
+            }],
             'ethereum-transactions': [{
               op: 'add',
               path: '/relationships/fields/data/-',
-              value: { type: 'computed-fields', id: 'todays-rates-lookup' }
+              value: { type: 'computed-fields', id: 'rates-at-transaction-timestamp' }
             },{
               op: 'add',
               path: '/attributes',
               value: {
-                defaultIncludes: [ 'todays-rates-lookup.rates' ],
+                defaultIncludes: [
+                  'rates-at-transaction-timestamp',
+                ],
                 fieldsets: {
                   embedded: [
-                    { field: 'todays-rates-lookup.rates', format: 'embedded' },
+                    { field: 'rates-at-transaction-timestamp', format: 'embedded' },
                   ],
                   isolated: [
-                    { field: 'todays-rates-lookup.rates', format: 'embedded' },
+                    { field: 'rates-at-transaction-timestamp', format: 'embedded' },
                   ]
                 }
               }

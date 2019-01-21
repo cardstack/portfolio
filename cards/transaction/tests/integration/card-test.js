@@ -75,6 +75,7 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-embedded-from]').hasText('From 0x0f4f...34b5');
     assert.dom('[data-test-transaction-embedded-to]').hasText('To 0xc3d7...1fde');
     assert.dom('[data-test-transaction-embedded-status]').hasText('Status: Successful');
+    assert.dom('[data-test-transaction-embedded-fiat]').hasText('≈ $10.10 USD');
   });
 
   test('embedded format renders failed transaction', async function(assert) {
@@ -106,5 +107,6 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-isolated-cost]').hasText('105000 Gwei');
     assert.dom('[data-test-transaction-isolated-nonce]').hasText('3');
     assert.dom('[data-test-transaction-isolated-position]').hasText('42');
+    assert.dom('[data-test-transaction-isolated-fiat]').hasText('≈ $10.10 USD');
   });
 });

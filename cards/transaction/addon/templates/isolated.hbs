@@ -15,10 +15,12 @@
         </div>
         <div class="transaction-isolated__amount">
           <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>
-            <span class="transaction-isolated__amount--value">{{transactionValue}}</span>
+            <span class="transaction-isolated__amount--value">{{transactionValueEth}}</span>
             <span class="transaction-isolated__amount--currency">ETH</span>
           </div>
-          <div class="transaction-isolated__amount-value--usd">≈ $500 USD</div>
+          <div class="transaction-isolated__amount-value--fiat" data-test-transaction-isolated-fiat>
+            ≈ {{currency-symbol 'USD'}}{{convert-currency 'ETH' 'USD' content.transactionValue content.ratesAtTransactionTimestamp}} USD
+          </div>
         </div>
 
         <dl class="transaction-isolated__addresses">

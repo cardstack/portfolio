@@ -4,6 +4,7 @@ const { utils: { BN } } = require('web3');
 const moment = require('moment-timezone');
 const Session = require('@cardstack/plugin-utils/session');
 const log = require('@cardstack/logger')('portfolio/asset-history/history-indexer');
+const { updateBalanceFromTransaction } = require('portfolio-utils');
 const DEFAULT_MAX_ASSET_HISTORIES = 1000000;
 
 let indexJobNumber = 0;
@@ -209,10 +210,10 @@ module.exports = declareInjections({
             differenceBy(transactionsForThisDate,
               (get(lastHistoryValue, 'relationships.transactions.data') || []), 'id');
           balance = (unprocessedTransactions || []).reduce((cumulativeBalance, t) =>
-            updateBalance(cumulativeBalance, asset.id, t), balance);
+            updateBalanceFromTransaction(cumulativeBalance, asset.id, t), balance);
         } else {
           balance = (transactionsForThisDate || []).reduce((cumulativeBalance, t) =>
-            updateBalance(cumulativeBalance, asset.id, t), balance);
+            updateBalanceFromTransaction(cumulativeBalance, asset.id, t), balance);
         }
 
         let historyValue = {
@@ -269,29 +270,4 @@ function transactionRelationshipsForDate(transactionsByDate, date) {
       return { type, id };
     });
   return result;
-}
-
-// This is very ethereum specific, need to think about how to generalize this...
-function updateBalance(balance, _address, transaction) {
-  let address = _address.toLowerCase();
-  let isSuccessfulTxn = get(transaction, 'attributes.transaction-successful');
-  let from = get(transaction, 'attributes.transaction-from');
-  let to = get(transaction, 'attributes.transaction-to');
-  let value = get(transaction, 'attributes.transaction-value') || '0';
-  let gasUsed = get(transaction, 'attributes.gas-used') || 0;
-  let gasPrice = get(transaction, 'attributes.gas-price') || '0';
-
-  if (isSuccessfulTxn && address === from.toLowerCase()) {
-    let gasCost = (new BN(gasUsed)).mul(new BN(gasPrice));
-    balance = balance.sub(new BN(value)).sub(gasCost);
-    if (balance.isNeg()) {
-      throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
-    }
-  }
-
-  if (isSuccessfulTxn && to && address === to.toLowerCase()) {
-    balance = balance.add(new BN(value));
-  }
-
-  return balance;
 }

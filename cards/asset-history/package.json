@@ -30,6 +30,7 @@
     "moment-timezone": "^0.5.11",
     "portfolio-common": "*",
     "portfolio-crypto-compare": "*",
+    "portfolio-utils": "*",
     "web3": "^1.0.0-beta.37"
   },
   "devDependencies": {

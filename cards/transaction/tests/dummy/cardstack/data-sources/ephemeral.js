@@ -18,6 +18,17 @@ module.exports = [
     }
   },
   {
+    type: 'data-sources',
+    id: 'crypto-compare',
+    attributes: {
+      'source-type': 'portfolio-crypto-compare',
+      params: {
+        'cryptoCompareDailyAverageApiUrl': 'http://nowhere',
+        'toFiatCurrencies': ['USD', 'EUR'],
+        'fromCryptoCurrencies': ['BTC', 'ETH', 'LTC', 'ZEC']
+      }
+    }
+  },{
     type: 'grants',
     id: 'wide-open',
     attributes: {

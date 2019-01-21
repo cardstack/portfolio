@@ -26,7 +26,7 @@ export default Component.extend({
     return moment.unix(timestamp).format('MMM D,YYYY')
   }),
 
-  transactionValue: computed('content.transactionValue', function() {
+  transactionValueEth: computed('content.transactionValue', function() {
     let value = this.get('content.transactionValue');
     if (!value) { return; }
 

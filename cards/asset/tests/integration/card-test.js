@@ -89,7 +89,7 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7...1fDE');
     assert.dom('[data-test-asset-embedded-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-embedded-balance]').hasText('0.2009 ETH');
-    assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$2008.95');
+    assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$20.09');
   });
 
   test('isolated format renders', async function (assert) {
@@ -100,7 +100,7 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-established-date]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
-    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$2008.95');
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$20.09');
 
     // TODO add assertion for historic chart
     assert.dom('[data-test-portfolio-top-header]').exists();
