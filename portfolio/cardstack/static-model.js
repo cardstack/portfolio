@@ -17,7 +17,6 @@ module.exports = function () {
   }
   let dataSourceTypes = dataSources.getModels().filter(i => i.type === 'data-sources')
                                                .map(i => i.attributes.sourceType || i.attributes['source-type']);
-  console.log(`====> found data source types: ${JSON.stringify(dataSourceTypes)}`); // eslint-disable-line  no-console
   for (let cardName of readdirSync(cardDir)) {
     let packageJsonFile = join(cardDir, cardName, 'package.json');
     if (!existsSync(packageJsonFile)) { continue; }

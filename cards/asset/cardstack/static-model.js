@@ -7,6 +7,7 @@ factory.addResource('content-types', 'assets')
   .withAttributes({
     defaultIncludes: [
       'transactions',
+      'todays-rates-lookup',
       'todays-rates-lookup.rates',
       'network',
       'network-asset',
@@ -16,6 +17,7 @@ factory.addResource('content-types', 'assets')
       isolated: [
         { field: 'transactions', format: 'embedded' },
         { field: 'network', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
         { field: 'network-asset.transactions', format: 'embedded' },
@@ -24,6 +26,7 @@ factory.addResource('content-types', 'assets')
       embedded: [
         { field: 'network', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }

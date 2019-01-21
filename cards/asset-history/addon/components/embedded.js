@@ -3,19 +3,29 @@ import layout from '../templates/embedded';
 import { computed } from '@ember/object';
 import { displayDecimalPlaces } from 'portfolio-common/helpers/convert-currency';
 import { symbolMapping } from 'portfolio-common/helpers/currency-symbol';
+import { abbreviateNumber } from 'portfolio-common/helpers/abbreviate-number';
+const initialCurrency = 'USD';
 
 export default Component.extend({
   layout,
   init() {
     this._super();
-    this.set('currency', 'USD');
+    this.set('currency', initialCurrency);
+    let _this = this;
     this.set('chartOptions', {
       chart: {
         styledMode: true,
         rangeSelector: {
           selected: 1
         },
-      }
+      },
+      yAxis: {
+        labels: {
+          formatter() { // TODO need to make sure this changes when the currency changes
+            return `${symbolMapping[_this.get('currency')] || ''}${abbreviateNumber(this.value)}`;
+          }
+        },
+      },
     });
   },
 
