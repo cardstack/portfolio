@@ -20,6 +20,7 @@ export default Component.extend({
         },
       },
       yAxis: {
+        min: 0, // this forces the y-axis to start at zero
         labels: {
           formatter() { // TODO need to make sure this changes when the currency changes
             return `${symbolMapping[_this.get('currency')] || ''}${abbreviateNumber(this.value)}`;
