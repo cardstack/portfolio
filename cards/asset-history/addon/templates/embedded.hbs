@@ -1,3 +1,4 @@
-<a class="asset-history-embedded" href={{cardstack-url content}} >
-  <h2 data-test-asset-history-embedded-title>{{content.title}}</h2>
-</a>
+<div class="asset-history-embedded">
+  {{!-- TODO we should set a placeholder here so that when chart appears it is not too jarring --}}
+  {{high-charts mode='StockChart' chartOptions=chartOptions content=chartData}}
+</div>

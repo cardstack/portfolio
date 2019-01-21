@@ -119,15 +119,6 @@
   padding: 25px;
 }
 
-/* TO DO: REMOVE THIS -- PLACEHOLDER */
-.asset-isolated__chart > div {
-  height: 340px;
-  padding: 25px;
-  border: 1px solid white;
-  font-size: var(--portfolio-med-font);
-}
-/* */
-
 .asset-isolated__details {
   display: flex;
   flex-flow: row wrap;

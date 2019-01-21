@@ -6,8 +6,8 @@ let factory = new JSONAPIFactory();
 factory.addResource('grants', 'asset-history-read')
   .withRelated('who', [{ type: 'groups', id: 'everyone' }])
   .withRelated('types', [
-    { type: 'content-types', id: 'assets-histories' },
-    { type: 'content-types', id: 'assets-history-values' },
+    { type: 'content-types', id: 'asset-histories' },
+    { type: 'content-types', id: 'asset-history-values' },
   ])
   .withAttributes({
     'may-read-resource': true,

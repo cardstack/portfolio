@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-const symbolMapping = {
+export const symbolMapping = {
   'USD': '$',
   'EUR': '€',
   'GBP': '£',

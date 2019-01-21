@@ -1,4 +1,5 @@
 /* eslint-env node */
+const moment = require('moment-timezone');
 
 module.exports = [
   {
@@ -26,6 +27,16 @@ module.exports = [
         'cryptoCompareDailyAverageApiUrl': 'http://nowhere',
         'toFiatCurrencies': ['USD', 'EUR'],
         'fromCryptoCurrencies': ['BTC', 'ETH', 'LTC', 'ZEC']
+      }
+    }
+  },{
+    type: 'data-sources',
+    id: 'asset-history',
+    attributes: {
+      'source-type': 'portfolio-asset-history',
+      params: {
+        assetContentTypes: ['ethereum-addresses'],
+        mockNow: moment('2019-01-20', 'YYYY-MM-DD').utc().valueOf()
       }
     }
   },

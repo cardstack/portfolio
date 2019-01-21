@@ -110,7 +110,7 @@ module.exports = declareInjections({
 
       this.pgsearchClient.on('add', async (evt) => {
         let { type, doc: { data: asset } } = evt;
-        if (!this.assetContentTypes.includes(type)) { return; }
+        if (!this.assetContentTypes || !this.assetContentTypes.includes(type)) { return; }
 
         this._eventProcessingPromise = Promise.resolve(this._eventProcessingPromise)
           .then(() => this.index({ asset }));
