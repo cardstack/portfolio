@@ -81,8 +81,8 @@ module('Card | asset-history', function(hooks) {
       assert.dom(label).hasText(`${i++}. Jan`);
     }
     let yAxisLabel = this.element.querySelector('.highcharts-yaxis-labels');
-    let valueLabel = yAxisLabel.querySelector('text');
-    assert.dom(valueLabel).hasText('$9.0k');
+    let valueLabel = yAxisLabel.querySelectorAll('text')[4];
+    assert.dom(valueLabel).hasText('$7.5k');
   });
 
 });
