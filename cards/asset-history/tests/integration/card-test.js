@@ -82,7 +82,7 @@ module('Card | asset-history', function(hooks) {
     }
     let yAxisLabel = this.element.querySelector('.highcharts-yaxis-labels');
     let valueLabel = yAxisLabel.querySelector('text');
-    assert.dom(valueLabel).hasText('$9,008.95');
+    assert.dom(valueLabel).hasText('$9.0k');
   });
 
 });

@@ -3,6 +3,7 @@ import layout from '../templates/embedded';
 import { computed } from '@ember/object';
 import { displayDecimalPlaces } from 'portfolio-common/helpers/convert-currency';
 import { symbolMapping } from 'portfolio-common/helpers/currency-symbol';
+import { abbreviateNumber } from 'portfolio-common/helpers/abbreviate-number';
 const initialCurrency = 'USD';
 
 export default Component.extend({
@@ -21,7 +22,7 @@ export default Component.extend({
       yAxis: {
         labels: {
           formatter() { // TODO need to make sure this changes when the currency changes
-            return `${symbolMapping[_this.get('currency')] || ''}${this.value.toLocaleString()}`;
+            return `${symbolMapping[_this.get('currency')] || ''}${abbreviateNumber(this.value)}`;
           }
         },
       },
