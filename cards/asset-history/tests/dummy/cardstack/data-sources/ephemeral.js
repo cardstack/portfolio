@@ -37,6 +37,7 @@ module.exports = [
       'source-type': 'portfolio-asset-history',
       params: {
         assetContentTypes: ['ethereum-addresses'],
+        transactionContentTypes: ['ethereum-transactions'],
         mockNow: moment('2019-01-20', 'YYYY-MM-DD').utc().valueOf()
       }
     }
