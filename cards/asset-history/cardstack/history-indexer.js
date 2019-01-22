@@ -254,7 +254,7 @@ module.exports = declareInjections({
     }
   });
 
-function getTransactionsFromAssetIncludeds(asset, included) {
+function getTransactionsFromAssetIncludeds(asset, included=[]) {
   let transactions = get(asset, 'relationships.transactions.data');
   if (!transactions || !transactions.length) { return []; }
 
