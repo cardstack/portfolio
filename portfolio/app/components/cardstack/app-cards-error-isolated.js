@@ -1,4 +1,4 @@
-import SessionAwareBase from '../session-aware-base';
+import SessionAwareBase from 'portfolio-common/components/session-aware-base';
 import { inject as service } from '@ember/service';
 import injectOptional from 'ember-inject-optional';
 import { getOwner } from '@ember/application';

@@ -6,6 +6,7 @@ let factory = new JSONAPIFactory();
 factory.addResource('content-types', 'assets')
   .withAttributes({
     defaultIncludes: [
+      'asset-history',
       'transactions',
       'todays-rates-lookup',
       'todays-rates-lookup.rates',
