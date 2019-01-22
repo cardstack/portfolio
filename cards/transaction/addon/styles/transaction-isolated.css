@@ -123,6 +123,44 @@
   letter-spacing: 0.2px;
 }
 
+.transaction-isolated__transaction-hash {
+  position: relative;
+  margin: 30px 0;
+  border: solid 1px var(--portfolio-border-gray);
+  border-radius: 5px;
+  padding: 30px;
+}
+
+.transaction-isolated__hash-label {
+  position: absolute;
+  width: 160px;
+  top: -10px;
+  display: block;
+  box-sizing: border-box;
+  left: calc(50% - 80px);
+  background-color: var(--portfolio-white);
+  font-size: 13px;
+  color: var(--portfolio-light-purple);
+  letter-spacing: 0.24px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.transaction-isolated__hash-value {
+  text-decoration: none;
+  display: inline-block;
+  color: var(--portfolio-black);
+  font-size: var(--portfolio-med-font);
+  font-family: var(--portfolio-semibold-text);
+  letter-spacing: 0.7px;
+  text-align: center;
+  line-height: 19px;
+  width: 450px;
+  margin: 0 auto;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
 .transaction-isolated__amount {
   padding: 50px 0;
   font-family: var(--portfolio-bold-text);
@@ -130,29 +168,14 @@
   letter-spacing: 0.2px;
   text-align: center;
 }
-.transaction-isolated__amount-label {
-  color: var(--portfolio-light-purple);
-  font-family: var(--portfolio-semibold-text);
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: center;
-}
-.transaction-isolated__amount-label--received {
-  display: inline-block;
-  width: 25px;
-  height: 35px;
-  background-image: url("/assets/images/received-arrow.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
-.transaction-isolated__amount-value {
+.transaction-isolated__amount--value {
   font-size: 54px;
 }
-.transaction-isolated__amount-value > span {
+.transaction-isolated__amount--currency {
   font-size: var(--portfolio-xl-font);
 }
-.transaction-isolated__amount-value--usd {
+.transaction-isolated__amount-value--fiat {
   color: var(--portfolio-muted-gray);
 }
 
@@ -163,11 +186,12 @@
   align-items: center;
   margin: 0;
   padding: 35px 0;
-  border-top: 1px solid var(--portfolio-border-gray);
 }
 
 .transaction-isolated__address {
-  max-width: 45%;
+  max-width: 47.5%;
+  border-top: 1px solid var(--portfolio-border-gray);
+  padding-top: 25px;
 }
 .transaction-isolated__address > dt {
   padding-bottom: 10px;
@@ -202,13 +226,16 @@
 .transaction-isolated__details {
   margin: 0;
   padding: 35px 0 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.transaction-isolated__details > dt {
+
+.transaction-isolated__details > dl > dt {
   color: var(--portfolio-light-purple);
   letter-spacing: 0.2px;
   line-height: 2;
 }
-.transaction-isolated__details > dd {
+.transaction-isolated__details > dl > dd {
   margin: 0;
   padding-bottom: 20px;
   letter-spacing: 0.2px;

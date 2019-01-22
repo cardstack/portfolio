@@ -1,0 +1,25 @@
+<header class="portfolio-top-header" data-test-portfolio-top-header>
+  <div class="portfolio-top-header__wrapper">
+    <a href="/" class="portfolio-top-header__home">
+      <h1 class="portfolio-top-header__title">
+        {{svg-jar "portfolio-logo" width="30px" height="30px"}} <span>Card Folio</span>
+      </h1>
+    </a>
+    {{#if (is-component "cardstack-session")}}
+      {{#cardstack-session as |session|}}
+        {{#if session.isAuthenticated }}
+          <button {{action transitionToProfile}} class="portfolio-top-header__user" data-test-portfolio-top-header-user>
+              <div class="portfolio-top-header__user-name">{{session.user.name}}</div>
+              {{#if session.user.avatarUrl}}
+                <div style={{css-url "background-image" session.user.avatarUrl}} class="portfolio-top-header__user-avatar" />
+              {{else}}
+                <div class="portfolio-top-header__user-avatar portfolio-top-header__user-avatar--default">
+                  {{svg-jar "user-icon" width="18px" height="20px"}}
+                </div>
+              {{/if}}
+          </button>
+        {{/if}}
+      {{/cardstack-session}}
+    {{/if}}
+  </div>
+</header>

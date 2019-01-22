@@ -16,7 +16,7 @@
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each",
-    "node-tests": "mocha ../../node-test-runner.js --timeout 10000"
+    "node-tests": "HUB_ENVIRONMENT=test mocha ../../node-test-runner.js --timeout 10000"
   },
   "dependencies": {
     "@cardstack/rendering": "^0.13.0",
@@ -27,15 +27,18 @@
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-moment-shim": "^3.7.1",
     "ember-moment": "^7.8.0",
-    "web3": "^1.0.0-beta.37"
+    "portfolio-asset-history": "*",
+    "portfolio-common": "*",
+    "portfolio-crypto-compare": "*",
+    "portfolio-transaction": "*"
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.13.0",
-    "@cardstack/ethereum": "^0.13.0",
-    "@cardstack/jsonapi": "^0.13.0",
-    "@cardstack/mobiledoc": "^0.13.0",
-    "@cardstack/routing": "^0.13.0",
-    "@cardstack/test-support": "^0.13.0",
+    "@cardstack/ethereum": "^0.13.8",
+    "@cardstack/jsonapi": "^0.13.6",
+    "@cardstack/mobiledoc": "^0.13.6",
+    "@cardstack/routing": "^0.13.6",
+    "@cardstack/test-support": "^0.13.6",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.1",
     "broccoli-asset-rev": "^2.7.0",
@@ -61,6 +64,8 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
+    "moment-timezone": "^0.5.11",
+    "portfolio-common": "*",
     "portfolio-transaction": "*",
     "qunit-dom": "^0.8.0"
   },

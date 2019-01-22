@@ -11,6 +11,45 @@ if (process.env.JSON_RPC_URL) {
           trackedAddressContentType: 'assets',
           trackedAddressField: 'ethereum-asset-id',
           maxBlockSearchDepth: 50000
+        },
+        patch: {
+          'content-types': {
+            'ethereum-addresses': [{
+              op: 'add',
+              path: '/attributes',
+              value: {
+                defaultIncludes: [
+                  'transactions',
+                ],
+                fieldsets: {
+                  isolated: [
+                    { field: 'transactions', format: 'embedded' },
+                  ],
+                }
+              }
+            }],
+            'ethereum-transactions': [{
+              op: 'add',
+              path: '/relationships/fields/data/-',
+              value: { type: 'computed-fields', id: 'rates-at-transaction-timestamp' }
+            },{
+              op: 'add',
+              path: '/attributes',
+              value: {
+                defaultIncludes: [
+                  'rates-at-transaction-timestamp',
+                ],
+                fieldsets: {
+                  embedded: [
+                    { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+                  ],
+                  isolated: [
+                    { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+                  ]
+                }
+              }
+            }]
+          }
         }
       }
     });

@@ -6,7 +6,10 @@ let factory = new JSONAPIFactory();
 factory.addResource('content-types', 'assets')
   .withAttributes({
     defaultIncludes: [
+      'asset-history',
       'transactions',
+      'todays-rates-lookup',
+      'todays-rates-lookup.rates',
       'network',
       'network-asset',
       'network-asset.transactions'
@@ -15,16 +18,23 @@ factory.addResource('content-types', 'assets')
       isolated: [
         { field: 'transactions', format: 'embedded' },
         { field: 'network', format: 'embedded' },
-        { field: 'network-asset', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
+        { field: 'todays-rates-lookup.rates', format: 'embedded' },
+        { field: 'network-asset', format: 'isolated' }, // we want to load this as isolated, as this card is essentially a wrapper for the network asset
         { field: 'network-asset.transactions', format: 'embedded' },
+        { field: 'asset-history', format: 'embedded' },
       ],
       embedded: [
         { field: 'network', format: 'embedded' },
         { field: 'network-asset', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
+        { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }
   })
   .withRelated('fields', [
+    { type: 'computed-fields', id: 'todays-rates-lookup' },
+
     // TODO use default on create for relationship to ethereum network?
     factory.addResource('fields', 'network').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to'
@@ -47,6 +57,14 @@ factory.addResource('content-types', 'assets')
     }),
     factory.addResource('computed-fields', 'network-asset').withAttributes({
       'computed-field-type': 'portfolio-asset::network-asset',
+    }),
+    factory.addResource('computed-fields', 'asset-history').withAttributes({
+      'computed-field-type': '@cardstack/core-types::correlate-by-field',
+      params: {
+        relationshipType: 'asset-histories',
+        field: 'id',
+        toLowerCase: true
+      }
     }),
     factory.addResource('computed-fields', 'ethereum-asset-id').withAttributes({
       'computed-field-type': 'portfolio-asset::network-address',

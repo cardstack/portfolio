@@ -3,14 +3,17 @@ const JSONAPIFactory = require('@cardstack/test-support/jsonapi-factory');
 let factory = new JSONAPIFactory();
 factory.addResource('content-types', 'portfolios')
   .withAttributes({
-    defaultIncludes: [ 'wallets', 'user' ],
+    defaultIncludes: [ 'wallets', 'user', 'todays-rates-lookup.rates' ],
     fieldsets: {
       isolated: [
         { field: 'wallets', format: 'embedded' },
+        { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }
   })
   .withRelated('fields', [
+    { type: 'computed-fields', id: 'todays-rates-lookup' },
+
     factory.addResource('fields', 'title').withAttributes({
       fieldType: '@cardstack/core-types::string'
     }),
@@ -21,7 +24,7 @@ factory.addResource('content-types', 'portfolios')
     }).withRelated('related-types', [{ type: 'content-types', id: 'wallets' }]),
     factory.addResource('fields', 'user').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to',
-    }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }])
+    }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
   ]);
 
   factory.addResource('grants', 'portfolio-self-grant')

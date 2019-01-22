@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 
-export default Component.extend({ layout });
+export default LiveIsolatedCard.extend({ layout });

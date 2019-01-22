@@ -1,4 +1,5 @@
 .user-isolated {
+  position: relative;
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
@@ -22,11 +23,11 @@
   font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xl-font);
   letter-spacing: -0.1px;
-  background-image: url("/assets/images/profile.png");
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 18px 20px;
-  padding-left: 30px;
+}
+.user-isolated__title > svg {
+  display: inline-block;
+  margin-right: 10px;
+  fill: var(--portfolio-muted-gray);
 }
 
 .user-isolated__close-button {
@@ -48,20 +49,24 @@
   fill: var(--portfolio-highlight-purple);
 }
 
-.user-isolated__error {
+.user-isolated__message {
+  position: absolute;
+  width: calc(100% - 60px);
   margin: 0;
-  padding-top: 30px;
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  text-align: center;
+}
+.user-isolated__message--error {
   color: var(--portfolio-red);
-  text-align: center;
+  font-size: var(--portfolio-xs-font);
+}
+.user-isolated__message--success {
+  color: var(--portfolio-green);
+  padding-top: 15px;
 }
 
-.user-isolated__success {
-  margin: 0;
-  padding: 30px;
-  text-align: center;
-}
-
-.user-isolated__picture {
+.user-isolated__section {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -71,16 +76,42 @@
   text-align: center;
 }
 
-.user-isolated__picture-frame {
+.user-isolated__picture {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-isolated__picture-avatar {
+  width: 100px;
+  height: 100px;
   padding: 30px;
-  color: var(--portfolio-purple-gray);
-  background-color: var(--portfolio-light-gray);
   border: none;
   border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-isolated__picture-avatar--default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--portfolio-purple-gray);
+  background-color: var(--portfolio-light-gray);
   font-weight: 700;
   font-family: var(--portfolio-bold-text);
   font-size: 40px;
   line-height: 1;
+}
+.user-isolated__picture-avatar--default > svg {
+  fill: var(--portfolio-light-purple);
+}
+
+.user-isolated__upload-photo {
+  margin-left: 10px;
+  color: var(--portfolio-light-purple);
 }
 
 .user-isolated__logout > button {
@@ -160,6 +191,9 @@
 .user-isolated__input:focus {
   outline: none;
   border-color: var(--portfolio-purple-gray);
+}
+.user-isolated__input--error {
+  border-color: var(--portfolio-red);
 }
 
 .user-isolated__button-row {

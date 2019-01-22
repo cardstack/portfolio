@@ -1,27 +1,26 @@
-<div class="transaction-isolated">
-  {{!-- Move this out as common component
-  <div class="transaction-isolated__breadcrumbs">
-    <button class="transaction-isolated__breadcrumbs-button">My Portfolio <span>2 Wallets</span></button>
-    <button class="transaction-isolated__breadcrumbs-button">ING Wallet <span>8 Assets</span></button>
-    <button class="transaction-isolated__breadcrumbs-button">Bitcoin <span>1Hz9…8tHJ</span></button>
-  </div> --}}
+<TopHeader></TopHeader>
 
+<div class="transaction-isolated">
   <div class="transaction-isolated__grid">
     <div>
       <section class="transaction-isolated__main transaction-isolated__group">
         <header class="transaction-isolated__header">
-          <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>{{content.title}}</h1>
+          <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>TX# {{abbreviatedTransactionHash}}</h1>
           <time class="transaction-isolated__time" datetime="" data-test-transaction-isolated-date>{{date}}</time>
         </header>
 
+        <div class="transaction-isolated__transaction-hash">
+          <span class="transaction-isolated__hash-label">Full Transaction Hash</span>
+          <a href={{transactionHashLink}} class="transaction-isolated__hash-value" data-test-transaction-isolated-hash>{{content.transactionHash}}</a>
+        </div>
         <div class="transaction-isolated__amount">
-          <div class="transaction-isolated__amount-label">
-            <span class="transaction-isolated__amount-label--received" />
-            <div>Received</div>
+          <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>
+            <span class="transaction-isolated__amount--value">{{wei-to-ethers content.transactionValue}}</span>
+            <span class="transaction-isolated__amount--currency">ETH</span>
           </div>
-          <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>+{{transactionValue}}<span>ETH</span></div>
-          {{!-- TODO the +/- sign is problematic we should remove this and make it more clear what is going on --}}
-          <div class="transaction-isolated__amount-value--usd">≈ $500 USD</div>
+          <div class="transaction-isolated__amount-value--fiat" data-test-transaction-isolated-fiat>
+            ≈ {{currency-symbol 'USD'}}{{convert-currency 'ETH' 'USD' content.transactionValue content.ratesAtTransactionTimestamp}} USD
+          </div>
         </div>
 
         <dl class="transaction-isolated__addresses">
@@ -30,40 +29,45 @@
             <dd>{{content.transactionFrom}}</dd>
           </div>
           {{#if content.transactionTo}}
-            <div class="transaction-isolated__address" data-test-transaction-isolated-to>
-              <dt>To</dt>
-              <dd>{{content.transactionTo}}</dd>
-            </div>
+          <div class="transaction-isolated__address" data-test-transaction-isolated-to>
+            <dt>To</dt>
+            <dd>{{content.transactionTo}}</dd>
+          </div>
           {{/if}}
         </dl>
 
         <div class="transaction-isolated__status" data-test-transaction-isolated-status>
-          Status: <span>{{#if content.transactionSuccessful}} Successful {{else}} Failed {{/if}}</span>
+          Status:
           {{#if content.transactionSuccessful}}
-            {{svg-jar "check" class="transaction-isolated__status-icon"}}
+          <span>Successful</span>
+          {{svg-jar "check" class="transaction-isolated__status-icon"}}
           {{else}}
-            {{!-- TODO we need an icon for a failed transaction --}}
-            {{svg-jar "fail" class="transaction-isolated__status-icon"}}
+          <span>Failed</span>
           {{/if}}
         </div>
 
-        <dl class="transaction-isolated__details">
-          <dt>Time</dt>
-          <dd>Dec-23-2018 07:49:13 PM +UTC</dd>
-          <dt>Block Height</dt>
-          <dd>6940145</dd>
-          <dt>Gas Limit</dt>
-          <dd>21000</dd>
-          <dt>Gas Used by Transaction</dt>
-          <dd>21000 (100%)</dd>
-          <dt>Gas Price</dt>
-          <dd>0.00000005 Ether (50 Gwei)</dd>
-          <dt>Actual Tx Cost/Fee</dt>
-          {{!-- it's imperative that you use web3.utils.BN to do this math --}}
-          <dd>0.00105 Ether ($0.14)</dd>
-          <dt>Nonce & {Position}</dt>
-          <dd>3 | {33}</dd>
-        </dl>
+        <div class="transaction-isolated__details">
+          <dl>
+            <dt>Time</dt>
+            <dd data-test-transaction-isolated-time>{{datetime}}</dd>
+            <dt>Block Height</dt>
+            <dd data-test-transaction-isolated-block-height>{{content.blockNumber}}</dd>
+            <dt>Gas Limit</dt>
+            <dd data-test-transaction-isolated-gas-limit>{{content.gas}}</dd>
+            <dt>Gas Used by Transaction</dt>
+            <dd data-test-transaction-isolated-gas-used>{{content.gasUsed}}</dd>
+          </dl>
+          <dl>
+            <dt>Gas Price</dt>
+            <dd data-test-transaction-isolated-gas-price>{{gasPriceGwei}} Gwei</dd>
+            <dt>Actual Tx Cost/Fee</dt>
+            <dd data-test-transaction-isolated-cost>{{wei-to-ethers transactionCostWei 6}} Ethers</dd>
+            <dt>Nonce</dt>
+            <dd data-test-transaction-isolated-nonce>{{content.transactionNonce}}</dd>
+            <dt>Position</dt>
+            <dd data-test-transaction-isolated-position>{{content.transactionIndex}}</dd>
+          </dl>
+        </div>
 
         <div class="transaction-isolated__qr-code">
           [QR CODE]
@@ -95,8 +99,12 @@
         </h3>
         <div class="transaction-isolated__group">
           <ul class="transaction-isolated__notes-list">
-            <li><p>Lorem ipsum dolor sit amet, consectetur</p></li>
-            <li><p>Proin sagittis bibendum purus sit amet elementum erat</p></li>
+            <li>
+              <p>Lorem ipsum dolor sit amet, consectetur</p>
+            </li>
+            <li>
+              <p>Proin sagittis bibendum purus sit amet elementum erat</p>
+            </li>
           </ul>
           <button class="transaction-isolated__group-button">
             Add new note

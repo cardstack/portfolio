@@ -13,6 +13,17 @@ export default Component.extend({
   store: service(),
   session: service(),
 
+  userInitials: computed('content.name', function () {
+    let name = this.get('content.name').trim();
+    if (!name) { return; }
+
+    let names = name.split(/\s\s*/);
+    if (names.length > 1) {
+      return name[0] + names[names.length - 1][0];
+    }
+    return name[0];
+  }),
+
   init() {
     this._super();
     this.resetForm();
@@ -27,15 +38,19 @@ export default Component.extend({
     let currentPassword = this.get('currentPassword');
 
     if (newPassword && newPassword !== confirmNewPassword) {
-      this.set('formError', `The 'New Password' and 'Confirm New Password' fields do not match`);
+      this.set('formError', `The 'New Password' and 'Confirm New Password' fields do not match.`);
+      this.set('newPasswordError', true);
       return;
     }
     if (newPassword && newPassword.length < passwordMinLength) {
       this.set('formError', `The new password must be at least 8 characters.`);
+      this.set('newPasswordError', true);
       return;
     }
     if (newPassword && currentPassword && newPassword === currentPassword) {
       this.set('formError', `The new password should be different than the old password.`);
+      this.set('oldPasswordError', true);
+      this.set('newPasswordError', true);
       return;
     }
 
@@ -68,7 +83,7 @@ export default Component.extend({
       this.resetForm();
       this.set('updateSuccessful', true);
     } else {
-      let message = get(body, 'errors[0].detail') || 'Errors encountered while updating profile';
+      let message = get(body, 'errors[0].detail') || 'Errors encountered while updating profile.';
       this.set('formError', message);
     }
   }).drop(),
@@ -91,6 +106,8 @@ export default Component.extend({
 
   resetForm() {
     this.set('formError', null);
+    this.set('newPasswordError', false);
+    this.set('oldPasswordError', false);
     this.set('updateSuccessful', false);
     this.setProperties({
       email: this.get('content.emailAddress'),
@@ -107,6 +124,8 @@ export default Component.extend({
 
   doOnInput(field, {target:{value}}) {
     this.set('formError', null);
+    this.set('newPasswordError', false);
+    this.set('oldPasswordError', false);
     this.set('updateSuccessful', false);
     this.set(field, value);
   },

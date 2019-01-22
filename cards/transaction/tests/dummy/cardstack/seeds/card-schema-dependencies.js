@@ -5,7 +5,7 @@ const cardDir = join(__dirname, '../../../../../');
 const thisCardsSchema = require('../../../../cardstack/static-model')();
 const mockEthereumSchema = require('../../../../../../shared-data/mock-ethereum-schema');
 
-const cardDependencies = [];
+const cardDependencies = ['crypto-compare'];
 
 let factory = new JSONAPIFactory();
 for (let cardName of cardDependencies) {

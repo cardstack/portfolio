@@ -167,6 +167,19 @@ module.exports = [{
 }, {
   type: 'content-types',
   id: 'ethereum-transactions',
+  attributes: {
+    defaultIncludes: [
+      'rates-at-transaction-timestamp',
+    ],
+    fieldsets: {
+      embedded: [
+        { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+      ],
+      isolated: [
+        { field: 'rates-at-transaction-timestamp', format: 'embedded' },
+      ]
+    }
+  },
   relationships: {
     fields: {
       data: [
@@ -187,6 +200,7 @@ module.exports = [{
         { type: "fields", id: "transaction-successful" },
         { type: "fields", id: "gas-used" },
         { type: "fields", id: "cumulative-gas-used" },
+        { type: "computed-fields", id: "rates-at-transaction-timestamp" },
       ]
     },
   }
@@ -195,7 +209,12 @@ module.exports = [{
   id: 'ethereum-addresses',
   attributes: {
     // cards should patch this schema in the data-source config for setting the fieldsets based on their specific scenarios
-    'default-includes': ['transactions']
+    'default-includes': ['transactions'],
+    fieldsets: {
+      isolated: [
+        { field: 'transactions', format: 'embedded' },
+      ],
+    }
   },
   relationships: {
     fields: {

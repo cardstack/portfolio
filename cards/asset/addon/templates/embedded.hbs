@@ -16,8 +16,8 @@
   <section class="asset-embedded__section">
     <div class="asset-embedded__data-row" data-test-asset-embedded-balance>
       <span class="asset-embedded__value">
-        {{#if etherBalance}}
-          {{etherBalance}}
+        {{#if content.networkAsset.balance}}
+          {{wei-to-ethers content.networkAsset.balance}}
         {{else}}
           2.1434
         {{/if}}
@@ -26,8 +26,18 @@
       {{!-- Add arrow icon and modal --}}
     </div>
     <div>
-      <span class="asset-embedded__value--secondary">$8509.30</span>
-      <span>USD</span>
+      {{!-- TODO you can use the "get-rate" helper to get the rate object used for the currency conversion
+          <span>Rate as of {{get (get-rate content.networkUnit 'USD' content.todaysRate) 'gmtDate'}} 0:00 GMT</span>
+      --}}
+      <span class="asset-embedded__value--secondary" data-test-asset-embedded-fiat-value>
+        {{#if content.networkAsset.balance}}
+          {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRatesLookup.rates}}
+        {{else}}
+          $8509.30
+        {{/if}}
+      </span>
+      {{!-- TODO need to be able to configure the fiat currency displayed here --}}
+      <span data-test-asset-embedded-fiat-currency>USD</span>
     </div>
   </section>
   <footer class="asset-embedded__footer">
