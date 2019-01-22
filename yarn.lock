@@ -647,7 +647,7 @@
     postcss-cssnext "^2.10.0"
     postcss-import "^9.1.0"
 
-"@cardstack/data@0.13.11", "@cardstack/data@^0.13.11":
+"@cardstack/data@0.13.11":
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/@cardstack/data/-/data-0.13.11.tgz#b11a57621f30d2b8c97de8511d76f6219331e9e0"
   integrity sha512-0N/ZKhurgVT1FKAlw2ORQTzJtIkF3hA6FpCofWzmB0YjMZ/IgDKZ1ISddcIkizGM2CZQfWZ7ZMzxclW+AphKvQ==
