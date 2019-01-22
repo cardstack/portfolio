@@ -1,7 +1,3 @@
-.asset-isolated {
-  padding: 50px 30px;
-}
-
 .asset-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
