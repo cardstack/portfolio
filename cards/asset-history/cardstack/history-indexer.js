@@ -113,6 +113,7 @@ module.exports = declareInjections({
         let { type, doc: { data: asset } } = evt;
         if (!this.assetContentTypes || !this.assetContentTypes.includes(type)) { return; }
 
+        log.debug(`index add event for asset ${asset.type}/${asset.id} has been detected, triggering asset history indexing for this asset.`);
         this._eventProcessingPromise = Promise.resolve(this._eventProcessingPromise)
           .then(() => this.index({ asset }));
 
@@ -177,7 +178,9 @@ module.exports = declareInjections({
         assetHistory = {
           type: 'asset-histories',
           id: asset.id.toLowerCase(),
-          attributes: {},
+          attributes: {
+            'last-update-timestamp': moment().utc().unix()
+          },
           relationships: {
             asset: { data: { type: asset.type, id: asset.id } },
             'history-values': { data: [] }
