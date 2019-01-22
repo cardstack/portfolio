@@ -4,40 +4,6 @@
   margin-right: auto;
 }
 
-/* .transaction-isolated__breadcrumbs {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 30px;
-}
-.transaction-isolated__breadcrumbs-button {
-  display: block;
-  margin-right: 25px;
-  padding: 10px 25px;
-  background-color: var(--portfolio-white);
-  color: var(--portfolio-black);
-  border: 1px solid var(--portfolio-darker-border-gray);
-  border-radius: 5px;
-  font-family: var(--portfolio-semibold-text);
-  font-size: var(--portfolio-sm-font);
-  font-weight: 600;
-  letter-spacing: -0.1px;
-  line-height: 1.1;
-  text-align: left;
-}
-.transaction-isolated__breadcrumbs-button:hover,
-.transaction-isolated__breadcrumbs-button:focus {
-  outline: none;
-  background-color: var(--portfolio-highlight-gray);
-  cursor: pointer;
-  user-select: none;
-}
-.transaction-isolated__breadcrumbs-button > span {
-  margin-left: 20px;
-  color: var(--portfolio-muted-gray);
-} */
-
 .transaction-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;

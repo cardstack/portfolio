@@ -217,6 +217,9 @@ module.exports = [{
     // cards should patch this schema in the data-source config for setting the fieldsets based on their specific scenarios
     'default-includes': ['transactions'],
     fieldsets: {
+      embedded: [
+        { field: 'transactions', format: 'embedded' },
+      ],
       isolated: [
         { field: 'transactions', format: 'embedded' },
       ],

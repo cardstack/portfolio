@@ -1,28 +1,30 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly, equal, match } from '@ember/object/computed';
-import { htmlSafe } from '@ember/string';
 import layout from '../templates/breadcrumbs';
 
 export default Component.extend({
   layout,
   tagName: '',
+  userId: readOnly('cardstackData.session.data.authenticated.data.id'),
   isAsset: equal('content.type', 'asset'),
   isTransaction: match('content.type', /.*?-transaction/),
   toEthAddress: readOnly('content.toAddress.ethereumAddress'),
 
-  assetUrl: computed('toEthAddress', function () {
+  assetPath: computed('toEthAddress', function () {
     let address = this.get('toEthAddress');
     if (!address) { return; }
 
-    return htmlSafe(`/assets/${address}`);
+    return `/assets/${address}`;
   }),
 
   assetType: computed('content.type', function () {
     let type = this.get('content.type');
     if (!type || !type.includes('-')) { return; }
 
-    return type.slice(0, type.indexOf('-')).toUpperCase();
+    let network = type.slice(0, type.indexOf('-')).toLowerCase();
+    if (network === 'ethereum') { return 'ether'; }
+    return network;
   }),
 
   abbreviatedAddress: computed('toEthAddress', function () {

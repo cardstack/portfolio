@@ -1,11 +1,36 @@
 <nav class="portfolio-breadcrumbs">
-  <ul>
-    <li><a href="/">My Portfolio</a></li>
+  <ul class="portfolio-breadcrumbs__list">
+    <li class="portfolio-breadcrumbs__list-item">
+      <a href="/" class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background">
+        {{svg-jar "briefcase" width="18px" height="16px" class="portfolio-breadcrumbs__logo"}}
+        <span>My Portfolio</span>
+      </a>
+    </li>
+
     {{#if (or isAsset isTransaction)}}
-      <li><a href="">[Wallet Title]</a></li>
+      <li class="portfolio-breadcrumbs__list-item">
+        {{!-- TO DO: Make title, link, and logo dynamic --}}
+        <a href={{cardstack-url "/wallets/ing-wallet"}} class="portfolio-breadcrumbs__link">
+          <span
+            class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
+            style={{css-url "background-image" "/portfolio-common/images/ing-logo-small.svg"}}
+          />
+          <span>ING Wallet</span>
+        </a>
+      </li>
     {{/if}}
+
     {{#if isTransaction}}
-      <li><a href={{assetUrl}}>{{assetType}} {{abbreviatedAddress}}</a></li>
+      <li class="portfolio-breadcrumbs__list-item">
+        <a
+          href={{cardstack-url assetPath}}
+          class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background {{assetType}}"
+        >
+          {{svg-jar assetType width="22px" height="22px" class="portfolio-breadcrumbs__logo"}}
+          <span class="portfolio-breadcrumbs__asset-type">{{assetType}}</span>
+          <span>{{abbreviatedAddress}}</span>
+        </a>
+      </li>
     {{/if}}
   </ul>
 </nav>
