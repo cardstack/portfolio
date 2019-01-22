@@ -20,7 +20,7 @@ factory.addResource('content-types', 'assets')
         { field: 'network', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
-        { field: 'network-asset', format: 'embedded' },
+        { field: 'network-asset', format: 'isolated' }, // we want to load this as isolated, as this card is essentially a wrapper for the network asset
         { field: 'network-asset.transactions', format: 'embedded' },
         { field: 'asset-history', format: 'embedded' },
       ],

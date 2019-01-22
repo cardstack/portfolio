@@ -214,9 +214,6 @@ module.exports = [{
       isolated: [
         { field: 'transactions', format: 'embedded' },
       ],
-      embedded: [
-        { field: 'transactions', format: 'embedded' },
-      ]
     }
   },
   relationships: {

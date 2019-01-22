@@ -18,13 +18,13 @@ if (process.env.JSON_RPC_URL) {
               op: 'add',
               path: '/attributes',
               value: {
+                defaultIncludes: [
+                  'transactions',
+                ],
                 fieldsets: {
                   isolated: [
                     { field: 'transactions', format: 'embedded' },
                   ],
-                  embedded: [
-                    { field: 'transactions', format: 'embedded' },
-                  ]
                 }
               }
             }],

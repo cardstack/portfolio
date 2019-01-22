@@ -41,7 +41,10 @@ module.exports = function () {
 
   factory.addResource('grants', 'app-card-grant')
     .withRelated('who', [{ type: 'groups', id: 'everyone' }])
-    .withRelated('types', [{ type: 'content-types', id: 'app-cards' }])
+    .withRelated('types', [
+      { type: 'content-types', id: 'content-types' },
+      { type: 'content-types', id: 'spaces' }
+    ])
     .withAttributes({
       'may-read-resource': true,
       'may-read-fields': true,

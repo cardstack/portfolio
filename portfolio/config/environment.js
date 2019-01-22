@@ -24,6 +24,7 @@ module.exports = function(environment) {
     fastboot: {
       hostWhitelist: ['jorts.surgery', /^localhost:\d+$/]
     },
+    liveUpdateSeconds: 20,
   };
 
   if (environment === 'development') {
