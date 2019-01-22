@@ -55,6 +55,12 @@ class Updater {
         'field-type': '@cardstack/core-types::string'
       },
     }, {
+      type: 'fields',
+      id: 'last-update-timestamp',
+      attributes: {
+        'field-type': '@cardstack/core-types::integer'
+      },
+    }, {
       type: 'computed-fields',
       id: 'historic-rates',
       attributes: {
@@ -92,6 +98,7 @@ class Updater {
       relationships: {
         fields: {
           data: [
+            { type: 'fields', id: 'last-update-timestamp' },
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'history-values' },
             { type: 'computed-fields', id: 'timeseries' },
