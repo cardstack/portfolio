@@ -7,16 +7,17 @@ export default Service.extend({
     this.values = new WeakMap();
   },
 
-  balanceFor(wallet, { network, inCurrency }) {
+  balanceFor(wallet, { asset, inCurrency }) {
+    if (!wallet) { return; }
     this._generateValuesForWallet(wallet);
-    return this._valueFor(wallet, { network, inCurrency });
+    return this._valueFor(wallet, { asset, inCurrency });
   },
 
   _valueFor(wallet, { asset, inCurrency }) {
     let walletValues = this.values.get(wallet);
     if (asset) {
-      let value = walletValues[this._assetKey(asset)];
-      return inCurrency ? this._convertToFiat(wallet, asset.networkUnit, value) : value;
+      let { value } = walletValues.get(asset);
+      return inCurrency ? this._convertToFiat(wallet, asset.networkUnit, inCurrency, value) : value;
     }
 
     let total = 0;
@@ -34,11 +35,6 @@ export default Service.extend({
     let walletAssets = this.values.get(wallet);
     let assets = wallet.get('assets').toArray();
     for (let asset of assets) {
-      // we'd already created a random value for this asset
-      let valueForAsset = walletAssets.get(asset);
-      if (valueForAsset) {
-        continue;
-      }
       let crypto = asset.get('networkUnit');
       let networkAsset = asset.get('networkAsset');
       let value;
@@ -46,6 +42,11 @@ export default Service.extend({
         // ETH assets are linked to the actual ETH wallet address
         value = networkAsset ? networkAsset.balance : "0";
       } else {
+        let valueForAsset = walletAssets.get(asset);
+        // we'd already created a random value for this asset
+        if (valueForAsset) {
+          continue;
+        }
         value = this._randomBalance(crypto);
       }
       walletAssets.set(asset, { crypto, value });

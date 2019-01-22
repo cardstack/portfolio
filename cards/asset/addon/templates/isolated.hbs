@@ -33,7 +33,7 @@
                     {{#if content.networkAsset.balance}}
                       {{wei-to-ethers content.networkAsset.balance}}
                     {{else}}
-                      2.1434
+                      {{assetBalance}}
                     {{/if}}
                   </span>
                   <span class="asset-isolated__unit" data-test-asset-isolated-unit>{{content.networkUnit}}</span>
@@ -43,7 +43,7 @@
                     {{#if content.networkAsset.balance}}
                       {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
                     {{else}}
-                      {{currency-symbol currency}}8509.30
+                      {{currency-symbol currency}}{{assetValueInUSD}}
                     {{/if}}
                   </span>
                   <span class="asset-isolated__unit--secondary" data-test-asset-isolated-currency-name>{{currency}}</span>
