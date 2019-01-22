@@ -4756,6 +4756,17 @@ ember-ajax@^3.1.0:
     ember-cli-babel "^6.16.0"
     najax "^1.0.3"
 
+ember-animated-tools@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-animated-tools/-/ember-animated-tools-0.4.0.tgz#ec555f31fb9e8397b82504d1be2e8c3fca5f42a6"
+  integrity sha512-aCjdtPt9Z18l4W/wKzcHTlOnwQc6vVrAYnjAOHWA+sFpBubjtCiY0VGZRrWFQYBno+GsbbYsmAj6LcG8pO6OqA==
+  dependencies:
+    broccoli-funnel "^2.0.1"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.11.0"
+    ember-cli-htmlbars "^2.0.1"
+    resolve "^1.5.0"
+
 ember-animated@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/ember-animated/-/ember-animated-0.3.2.tgz#0d5bed0a8b26a003855c4c2b0f4205e173be6838"

@@ -1,0 +1,7 @@
+{{#animated-value @content group="moving-box-outer" use=outer duration=this.duration }}
+  <div class={{@class}} >
+    {{#animated-value @content group="moving-box-inner" use=inner duration=this.duration }}
+      {{yield}}
+    {{/animated-value}}
+  </div>
+{{/animated-value}}

@@ -5,47 +5,40 @@
     <div>
       <section class="asset-isolated__main asset-isolated__section">
         <AnimatedContainer>
-        {{#animated-value content group="background" use=offscreenLeft initialInsertion=true finalRemoval=true}}
-        <div class="asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
-          <AnimatedContainer>
-          {{#animated-value content group="insides" use=dontScale initialInsertion=true finalRemoval=true }}
-          <div class="asset-isolated__gradient-header">
-            <h2 class="asset-isolated__title" data-test-asset-isolated-title>
-              {{#animated-value content group="logo" use=logoTransition initialInsertion=true finalRemoval=true }}
-                {{svg-jar content.networkId width="36px" height="36px"}} {{content.networkTitle}}
-              {{/animated-value}}
-              {{title}}
-            </h2>
-          </div>
-          <div class="asset-isolated_gradient-wrapper">
+          <MovingBox @content={{content}} @class="asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
             <div>
-              <span class="asset-isolated__value">
-                {{#if content.networkAsset.balance}}
-                  {{wei-to-ethers content.networkAsset.balance}}
-                {{else}}
-                  2.1434
-                {{/if}}
-              </span>
-              <span class="asset-isolated__unit" data-test-asset-isolated-unit>{{content.networkUnit}}</span>
+              <div class="asset-isolated__gradient-header">
+                <h2 class="asset-isolated__title" data-test-asset-isolated-title>
+                  {{svg-jar content.networkId width="36px" height="36px"}} {{content.networkTitle}}
+                </h2>
+              </div>
+              <div class="asset-isolated_gradient-wrapper">
+                <div>
+                  <span class="asset-isolated__value">
+                    {{#if content.networkAsset.balance}}
+                      {{wei-to-ethers content.networkAsset.balance}}
+                    {{else}}
+                      2.1434
+                    {{/if}}
+                  </span>
+                  <span class="asset-isolated__unit" data-test-asset-isolated-unit>{{content.networkUnit}}</span>
+                </div>
+                <div>
+                  <span class="asset-isolated__value--secondary" data-test-asset-isolated-fiat-value>
+                    {{#if content.networkAsset.balance}}
+                      {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRatesLookup.rates}}
+                    {{else}}
+                      $8509.30
+                    {{/if}}
+                  </span>
+                  <span class="asset-isolated__unit--secondary">USD</span>
+                </div>
+              </div>
+              <div class="asset-isolated__chart">
+                {{cardstack-content content=content.assetHistory format="embedded"}}
+              </div>
             </div>
-            <div>
-              <span class="asset-isolated__value--secondary" data-test-asset-isolated-fiat-value>
-                {{#if content.networkAsset.balance}}
-                  {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRatesLookup.rates}}
-                {{else}}
-                  $8509.30
-                {{/if}}
-              </span>
-              <span class="asset-isolated__unit--secondary">USD</span>
-            </div>
-          </div>
-          <div class="asset-isolated__chart">
-            {{cardstack-content content=content.assetHistory format="embedded"}}
-          </div>
-          {{/animated-value}}
-          </AnimatedContainer>
-        </div>
-        {{/animated-value}}
+          </MovingBox>
         </AnimatedContainer>
 
         <div class="asset-isolated__details">
