@@ -37,18 +37,21 @@ export function convertCurrency(fromCurrency, toCurrency, fromValue, rates) {
   } else {
     rate = getRate(fromCurrency, toCurrency, rates);
   }
+  //TODO: Only BTC and ETH rates are fetched
   if (!rate && !rateCents) { return; }
 
+  rateCents = rateCents || rate.get('cents');
+
+  let currencyDecimalPlaces = currencyCentsDecimalPlaces[toCurrency] || 2;
   // When we do this for other crypto currencies we should use BigNumber, as those currenies use really small units like satoshi for bitcoin
   if (fromCurrency !== 'ETH') {
-    return (parseFloat(fromValue) * parseFloat(rateCents || rate.get('cents')) /
-      (Math.pow(10, currencyDecimalPlaces[toCurrency] || 2)))
+    return (parseFloat(fromValue) * parseFloat(rateCents) /
+      (Math.pow(10, currencyDecimalPlaces)))
       .toFixed(displayDecimalPlaces[toCurrency] || 2);
   }
 
   let fromValueAsEth = parseFloat(Web3.utils.fromWei(fromValue, 'ether'));
-  rateCents = parseFloat(rateCents || rate.get('cents'));
-  let currencyDecimalPlaces = currencyCentsDecimalPlaces[toCurrency] || 2;
+  rateCents = parseFloat(rateCents);
   let toCurrenyUnits = ((rateCents * fromValueAsEth) / Math.pow(10, currencyDecimalPlaces))
     .toFixed(displayDecimalPlaces[toCurrency] || 2);
   return toCurrenyUnits;
