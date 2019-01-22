@@ -148,7 +148,7 @@
 
 .transaction-isolated__hash-value {
   text-decoration: none;
-  display: inline-block;
+  display: block;
   color: var(--portfolio-black);
   font-size: var(--portfolio-med-font);
   font-family: var(--portfolio-semibold-text);
