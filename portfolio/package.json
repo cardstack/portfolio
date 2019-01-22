@@ -44,6 +44,7 @@
     "@ember/optional-features": "^0.6.3",
     "babel-preset-env": "^1.7.0",
     "broccoli-asset-rev": "^2.7.0",
+    "co-body": "^6.0.0",
     "ember-ajax": "^3.1.0",
     "ember-cli": "~3.5.0",
     "ember-cli-app-version": "^3.2.0",
@@ -82,6 +83,7 @@
     "eslint-plugin-ember": "^6.0.1",
     "loader.js": "^4.7.0",
     "lodash": "^4.17.11",
+    "moment-timezone": "^0.5.11",
     "portfolio-asset": "*",
     "portfolio-asset-history": "*",
     "portfolio-common": "*",
@@ -92,10 +94,12 @@
     "portfolio-register": "*",
     "portfolio-transaction": "*",
     "portfolio-user": "*",
+    "portfolio-utils": "*",
     "portfolio-wallet": "*",
     "prember": "^1.0.0",
     "qunit-dom": "^0.8.0",
-    "squishable-container": "^0.1.0"
+    "squishable-container": "^0.1.0",
+    "web3": "^1.0.0-beta.37"
   },
   "workspaces": {
     "nohoist": [

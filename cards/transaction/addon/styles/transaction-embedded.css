@@ -57,7 +57,7 @@
   line-height: 20px;
   padding-left: 10px;
 }
-.transaction-embedded__data .transaction-embedded__amount--usd {
+.transaction-embedded__data .transaction-embedded__amount--fiat {
   opacity: 0.5;
   color: #000000;
   line-height: 19px;
@@ -85,7 +85,7 @@
 .transaction-embedded__amount {
   font-family: var(--portfolio-bold-text);
 }
-.transaction-embedded__amount--usd {
+.transaction-embedded__amount--fiat {
   color: var(--portfolio-muted-gray);
   font-size: var(--portfolio-xs-font);
 }

@@ -4,6 +4,8 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 import Web3 from 'web3';
 
+const { utils: { BN, fromWei } } = Web3;
+
 export default Component.extend({
   date: computed('content.timestamp', function() {
     let timestamp = this.get('content.timestamp');
@@ -26,23 +28,20 @@ export default Component.extend({
     return moment.unix(timestamp).format('MMM D,YYYY')
   }),
 
-  transactionValue: computed('content.transactionValue', function() {
-    let value = this.get('content.transactionValue');
-    if (!value) { return; }
-
-    return parseFloat(Web3.utils.fromWei(value, 'ether')).toFixed(4);
-  }),
-
-  transactionCost: computed('content.{gasPrice,gasUsed}', function() {
+  transactionCostWei: computed('content.{gasPrice,gasUsed}', function() {
     let gasPrice = this.get('content.gasPrice');
     let gasUsed = this.get('content.gasUsed');
     if (!gasPrice || !gasUsed) { return; }
 
-    let BN = Web3.utils.BN;
     let price = new BN(gasPrice);
     let used = new BN(gasUsed);
 
-    return Web3.utils.fromWei(price.mul(used), 'Gwei');
+    return price.mul(used).toString();
+  }),
+
+  gasPriceGwei: computed('content.gasPrice', function() {
+    let gasPrice = this.get('content.gasPrice');
+    return fromWei(gasPrice || "0", 'gwei');
   }),
 
   transactionHashLink: computed('content.transactionHash', function() {

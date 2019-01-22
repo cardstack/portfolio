@@ -30,7 +30,7 @@ const scenario = new Fixtures({
             "gas-price": "5000000000",
             "transaction-hash": "0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572",
             "gas": 90000,
-            "transaction-value": "1001000000000000000"
+            "transaction-value": "10010000000000000000"
           }),
         factory.addResource('ethereum-transactions', '0x3252a963fe90697240890b84d2a3fac45b756338027467e2788ad0bb82b1fdc2')
           .withAttributes({
@@ -74,15 +74,9 @@ module('Card | asset-history', function(hooks) {
   test('embedded format renders', async function(assert) {
     await render(hbs`{{cardstack-card-test 'asset-history' '0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde' format="embedded"}}`);
     assert.dom('.highcharts-root').exists();
-    let xAxisLabels = this.element.querySelector('.highcharts-axis-labels');
-    let dateLabels = xAxisLabels.querySelectorAll('text');
-    let i = 14;
-    for (let label of dateLabels) {
-      assert.dom(label).hasText(`${i++}. Jan`);
-    }
     let yAxisLabel = this.element.querySelector('.highcharts-yaxis-labels');
-    let valueLabel = yAxisLabel.querySelectorAll('text')[4];
-    assert.dom(valueLabel).hasText('$7.5k');
+    let valueLabel = yAxisLabel.querySelectorAll('text')[1];
+    assert.dom(valueLabel).hasText('$1.0k');
   });
 
 });

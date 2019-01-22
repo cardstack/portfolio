@@ -6,10 +6,12 @@
   <div class="transaction-embedded__data">
     <div class="transaction-embedded__amount">
       <div data-test-transaction-embedded-value>
-        <span class="transaction-embedded__amount--value">{{transactionValue}}</span>
+        <span class="transaction-embedded__amount--value">{{wei-to-ethers content.transactionValue}}</span>
         <span class="transaction-embedded__amount--currency">ETH</span>
       </div>
-      <div class="transaction-embedded__amount--usd">≈ $500 USD</div>
+      <div class="transaction-embedded__amount--fiat" data-test-transaction-embedded-fiat>
+        ≈ {{currency-symbol 'USD'}}{{convert-currency 'ETH' 'USD' content.transactionValue content.ratesAtTransactionTimestamp}} USD
+      </div>
     </div>
     <div class="transaction-embedded__addresses">
       <div data-test-transaction-embedded-from>

@@ -175,7 +175,7 @@
 .transaction-isolated__amount--currency {
   font-size: var(--portfolio-xl-font);
 }
-.transaction-isolated__amount-value--usd {
+.transaction-isolated__amount-value--fiat {
   color: var(--portfolio-muted-gray);
 }
 
