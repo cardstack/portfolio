@@ -4,7 +4,7 @@ const { join } = require('path');
 const cardDir = join(__dirname, '../../../../../');
 const thisCardsSchema = require('../../../../cardstack/static-model')();
 
-const cardDependencies = ['user', 'wallet', 'asset', 'network'];
+const cardDependencies = ['user', 'wallet', 'asset', 'network', 'crypto-compare'];
 
 let factory = new JSONAPIFactory();
 for (let cardName of cardDependencies) {

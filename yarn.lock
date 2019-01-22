@@ -5479,6 +5479,14 @@ ember-concurrency@^0.8.14, ember-concurrency@^0.8.17, ember-concurrency@^0.8.19:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
+ember-config-service@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-config-service/-/ember-config-service-1.0.0.tgz#5309ef34d8e14061842b691bb62697e02d3dfe70"
+  integrity sha512-76Lih8+rENDXxzCxUF03sJhjHWgGTpiCMrh/HLEnusKOCpYWZJPVmvBCWZPSJLXXeDoUrxhdfhwe5EkP9lRniA==
+  dependencies:
+    ember-cli-babel "^6.16.0"
+    ember-getowner-polyfill "2.2.0"
+
 ember-cookies@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.3.1.tgz#42ca530703092f6cde691103d608a6a5a58f2d76"
@@ -5653,7 +5661,7 @@ ember-fetch@^6.2.2:
     node-fetch "^2.3.0"
     whatwg-fetch "^3.0.0"
 
-"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1:
+ember-getowner-polyfill@2.2.0, "ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
   integrity sha512-rwGMJgbGzxIAiWYjdpAh04Abvt0s3HuS/VjHzUFhVyVg2pzAuz45B9AzOxYXzkp88vFC7FPaiA4kE8NxNk4A4Q==

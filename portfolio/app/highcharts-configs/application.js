@@ -1,6 +1,7 @@
 export default function(defaultOptions) {
   defaultOptions.lang = {
-    thousandsSep: ','
+    thousandsSep: ',',
+    rangeSelectorZoom: ''
   };
 
   return defaultOptions;

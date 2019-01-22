@@ -109,16 +109,16 @@
 .highcharts-grid-line {
   fill: none;
   stroke: #fff;
-  opacity: 0.25;
+  opacity: 0.15;
 }
 .highcharts-grid-line:first-child,
 .highcharts-grid-line:last-child {
-  opacity: 0.5;
+  opacity: 0.25;
 }
 
 .highcharts-xaxis-grid .highcharts-grid-line {
   stroke-width: 1px;
-  opacity: 0.5;
+  opacity: 0.25;
 }
 .highcharts-xaxis-grid .highcharts-grid-line:first-child,
 .highcharts-xaxis-grid .highcharts-grid-line:last-child {

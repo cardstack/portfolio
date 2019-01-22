@@ -1,10 +1,9 @@
-import Component from '@ember/component';
+import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import moment from 'moment';
-
 const { readOnly } = computed;
 
-export default Component.extend({
+export default Mixin.create({
   networkId: readOnly('content.networkId'),
   abbreviatedAddress: computed('content.formattedAddress', function() {
     let address = this.get('content.formattedAddress');

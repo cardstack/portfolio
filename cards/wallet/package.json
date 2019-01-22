@@ -27,7 +27,8 @@
     "portfolio-asset": "*",
     "portfolio-common": "*",
     "portfolio-crypto-compare": "*",
-    "portfolio-user": "*"
+    "portfolio-user": "*",
+    "portfolio-transaction": "*"
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.13.0",

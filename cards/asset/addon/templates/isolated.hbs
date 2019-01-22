@@ -64,7 +64,7 @@
 
       <section class="asset-isolated__section asset-isolated__section-group">
         <h3 class="asset-isolated__section-title bg-icon--history">Transaction History</h3>
-        {{#each content.networkAsset.transactions as |transaction index|}}
+        {{#each chronologicallyDescendingTransactions as |transaction index|}}
           <div data-test-asset-isolated-transaction={{index}}>
             {{cardstack-content content=transaction format="embedded"}}
           </div>

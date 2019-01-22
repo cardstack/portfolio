@@ -1,12 +1,12 @@
 
-import Component from '@ember/component';
+import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import moment from 'moment';
 import Web3 from 'web3';
 
 const { utils: { BN, fromWei } } = Web3;
 
-export default Component.extend({
+export default Mixin.create({
   date: computed('content.timestamp', function() {
     let timestamp = this.get('content.timestamp');
     if (!timestamp) { return; }

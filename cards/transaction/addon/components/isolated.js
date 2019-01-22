@@ -1,4 +1,5 @@
-import TransactionBase from './transaction-base';
+import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
+import TransactionBaseMixin from '../mixins/transaction-base';
 import layout from '../templates/isolated';
 
-export default TransactionBase.extend({ layout });
+export default LiveIsolatedCard.extend(TransactionBaseMixin, { layout });
