@@ -6,10 +6,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { readOnly } from '@ember/object/computed';
-
-function round(value, precision) {
-  return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
-}
+import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
 export default Component.extend(AssetBaseMixin, {
   layout,
@@ -45,7 +42,7 @@ export default Component.extend(AssetBaseMixin, {
     });
     // Avoid displaying NaN
     if (balance) {
-      return round(balance, 4);
+      return roundWithPrecision([ balance, 4 ]);
     }
   }),
 
@@ -56,7 +53,7 @@ export default Component.extend(AssetBaseMixin, {
     });
     // Avoid displaying NaN
     if (assetValue) {
-      return round(assetValue, 2);
+      return roundWithPrecision([ assetValue, 2 ]);
     }
   }),
 });

@@ -12,7 +12,7 @@
           {{or content.wallets.length "0"}} Wallets
         </div>
         <div class="portfolio-isolated__wallets-value" data-test-portfolio-isolated-wallets-value>
-          ≈ $ 33,971
+          ≈ {{currency-symbol 'USD'}} {{accountTotalInUSD}}
         </div>
         {{!-- Add more button and modal --}}
       </div>

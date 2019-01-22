@@ -5,10 +5,7 @@ import layout from '../templates/isolated';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
-
-function round(value, precision) {
-  return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
-}
+import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
 export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   layout,
@@ -51,7 +48,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     });
     // Avoid displaying NaN
     if (balance) {
-      return round(balance, 4);
+      return roundWithPrecision([ balance, 4 ]);
     }
   }),
 
@@ -62,7 +59,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     });
     // Avoid displaying NaN
     if (assetValue) {
-      return round(assetValue, 2);
+      return roundWithPrecision([ assetValue, 2 ]);
     }
   }),
 });
