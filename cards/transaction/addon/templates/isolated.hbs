@@ -15,7 +15,7 @@
         </div>
         <div class="transaction-isolated__amount">
           <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>
-            <span class="transaction-isolated__amount--value">{{transactionValueEth}}</span>
+            <span class="transaction-isolated__amount--value">{{wei-to-ethers content.transactionValue}}</span>
             <span class="transaction-isolated__amount--currency">ETH</span>
           </div>
           <div class="transaction-isolated__amount-value--fiat" data-test-transaction-isolated-fiat>
@@ -59,10 +59,9 @@
           </dl>
           <dl>
             <dt>Gas Price</dt>
-            <dd data-test-transaction-isolated-gas-price>{{content.gasPrice}}</dd>
+            <dd data-test-transaction-isolated-gas-price>{{gasPriceGwei}} Gwei</dd>
             <dt>Actual Tx Cost/Fee</dt>
-            {{!-- it's imperative that you use web3.utils.BN to do this math --}}
-            <dd data-test-transaction-isolated-cost>{{transactionCost}} Gwei</dd>
+            <dd data-test-transaction-isolated-cost>{{wei-to-ethers transactionCostWei 6}} Ethers</dd>
             <dt>Nonce</dt>
             <dd data-test-transaction-isolated-nonce>{{content.transactionNonce}}</dd>
             <dt>Position</dt>

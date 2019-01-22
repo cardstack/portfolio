@@ -103,8 +103,8 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-isolated-block-height]').hasText('6');
     assert.dom('[data-test-transaction-isolated-gas-limit]').hasText('90000');
     assert.dom('[data-test-transaction-isolated-gas-used]').hasText('21000');
-    assert.dom('[data-test-transaction-isolated-gas-price]').hasText('5000000000');
-    assert.dom('[data-test-transaction-isolated-cost]').hasText('105000 Gwei');
+    assert.dom('[data-test-transaction-isolated-gas-price]').hasText('5 Gwei');
+    assert.dom('[data-test-transaction-isolated-cost]').hasText('0.000105 Ethers');
     assert.dom('[data-test-transaction-isolated-nonce]').hasText('3');
     assert.dom('[data-test-transaction-isolated-position]').hasText('42');
     assert.dom('[data-test-transaction-isolated-fiat]').hasText('≈ $10.10 USD');

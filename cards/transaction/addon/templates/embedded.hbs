@@ -6,7 +6,7 @@
   <div class="transaction-embedded__data">
     <div class="transaction-embedded__amount">
       <div data-test-transaction-embedded-value>
-        <span class="transaction-embedded__amount--value">{{transactionValueEth}}</span>
+        <span class="transaction-embedded__amount--value">{{wei-to-ethers content.transactionValue}}</span>
         <span class="transaction-embedded__amount--currency">ETH</span>
       </div>
       <div class="transaction-embedded__amount--fiat" data-test-transaction-embedded-fiat>

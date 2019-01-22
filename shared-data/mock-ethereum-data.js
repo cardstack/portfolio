@@ -182,7 +182,5 @@ let balance = models.filter(i => i.type === 'ethereum-transactions')
   .reduce((cumulativeBalance, txn) => updateBalanceFromTransaction(cumulativeBalance, address.id, txn), new BN(0));
 
 address.attributes.balance = balance.toString();
-console.log(`====> seed address ${address.id} balance is: ${fromWei(balance, 'ether')} ETH`); // eslint-disable-line no-console
-
 
 module.exports = models;
