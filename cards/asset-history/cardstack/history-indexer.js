@@ -33,11 +33,12 @@ module.exports = declareInjections({
       this._startedPromise = new Promise(res => this._hasStartedCallBack = res);
     }
 
-    async start({ assetContentTypes, maxAssetHistories, mockNow }) {
+    async start({ assetContentTypes, transactionContentTypes, maxAssetHistories, mockNow }) {
       log.debug(`starting history-indexer`);
       await this._setupPromise;
 
       this.assetContentTypes = assetContentTypes;
+      this.transactionContentTypes = transactionContentTypes;
       this.maxAssetHistories = maxAssetHistories;
       if (process.env.HUB_ENVIRONMENT === 'test' && mockNow) {
         moment.now = function() {
@@ -87,16 +88,14 @@ module.exports = declareInjections({
       if (asset) {
         let result;
         try {
-          result = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, asset.type, asset.id);
+          result = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, asset.type, asset.id, ['transactions']);
         } catch (e) {
           if (e.status !== 404) { throw e; }
         }
         await this._processAsset(result.data, result.included);
       } else {
-        let { included=[], data: assets=[] } = await this._getAssets() || {};
+        let { transactions=[], assets=[] } = await this._getAssets() || {};
         for (asset of assets) {
-          let transactionsIdentifiers = (get(asset, 'relationships.transactions.data') || []).map(i => `${i.type}/${i.id}`);
-          let transactions = included.filter(i => transactionsIdentifiers.includes(`${i.type}/${i.id}`));
           await this._processAsset(asset, transactions);
         }
       }
@@ -110,12 +109,14 @@ module.exports = declareInjections({
       if (!this.assetContentTypes || !this.assetContentTypes.length) { return; }
 
       this.pgsearchClient.on('add', async (evt) => {
-        let { type, doc: { data: asset } } = evt;
-        if (!this.assetContentTypes || !this.assetContentTypes.includes(type)) { return; }
+        let { type, doc: { data: resource } } = evt;
+        if (!this.assetContentTypes || !this.transactionContentTypes) { return; }
 
-        log.debug(`index add event for asset ${asset.type}/${asset.id} has been detected, triggering asset history indexing for this asset.`);
-        this._eventProcessingPromise = Promise.resolve(this._eventProcessingPromise)
-          .then(() => this.index({ asset }));
+        if (this.assetContentTypes.includes(type)) {
+          log.debug(`index add event for asset ${resource.type}/${resource.id} has been detected, triggering asset history indexing for this asset.`);
+          this._eventProcessingPromise = Promise.resolve(this._eventProcessingPromise)
+            .then(() => this.index({ asset:resource }));
+        }
 
         return await this._eventProcessingPromise;
       });
@@ -150,12 +151,25 @@ module.exports = declareInjections({
       if (!this.assetContentTypes) { return; }
 
       let size = this.maxAssetHistories || DEFAULT_MAX_ASSET_HISTORIES;
-      return await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+      let { data: assets } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
         filter: {
           type: { exact: this.assetContentTypes }
         },
         page: { size }
       });
+      let transactionIds = assets.reduce((cumulativeTransactions, asset) => {
+        return cumulativeTransactions.concat((get(asset, 'relationships.transactions.data') || []).map(i => i.id).filter(i => Boolean(i)));
+      } , []);
+      let { data: transactions } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+        filter: {
+          type: { exact: this.transactionContentTypes },
+          id: { exact: transactionIds }
+
+        },
+        page: { size }
+      });
+
+      return { assets, transactions };
     }
 
     async _buildAssetHistory({ today, asset, assetHistory, transactions, historyValueIds = [], historyValues = [] }) {
@@ -194,7 +208,7 @@ module.exports = declareInjections({
     }
 
     async _buildHistoryValues(today, asset, transactions, historyValueIds = [], historyValues = []) {
-      let updatedLastHistoryValues = [];
+      let updatedLastHistoryValues = transactions.length ? [ this.buildInitialHistoryValue(asset, transactions[0]) ] : [];
       if (!transactions || !transactions.length) { return []; }
 
       let historyStartDate = moment(transactions[0].attributes.timestamp, 'X').utc().format('YYYY-MM-DD');
@@ -234,6 +248,22 @@ module.exports = declareInjections({
         updatedLastHistoryValues.push(historyValue);
       }
       return updatedLastHistoryValues;
+    }
+
+    buildInitialHistoryValue(asset, firstTransaction) {
+      let date = moment(firstTransaction.attributes.timestamp, 'X').utc().subtract(1, 'day').format('YYYY-MM-DD');
+      return {
+        id: `${asset.id}_${date}`,
+        type: 'asset-history-values',
+        attributes: {
+          balance: "0",
+          'gmt-date': date,
+        },
+        relationships: {
+          asset: { data: { type: asset.type, id: asset.id } },
+          transactions: { data: [] }
+        }
+      };
     }
 
     async _indexResource(batch, record) {

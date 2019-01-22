@@ -20,6 +20,7 @@ export default Component.extend({
         },
       },
       yAxis: {
+        offset: -5,
         min: 0, // this forces the y-axis to start at zero
         labels: {
           formatter() { // TODO need to make sure this changes when the currency changes

@@ -40,7 +40,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
     .withRelated('network', bitcoinNetwork);
 
-  let simpleEthereumAsset = factory.addResource('assets', '0x04C945B74E46F1D142A760863012aC802058449e')
+  let simpleEthereumAsset = factory.addResource('assets', '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf')
     .withRelated('network', ethereumNetwork);
 
   let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
