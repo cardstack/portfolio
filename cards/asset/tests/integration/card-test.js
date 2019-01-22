@@ -94,7 +94,7 @@ module('Card | asset', function (hooks) {
 
   test('isolated format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="isolated"}}`);
-    assert.dom('[data-test-asset-isolated-title]').hasText('Ether Asset Detail');
+    assert.dom('[data-test-asset-isolated-title]').hasText('Ether');
     assert.dom('[data-test-asset-isolated-unit]').hasText('ETH');
     assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`);
     assert.dom('[data-test-asset-isolated-established-date]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI

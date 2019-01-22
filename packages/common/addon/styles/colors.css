@@ -19,7 +19,7 @@
   --portfolio-red-failed: #db3d3d;
 
   --portfolio-bitcoin-gradient: linear-gradient(45deg, #f76b1c 0%, #fad961 100%), #f76b1c;
-  --portfolio-ether-gradient: linear-gradient(45deg, #003bff 0%, #00ff91 100%), #003bff;
+  --portfolio-ether-gradient: linear-gradient(45deg, #003bff 0%, #00ccae 100%), #003bff;
   --portfolio-litecoin-gradient: linear-gradient(45deg, #3023ae 0%, #c86dd7 100%), #3023ae;
   --portfolio-zcash-gradient: linear-gradient(45deg, #8022ae 0%, #ff0000 100%), #8022ae;
 }

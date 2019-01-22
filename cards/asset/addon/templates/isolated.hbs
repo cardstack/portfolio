@@ -1,18 +1,14 @@
-<TopHeader></TopHeader>
+<section class="asset-isolated">
+  <TopHeader></TopHeader>
 
-<div class="asset-isolated">
-  <button class="asset-isolated__button-row">Back to My Portfolio</button>
-
-  <h1 class="asset-isolated__title" data-test-asset-isolated-title>{{content.networkTitle}} Asset Detail</h1>
   <div class="asset-isolated__grid">
     <div>
-      <section class="asset-isolated__main asset-isolated__group">
+      <section class="asset-isolated__main asset-isolated__section">
         <div class="asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
           <div class="asset-isolated__gradient-header">
-            <h2 class="asset-isolated__gradient-title">
-              {{svg-jar content.networkId}} {{content.networkTitle}}
+            <h2 class="asset-isolated__title" data-test-asset-isolated-title>
+              {{svg-jar content.networkId width="36px" height="36px"}} {{content.networkTitle}}
             </h2>
-            <div class="asset-isolated__tag">Savings</div>
           </div>
           <div class="asset-isolated_gradient-wrapper">
             <div>
@@ -43,7 +39,7 @@
 
         <div class="asset-isolated__details">
           <div class="asset-isolated__details-item" data-test-asset-isolated-address>
-            <h4 class="asset-isolated__details-item-title" >Address</h4>
+            <h4 class="asset-isolated__details-item-title">Address</h4>
             {{content.formattedAddress}}
           </div>
           <div class="asset-isolated__details-item">
@@ -66,42 +62,43 @@
         </div>
       </section>
 
-      <section>
-        <h3 class="asset-isolated__section-title">Transaction History</h3>
-        <div class="asset-isolated__group asset-isolated__transactions">
-          {{#each content.networkAsset.transactions as |transaction index|}}
-            <div data-test-asset-isolated-transaction={{index}}>
-              {{cardstack-content content=transaction format="embedded"}}
-            </div>
-          {{/each}}
-        </div>
+      <section class="asset-isolated__section asset-isolated__section-group">
+        <h3 class="asset-isolated__section-title bg-icon--history">Transaction History</h3>
+        {{#each content.networkAsset.transactions as |transaction index|}}
+          <div data-test-asset-isolated-transaction={{index}}>
+            {{cardstack-content content=transaction format="embedded"}}
+          </div>
+        {{/each}}
       </section>
     </div>
 
     <aside>
-      <section>
-        <h3 class="asset-isolated__section-title">Wallet</h3>
-        <div class="asset-isolated__group">
-          <div class="asset-isolated__group-title">{{svg-jar "ing-logo"}} ING Wallet</div>
-          <button class="asset-isolated__group-button">
-            Move funds to another wallet
-          </button>
+      <section class="asset-isolated__section asset-isolated__section-group">
+        <h3 class="asset-isolated__section-title bg-icon--wallet">
+          Belongs To
+        </h3>
+        <div class="asset-isolated__section-content" style={{css-url "background-image" "/portfolio-common/images/ing-logo.svg"}}>
+          ING Wallet
         </div>
       </section>
-      <section>
-        <h3 class="asset-isolated__section-title">Tags</h3>
-        <div class="asset-isolated__group">
-          <div class="asset-isolated__group-title">
-            <span>Savings</span>
-            <span>Business Operations</span>
-            <span>International</span>
+
+      <section class="asset-isolated__section">
+        <div class="asset-isolated__section-group">
+          <h3 class="asset-isolated__section-title bg-icon--tag">
+            Tags
+          </h3>
+          <ul class="asset-isolated__tags-list">
+            <li><a href="/">Savings</a></li>
+            <li><a href="/">Business Operations</a></li>
+            <li><a href="/">International</a></li>
             {{!-- TAGS HERE --}}
-          </div>
-          <button class="asset-isolated__group-button">
-            Add custom tag
-          </button>
+          </ul>
         </div>
+        <button class="asset-isolated__section-button bg-icon--add">
+          Add custom tag
+        </button>
       </section>
     </aside>
   </div>
-</div>
+
+</section>
