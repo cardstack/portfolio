@@ -74,12 +74,6 @@ module('Card | asset-history', function(hooks) {
   test('embedded format renders', async function(assert) {
     await render(hbs`{{cardstack-card-test 'asset-history' '0xc3d7fcfb69d168e9339ed18869b506c3b0f51fde' format="embedded"}}`);
     assert.dom('.highcharts-root').exists();
-    let xAxisLabels = this.element.querySelector('.highcharts-axis-labels');
-    let dateLabels = xAxisLabels.querySelectorAll('text');
-    let i = 14;
-    for (let label of dateLabels) {
-      assert.dom(label).hasText(`${i++}. Jan`);
-    }
     let yAxisLabel = this.element.querySelector('.highcharts-yaxis-labels');
     let valueLabel = yAxisLabel.querySelectorAll('text')[1];
     assert.dom(valueLabel).hasText('$1.0k');

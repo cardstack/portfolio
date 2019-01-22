@@ -129,7 +129,7 @@ function setup(factoryCallback) {
       });
 
     // Make content types available from the cards in our application available for us to use
-    for (let cardName of ['network', 'crypto-compare']) {
+    for (let cardName of ['network', 'crypto-compare', 'transaction']) {
       let schemaFile = join(cardDir, cardName, 'cardstack', 'static-model.js');
       if (!existsSync(schemaFile)) { continue; }
       factory.importModels(require(schemaFile)());

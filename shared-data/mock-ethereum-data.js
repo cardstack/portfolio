@@ -1,5 +1,5 @@
 const { updateBalanceFromTransaction } = require('portfolio-utils');
-const { utils: { BN, fromWei } } = require('web3');
+const { utils: { BN } } = require('web3');
 
 // an easy to to build this is to just copy-paste the pristine docs straight
 // out of the DB whose addresses and transactions you want to mock (hub unit tests are nice for this)
