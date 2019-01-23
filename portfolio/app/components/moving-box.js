@@ -12,6 +12,7 @@ export default Component.extend({
 
   outer: function * ({ receivedSprites }) {
     receivedSprites.forEach(sprite => {
+      sprite.applyStyles({ 'z-index': 1 });
       move(sprite);
       resize(sprite);
     });
@@ -31,7 +32,7 @@ export default Component.extend({
     });
 
     if (receivedSprites.length > 0) {
-      yield wait(duration * 0.8);
+      yield wait(duration * 0.75);
       receivedSprites.forEach(sprite => {
         opacity(sprite, { from: 0, to: 1, duration: duration * 0.2 });
       });

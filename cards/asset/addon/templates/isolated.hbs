@@ -14,7 +14,14 @@
                       {{svg-jar content.networkId class="asset-isolated__logo" width="36px" height="36px"}}
                     </MovingItem>
                     <MovingItem @content={{content}} @name="title">
-                      <span>{{content.networkTitle}}</span>
+
+                      {{! these inline styles make it possible to align the text
+                          correctly throughout animation. Ideally we should
+                          instead refactor the isolated and embedded cards to
+                          have semantically similar markup. There's not really a
+                          good reason to structure the title and logo so
+                          differently on each. }}
+                      <span style="text-align: left; display: inline-block">{{content.networkTitle}}</span>
                     </MovingItem>
                   </AnimatedContainer>
                 </h2>
