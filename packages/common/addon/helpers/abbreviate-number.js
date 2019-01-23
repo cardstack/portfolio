@@ -4,6 +4,8 @@ const SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
 
 export function abbreviateNumber(number){
 
+    if (number < 1) { return number; }
+
     // what tier? (determines SI symbol)
     let tier = Math.log10(number) / 3 | 0;
 

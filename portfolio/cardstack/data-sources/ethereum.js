@@ -10,7 +10,7 @@ if (process.env.JSON_RPC_URL) {
         addressIndexing: {
           trackedAddressContentType: 'assets',
           trackedAddressField: 'ethereum-asset-id',
-          maxBlockSearchDepth: 50000
+          maxBlockSearchDepth: 100000
         },
         patch: {
           'content-types': {

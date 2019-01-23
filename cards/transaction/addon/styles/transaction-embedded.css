@@ -36,16 +36,29 @@
 }
 
 .transaction-embedded__data {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-around;
   align-items: center;
-  margin: 0;
-  padding: 30px 0;
+  margin: 0 0 15px;
   font-size: 13px;
   letter-spacing: 0.24px;
   text-align: center;
 }
+
+.transaction-embedded__data > * {
+  height: 180px;
+}
+
+.transaction-embedded__amount {
+  padding-top: 70px;
+  border-right: solid 1px var(--portfolio-border-gray);
+}
+
+.transaction-embedded__addresses {
+  padding-top: 40px;
+}
+
 .transaction-embedded__data .transaction-embedded__amount--value {
   font-size: 26px;
   letter-spacing: 0.14px;
@@ -65,7 +78,7 @@
 
 .transaction-embedded__data .transaction-embedded__label {
   color: #676680;
-  line-height: 30px;
+  line-height: 20px;
   text-transform: uppercase;
 }
 .transaction-embedded__data .transaction-embedded__address {
@@ -88,6 +101,10 @@
 .transaction-embedded__amount--fiat {
   color: var(--portfolio-muted-gray);
   font-size: var(--portfolio-xs-font);
+}
+
+.transaction-embedded__address-to {
+  margin-top: 15px;
 }
 
 .transaction-embedded__address {

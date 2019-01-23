@@ -15,6 +15,7 @@ module.exports = declareInjections({
     async beginUpdate() {
       await this.historyIndexer.start({
         assetContentTypes: this.assetContentTypes,
+        transactionContentTypes: this.transactionContentTypes,
         maxAssetHistories: this.maxAssetHistories,
         mockNow: this.mockNow
       });
@@ -55,6 +56,12 @@ class Updater {
         'field-type': '@cardstack/core-types::string'
       },
     }, {
+      type: 'fields',
+      id: 'last-update-timestamp',
+      attributes: {
+        'field-type': '@cardstack/core-types::integer'
+      },
+    }, {
       type: 'computed-fields',
       id: 'historic-rates',
       attributes: {
@@ -92,6 +99,7 @@ class Updater {
       relationships: {
         fields: {
           data: [
+            { type: 'fields', id: 'last-update-timestamp' },
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'history-values' },
             { type: 'computed-fields', id: 'timeseries' },
@@ -128,6 +136,7 @@ class Updater {
   async updateContent(meta, hints,/* ops*/) {
     log.debug(`starting asset history indexing`);
 
+    // TODO we should keep track of the timestamp of the last indexed transaction for each asset so we dont have to re-do work we've already done
     await this.historyIndexer.index(hints);
 
     log.debug(`ending asset history indexing`);

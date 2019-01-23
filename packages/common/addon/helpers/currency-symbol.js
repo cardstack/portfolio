@@ -3,12 +3,12 @@ export const symbolMapping = {
   'USD': '$',
   'EUR': '€',
   'GBP': '£',
-  'BTC': '฿',
+  // 'BTC': '฿', this looks super duper tacky
   'JPY': '¥'
 };
 export function currencySymbol(currency) {
   if (currency) {
-    return symbolMapping[currency] || currency;
+    return symbolMapping[currency] || '';
   }
 }
 

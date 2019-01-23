@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import Fixtures from '@cardstack/test-support/fixtures';
 import { setupURLs, setupCardTest } from '@cardstack/test-support/test-helpers';
 
@@ -101,8 +101,25 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$20.09');
-
-    // TODO add assertion for historic chart
     assert.dom('[data-test-portfolio-top-header]').exists();
+  });
+
+  test('can change currency in isolated format', async function (assert) {
+    await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="isolated"}}`);
+
+    await click('[data-test-asset-isolated-eur-button]');
+
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('€20.09');
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('EUR');
+
+    await click('[data-test-asset-isolated-btc-button]');
+
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('0.0020');
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('BTC');
+
+    await click('[data-test-asset-isolated-usd-button]');
+
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('$20.09');
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('USD');
   });
 });
