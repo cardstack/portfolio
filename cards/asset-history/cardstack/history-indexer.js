@@ -208,7 +208,7 @@ module.exports = declareInjections({
     }
 
     async _buildHistoryValues(today, asset, transactions, historyValueIds = [], historyValues = []) {
-      let updatedLastHistoryValues = transactions.length ? [ this.buildInitialHistoryValue(asset, transactions[0]) ] : [];
+      let updatedLastHistoryValues = [ ];
       if (!transactions || !transactions.length) { return []; }
 
       let historyStartDate = moment(transactions[0].attributes.timestamp, 'X').utc().format('YYYY-MM-DD');
