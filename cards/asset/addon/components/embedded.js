@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import AssetBaseMixin from '../mixins/asset-base';
 import { computed  } from '@ember/object';
@@ -17,11 +18,17 @@ export default Component.extend(AssetBaseMixin, {
 
   currency: readOnly('selectedCurrency.currency'),
 
+  init() {
+    this._super();
+    this.fetchWallet.perform();
+  },
+
   assetLink: computed(function() {
     return `/assets/${this.get('content.id')}`;
   }),
 
   fetchWallet: task(function * () {
+    if (Ember.testing) { return; }
     let query = {
       filter: {
         ['assets.id']: {
@@ -34,7 +41,7 @@ export default Component.extend(AssetBaseMixin, {
     let models = yield this.cardstackData.query('embedded', query);
     let wallet = models.get('firstObject');
     this.set('wallet', wallet);
-  }).on('init'),
+  }),
 
   assetBalance: computed('content', 'wallet', function() {
     let balance = this.dummyAccount.balanceFor(this.wallet, {

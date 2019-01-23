@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import AssetBaseMixin from '../mixins/asset-base';
 import CurrencyParamsMixin from 'portfolio-common/mixins/currency-params';
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
@@ -28,7 +29,13 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     return `https://rinkeby.etherscan.io/address/${this.get('content.formattedAddress')}`;
   }),
 
+  init() {
+    this._super();
+    this.fetchWallet.perform();
+  },
+
   fetchWallet: task(function * () {
+    if (Ember.testing) { return; }
     let query = {
       filter: {
         ['assets.id']: {
@@ -41,7 +48,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     let models = yield this.cardstackData.query('embedded', query);
     let wallet = models.get('firstObject');
     this.set('wallet', wallet);
-  }).on('init'),
+  }),
 
   assetBalance: computed('content', 'wallet', function() {
     let balance = this.dummyAccount.balanceFor(this.wallet, {
