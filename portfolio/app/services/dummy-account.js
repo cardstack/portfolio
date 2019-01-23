@@ -1,6 +1,27 @@
 import Service from '@ember/service';
 import { convertCurrency } from 'portfolio-common/helpers/convert-currency';
 
+function findStoredValue(asset) {
+  let key = asset.id;
+  let portfolioBalances = localStorage.getItem('cs-portfolio-balances');
+  if (!portfolioBalances) {
+    return;
+  }
+  portfolioBalances = JSON.parse(portfolioBalances);
+  return portfolioBalances[key];
+}
+
+function storeValue(asset, value) {
+  let key = asset.id;
+  let portfolioBalances = localStorage.getItem('cs-portfolio-balances');
+  let newBalances = {};
+  if (portfolioBalances) {
+    newBalances = JSON.parse(portfolioBalances);
+  }
+  newBalances[key] = value;
+  localStorage.setItem('cs-portfolio-balances', JSON.stringify(newBalances));
+}
+
 export default Service.extend({
   init() {
     this._super();
@@ -39,7 +60,8 @@ export default Service.extend({
       let networkAsset = asset.get('networkAsset');
       let value;
       if (crypto === 'ETH') {
-        // ETH assets are linked to the actual ETH wallet address
+        // ETH assets are linked to the actual ETH wallet address,
+        // so let's not mess with them
         value = networkAsset ? networkAsset.balance : "0";
       } else {
         let valueForAsset = walletAssets.get(asset);
@@ -47,10 +69,20 @@ export default Service.extend({
         if (valueForAsset) {
           continue;
         }
-        value = this._randomBalance(crypto);
+        value = findStoredValue(asset);
+        if (!value) {
+          value = this._generateAndStoreValue(asset);
+        }
       }
       walletAssets.set(asset, { crypto, value });
     }
+  },
+
+  _generateAndStoreValue(asset) {
+    let crypto = asset.get('networkUnit');
+    let value = this._randomBalance(crypto);
+    storeValue(asset, value);
+    return value;
   },
 
   _randomBalance(crypto) {
