@@ -33,7 +33,7 @@ export function convertCurrency(fromCurrency, toCurrency, fromValue, rates) {
     let cryptoToUsdRate = getRate(fromCurrency, 'USD', rates);
     if (!cryptoToUsdRate || !btcToUsdRate) { return; }
 
-    rateCents = parseFloat(cryptoToUsdRate.get('cents')) / parseFloat(btcToUsdRate.get('cents'));
+    rateCents = (parseFloat(cryptoToUsdRate.get('cents')) / parseFloat(btcToUsdRate.get('cents'))) * 100;
   } else {
     rate = getRate(fromCurrency, toCurrency, rates);
   }

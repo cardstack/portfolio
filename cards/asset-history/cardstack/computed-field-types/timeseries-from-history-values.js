@@ -55,7 +55,7 @@ async function rateForEth(toCurrency, rates) {
     let ethToUsdInCents = parseFloat(await ethToUsdRate.getField('cents'));
     let btcToUsdInCents = parseFloat(await btcToUsdRate.getField('cents'));
 
-    return ethToUsdInCents/btcToUsdInCents;
+    return (ethToUsdInCents/btcToUsdInCents) * 100;
   } else {
     let ethToFiatRate = await getRate('ETH', toCurrency, rates);
     if (!ethToFiatRate) { return; }
