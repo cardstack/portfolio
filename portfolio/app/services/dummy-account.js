@@ -21,7 +21,7 @@ export default Service.extend({
     }
 
     let total = 0;
-    for (let [_, { crypto, value }] of walletValues) {
+    for (let { crypto, value } of walletValues.values()) {
       let converted = this._convertToFiat(wallet, crypto, inCurrency, value);
       total += parseFloat(converted || 0);
     }

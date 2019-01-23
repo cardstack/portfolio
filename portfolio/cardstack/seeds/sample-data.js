@@ -52,6 +52,12 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   let zcashAsset = factory.addResource('assets', 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs')
     .withRelated('network', zcashNetwork);
 
+  let anotherBitcoinAsset = factory.addResource('assets', '1FCciasLYWGNApYcS6Lm79y7HY8uJ37hYf')
+    .withRelated('network', bitcoinNetwork);
+
+  let anotherLitecoinAsset = factory.addResource('assets', '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co')
+    .withRelated('network', litecoinNetwork);
+
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
     title: 'My Portfolio'
   })
@@ -77,10 +83,10 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         })
         .withRelated('user', user)
         .withRelated('assets', [
-          bitcoinAsset,
+          anotherBitcoinAsset,
           mockedEthereumAsset,
           simpleEthereumAsset,
-          litecoinAsset
+          anotherLitecoinAsset
         ])
   ]);
 }

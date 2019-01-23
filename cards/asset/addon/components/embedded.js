@@ -40,7 +40,7 @@ export default Component.extend(AssetBaseMixin, {
     let balance = this.dummyAccount.balanceFor(this.wallet, {
       asset: this.content
     });
-    // Avoid displaying NaN
+    // Avoid displaying NaN temporarily
     if (balance) {
       return roundWithPrecision([ balance, 4 ]);
     }
