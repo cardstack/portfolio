@@ -281,7 +281,7 @@ describe('asset-histories', function () {
         await addTransaction(address, {
           "transaction-successful": true,
           "transaction-index": 4,
-          "timestamp": timestamp,
+          "timestamp": timestamp + 100,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -294,7 +294,7 @@ describe('asset-histories', function () {
         await addTransaction(address, {
           "transaction-successful": true,
           "transaction-index": 5,
-          "timestamp": timestamp + 10,
+          "timestamp": timestamp + 200,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -314,7 +314,7 @@ describe('asset-histories', function () {
         let historyValueWithNewTxn2 = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
         expect(historyValueWithNewTxn1).to.have.deep.property('attributes.balance', '100895000000000000');
-        expect(historyValueWithNewTxn1).to.have.deep.property('attributes.timestamp-unix', timestamp);
+        expect(historyValueWithNewTxn1).to.have.deep.property('attributes.timestamp-unix', timestamp + 100);
         expect(historyValueWithNewTxn1.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
         expect(historyValueWithNewTxn1.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
         expect(historyValueWithNewTxn1.relationships['historic-rates'].data).to.have.deep.members([
@@ -329,7 +329,7 @@ describe('asset-histories', function () {
         expect(included.find(i => i.type === 'crypto-compares' && i.id === `ETH_EUR_${today}`));
 
         expect(historyValueWithNewTxn2).to.have.deep.property('attributes.balance', '200895000000000000');
-        expect(historyValueWithNewTxn2).to.have.deep.property('attributes.timestamp-unix', timestamp + 10);
+        expect(historyValueWithNewTxn2).to.have.deep.property('attributes.timestamp-unix', timestamp + 200);
         expect(historyValueWithNewTxn2.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x11111a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
         expect(historyValueWithNewTxn2.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
         expect(historyValueWithNewTxn2.relationships['historic-rates'].data).to.have.deep.members([
