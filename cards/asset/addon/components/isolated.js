@@ -4,6 +4,7 @@ import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
