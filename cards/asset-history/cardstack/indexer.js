@@ -40,6 +40,12 @@ class Updater {
       },
     }, {
       type: 'fields',
+      id: 'transaction',
+      attributes: {
+        'field-type': '@cardstack/core-types::belongs-to'
+      },
+    }, {
+      type: 'fields',
       id: 'history-values',
       attributes: {
         'field-type': '@cardstack/core-types::has-many'
@@ -57,7 +63,7 @@ class Updater {
       },
     }, {
       type: 'fields',
-      id: 'last-update-timestamp',
+      id: 'timestamp-ms',
       attributes: {
         'field-type': '@cardstack/core-types::integer'
       },
@@ -65,18 +71,18 @@ class Updater {
       type: 'computed-fields',
       id: 'historic-rates',
       attributes: {
-        'computed-field-type': 'portfolio-crypto-compare::rates-from-date',
+        'computed-field-type': 'portfolio-crypto-compare::rates-from-timestamp',
         params: {
-          dateField: 'gmt-date'
+          timestampField: 'timestamp-unix'
         }
       },
     }, {
       type: 'computed-fields',
-      id: 'timestamp-ms',
+      id: 'timestamp-unix',
       attributes: {
-        'computed-field-type': 'portfolio-asset-history::date-to-ms',
+        'computed-field-type': 'portfolio-asset-history::timestamp-ms-to-unix',
         params: {
-          dateField: 'gmt-date'
+          dateField: 'timestamp-ms'
         }
       },
     }, {
@@ -99,7 +105,6 @@ class Updater {
       relationships: {
         fields: {
           data: [
-            { type: 'fields', id: 'last-update-timestamp' },
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'history-values' },
             { type: 'computed-fields', id: 'timeseries' },
@@ -118,11 +123,11 @@ class Updater {
       relationships: {
         fields: {
           data: [
-            { type: 'fields', id: 'gmt-date' },
-            { type: 'fields', id: 'transactions' },
+            { type: 'fields', id: 'timestamp-ms' },
+            { type: 'fields', id: 'transaction' },
             { type: 'fields', id: 'asset' },
             { type: 'fields', id: 'balance' },
-            { type: 'computed-fields', id: 'timestamp-ms' },
+            { type: 'computed-fields', id: 'timestamp-unix' },
             { type: 'computed-fields', id: 'historic-rates' },
           ]
         },
