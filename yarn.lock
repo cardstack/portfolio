@@ -4767,10 +4767,10 @@ ember-animated-tools@^0.4.0:
     ember-cli-htmlbars "^2.0.1"
     resolve "^1.5.0"
 
-ember-animated@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/ember-animated/-/ember-animated-0.4.0.tgz#1022d80ebacd0042755be1dd74afac8a81e9d83a"
-  integrity sha512-hF/heMv0NqhKLYd8LO2lONCAtrzE2aXiBDVFdtSaXOPfSS/iQ1yPuk7GWVyY5UTn+XRWdSCk9psSyrSZ0b8PnQ==
+ember-animated@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/ember-animated/-/ember-animated-0.4.1.tgz#2f4cdc1e20efb052266f4fe3c7c89cfaf1ed7947"
+  integrity sha512-rOImRfYu0jBcY/3X/JDNMnydP7r38BPE1T7nwdoh1LT6Pjv74rOlHSoGNlDU0fCbOPBX1MIKBXg3NrZCWae1YQ==
   dependencies:
     ember-cli-babel "^7.1.2"
     ember-cli-htmlbars "^3.0.0"
