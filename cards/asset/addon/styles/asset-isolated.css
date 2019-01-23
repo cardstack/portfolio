@@ -20,7 +20,7 @@
   line-height: 1.1;
   text-transform: uppercase;
 }
-.asset-isolated__title > svg {
+.asset-isolated__logo {
   display: inline-block;
   width: 36px;
   height: 36px;
@@ -31,7 +31,6 @@
 .asset-isolated__gradient {
   background-color: var(--portfolio-light-purple);
   color: var(--portfolio-white);
-  border-radius: 5px 5px 0 0;
 }
 .asset-isolated__gradient--bitcoin {
   background: var(--portfolio-bitcoin-gradient);
@@ -90,6 +89,9 @@
   flex-flow: row wrap;
   justify-content: space-around;
   padding: 0 25px;
+  background-color: var(--portfolio-white);
+  color: var(--portfolio-black);
+  border-radius: 0 0 5px 5px;
 }
 .asset-isolated__details-item {
   margin: 0;

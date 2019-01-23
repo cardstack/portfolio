@@ -3,6 +3,7 @@ import { module, test, skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
+import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 
 const scenario = new Fixtures({
   create(factory) {
@@ -104,6 +105,7 @@ async function login() {
 
 module('Acceptance | wallet', function (hooks) {
   setupApplicationTest(hooks);
+  setupAnimationTest(hooks);
   scenario.setupTest(hooks);
 
   hooks.beforeEach(function () {
@@ -138,7 +140,8 @@ module('Acceptance | wallet', function (hooks) {
     await visit('/wallets/ing-wallet');
     await login();
 
-    await click('.asset-embedded--ether');
+    await click('.asset-embedded--ether [data-test-asset-embedded-link]')
+    await animationsSettled();
 
     assert.equal(currentURL(), '/assets/0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
     assert.dom('.asset-isolated').exists();

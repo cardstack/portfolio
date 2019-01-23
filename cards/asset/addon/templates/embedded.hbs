@@ -1,43 +1,55 @@
-<a class="asset-embedded asset-embedded--{{networkId}}" data-test-asset-embedded-link href={{cardstack-url content}}>
-  <header class="asset-embedded__header">
-    <div class="asset-embedded__title-row">
-      {{svg-jar content.networkId class="asset-embedded__logo"}}
-      <h3 class="asset-embedded__title" data-test-asset-embedded-title>
-        {{content.networkTitle}}
-      </h3>
-    </div>
-    <a class="asset-embedded__tag" href={{cardstack-url content}}>Savings</a>
-  </header>
-  <section class="asset-embedded__section">
-    <div class="asset-embedded__data-row" data-test-asset-embedded-balance>
-      <span class="asset-embedded__value">
-        {{#if content.networkAsset.balance}}
-          {{wei-to-ethers content.networkAsset.balance}}
-        {{else}}
-          2.1434
-        {{/if}}
-      </span>
-      <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.networkUnit}}</span>
-      {{!-- Add arrow icon and modal --}}
-    </div>
-    <div>
-      {{!-- TODO you can use the "get-rate" helper to get the rate object used for the currency conversion
-          <span>Rate as of {{get (get-rate content.networkUnit 'USD' content.todaysRate) 'gmtDate'}} 0:00 GMT</span>
-      --}}
-      <span class="asset-embedded__value--secondary" data-test-asset-embedded-fiat-value>
-        {{#if content.networkAsset.balance}}
-          {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
-        {{else}}
-          {{currency-symbol currency}}8509.30
-        {{/if}}
-      </span>
-      <span data-test-asset-embedded-fiat-currency>{{currency}}</span>
-    </div>
-  </section>
-  <footer class="asset-embedded__footer">
-    <div class="asset-embedded__address" data-test-asset-embedded-address>{{abbreviatedAddress}}</div>
-    <div class="asset-embedded__last-active" data-test-asset-embedded-last-active>
-      {{lastActiveDate}}
-      </div>
-  </footer>
-</a>
+<AnimatedContainer>
+  <MovingBox @content={{content}} @class="asset-embedded asset-embedded--{{networkId}}">
+    <a class="asset-embedded--a" data-test-asset-embedded-link href={{cardstack-url content}}>
+      <header class="asset-embedded__header">
+        <AnimatedContainer class="asset-embedded__title-row">
+          <MovingItem @content={{content}} @name="logo">
+            {{svg-jar content.networkId class="asset-embedded__logo"}}
+          </MovingItem>
+          <MovingItem @content={{content}} @name="title">
+            <h3 class="asset-embedded__title" data-test-asset-embedded-title>
+              {{content.networkTitle}}
+            </h3>
+          </MovingItem>
+        </AnimatedContainer>
+        <a class="asset-embedded__tag" href={{cardstack-url content}}>Savings</a>
+      </header>
+      <section class="asset-embedded__section">
+        <div class="asset-embedded__data-row" data-test-asset-embedded-balance>
+          <span class="asset-embedded__value">
+            {{#if content.networkAsset.balance}}
+              {{wei-to-ethers content.networkAsset.balance}}
+            {{else}}
+              2.1434
+            {{/if}}
+          </span>
+          <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.networkUnit}}</span>
+          {{!-- Add arrow icon and modal --}}
+        </div>
+        <div>
+          {{!-- TODO you can use the "get-rate" helper to get the rate object used for the currency conversion
+              <span>Rate as of {{get (get-rate content.networkUnit 'USD' content.todaysRate) 'gmtDate'}} 0:00 GMT</span>
+          --}}
+          <span class="asset-embedded__value--secondary" data-test-asset-embedded-fiat-value>
+            {{#if content.networkAsset.balance}}
+              {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
+            {{else}}
+              {{currency-symbol currency}}8509.30
+            {{/if}}
+          </span>
+          <span data-test-asset-embedded-fiat-currency>{{currency}}</span>
+        </div>
+      </section>
+      <AnimatedContainer>
+        <MovingInnerBox @content={{content}} @name="details">
+          <div class="asset-embedded__footer">
+            <div class="asset-embedded__address" data-test-asset-embedded-address>{{abbreviatedAddress}}</div>
+            <div class="asset-embedded__last-active" data-test-asset-embedded-last-active>
+              {{lastActiveDate}}
+              </div>
+          </div>
+        </MovingInnerBox>
+      </AnimatedContainer>
+    </a>
+  </MovingBox>
+</AnimatedContainer>

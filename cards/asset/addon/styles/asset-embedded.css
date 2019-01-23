@@ -1,21 +1,23 @@
 .asset-embedded {
   --asset-embedded-logo-size: 22px;
-
-  display: block;
-  text-decoration: none;
   background-color: var(--portfolio-light-purple);
-  color: var(--portfolio-white);
   border: none;
   border-radius: 5px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
-  font-size: var(--portfolio-sm-font);
-  letter-spacing: 0.2px;
 }
 .asset-embedded:hover,
 .asset-embedded:focus {
   outline: none;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 25%);
   filter: brightness(110%);
+}
+
+.asset-embedded--a {
+  display: block;
+  text-decoration: none;
+  color: var(--portfolio-white);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
 }
 
 /* There's probably a better way to generate these gradients */
