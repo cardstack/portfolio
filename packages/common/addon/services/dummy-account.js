@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Service from '@ember/service';
 import { convertCurrency } from 'portfolio-common/helpers/convert-currency';
 
@@ -30,6 +31,7 @@ export default Service.extend({
 
   balanceFor(wallet, { asset, inCurrency }) {
     if (!wallet) { return; }
+    if (Ember.testing) { return 0; }
     this._generateValuesForWallet(wallet);
     return this._valueFor(wallet, { asset, inCurrency });
   },
