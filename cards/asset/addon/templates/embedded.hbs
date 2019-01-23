@@ -26,13 +26,12 @@
       --}}
       <span class="asset-embedded__value--secondary" data-test-asset-embedded-fiat-value>
         {{#if content.networkAsset.balance}}
-          {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRatesLookup.rates}}
+          {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
         {{else}}
-          $8509.30
+          {{currency-symbol currency}}8509.30
         {{/if}}
       </span>
-      {{!-- TODO need to be able to configure the fiat currency displayed here --}}
-      <span data-test-asset-embedded-fiat-currency>USD</span>
+      <span data-test-asset-embedded-fiat-currency>{{currency}}</span>
     </div>
   </section>
   <footer class="asset-embedded__footer">

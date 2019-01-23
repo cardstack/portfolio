@@ -25,13 +25,18 @@
             <div>
               <span class="asset-isolated__value--secondary" data-test-asset-isolated-fiat-value>
                 {{#if content.networkAsset.balance}}
-                  {{currency-symbol 'USD'}}{{convert-currency content.networkUnit 'USD' content.networkAsset.balance content.todaysRatesLookup.rates}}
+                  {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
                 {{else}}
-                  $8509.30
+                  {{currency-symbol currency}}8509.30
                 {{/if}}
               </span>
-              <span class="asset-isolated__unit--secondary">USD</span>
+              <span class="asset-isolated__unit--secondary" data-test-asset-isolated-currency-name>{{currency}}</span>
             </div>
+          </div>
+          <div class="asset-isolated__currency-switcher">
+            <button class="asset-isolated__currency-switcher__usd {{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
+            <button class="asset-isolated__currency-switcher__eur {{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
+            <button class="asset-isolated__currency-switcher__btc {{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
           </div>
           <div class="asset-isolated__chart">
             {{cardstack-content content=content.assetHistory format="embedded"}}
@@ -55,11 +60,6 @@
             <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-last-active>Last active</h4>
             {{lastActiveDate}}
           </div>
-        </div>
-
-        <div class="asset-isolated__buttons">
-          <button>Transfer Funds</button>
-          <button>Trade Currency</button>
         </div>
       </section>
 
