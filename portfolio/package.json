@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@cardstack/authentication": "^0.13.11",
-    "@cardstack/data": "^0.13.11",
     "@cardstack/di": "^0.13.0",
     "@cardstack/ephemeral": "^0.13.0",
     "@cardstack/eslint-config": "^0.13.0",
