@@ -620,17 +620,6 @@
     ember-fetch "^6.4.0"
     koa-better-route "^0.1.0"
 
-"@cardstack/codegen@0.13.6":
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/@cardstack/codegen/-/codegen-0.13.6.tgz#95455cdfe8784cd963efe303079fb71dc1319f9e"
-  integrity sha512-ZhmGuWanZKgTq/cIluNvallYL6VoZGzz+6p/binLpp68sQfwYl2uNzLm3sZ7F7kuhcNXfvINQlwzj2gu6SHe6w==
-  dependencies:
-    "@cardstack/di" "0.13.0"
-    "@cardstack/plugin-utils" "0.13.0"
-    ember-cli-babel "^6.8.2"
-    ember-fetch "^6.4.0"
-    koa-better-route "^0.1.0"
-
 "@cardstack/core-types@0.13.11":
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/@cardstack/core-types/-/core-types-0.13.11.tgz#d9987b8dfd5495b059793266ce45fa821f83b55e"
@@ -653,17 +642,6 @@
   integrity sha512-0N/ZKhurgVT1FKAlw2ORQTzJtIkF3hA6FpCofWzmB0YjMZ/IgDKZ1ISddcIkizGM2CZQfWZ7ZMzxclW+AphKvQ==
   dependencies:
     "@cardstack/models" "0.13.11"
-    "@cardstack/plugin-utils" "0.13.0"
-    ember-cli-babel "^6.16.0"
-    ember-concurrency "^0.8.17"
-    ember-inflector "^2.1.0"
-
-"@cardstack/data@0.13.6":
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/@cardstack/data/-/data-0.13.6.tgz#67cdd7eb32c0b67243270e62bd5526b8f58fa0bc"
-  integrity sha512-A6oq4ea98nLl/ZvEhWO+5xR//V7Wka1hW4H7RlROP6iDrk4Gr/FExRtgHDEnPRxUABknUUsWcJyNvNZO01n1sw==
-  dependencies:
-    "@cardstack/models" "0.13.6"
     "@cardstack/plugin-utils" "0.13.0"
     ember-cli-babel "^6.16.0"
     ember-concurrency "^0.8.17"
@@ -818,23 +796,6 @@
   integrity sha512-A9IhjI6B4kc4X9KbSwKNMNOLXij3+2kya7D49pqERUL7F2By00K686T4G9efUyRqcS5ihl9IRiHos/gHETqmsw==
   dependencies:
     "@cardstack/codegen" "0.13.11"
-    "@cardstack/di" "0.13.0"
-    "@cardstack/plugin-utils" "0.13.0"
-    ember-auto-import "^1.2.16"
-    ember-cli-babel "^6.8.2"
-    ember-data-relationship-tracker "^0.3.2"
-    ember-inject-optional "^0.1.0"
-    ember-resource-metadata "^0.3.0"
-    handlebars "^4.0.6"
-    inflection "^1.12.0"
-    lodash-es "^4.17.11"
-
-"@cardstack/models@0.13.6":
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/@cardstack/models/-/models-0.13.6.tgz#b566d5b151de4e3d7e3ae0df68b03299fdf55cea"
-  integrity sha512-n13T/qbBBL50TmgOdEoQTjScMpc+iRf862RJYIoI2CCXk4HpuEW1p4XBO+SG6rkWDy2Ol7VmkJAolmjZlZ+nkw==
-  dependencies:
-    "@cardstack/codegen" "0.13.6"
     "@cardstack/di" "0.13.0"
     "@cardstack/plugin-utils" "0.13.0"
     ember-auto-import "^1.2.16"
