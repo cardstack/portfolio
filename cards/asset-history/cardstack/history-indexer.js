@@ -1,5 +1,5 @@
 const { declareInjections } = require('@cardstack/di');
-const { differenceBy, get, groupBy, sortBy } = require('lodash');
+const { get, sortBy } = require('lodash');
 const { utils: { BN } } = require('web3');
 const moment = require('moment-timezone');
 const Session = require('@cardstack/plugin-utils/session');
@@ -8,6 +8,7 @@ const { updateBalanceFromTransaction } = require('portfolio-utils');
 const DEFAULT_MAX_ASSET_HISTORIES = 1000000;
 
 let indexJobNumber = 0;
+let historyValueNonce = 0;
 
 module.exports = declareInjections({
   controllingBranch: 'hub:controlling-branch',
@@ -129,22 +130,8 @@ module.exports = declareInjections({
 
       const today = moment().utc().format('YYYY-MM-DD');
       let transactions = getTransactionsFromAssetIncludeds(asset, includedTransactions);
-      let { included = [], data: assetHistories } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
-        filter: {
-          type: { exact: 'asset-histories' },
-          'asset.id': { exact: asset.id },
-          'asset.type': { exact: asset.type }
-        }
-      });
-      let [assetHistory] = assetHistories;
 
-      if (!assetHistory) {
-        await this._buildAssetHistory({ today, asset, transactions });
-      } else {
-        let historyValueIds = (get(assetHistory, 'relationships.history-values.data') || []).map(i => i.id);
-        let historyValues = included.filter(i => historyValueIds.includes(i.id));
-        await this._buildAssetHistory({ today, asset, assetHistory, transactions, historyValueIds, historyValues });
-      }
+      await this._buildAssetHistory({ today, asset, transactions });
     }
 
     async _getAssets() {
@@ -172,98 +159,60 @@ module.exports = declareInjections({
       return { assets, transactions };
     }
 
-    async _buildAssetHistory({ today, asset, assetHistory, transactions, historyValueIds = [], historyValues = [] }) {
-      let updatedLastHistoryValues = await this._buildHistoryValues(today, asset, transactions, historyValueIds, historyValues);
+    async _buildAssetHistory({ today, asset, transactions }) {
+      let historyValues = await this._buildHistoryValues(today, asset, transactions);
 
       let batch = this.pgsearchClient.beginBatch(this.schema, this.searchers);
-      for (let historyValue of updatedLastHistoryValues) {
+      for (let historyValue of historyValues) {
         await this._indexResource(batch, historyValue);
       }
 
-      let updatedHistoryRelationships = historyValueIds.map(id => {
-        return { type: 'asset-history-values', id };
-      });
-      for (let { type, id } of updatedLastHistoryValues) {
-        if (historyValueIds.includes(id)) { continue; }
-        updatedHistoryRelationships.push({ type, id });
-      }
-
-      if (!assetHistory) {
-        assetHistory = {
-          type: 'asset-histories',
-          id: asset.id.toLowerCase(),
-          attributes: {
-            'last-update-timestamp': moment().utc().unix()
-          },
-          relationships: {
-            asset: { data: { type: asset.type, id: asset.id } },
-            'history-values': { data: [] }
+      let assetHistory = {
+        type: 'asset-histories',
+        id: asset.id.toLowerCase(),
+        relationships: {
+          asset: { data: { type: asset.type, id: asset.id } },
+          'history-values': {
+            data: historyValues.map(({ id, type }) => {
+              return { type, id };
+            })
           }
-        };
-      }
-      assetHistory.relationships['history-values'] = assetHistory.relationships['history-values'] || {};
-      assetHistory.relationships['history-values'].data = updatedHistoryRelationships;
+        }
+      };
+
       await this._indexResource(batch, assetHistory);
       await batch.done();
     }
 
-    async _buildHistoryValues(today, asset, transactions, historyValueIds = [], historyValues = []) {
-      let updatedLastHistoryValues = [ ];
-      if (!transactions || !transactions.length) { return []; }
+    async _buildHistoryValues(today, asset, transactions=[]) {
+      let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
+      if (!successfulTransactions || !successfulTransactions.length) { return []; }
 
-      let historyStartDate = moment(transactions[0].attributes.timestamp, 'X').utc().format('YYYY-MM-DD');
-      let transactionsByDate = groupBy(transactions, t => moment(t.attributes.timestamp, 'X').utc().format('YYYY-MM-DD'));
-      let lastHistoryValue = historyValues.find(i => i.id === historyValueIds[historyValueIds.length - 1]);
-      let beginNewValuesDate = lastHistoryValue ? lastHistoryValue.attributes['gmt-date'] : historyStartDate;
-      let daysToAdd = moment(today, 'YYYY-MM-DD').utc().diff(moment(beginNewValuesDate, 'YYYY-MM-DD').utc(), 'days');
+      let historyValues = [];
+      let historyStartDate = moment(successfulTransactions[0].attributes.timestamp, 'X').utc().startOf('day');
+      let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(historyStartDate, 'days');
 
-      let balance = lastHistoryValue ? new BN(lastHistoryValue.attributes.balance) : new BN(0);
-      for (let i = 0; i <= daysToAdd; i++) {
-        let date = moment(beginNewValuesDate, 'YYYY-MM-DD').utc().add(i, 'day').format('YYYY-MM-DD');
-        let transactionsForThisDate = transactionsByDate[date];
-
-        if (lastHistoryValue && lastHistoryValue.attributes['gmt-date'] === date) {
-          let unprocessedTransactions =
-            differenceBy(transactionsForThisDate,
-              (get(lastHistoryValue, 'relationships.transactions.data') || []), 'id');
-          balance = (unprocessedTransactions || []).reduce((cumulativeBalance, t) =>
-            updateBalanceFromTransaction(cumulativeBalance, asset.id, t), balance);
-        } else {
-          balance = (transactionsForThisDate || []).reduce((cumulativeBalance, t) =>
-            updateBalanceFromTransaction(cumulativeBalance, asset.id, t), balance);
-        }
-
-        let historyValue = {
-          id: `${asset.id}_${date}`,
-          type: 'asset-history-values',
-          attributes: {
-            balance: balance.toString(),
-            'gmt-date': date,
-          },
-          relationships: {
-            asset: { data: { type: asset.type, id: asset.id } },
-            transactions: { data: transactionRelationshipsForDate(transactionsByDate, date) }
-          }
-        };
-        updatedLastHistoryValues.push(historyValue);
+      for (let i = 0; i <= daysOfHistory; i++) {
+        let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
+        historyValues.push(buildHistoryValue({ asset, timestamp }));
       }
-      return updatedLastHistoryValues;
-    }
+      for (let transaction of successfulTransactions) {
+        historyValues.push(buildHistoryValue({ asset, transaction }));
+      }
+      historyValues = sortBy(historyValues, [ 'attributes.timestamp', 'id']);
 
-    buildInitialHistoryValue(asset, firstTransaction) {
-      let date = moment(firstTransaction.attributes.timestamp, 'X').utc().subtract(1, 'day').format('YYYY-MM-DD');
-      return {
-        id: `${asset.id}_${date}`,
-        type: 'asset-history-values',
-        attributes: {
-          balance: "0",
-          'gmt-date': date,
-        },
-        relationships: {
-          asset: { data: { type: asset.type, id: asset.id } },
-          transactions: { data: [] }
+      let balance = new BN(0);
+      for (let historyValue of historyValues) {
+        let transaction;
+        let transactionId = get(historyValue, 'relationships.transaction.data.id');
+        let transactionType = get(historyValue, 'relationships.transaction.data.type');
+        if (transactionId && transactionType && (transaction = successfulTransactions.find(i => i.id === transactionId && i.type === transactionType))) {
+          balance = updateBalanceFromTransaction(balance, asset.id, transaction);
         }
-      };
+
+        historyValue.attributes.balance = balance.toString();
+      }
+      return historyValues;
     }
 
     async _indexResource(batch, record) {
@@ -297,10 +246,17 @@ function getTransactionsFromAssetIncludeds(asset, included=[]) {
   return results;
 }
 
-function transactionRelationshipsForDate(transactionsByDate, date) {
-  let result = sortBy((transactionsByDate[date] || []), ['attributes.timestamp', 'attributes.transaction-index'])
-    .map(({ type, id }) => {
-      return { type, id };
-    });
-  return result;
+function buildHistoryValue({ asset, transaction, timestamp }) {
+  let transactionUnixTime = get(transaction, 'attributes.timestamp');
+  timestamp = transactionUnixTime ? transactionUnixTime * 1000 : timestamp;
+  let transactionRelationship = transaction ? { type: transaction.type, id: transaction.id } : null;
+  return {
+    id: `${asset.id}_${timestamp}_${historyValueNonce++}`,
+    type: 'asset-history-values',
+    attributes: { 'timestamp-ms': timestamp },
+    relationships: {
+      asset: { data: { type: asset.type, id: asset.id } },
+      transaction: { data: transactionRelationship }
+    }
+  };
 }

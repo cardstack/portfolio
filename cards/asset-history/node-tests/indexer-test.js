@@ -41,26 +41,42 @@ async function addTransaction(assetId, transaction) {
   await waitForIndexingEvents();
 }
 
-function assertSeedTransactionsInAssetHistory({ data, included }, mockToday) {
+function assertSeedTransactionsInAssetHistory({ data, included }, mockToday, numOfAdditionalTxns=0) {
   const firstTransactionDate = moment('2019-01-14', 'YYYY-MM-DD').utc();
   mockToday = mockToday || today;
   let daysOfAssetHistory = moment(mockToday, 'YYYY-MM-DD').utc().endOf('day').diff(firstTransactionDate, 'days') + 1; // add 1 for today
   expect(data.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
 
   let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
-  expect(orderedHistoryValuesIds.length).to.equal(daysOfAssetHistory);
+  expect(orderedHistoryValuesIds.length).to.equal(daysOfAssetHistory + 2 /* there are 2 seed txns */ + numOfAdditionalTxns);
 
   let historyValues = included.filter(i => i.type === 'asset-history-values');
-  let firstHistoryValue = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[0]);
-  let historyValueWithoutTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[1]);
-  let historyValueWithTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[4]); // 2019-01-18 GMT which is the 5th element in the array of history
+  let preHistoryValue = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[0]); // balance before initial txn at 2019-01-14 0:00 (UTC) balance of 0 on the day of the first txn (starting the graph from 0 looks nice)
+  let firstHistoryValue = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[1]); // first txn ocurring at 01/14/2019 @ 3:10pm (UTC)
+  let historyValueWithoutTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[2]); // currency fluxuation data point for 2019-01-01-15 0:00 (UTC)
+  let historyValueWithTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[6]); // 2nd txn ocurring at 01/18/2019 @ 6:56pm (UTC)
 
   expect(historyValues.every(i => i.relationships['historic-rates'].data.length === 4));
 
+  expect(preHistoryValue).to.have.deep.property('attributes.balance', '0');
+  expect(preHistoryValue).to.have.deep.property('attributes.timestamp-unix',  1547424000 );
+  expect(preHistoryValue.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
+  expect(preHistoryValue.relationships.transaction.data).to.be.not.ok;
+  expect(preHistoryValue.relationships['historic-rates'].data).to.have.deep.members([
+    { type: 'crypto-compares', id: 'BTC_USD_2019-01-14' },
+    { type: 'crypto-compares', id: 'BTC_EUR_2019-01-14' },
+    { type: 'crypto-compares', id: 'ETH_USD_2019-01-14' },
+    { type: 'crypto-compares', id: 'ETH_EUR_2019-01-14' },
+  ]);
+  expect(included.find(i => i.type === 'crypto-compares' && i.id === 'BTC_USD_2019-01-14'));
+  expect(included.find(i => i.type === 'crypto-compares' && i.id === 'BTC_EUR_2019-01-14'));
+  expect(included.find(i => i.type === 'crypto-compares' && i.id === 'ETH_USD_2019-01-14'));
+  expect(included.find(i => i.type === 'crypto-compares' && i.id === 'ETH_EUR_2019-01-14'));
+
   expect(firstHistoryValue).to.have.deep.property('attributes.balance', '101000000000000000');
-  expect(firstHistoryValue).to.have.deep.property('attributes.gmt-date', '2019-01-14');
+  expect(firstHistoryValue).to.have.deep.property('attributes.timestamp-unix',  1547478615 );
   expect(firstHistoryValue.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
-  expect(firstHistoryValue.relationships.transactions.data).to.eql([{ type: 'ethereum-transactions', id: '0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' }]);
+  expect(firstHistoryValue.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
   expect(firstHistoryValue.relationships['historic-rates'].data).to.have.deep.members([
     { type: 'crypto-compares', id: 'BTC_USD_2019-01-14' },
     { type: 'crypto-compares', id: 'BTC_EUR_2019-01-14' },
@@ -73,8 +89,8 @@ function assertSeedTransactionsInAssetHistory({ data, included }, mockToday) {
   expect(included.find(i => i.type === 'crypto-compares' && i.id === 'ETH_EUR_2019-01-14'));
 
   expect(historyValueWithoutTxn).to.have.deep.property('attributes.balance', '101000000000000000');
-  expect(historyValueWithoutTxn).to.have.deep.property('attributes.gmt-date', '2019-01-15');
-  expect(historyValueWithoutTxn.relationships.transactions.data).to.eql([]);
+  expect(historyValueWithoutTxn).to.have.deep.property('attributes.timestamp-unix',  1547510400 );
+  expect(historyValueWithoutTxn.relationships.transaction.data).to.be.not.ok;
   expect(historyValueWithoutTxn.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
   expect(historyValueWithoutTxn.relationships['historic-rates'].data).to.have.deep.members([
     { type: 'crypto-compares', id: 'BTC_USD_2019-01-15' },
@@ -88,8 +104,8 @@ function assertSeedTransactionsInAssetHistory({ data, included }, mockToday) {
   expect(included.find(i => i.type === 'crypto-compares' && i.id === 'ETH_EUR_2019-01-15'));
 
   expect(historyValueWithTxn).to.have.deep.property('attributes.balance', '895000000000000');
-  expect(historyValueWithTxn).to.have.deep.property('attributes.gmt-date', '2019-01-18');
-  expect(historyValueWithTxn.relationships.transactions.data).to.eql([{ type: 'ethereum-transactions', id: '0x3252a963fe90697240890b84d2a3fac45b756338027467e2788ad0bb82b1fdc2' }]);
+  expect(historyValueWithTxn).to.have.deep.property('attributes.timestamp-unix',  1547837811 );
+  expect(historyValueWithTxn.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x3252a963fe90697240890b84d2a3fac45b756338027467e2788ad0bb82b1fdc2' });
   expect(historyValueWithTxn.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
   expect(historyValueWithTxn.relationships['historic-rates'].data).to.have.deep.members([
     { type: 'crypto-compares', id: 'BTC_USD_2019-01-18' },
@@ -176,7 +192,7 @@ describe('asset-histories', function () {
               .withAttributes({
                 "transaction-successful": true,
                 "transaction-index": 0,
-                "timestamp": 1547478615,
+                "timestamp": 1547478615, // 01/14/2019 @ 3:10pm (UTC)
                 "block-number": 6,
                 "gas-used": 21000,
                 "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -190,7 +206,7 @@ describe('asset-histories', function () {
               .withAttributes({
                 "transaction-successful": true,
                 "transaction-index": 0,
-                "timestamp": 1547837811,
+                "timestamp": 1547837811, //01/18/2019 @ 6:56pm (UTC)
                 "block-number": 8,
                 "gas-used": 21000,
                 "transaction-from": address.toLowerCase(),
@@ -209,14 +225,15 @@ describe('asset-histories', function () {
 
       it('creates asset history when an asset exists', async function () {
         let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
-        assertSeedTransactionsInAssetHistory(response);
+        assertSeedTransactionsInAssetHistory(response, today);
       });
 
       it("updates asset history when the asset's transactions changes", async function () {
+        const timestamp = moment(today, 'YYYY-MM-DD').utc().unix();
         await addTransaction(address, {
           "transaction-successful": true,
           "transaction-index": 4,
-          "timestamp":  moment(today, 'YYYY-MM-DD').utc().unix(),
+          "timestamp":  timestamp,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -228,15 +245,15 @@ describe('asset-histories', function () {
         });
 
         let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
-        assertSeedTransactionsInAssetHistory(response);
+        assertSeedTransactionsInAssetHistory(response, today, 1);
 
         let { included, data } = response;
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
         let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
         expect(historyValueWithNewTxn).to.have.deep.property('attributes.balance', '100895000000000000');
-        expect(historyValueWithNewTxn).to.have.deep.property('attributes.gmt-date', today);
-        expect(historyValueWithNewTxn.relationships.transactions.data).to.eql([{ type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' }]);
+        expect(historyValueWithNewTxn).to.have.deep.property('attributes.timestamp-unix', timestamp);
+        expect(historyValueWithNewTxn.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
         expect(historyValueWithNewTxn.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
         expect(historyValueWithNewTxn.relationships['historic-rates'].data).to.have.deep.members([
           { type: 'crypto-compares', id: `BTC_USD_${today}` },
@@ -260,10 +277,11 @@ describe('asset-histories', function () {
       });
 
       it('handles multiple transaction updates for an asset in a day', async function () {
+        const timestamp = moment(today, 'YYYY-MM-DD').utc().unix();
         await addTransaction(address, {
           "transaction-successful": true,
           "transaction-index": 4,
-          "timestamp":  moment(today, 'YYYY-MM-DD').utc().unix(),
+          "timestamp": timestamp + 100,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -276,7 +294,7 @@ describe('asset-histories', function () {
         await addTransaction(address, {
           "transaction-successful": true,
           "transaction-index": 5,
-          "timestamp":  moment(today, 'YYYY-MM-DD').utc().unix(),
+          "timestamp": timestamp + 200,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -288,20 +306,33 @@ describe('asset-histories', function () {
         });
 
         let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
-        assertSeedTransactionsInAssetHistory(response);
+        assertSeedTransactionsInAssetHistory(response, today, 2);
 
         let { included, data } = response;
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
-        let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
+        let historyValueWithNewTxn1 = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 2]);
+        let historyValueWithNewTxn2 = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
-        expect(historyValueWithNewTxn).to.have.deep.property('attributes.balance', '200895000000000000');
-        expect(historyValueWithNewTxn).to.have.deep.property('attributes.gmt-date', today);
-        expect(historyValueWithNewTxn.relationships.transactions.data).to.eql([
-          { type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' },
-          { type: 'ethereum-transactions', id: '0x11111a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' },
+        expect(historyValueWithNewTxn1).to.have.deep.property('attributes.balance', '100895000000000000');
+        expect(historyValueWithNewTxn1).to.have.deep.property('attributes.timestamp-unix', timestamp + 100);
+        expect(historyValueWithNewTxn1.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
+        expect(historyValueWithNewTxn1.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
+        expect(historyValueWithNewTxn1.relationships['historic-rates'].data).to.have.deep.members([
+          { type: 'crypto-compares', id: `BTC_USD_${today}` },
+          { type: 'crypto-compares', id: `BTC_EUR_${today}` },
+          { type: 'crypto-compares', id: `ETH_USD_${today}` },
+          { type: 'crypto-compares', id: `ETH_EUR_${today}` },
         ]);
-        expect(historyValueWithNewTxn.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
-        expect(historyValueWithNewTxn.relationships['historic-rates'].data).to.have.deep.members([
+        expect(included.find(i => i.type === 'crypto-compares' && i.id === `BTC_USD_${today}`));
+        expect(included.find(i => i.type === 'crypto-compares' && i.id === `BTC_EUR_${today}`));
+        expect(included.find(i => i.type === 'crypto-compares' && i.id === `ETH_USD_${today}`));
+        expect(included.find(i => i.type === 'crypto-compares' && i.id === `ETH_EUR_${today}`));
+
+        expect(historyValueWithNewTxn2).to.have.deep.property('attributes.balance', '200895000000000000');
+        expect(historyValueWithNewTxn2).to.have.deep.property('attributes.timestamp-unix', timestamp + 200);
+        expect(historyValueWithNewTxn2.relationships.transaction.data).to.eql({ type: 'ethereum-transactions', id: '0x11111a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' });
+        expect(historyValueWithNewTxn2.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
+        expect(historyValueWithNewTxn2.relationships['historic-rates'].data).to.have.deep.members([
           { type: 'crypto-compares', id: `BTC_USD_${today}` },
           { type: 'crypto-compares', id: `BTC_EUR_${today}` },
           { type: 'crypto-compares', id: `ETH_USD_${today}` },
@@ -379,10 +410,11 @@ describe('asset-histories', function () {
       });
 
       it('handles failed transactions', async function () {
+        const timestamp = moment(today, 'YYYY-MM-DD').utc().unix();
         await addTransaction(address, {
           "transaction-successful": false,
           "transaction-index": 4,
-          "timestamp":  moment(today, 'YYYY-MM-DD').utc().unix(),
+          "timestamp":  timestamp,
           "block-number": 16,
           "gas-used": 21000,
           "transaction-from": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
@@ -398,13 +430,13 @@ describe('asset-histories', function () {
 
         let { included, data } = response;
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
-        let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
+        let lastAssetHistoryValue = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
-        expect(historyValueWithNewTxn).to.have.deep.property('attributes.balance', '895000000000000');
-        expect(historyValueWithNewTxn).to.have.deep.property('attributes.gmt-date', today);
-        expect(historyValueWithNewTxn.relationships.transactions.data).to.eql([{ type: 'ethereum-transactions', id: '0x00001a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572' }]);
-        expect(historyValueWithNewTxn.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
-        expect(historyValueWithNewTxn.relationships['historic-rates'].data).to.have.deep.members([
+        expect(lastAssetHistoryValue).to.have.deep.property('attributes.balance', '895000000000000');
+        expect(lastAssetHistoryValue).to.have.deep.property('attributes.timestamp-unix', moment().utc().startOf('day').unix());
+        expect(lastAssetHistoryValue.relationships.transaction.data).to.not.be.ok;
+        expect(lastAssetHistoryValue.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: address.toLowerCase() });
+        expect(lastAssetHistoryValue.relationships['historic-rates'].data).to.have.deep.members([
           { type: 'crypto-compares', id: `BTC_USD_${today}` },
           { type: 'crypto-compares', id: `BTC_EUR_${today}` },
           { type: 'crypto-compares', id: `ETH_USD_${today}` },
