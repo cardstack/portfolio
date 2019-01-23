@@ -27,15 +27,15 @@
     "portfolio-asset": "*",
     "portfolio-common": "*",
     "portfolio-crypto-compare": "*",
-    "portfolio-user": "*",
-    "portfolio-transaction": "*"
+    "portfolio-transaction": "*",
+    "portfolio-user": "*"
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.13.0",
-    "@cardstack/jsonapi": "^0.13.6",
-    "@cardstack/mobiledoc": "^0.13.6",
-    "@cardstack/routing": "^0.13.6",
-    "@cardstack/test-support": "^0.13.6",
+    "@cardstack/jsonapi": "^0.13.11",
+    "@cardstack/mobiledoc": "^0.13.11",
+    "@cardstack/routing": "^0.13.11",
+    "@cardstack/test-support": "^0.13.11",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.1",
     "broccoli-asset-rev": "^2.7.0",
