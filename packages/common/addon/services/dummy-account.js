@@ -90,20 +90,20 @@ export default Service.extend({
   _randomBalance(crypto) {
     let randomGenerators = {
       "BTC": () => {
-        let range = Math.pow(10, 5);
-        return Math.round(Math.random() * range) / range;
+        let range = Math.pow(10, 4);
+        let value = Math.random() + 0.5;
+        return Math.round(value * range) / range;
       },
       "LTC": () => {
-        let range = Math.pow(10, 6);
-        return Math.round(Math.random() * range) / range;
+        let range = Math.pow(10, 3);
+        let value = Math.random() * 10 + 2;
+        return Math.round(value * range) / range;
       },
       "ZEC": () => {
-        let range = Math.pow(10, 6);
-        return Math.round(Math.random() * range) / range;
+        let range = Math.pow(10, 3);
+        let value = Math.random() * 10 + 2;
+        return Math.round(value * range) / range;
       }
-    }
-    switch(crypto) {
-      case "ETH":
     }
     return randomGenerators[crypto]();
   },
