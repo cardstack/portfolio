@@ -3,8 +3,10 @@ import move from 'ember-animated/motions/move';
 import resize from 'ember-animated/motions/resize';
 import adjustColor from 'ember-animated/motions/adjust-color';
 import { duration } from './moving-box';
+import layout from '../templates/moving-inner-box';
 
 export default Component.extend({
+  layout,
   tagName: '',
   duration,
 

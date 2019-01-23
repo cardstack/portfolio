@@ -3,8 +3,10 @@ import move from 'ember-animated/motions/move';
 import scale from 'ember-animated/motions/scale';
 import adjustCSS from 'ember-animated/motions/adjust-css';
 import { duration } from './moving-box';
+import layout from '../templates/moving-item';
 
 export default Component.extend({
+  layout,
   tagName: '',
   duration,
 

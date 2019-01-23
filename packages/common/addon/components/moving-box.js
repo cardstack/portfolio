@@ -3,10 +3,12 @@ import move from 'ember-animated/motions/move';
 import resize from 'ember-animated/motions/resize';
 import opacity from 'ember-animated/motions/opacity';
 import { wait } from 'ember-animated';
+import layout from '../templates/moving-box';
 
 export let duration = 500;
 
 export default Component.extend({
+  layout,
   tagName: '',
   duration,
 
