@@ -28,6 +28,18 @@
   margin-right: 5px;
 }
 
+.asset-isolated__etherscan-link {
+  text-decoration: none;
+  color: var(--portfolio-black);
+  color: var(--portfolio-black);
+  font-size: var(--portfolio-med-font);
+  font-family: var(--portfolio-semibold-text);
+  letter-spacing: 0.7px;
+  line-height: 19px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
 .asset-isolated__gradient {
   background-color: var(--portfolio-light-purple);
   color: var(--portfolio-white);
