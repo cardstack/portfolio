@@ -114,7 +114,7 @@ module('Card | asset', function (hooks) {
 
     await click('[data-test-asset-isolated-btc-button]');
 
-    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('0.0020');
+    assert.dom('[data-test-asset-isolated-fiat-value]').hasText('0.2009');
     assert.dom('[data-test-asset-isolated-currency-name').hasText('BTC');
 
     await click('[data-test-asset-isolated-usd-button]');
