@@ -97,6 +97,7 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: var(--portfolio-med-font);
   text-align: center;
+  color: var(--portfolio-muted-gray);
   text-decoration: none;
 }
 .portfolio-isolated-filters__item.active,
@@ -125,4 +126,65 @@
   font-weight: normal;
   letter-spacing: -0.1px;
   line-height: 1.1;
+}
+.portfolio-isolated-section__count {
+  display: inline-block;
+  padding-left: 10px;
+  color: var(--portfolio-muted-gray);
+}
+.portfolio-isolated-section__grid,
+.currency-assets__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 25px;
+  padding: 25px 0;
+}
+
+.portfolio-isolated-section__currency {
+  --currency-title-logo-size: 32px;
+  position: relative;
+  border: solid 1px var(--portfolio-border-gray);
+  border-radius: 3px;
+  padding: 25px 25px 0 25px;
+  margin-bottom: 60px;
+}
+
+.currency-totals {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.currency-title {
+  line-height: 44px;
+  font-size: 22px;
+  letter-spacing: -0.15px;
+  margin: 0;
+}
+
+.currency-title__logo-background {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  padding: 14px;
+  margin-right: 20px;
+}
+
+.currency-title__logo {
+  width: var(--currency-title-logo-size);
+  height: var(--currency-title-logo-size);
+}
+
+.currency-title__logo-background--bitcoin {
+  background: var(--portfolio-bitcoin-gradient);
+}
+.currency-title__logo-background--ether {
+  background: var(--portfolio-ether-gradient);
+}
+.currency-title__logo-background--litecoin {
+  background: var(--portfolio-litecoin-gradient);
+}
+.currency-title__logo-background--zcash {
+  background: var(--portfolio-zcash-gradient);
 }

@@ -21,27 +21,50 @@
             ≈ {{currency-symbol currency}}{{accountTotal}}
           </div>
         </div>
+        {{!-- Add more button and modal --}}
       </div>
       <ul class="portfolio-isolated-filters">
         <li class="portfolio-isolated-filters__label">Organize by</li>
-        <li><a href="/" class="portfolio-isolated-filters__item active">Wallets</a></li>
-        <li><a href="/" class="portfolio-isolated-filters__item">Currencies</a></li>
+        <li><a href="#" {{action 'groupByWallet'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__wallets {{if (eq groupBy 'wallets') 'active'}}">Wallets</a></li>
+        <li><a href="#" {{action 'groupByCurrency'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__currencies {{if (eq groupBy 'currency') 'active'}}">Currencies</a></li>
         <li><a href="/" class="portfolio-isolated-filters__item">Tags</a></li>
       </ul>
     </div>
   </header>
 
   <main class="portfolio-isolated__main">
-    {{#if walletCount}}
-      {{#each content.wallets as |wallet index|}}
-        <section class="portfolio-isolated__section" data-test-portfolio-isolated-wallet={{index}}>
-          {{cardstack-content content=wallet format="embedded"}}
+    {{#if (eq groupBy 'currency')}}
+      {{#if assetsByCurrency}}
+        <section class="portfolio-isolated-section">
+          {{#each assetsByCurrency as |currency index|}}
+            <section class="portfolio-isolated-section__currency" data-test-portfolio-isolated-currency={{index}}>
+              <h3 class="currency-title"><span class="currency-title__logo-background currency-title__logo-background--{{currency.network.id}}">
+                {{svg-jar currency.network.id class="currency-title__logo"}}
+              </span>{{currency.network.title}}</h3>
+              <div class="currency-totals">
+                {{currency.assets.length}} Asset{{if (eq currency.assets.length 1) '' 's'}}
+              </div>
+              <div class="currency-assets__grid">
+                {{#each currency.assets as |asset|}}
+                  {{cardstack-content content=asset format="embedded"}}
+                {{/each}}
+              </div>
+            </section>
+          {{/each}}
         </section>
-      {{/each}}
+      {{/if}}
     {{else}}
-      <section class="portfolio-isolated__section">
-        <p>Please add a wallet to get started.</p>
-      </section>
+      {{#if walletCount}}
+        {{#each content.wallets as |wallet index|}}
+          <section class="portfolio-isolated__section" data-test-portfolio-isolated-wallet={{index}}>
+            {{cardstack-content content=wallet format="embedded"}}
+          </section>
+        {{/each}}
+      {{else}}
+        <section class="portfolio-isolated__section">
+          <p>Please add a wallet to get started.</p>
+        </section>
+      {{/if}}
     {{/if}}
   </main>
 </div>
