@@ -1,11 +1,10 @@
 import AssetBaseMixin from '../mixins/asset-base';
+import CurrencyParamsMixin from 'portfolio-common/mixins/currency-params';
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 import { computed } from '@ember/object';
 
-//TODO use routing query param to set the selectedCurrency
-
-export default LiveIsolatedCard.extend(AssetBaseMixin, {
+export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   layout,
 
   chronologicallyDescendingTransactions: computed('content.networkAsset.transactions.[]', function() {
@@ -18,9 +17,4 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, {
   addressLink: computed('content.formattedAddress', function() {
     return `https://rinkeby.etherscan.io/address/${this.get('content.formattedAddress')}`;
   }),
-
-  setCurrency(currency) {
-    let currencyService = this.get('selectedCurrency');
-    currencyService.setCurrency(currency);
-  }
 });

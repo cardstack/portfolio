@@ -1,6 +1,6 @@
 <AnimatedContainer>
   <MovingBox @content={{content}} @class="asset-embedded asset-embedded--{{networkId}}">
-    <a class="asset-embedded--a" data-test-asset-embedded-link href={{cardstack-url content}}>
+    <a class="asset-embedded--a" data-test-asset-embedded-link href={{assetLink}}>
       <header class="asset-embedded__header">
         <AnimatedContainer class="asset-embedded__title-row">
           <MovingItem @content={{content}} @name="logo">
@@ -12,7 +12,6 @@
             </h3>
           </MovingItem>
         </AnimatedContainer>
-        <a class="asset-embedded__tag" href={{cardstack-url content}}>Savings</a>
       </header>
       <section class="asset-embedded__section">
         <div class="asset-embedded__data-row" data-test-asset-embedded-balance>
