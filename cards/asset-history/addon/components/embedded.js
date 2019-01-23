@@ -4,13 +4,17 @@ import { computed } from '@ember/object';
 import { displayDecimalPlaces } from 'portfolio-common/helpers/convert-currency';
 import { symbolMapping } from 'portfolio-common/helpers/currency-symbol';
 import { abbreviateNumber } from 'portfolio-common/helpers/abbreviate-number';
-const initialCurrency = 'USD';
+import { inject as service } from '@ember/service';
+
+const { readOnly } = computed;
 
 export default Component.extend({
   layout,
+  selectedCurrency: service(),
+  currency: readOnly('selectedCurrency.currency'),
+
   init() {
-    this._super();
-    this.set('currency', initialCurrency);
+    this._super(...arguments);
     let _this = this;
     this.set('chartOptions', {
       chart: {
@@ -23,15 +27,15 @@ export default Component.extend({
         offset: -5,
         min: 0, // this forces the y-axis to start at zero
         labels: {
-          formatter() { // TODO need to make sure this changes when the currency changes
-            return `${symbolMapping[_this.get('currency')] || ''}${abbreviateNumber(this.value)}`;
+          formatter() {
+            let currency = _this.get('currency');
+            return `${symbolMapping[currency] || ''}${abbreviateNumber(this.value)}${currency === 'BTC' ? ' BTC' : ''}`;
           }
         },
       },
     });
   },
 
-  // TODO need to use "dynamic" data service: https://github.com/ahmadsoe/ember-highcharts/blob/master/tests/dummy/app/components/chart-highstock-interactive.js
   chartData: computed('currency', 'content.{timeseries,historyValues.@each.balance}', function() {
     let currency = this.get('currency');
     let timeseries = Object.assign({}, this.get('content.timeseries'));

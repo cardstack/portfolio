@@ -1,12 +1,17 @@
 
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 import Web3 from 'web3';
 
+const { readOnly } = computed;
 const { utils: { BN, fromWei } } = Web3;
 
 export default Mixin.create({
+  selectedCurrency: service(),
+  currency: readOnly('selectedCurrency.currency'),
+
   date: computed('content.timestamp', function() {
     let timestamp = this.get('content.timestamp');
     if (!timestamp) { return; }

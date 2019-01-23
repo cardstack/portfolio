@@ -20,7 +20,7 @@
             <span class="transaction-isolated__amount--currency">ETH</span>
           </div>
           <div class="transaction-isolated__amount-value--fiat" data-test-transaction-isolated-fiat>
-            ≈ {{currency-symbol 'USD'}}{{convert-currency 'ETH' 'USD' content.transactionValue content.ratesAtTransactionTimestamp}} USD
+            ≈ {{currency-symbol currency}}{{convert-currency 'ETH' currency content.transactionValue content.ratesAtTransactionTimestamp}} {{currency}}
           </div>
         </div>
 
