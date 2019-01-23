@@ -15,6 +15,10 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, {
     return transactions.toArray().reverse();
   }),
 
+  addressLink: computed('content.formattedAddress', function() {
+    return `https://rinkeby.etherscan.io/address/${this.get('content.formattedAddress')}`;
+  }),
+
   setCurrency(currency) {
     let currencyService = this.get('selectedCurrency');
     currencyService.setCurrency(currency);

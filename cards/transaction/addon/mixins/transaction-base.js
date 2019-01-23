@@ -52,7 +52,7 @@ export default Mixin.create({
   transactionHashLink: computed('content.transactionHash', function() {
     let hash = this.get('content.transactionHash');
 
-    return `https://etherscan.io/tx/${hash}`;
+    return `https://rinkeby.etherscan.io/tx/${hash}`;
   }),
 
   abbreviatedFromAddress: computed('content.transactionFrom', function() {
