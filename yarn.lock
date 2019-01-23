@@ -913,7 +913,7 @@
   resolved "https://registry.yarnpkg.com/@cardstack/tools/-/tools-0.13.9.tgz#730cac6d2d8b797916b0c7ff223947cedce47cd2"
   integrity sha512-ToJhyK09GQ1321iWzJr1XPru8YqhGuNEEdVRGWlZrZPqIWkW5S0Aw5F3K6OnFlyXHAiKEeJHC0JIzvpUZUhvTw==
   dependencies:
-    "@cardstack/data" "0.13.6"
+    "@cardstack/data" "0.13.11"
     "@cardstack/edges" "0.13.0"
     "@cardstack/plugin-utils" "0.13.0"
     "@cardstack/rendering" "0.13.0"
