@@ -4,10 +4,10 @@
 
   <div class="asset-isolated__grid">
     <div>
-      <section class="asset-isolated__main asset-isolated__section">
-        <AnimatedContainer>
-          <MovingBox @content={{content}} @class="asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
-            <div>
+      <AnimatedContainer>
+        <MovingBox @content={{content}} @class="asset-isolated__main asset-isolated__section asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
+          <div>
+            <div class="">
               <div class="asset-isolated__gradient-header">
                 <h2 class="asset-isolated__title" data-test-asset-isolated-title>
                   <AnimatedContainer>
@@ -50,36 +50,40 @@
                 </div>
               </div>
               <div class="asset-isolated__currency-switcher">
-               <button class="asset-isolated__currency-switcher__usd {{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
-               <button class="asset-isolated__currency-switcher__eur {{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
-               <button class="asset-isolated__currency-switcher__btc {{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
+                <button class="asset-isolated__currency-switcher__usd {{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
+                <button class="asset-isolated__currency-switcher__eur {{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
+                <button class="asset-isolated__currency-switcher__btc {{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
               </div>
               <div class="asset-isolated__chart">
                 {{cardstack-content content=content.assetHistory format="embedded"}}
               </div>
             </div>
-          </MovingBox>
-        </AnimatedContainer>
 
-        <div class="asset-isolated__details">
-          <div class="asset-isolated__details-item" data-test-asset-isolated-address>
-            <h4 class="asset-isolated__details-item-title">Address</h4>
-            {{content.formattedAddress}}
+            <AnimatedContainer>
+              <MovingInnerBox @content={{content}} @name="details" @class="asset-isolated__details">
+                <div>
+                  <div class="asset-isolated__details-item" data-test-asset-isolated-address>
+                    <h4 class="asset-isolated__details-item-title">Address</h4>
+                    {{content.formattedAddress}}
+                  </div>
+                  <div class="asset-isolated__details-item">
+                    <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-established-date>Established</h4>
+                    {{firstTransactionDate}}
+                  </div>
+                  <div class="asset-isolated__details-item" data-test-asset-isolated-num-transactions>
+                    <h4 class="asset-isolated__details-item-title">Transactions</h4>
+                    {{content.networkAsset.transactions.length}}
+                  </div>
+                  <div class="asset-isolated__details-item">
+                    <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-last-active>Last active</h4>
+                    {{lastActiveDate}}
+                  </div>
+                </div>
+              </MovingInnerBox>
+            </AnimatedContainer>
           </div>
-          <div class="asset-isolated__details-item">
-            <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-established-date>Established</h4>
-            {{firstTransactionDate}}
-          </div>
-          <div class="asset-isolated__details-item" data-test-asset-isolated-num-transactions>
-            <h4 class="asset-isolated__details-item-title">Transactions</h4>
-            {{content.networkAsset.transactions.length}}
-          </div>
-          <div class="asset-isolated__details-item">
-            <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-last-active>Last active</h4>
-            {{lastActiveDate}}
-          </div>
-        </div>
-      </section>
+        </MovingBox>
+      </AnimatedContainer>
 
       <section class="asset-isolated__section asset-isolated__section-group">
         <h3 class="asset-isolated__section-title bg-icon--history">Transaction History</h3>
