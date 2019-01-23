@@ -2,12 +2,16 @@
   <MovingBox @content={{content}} @class="asset-embedded asset-embedded--{{networkId}}">
     <a class="asset-embedded--a" data-test-asset-embedded-link href={{cardstack-url content}}>
       <header class="asset-embedded__header">
-        <div class="asset-embedded__title-row">
-          {{svg-jar content.networkId class="asset-embedded__logo"}}
-          <h3 class="asset-embedded__title" data-test-asset-embedded-title>
-            {{content.networkTitle}}
-          </h3>
-        </div>
+        <AnimatedContainer class="asset-embedded__title-row">
+          <MovingItem @content={{content}} @name="logo">
+            {{svg-jar content.networkId class="asset-embedded__logo"}}
+          </MovingItem>
+          <MovingItem @content={{content}} @name="title">
+            <h3 class="asset-embedded__title" data-test-asset-embedded-title>
+              {{content.networkTitle}}
+            </h3>
+          </MovingItem>
+        </AnimatedContainer>
         <a class="asset-embedded__tag" href={{cardstack-url content}}>Savings</a>
       </header>
       <section class="asset-embedded__section">

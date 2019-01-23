@@ -30,9 +30,11 @@
       </header>
       <div class="wallet-isolated-section__grid">
         {{#each content.assets as |asset index|}}
+          {{#if (eq index 1)}}
           <div data-test-wallet-isolated-asset={{index}}>
             {{cardstack-content content=asset format="embedded"}}
           </div>
+          {{/if}}
         {{/each}}
       </div>
     </section>

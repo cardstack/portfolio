@@ -9,7 +9,14 @@
             <div>
               <div class="asset-isolated__gradient-header">
                 <h2 class="asset-isolated__title" data-test-asset-isolated-title>
-                  {{svg-jar content.networkId width="36px" height="36px"}} {{content.networkTitle}}
+                  <AnimatedContainer>
+                    <MovingItem @content={{content}} @name="logo">
+                      {{svg-jar content.networkId class="asset-isolated__logo" width="36px" height="36px"}}
+                    </MovingItem>
+                    <MovingItem @content={{content}} @name="title">
+                      <span>{{content.networkTitle}}</span>
+                    </MovingItem>
+                  </AnimatedContainer>
                 </h2>
               </div>
               <div class="asset-isolated_gradient-wrapper">

@@ -24,7 +24,7 @@
   line-height: 1.1;
   text-transform: uppercase;
 }
-.asset-isolated__title > svg {
+.asset-isolated__logo {
   display: inline-block;
   width: 36px;
   height: 36px;

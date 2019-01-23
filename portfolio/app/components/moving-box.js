@@ -4,8 +4,11 @@ import resize from 'ember-animated/motions/resize';
 import opacity from 'ember-animated/motions/opacity';
 import { wait } from 'ember-animated';
 
+export let duration = 500;
+
 export default Component.extend({
-  duration: 500,
+  tagName: '',
+  duration,
 
   outer: function * ({ receivedSprites }) {
     receivedSprites.forEach(sprite => {
