@@ -5,8 +5,8 @@ exports.type = '@cardstack/core-types::has-many';
 const conversions = {
   BTC: ['USD', 'EUR'],
   ETH: ['USD', 'EUR'],
-  // LTC: ['USD', 'EUR'],
-  // ZEC: ['USD', 'EUR'],
+  LTC: ['USD', 'EUR'],
+  ZEC: ['USD', 'EUR'],
 };
 
 exports.compute = async function(model, { timestampField }) {
