@@ -156,13 +156,6 @@
   letter-spacing: 0.2px;
 }
 
-.transaction-isolated__qr-code {
-  padding-top: 25px;
-  text-align: center;
-  border-top: 1px solid var(--portfolio-border-gray);
-}
-
-
 /*  Cards with white background  */
 .transaction-isolated__section {
   margin-bottom: 25px;
