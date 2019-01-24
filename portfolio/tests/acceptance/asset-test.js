@@ -1,7 +1,14 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click } from '@ember/test-helpers';
+import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
+
+// use the main:router location API to get the current URL since we are
+// manipulating the URL using the location API
+function currentURL(owner) {
+  let router = owner.lookup('router:main');
+  return router.get('location').getURL();
+}
 
 const address = '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE';
 const scenario = new Fixtures({
@@ -74,7 +81,7 @@ module('Acceptance | asset', function (hooks) {
 
   test('user sees isolated asset card when directly navigating to the URL without logging in', async function(assert) {
     await visit(`/assets/${address}`);
-    assert.equal(currentURL(), `/assets/${address}`);
+    assert.equal(currentURL(this.owner), `/assets/${address}`);
 
     assert.dom('.asset-isolated').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
@@ -86,8 +93,38 @@ module('Acceptance | asset', function (hooks) {
 
     await click('[data-test-asset-isolated-transaction="1"] [data-test-transaction-embedded-link]');
 
-    assert.equal(currentURL(), `/ethereum-transactions/0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572`);
+    assert.equal(currentURL(this.owner), `/ethereum-transactions/0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572`);
     assert.dom('.transaction-isolated').exists();
+  });
+
+  test('users currency change is reflected in the URL', async function(assert) {
+    await visit(`/assets/${address}`);
+
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('USD');
+
+    await click('[data-test-asset-isolated-eur-button]');
+
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('EUR');
+    assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=EUR`);
+
+    await click('[data-test-asset-isolated-btc-button]');
+
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('BTC');
+    assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=BTC`);
+  });
+
+  test('the EUR currency that is specified in the URL query params is honored', async function(assert) {
+    await visit(`/assets/${address}?assets[currency]=EUR`);
+
+    assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=EUR`);
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('EUR');
+  });
+
+  test('the BTC currency that is specified in the URL query params is honored', async function(assert) {
+    await visit(`/assets/${address}?assets[currency]=BTC`);
+
+    assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=BTC`);
+    assert.dom('[data-test-asset-isolated-currency-name').hasText('BTC');
   });
 
 });

@@ -5,6 +5,9 @@ let factory = new JSONAPIFactory();
 // TODO create router for assets card so that we can use a custom error page that doens't have a login template
 factory.addResource('content-types', 'assets')
   .withAttributes({
+    router: [{
+      path: '/?currency=:currency'
+    }],
     defaultIncludes: [
       'asset-history',
       'transactions',
