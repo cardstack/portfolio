@@ -132,59 +132,71 @@
   padding-left: 10px;
   color: var(--portfolio-muted-gray);
 }
-.portfolio-isolated-section__grid,
-.currency-assets__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 25px;
-  padding: 25px 0;
-}
 
 .portfolio-isolated-section__currency {
   --currency-title-logo-size: 32px;
   position: relative;
-  border: solid 1px var(--portfolio-border-gray);
-  border-radius: 3px;
-  padding: 25px 25px 0 25px;
+  padding: 30px;
+  background-color: var(--portfolio-white);
+  border: 1px solid var(--portfolio-border-gray);
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.35);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
   margin-bottom: 60px;
+}
+
+.currency__heading {
+  display: flex;
 }
 
 .currency-totals {
   position: absolute;
-  top: 25px;
-  right: 25px;
+  top: 30px;
+  right: 30px;
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-xs-font);
 }
 
 .currency-title {
-  line-height: 44px;
-  font-size: 22px;
-  letter-spacing: -0.15px;
   margin: 0;
+  font-weight: 400;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xl-font);
+  letter-spacing: 0.2px;
+  line-height: 1;
 }
 
-.currency-title__logo-background {
+.currency__logo-background {
   display: inline-block;
   width: 60px;
   height: 60px;
   border-radius: 5px;
   padding: 14px;
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
-.currency-title__logo {
+.currency__logo {
   width: var(--currency-title-logo-size);
   height: var(--currency-title-logo-size);
 }
 
-.currency-title__logo-background--bitcoin {
+.currency__logo-background--bitcoin {
   background: var(--portfolio-bitcoin-gradient);
 }
-.currency-title__logo-background--ether {
+.currency__logo-background--ether {
   background: var(--portfolio-ether-gradient);
 }
-.currency-title__logo-background--litecoin {
+.currency__logo-background--litecoin {
   background: var(--portfolio-litecoin-gradient);
 }
-.currency-title__logo-background--zcash {
+.currency__logo-background--zcash {
   background: var(--portfolio-zcash-gradient);
+}
+
+.currency-assets__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 25px;
+  padding-top: 25px;
 }
