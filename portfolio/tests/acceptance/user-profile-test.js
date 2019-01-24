@@ -41,7 +41,8 @@ async function searchForUser(email) {
 }
 
 async function ensureUserLoggedOut() {
-  await visit('/');
+  await visit('/profile');
+
   if (document.querySelector('[data-test-signout-button]')) {
     await click('[data-test-signout-button]');
   }
@@ -81,7 +82,7 @@ module('Acceptance | user-profile', function(hooks) {
       await fillIn('[data-test-login-email]', 'hassan@example.com');
       await fillIn('[data-test-login-password]', 'password')
       await click('[data-test-login-button]');
-      await waitFor('.user-isolated');
+      await waitFor('[data-test-user-isolated]');
 
       assert.equal(currentURL(), '/profile');
 

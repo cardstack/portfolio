@@ -44,6 +44,8 @@ module('Card | user', function(hooks) {
     assert.dom('[data-test-user-new-password').hasValue('');
     assert.dom('[data-test-user-confirm-new-password').hasValue('');
     assert.dom('[data-test-user-submit]').isNotDisabled();
+    assert.dom('[data-test-portfolio-account-card]').exists();
+    assert.dom('[data-test-portfolio-account-card-title]').hasText('Card Folio');
   });
 
   // unsure how to mock the session, moving these tests to the acceptance tests

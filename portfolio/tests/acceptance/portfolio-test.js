@@ -81,6 +81,11 @@ module('Acceptance | portfolio', function(hooks) {
   test('user sees the login form when they log out from the portfolio page', async function(assert) {
     await visit('/');
     await login();
+
+    await waitFor('[data-test-portfolio-top-header-user]');
+    await click('[data-test-portfolio-top-header-user]');
+
+    assert.equal(currentURL(), '/profile');
     await click('[data-test-signout-button]');
 
     assert.equal(currentURL(), '/');
