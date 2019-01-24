@@ -49,7 +49,7 @@ module('Card | wallet', function (hooks) {
     assert.dom('[data-test-wallet-embedded-title]').hasText('Test Wallet');
     assert.dom('[data-test-wallet-embedded-count]').hasText('2 Assets');
     // TO DO: Total value calculation needed here!
-    assert.dom('[data-test-wallet-embedded-value]').hasText('≈ $ 0');
+    assert.dom('[data-test-wallet-embedded-value]').hasText('≈ $0');
     assert.dom('[data-test-wallet-embedded-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
     assert.dom('[data-test-wallet-embedded-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
   });
@@ -59,7 +59,7 @@ module('Card | wallet', function (hooks) {
     assert.dom('[data-test-wallet-isolated-title]').hasText('Test Wallet');
     assert.dom('[data-test-wallet-isolated-count]').hasText('2 Assets');
     // TO DO: Total value calculation needed here!
-    assert.dom('[data-test-wallet-isolated-value]').hasText('≈ $ 0');
+    assert.dom('[data-test-wallet-isolated-value]').hasText('≈ $0');
     assert.dom('[data-test-wallet-isolated-section-active-count]').hasText('2');
     assert.dom('[data-test-wallet-isolated-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
     assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
