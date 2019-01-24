@@ -4,7 +4,7 @@
 {{#if (is-component "cardstack-session")}}
   {{#cardstack-session as |session|}}
     {{#if session.isAuthenticated}}
-      <div class="user-isolated">
+      <div class="user-isolated" data-test-user-isolated>
         <header class="user-isolated__header">
           <h1 class="user-isolated__title">{{svg-jar "user-icon" width="18px" height="20px"}} Profile</h1>
           <button onclick={{action transitionToPortfolio}} class="user-isolated__close-button">
