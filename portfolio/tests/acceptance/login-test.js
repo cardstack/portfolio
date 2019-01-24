@@ -42,7 +42,11 @@ module('Acceptance | login', function(hooks) {
 
     await click('[data-test-login-button]');
 
-    await waitFor('[data-test-signout-button]');
+    await waitFor('[data-test-portfolio-top-header-user]');
+    await click('[data-test-portfolio-top-header-user]');
+    assert.equal(currentURL(), '/profile');
+
+    await click('[data-test-signout-button]');
   });
 
   test('user sees error message when they login with invalid credentials', async function(assert) {
