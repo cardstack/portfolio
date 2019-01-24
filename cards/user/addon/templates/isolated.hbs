@@ -1,5 +1,5 @@
 {{!-- When the session does not exist then the error card takes over and renders the login form --}}
-
+<AccountCard>
 {{!-- fastboot guard --}}
 {{#if (is-component "cardstack-session")}}
   {{#cardstack-session as |session|}}
@@ -169,3 +169,4 @@
     {{/if}}
   {{/cardstack-session}}
 {{/if}}
+</AccountCard>
