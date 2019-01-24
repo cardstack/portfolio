@@ -62,7 +62,9 @@
                 <div class="asset-isolated__details">
                   <div class="asset-isolated__details-item" data-test-asset-isolated-address>
                     <h4 class="asset-isolated__details-item-title">Address</h4>
-                    <a href="{{addressLink}}" class="asset-isolated__etherscan-link" data-test-asset-isolated-etherscan-link>{{content.formattedAddress}}</a>
+                    <a href="{{addressLink}}" class="asset-isolated__etherscan-link" target="_blank" rel="noopener" data-test-asset-isolated-etherscan-link>
+                      {{content.formattedAddress}}
+                    </a>
                   </div>
                   <div class="asset-isolated__details-item">
                     <h4 class="asset-isolated__details-item-title" data-test-asset-isolated-established-date>Established</h4>

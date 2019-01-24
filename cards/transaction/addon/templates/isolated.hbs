@@ -12,7 +12,9 @@
 
         <div class="transaction-isolated__transaction-hash">
           <span class="transaction-isolated__hash-label">Full Transaction Hash</span>
-          <a href={{transactionHashLink}} class="transaction-isolated__hash-value" data-test-transaction-isolated-hash>{{content.transactionHash}}</a>
+          <a href={{transactionHashLink}} class="transaction-isolated__hash-value" target="_blank" rel="noopener" data-test-transaction-isolated-hash>
+            {{content.transactionHash}}
+          </a>
         </div>
         <div class="transaction-isolated__amount">
           <div class="transaction-isolated__amount-value" data-test-transaction-isolated-value>
