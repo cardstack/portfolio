@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Component from '@ember/component';
 import AssetBaseMixin from '../mixins/asset-base';
-import { computed  } from '@ember/object';
 import layout from '../templates/embedded';
 import { inject as service } from '@ember/service';
 import injectOptional from 'ember-inject-optional';
