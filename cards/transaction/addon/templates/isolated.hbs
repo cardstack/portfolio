@@ -1,12 +1,12 @@
-<TopHeader></TopHeader>
-<Breadcrumbs @content={{content}}></Breadcrumbs>
-
 <div class="transaction-isolated">
-  <div class="transaction-isolated__grid">
+  <TopHeader></TopHeader>
+  <Breadcrumbs @content={{content}}></Breadcrumbs>
+
+  <main class="transaction-isolated__main transaction-isolated__grid">
     <div>
-      <section class="transaction-isolated__main transaction-isolated__group">
+      <section class="transaction-isolated__section transaction-isolated__section--main">
         <header class="transaction-isolated__header">
-          <h1 class="transaction-isolated__title" data-test-transaction-isolated-title>TX# {{abbreviatedTransactionHash}}</h1>
+          <h2 class="transaction-isolated__title" data-test-transaction-isolated-title>TX# {{abbreviatedTransactionHash}}</h2>
           <time class="transaction-isolated__time" datetime="" data-test-transaction-isolated-date>{{date}}</time>
         </header>
 
@@ -77,41 +77,41 @@
     </div>
 
     <aside>
-      <section class="transaction-isolated__tags">
-        <h3 class="transaction-isolated__section-title transaction-isolated__tags-title">
-          Tags
-        </h3>
-        <div class="transaction-isolated__group">
+      <section class="transaction-isolated__section transaction-isolated__section--padding">
+        <h3 class="transaction-isolated__section-title bg-icon--wallet">Belongs To</h3>
+        {{!-- TO DO: Query wallet and link to it --}}
+        <a href={{cardstack-url "/wallets/demo-wallet"}} class="transaction-isolated__section-link">
+          Demo Wallet
+        </a>
+      </section>
+
+      <section class="transaction-isolated__section">
+        <div class="transaction-isolated__section--padding">
+          <h3 class="transaction-isolated__section-title bg-icon--tag">Tags</h3>
           <ul class="transaction-isolated__tags-list">
             <li><a href="/">Savings</a></li>
             <li><a href="/">Business Operations</a></li>
             <li><a href="/">International</a></li>
             {{!-- TAGS HERE --}}
           </ul>
-          <button class="transaction-isolated__group-button">
-            Add custom tag
-          </button>
         </div>
+        <button class="transaction-isolated__section-button bg-icon--add">
+          Add custom tag
+        </button>
       </section>
 
-      <section class="transaction-isolated__notes">
-        <h3 class="transaction-isolated__section-title transaction-isolated__notes-title">
-          Notes
-        </h3>
-        <div class="transaction-isolated__group">
+      <section class="transaction-isolated__section">
+        <div class="transaction-isolated__section--padding">
+          <h3 class="transaction-isolated__section-title bg-icon--notes">Notes</h3>
           <ul class="transaction-isolated__notes-list">
-            <li>
-              <p>Lorem ipsum dolor sit amet, consectetur</p>
-            </li>
-            <li>
-              <p>Proin sagittis bibendum purus sit amet elementum erat</p>
-            </li>
+            <li><p>Lorem ipsum dolor sit amet, consectetur</p></li>
+            <li><p>Proin sagittis bibendum purus sit amet elementum erat</p></li>
           </ul>
-          <button class="transaction-isolated__group-button">
-            Add new note
-          </button>
         </div>
+        <button class="transaction-isolated__section-button bg-icon--add">
+          Add new note
+        </button>
       </section>
     </aside>
-  </div>
+  </main>
 </div>

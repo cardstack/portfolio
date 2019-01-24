@@ -6,7 +6,7 @@
   background-color: var(--portfolio-white);
   border: none;
   border-radius: 5px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 35%);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.35);
 }
 
 .login-form__title {
@@ -48,7 +48,7 @@
   background-color: var(--portfolio-off-white);
   border: 1px solid var(--portfolio-border-gray);
   border-radius: 5px;
-  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 25%);
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   font-size: var(--portfolio-sm-font);
 }
 .login-form__input:focus {

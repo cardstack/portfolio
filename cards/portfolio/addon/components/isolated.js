@@ -22,4 +22,10 @@ export default LiveIsolatedCard.extend({
     }, 0);
     return roundWithPrecision([total, 2]);
   }),
+
+  walletCount: computed('wallets.[]', function () {
+    let wallets = this.content.get('wallets');
+    if (!wallets) { return; }
+    return wallets.length;
+  })
 });

@@ -21,9 +21,8 @@ const scenario = new Fixtures({
       title: 'My Portfolio'
     })
       .withRelated('wallets', [
-        factory.addResource('wallets', 'ing-wallet').withAttributes({
-          title: 'ING Wallet',
-          logo: 'ing-logo'
+        factory.addResource('wallets', 'test-wallet').withAttributes({
+          title: 'Test Wallet'
         })
           .withRelated('user', user)
       ])
@@ -75,10 +74,10 @@ module('Acceptance | portfolio', function(hooks) {
     await visit('/');
     await login();
 
-    await click('.wallet-embedded');
+    await click('[data-test-wallet-embedded-link]');
 
-    assert.equal(currentURL(), '/wallets/ing-wallet');
-    assert.dom('.wallet-isolated').exists();
-    assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
+    assert.equal(currentURL(), '/wallets/test-wallet');
+    assert.dom('[data-test-wallet-isolated]').exists();
+    assert.dom('[data-test-wallet-isolated-title]').hasText('Test Wallet');
   });
 });

@@ -23,7 +23,7 @@ const scenario = new Fixtures({
 
     factory.addResource('wallets', '123')
       .withAttributes({
-        title: 'ING Wallet'
+        title: 'Test Wallet'
       })
       .withRelated('assets', [btc, eth]);
 
@@ -46,17 +46,27 @@ module('Card | wallet', function (hooks) {
 
   test('embedded format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="embedded"}}`);
-    assert.dom('[data-test-wallet-embedded-title]').hasText('ING Wallet');
+    assert.dom('[data-test-wallet-embedded-title]').hasText('Test Wallet');
     assert.dom('[data-test-wallet-embedded-count]').hasText('2 Assets');
+    // TO DO: Total value calculation needed here!
+    assert.dom('[data-test-wallet-embedded-value]').hasText('≈ $ 0');
+    assert.dom('[data-test-wallet-embedded-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
+    assert.dom('[data-test-wallet-embedded-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
   });
 
   test('isolated format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "wallet" "123" format="isolated"}}`);
-    assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
-    assert.dom('[data-test-wallet-isolated-assets-count]').hasText('2 Assets');
+    assert.dom('[data-test-wallet-isolated-title]').hasText('Test Wallet');
+    assert.dom('[data-test-wallet-isolated-count]').hasText('2 Assets');
+    // TO DO: Total value calculation needed here!
+    assert.dom('[data-test-wallet-isolated-value]').hasText('≈ $ 0');
     assert.dom('[data-test-wallet-isolated-section-active-count]').hasText('2');
     assert.dom('[data-test-wallet-isolated-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
     assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
     assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-wallet]').doesNotExist();
+    assert.dom('[data-test-portfolio-breadcrumbs-asset]').doesNotExist();
   });
 });

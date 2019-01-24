@@ -1,16 +1,48 @@
-<a class="wallet-embedded" href={{cardstack-url content}}>
-  <header class="wallet-embedded__header" data-test-wallet-embedded-count>
-    {{or content.assets.length "0"}} Assets
-    {{!-- Add wallet icon --}}
-  </header>
-  <section class="wallet-embedded__main">
-    {{svg-jar content.logo class="wallet-embedded__logo"}}
-    <h3 class="wallet-embedded__title" data-test-wallet-embedded-title>{{content.title}}</h3>
-  </section>
-  <footer class="wallet-embedded__footer">
-    <div class="wallet-embedded__label">Approximate Value</div>
-    <div class="wallet-embedded__value" data-test-wallet-embedded-value>
-      {{currency-symbol currency}} {{accountTotal}}
+<div class="wallet-embedded">
+  <header class="wallet-embedded__header">
+    <a href={{cardstack-url content}} class="wallet-embedded__heading" data-test-wallet-embedded-link>
+      <span
+        class="wallet-embedded__logo"
+        style={{css-url "background-image" (concat "/portfolio-common/images/" (or content.logo "wallet") ".svg")}}
+      />
+      <div>
+        <h3 class="wallet-embedded__title" data-test-wallet-embedded-title>{{content.title}}</h3>
+        <span class="wallet-embedded__details">View Details</span>
+      </div>
+    </a>
+    <div class="wallet-embedded__summary">
+      <div class="wallet-embedded__summary-count" data-test-wallet-embedded-count>
+        {{#if (eq content.assets.length 1)}}
+          1 Asset
+        {{else}}
+          {{or content.assets.length "0"}} Assets
+        {{/if}}
+      </div>
+      <div class="wallet-embedded__summary-value">
+        <button class="wallet-embedded__info-button">
+          {{svg-jar "info-icon" width="16px" height="16px"}}
+        </button>
+        {{!-- TO DO: calculate total value --}}
+        <span data-test-wallet-embedded-value>
+          {{currency-symbol currency}} {{accountTotal}}
+        </span>
+      </div>
     </div>
-  </footer>
-</a>
+  </header>
+
+  {{#if content.assets.length}}
+    <section class="wallet-embedded__main">
+      <div class="wallet-embedded__grid">
+        {{#each content.assets as |asset index|}}
+          <div data-test-wallet-embedded-asset={{index}}>
+            {{cardstack-content content=asset format="embedded"}}
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{else}}
+    <section class="wallet-embedded__main">
+      <p>Please add an asset.</p>
+    </section>
+  {{/if}}
+</div>
