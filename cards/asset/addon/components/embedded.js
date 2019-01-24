@@ -4,6 +4,7 @@ import AssetBaseMixin from '../mixins/asset-base';
 import { computed  } from '@ember/object';
 import layout from '../templates/embedded';
 import { inject as service } from '@ember/service';
+import injectOptional from 'ember-inject-optional';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { readOnly } from '@ember/object/computed';
@@ -15,12 +16,17 @@ export default Component.extend(AssetBaseMixin, {
   dummyAccount: service(),
   cardstackData: service(),
   selectedCurrency: service(),
+  fastboot: injectOptional.service(),
 
   currency: readOnly('selectedCurrency.currency'),
 
   init() {
     this._super();
-    this.fetchWallet.perform();
+    if (this.get('fastboot.isFastboot')) {
+      this.get('fastboot').deferRendering(this.fetchWallet.perform().then());
+    } else {
+      this.fetchWallet.perform();
+    }
   },
 
   assetLink: computed(function() {

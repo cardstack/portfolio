@@ -4,6 +4,7 @@ import CurrencyParamsMixin from 'portfolio-common/mixins/currency-params';
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 import { inject as service } from '@ember/service';
+import injectOptional from 'ember-inject-optional';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
@@ -15,6 +16,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   dummyAccount: service(),
   cardstackData: service(),
   selectedCurrency: service(),
+  fastboot: injectOptional.service(),
 
   currency: readOnly('selectedCurrency.currency'),
 
@@ -31,7 +33,11 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
 
   init() {
     this._super();
-    this.fetchWallet.perform();
+    if (this.get('fastboot.isFastboot')) {
+      this.get('fastboot').deferRendering(this.fetchWallet.perform().then());
+    } else {
+      this.fetchWallet.perform();
+    }
   },
 
   fetchWallet: task(function * () {
