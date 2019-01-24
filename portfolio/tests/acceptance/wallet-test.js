@@ -99,7 +99,7 @@ async function login() {
   await fillIn('[data-test-login-password]', 'password');
   await click('[data-test-login-button]');
 
-  await waitFor('.wallet-isolated');
+  await waitFor('[data-test-wallet-isolated]');
 }
 
 module('Acceptance | wallet', function (hooks) {
@@ -127,6 +127,7 @@ module('Acceptance | wallet', function (hooks) {
   test('user sees the login form when they log out from the portfolio page', async function (assert) {
     await visit('/wallets/demo-wallet');
     await login();
+    await visit('/profile');
     await click('[data-test-signout-button]');
 
     assert.equal(currentURL(), '/');
@@ -143,7 +144,7 @@ module('Acceptance | wallet', function (hooks) {
     await animationsSettled();
 
     assert.equal(currentURL(), '/assets/0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
-    assert.dom('.asset-isolated').exists();
+    assert.dom('[data-test-asset-isolated]').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
   });
 
