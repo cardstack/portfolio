@@ -37,9 +37,8 @@ const scenario = new Fixtures({
       title: 'My Portfolio'
     })
       .withRelated('wallets', [
-        factory.addResource('wallets', 'ing-wallet').withAttributes({
-          title: 'ING Wallet',
-          logo: 'ing-logo'
+        factory.addResource('wallets', 'demo-wallet').withAttributes({
+          title: 'Demo Wallet'
         })
           .withRelated('user', user)
           .withRelated('assets', [
@@ -117,16 +116,16 @@ module('Acceptance | wallet', function (hooks) {
   });
 
   test('user sees their wallet after they login from the wallet route', async function (assert) {
-    await visit('/wallets/ing-wallet');
-    assert.equal(currentURL(), '/wallets/ing-wallet');
+    await visit('/wallets/demo-wallet');
+    assert.equal(currentURL(), '/wallets/demo-wallet');
 
     await login();
 
-    assert.dom('[data-test-wallet-isolated-title]').hasText('ING Wallet');
+    assert.dom('[data-test-wallet-isolated-title]').hasText('Demo Wallet');
   });
 
   test('user sees the login form when they log out from the portfolio page', async function (assert) {
-    await visit('/wallets/ing-wallet');
+    await visit('/wallets/demo-wallet');
     await login();
     await click('[data-test-signout-button]');
 
@@ -137,7 +136,7 @@ module('Acceptance | wallet', function (hooks) {
   });
 
   test('user sees isolated asset card after clicking on the embedded asset card', async function (assert) {
-    await visit('/wallets/ing-wallet');
+    await visit('/wallets/demo-wallet');
     await login();
 
     await click('.asset-embedded--ether [data-test-asset-embedded-link]')

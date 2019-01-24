@@ -2,6 +2,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 25px 30px;
 }
 
 .portfolio-breadcrumbs__list {
@@ -10,7 +11,7 @@
   align-items: center;
   justify-content: flex-start;
   margin: 0;
-  padding: 30px 30px 50px;
+  padding: 0;
 }
 
 .portfolio-breadcrumbs__list-item {

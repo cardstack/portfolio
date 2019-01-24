@@ -63,10 +63,9 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   })
     .withRelated('user', user)
     .withRelated('wallets', [
-      factory.addResource('wallets', 'ing-wallet')
+      factory.addResource('wallets', 'demo-wallet')
         .withAttributes({
-          title: 'ING Wallet',
-          logo: 'ing-logo'
+          title: 'Demo Wallet'
         })
         .withRelated('user', user)
         .withRelated('assets', [

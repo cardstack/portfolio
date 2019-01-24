@@ -1,34 +1,32 @@
-<section class="asset-isolated">
+<div class="asset-isolated">
   <TopHeader></TopHeader>
   <Breadcrumbs @content={{content}}></Breadcrumbs>
 
-  <div class="asset-isolated__grid">
+  <main class="asset-isolated__main asset-isolated__grid">
     <div>
       <AnimatedContainer>
-        <MovingBox @content={{content}} @class="asset-isolated__main asset-isolated__section asset-isolated__gradient asset-isolated__gradient--{{networkId}}">
+        <MovingBox @content={{content}} @class="asset-isolated__section asset-isolated__section--main asset-isolated__gradient--{{networkId}}">
           <div>
             <div class="">
-              <div class="asset-isolated__gradient-header">
-                <h2 class="asset-isolated__title" data-test-asset-isolated-title>
-                  <AnimatedContainer>
-                    <MovingItem @content={{content}} @name="logo">
-                      {{svg-jar content.networkId class="asset-isolated__logo" width="36px" height="36px"}}
-                    </MovingItem>
-                    <MovingItem @content={{content}} @name="title">
+              <header class="asset-isolated__header">
+                <AnimatedContainer class="asset-isolated__title-row">
+                  <MovingItem @content={{content}} @name="logo">
+                    {{svg-jar content.networkId width="36px" height="36px" class="asset-isolated__logo"}}
+                  </MovingItem>
+                  <MovingItem @content={{content}} @name="title">
 
-                      {{! these inline styles make it possible to align the text
-                          correctly throughout animation. Ideally we should
-                          instead refactor the isolated and embedded cards to
-                          have semantically similar markup. There's not really a
-                          good reason to structure the title and logo so
-                          differently on each. }}
-                      <span style="text-align: left; display: inline-block">{{content.networkTitle}}</span>
-                    </MovingItem>
-                  </AnimatedContainer>
-                </h2>
-              </div>
-              <div class="asset-isolated_gradient-wrapper">
-                <div>
+                    {{! these inline styles make it possible to align the text
+                        correctly throughout animation. Ideally we should
+                        instead refactor the isolated and embedded cards to
+                        have semantically similar markup. There's not really a
+                        good reason to structure the title and logo so
+                        differently on each. }}
+                    <h2 class="asset-isolated__title" data-test-asset-isolated-title>{{content.networkTitle}}</h2>
+                  </MovingItem>
+                </AnimatedContainer>
+              </header>
+              <section class="asset-isolated__summary">
+                <div class="asset-isolated__summary-row" data-test-asset-isolated-balance>
                   <span class="asset-isolated__value">
                     {{#if content.networkAsset.balance}}
                       {{wei-to-ethers content.networkAsset.balance}}
@@ -48,7 +46,7 @@
                   </span>
                   <span class="asset-isolated__unit--secondary" data-test-asset-isolated-currency-name>{{currency}}</span>
                 </div>
-              </div>
+              </section>
               <div class="asset-isolated__currency-switcher">
                 <button class="asset-isolated__currency-switcher__usd {{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
                 <button class="asset-isolated__currency-switcher__eur {{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
@@ -85,7 +83,7 @@
         </MovingBox>
       </AnimatedContainer>
 
-      <section class="asset-isolated__section asset-isolated__section-group">
+      <section class="asset-isolated__section asset-isolated__section--padding">
         <h3 class="asset-isolated__section-title bg-icon--history">Transaction History</h3>
         {{#each chronologicallyDescendingTransactions as |transaction index|}}
           <div data-test-asset-isolated-transaction={{index}}>
@@ -96,20 +94,17 @@
     </div>
 
     <aside>
-      <section class="asset-isolated__section asset-isolated__section-group">
-        <h3 class="asset-isolated__section-title bg-icon--wallet">
-          Belongs To
-        </h3>
-        <div class="asset-isolated__section-content" style={{css-url "background-image" "/portfolio-common/images/ing-logo.svg"}}>
-          ING Wallet
-        </div>
+      <section class="asset-isolated__section asset-isolated__section--padding">
+        <h3 class="asset-isolated__section-title bg-icon--wallet">Belongs To</h3>
+        {{!-- TO DO: Query wallet and link to it  --}}
+        <a href={{cardstack-url "/wallets/demo-wallet"}} class="asset-isolated__section-link">
+          Demo Wallet
+        </a>
       </section>
 
       <section class="asset-isolated__section">
-        <div class="asset-isolated__section-group">
-          <h3 class="asset-isolated__section-title bg-icon--tag">
-            Tags
-          </h3>
+        <div class="asset-isolated__section--padding">
+          <h3 class="asset-isolated__section-title bg-icon--tag">Tags</h3>
           <ul class="asset-isolated__tags-list">
             <li><a href="/">Savings</a></li>
             <li><a href="/">Business Operations</a></li>
@@ -122,6 +117,5 @@
         </button>
       </section>
     </aside>
-  </div>
-
-</section>
+  </main>
+</div>

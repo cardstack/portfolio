@@ -1,7 +1,12 @@
 .transaction-isolated {
+  padding-bottom: 75px;
+}
+
+.transaction-isolated__main {
   max-width: var(--portfolio-isolated-container-max-width);
   margin-left: auto;
   margin-right: auto;
+  padding: 25px 30px;
 }
 
 .transaction-isolated__grid {
@@ -11,65 +16,9 @@
   grid-gap: 30px;
 }
 
-.transaction-isolated__main {
-  padding: 25px;
-}
-
-.transaction-isolated__section-title {
-  margin: 0 0 20px;
-
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 26px 26px;
-  text-indent: 35px;
-
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-med-font);
-  font-weight: normal;
-  letter-spacing: 0;
-  line-height: 1.5;
-}
-
-/* data group with white background */
-.transaction-isolated__group {
-  margin-bottom: 40px;
-  background-color: var(--portfolio-white);
-  border: 1px solid var(--portfolio-border-gray);
-  border-radius: 5px;
-}
-.transaction-isolated__group-button {
-  display: block;
-  width: 100%;
-  padding: 15px 25px;
-
-  background-color: transparent;
-  background-image: url("/assets/images/plus.svg");
-  background-position: 25px center;
-  background-repeat: no-repeat;
-  background-size: 12px 12px;
-  text-indent: 25px;
-  text-align: left;
-
-  border: none;
-  border-top: 1px solid var(--portfolio-border-gray);
-  border-radius: 0 0 5px 5px;
-
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-xs-font);
-  line-height: 1.2;
-  letter-spacing: 0.2px;
-}
-.transaction-isolated__group-button:hover,
-.transaction-isolated__group-button:focus {
-  outline: none;
-  background-color: var(--portfolio-highlight-gray);
-  color: var(--portfolio-dark-purple);
-  cursor: pointer;
-  user-select: none;
-}
-
 .transaction-isolated__header {
   display: flex;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -213,14 +162,98 @@
   border-top: 1px solid var(--portfolio-border-gray);
 }
 
-.transaction-isolated__tags-title {
-  background-image: url("/assets/images/tag.png");
+
+/*  Cards with white background  */
+.transaction-isolated__section {
+  margin-bottom: 25px;
+  background-color: var(--portfolio-white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.35);
 }
+.transaction-isolated__section--main {
+  padding: 25px;
+}
+.transaction-isolated__section--padding {
+  padding: 15px 25px 25px;
+}
+
+.transaction-isolated__section-title {
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 10px 0;
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-med-font);
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 1;
+
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 20px 21px;
+}
+.transaction-isolated__section-title.bg-icon--wallet {
+  padding-left: 30px;
+  background-image: url("/portfolio-common/images/wallet.svg")
+}
+.transaction-isolated__section-title.bg-icon--tag {
+  padding-left: 30px;
+  background-image: url("/portfolio-common/images/tag.svg")
+}
+.transaction-isolated__section-title.bg-icon--notes {
+  padding-left: 30px;
+  background-image: url("/portfolio-common/images/note.svg")
+}
+
+.transaction-isolated__section-link {
+  display: inline-block;
+  color: var(--portfolio-light-purple);
+  text-decoration: none;
+}
+.transaction-isolated__section-link:hover,
+.transaction-isolated__section-link:focus {
+  color: var(--portfolio-dark-purple);
+  cursor: pointer;
+  user-select: none;
+}
+
+.transaction-isolated__section-button {
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+  background: none;
+  border: none;
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid var(--portfolio-border-gray);
+  color: var(--portfolio-muted-gray);
+  font-family: var(--portfolio-regular-text);
+  font-size: var(--portfolio-xs-font);
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+  text-align: left;
+}
+.transaction-isolated__section-button.bg-icon--add {
+  background-image: url("/portfolio-common/images/add-icon.svg");
+  background-position: 25px center;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  text-indent: 25px;
+}
+.transaction-isolated__section-button:hover,
+.transaction-isolated__section-button:focus {
+  color: var(--portfolio-dark-purple);
+  background-color: var(--portfolio-highlight-gray);
+  cursor: pointer;
+  user-select: none;
+}
+
+
+/*  Tags  */
 .transaction-isolated__tags-list {
   display: flex;
   flex-flow: row wrap;
   margin: 0;
-  padding: 25px;
+  padding: 0;
   list-style-type: none;
 }
 .transaction-isolated__tags-list > li {
@@ -239,16 +272,16 @@
 }
 .transaction-isolated__tags-list > li > a:hover,
 .transaction-isolated__tags-list > li > a:focus {
-  outline: none;
   color: var(--portfolio-dark-purple);
+  cursor: pointer;
+  user-select: none;
 }
 
-.transaction-isolated__notes-title {
-  background-image: url("/assets/images/notes.png");
-}
+
+/*  Notes  */
 .transaction-isolated__notes-list {
   margin: 0 0 0 25px;
-  padding: 25px;
+  padding: 0;
   font-size: var(--portfolio-xs-font);
 }
 .transaction-isolated__notes-list > li + li {
