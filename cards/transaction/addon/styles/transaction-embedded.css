@@ -88,7 +88,7 @@
 }
 
 .transaction-embedded__label--sent {
-  background-image: url("/assets/images/sent-arrow.svg");
+  background-image: url("/portfolio-common/images/sent-arrow.svg");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: 22px 24px;
@@ -137,7 +137,7 @@
 
 .transaction-embedded__details {
   padding-right: 15px;
-  background-image: url("/assets/images/chevron-right.svg");
+  background-image: url("/portfolio-common/images/chevron-right.svg");
   background-position: right center;
   background-repeat: no-repeat;
   background-size: 6px 10px;
