@@ -74,6 +74,9 @@
   margin: 0 auto;
   word-wrap: break-word;
   word-break: break-all;
+  background: url("/portfolio-common/images/arrow-right.svg") no-repeat;
+  background-position: right;
+  padding-right: 1.5em;
 }
 
 .transaction-isolated__amount {

@@ -53,6 +53,9 @@
   line-height: 19px;
   word-wrap: break-word;
   word-break: break-all;
+  background: url("/portfolio-common/images/arrow-right.svg") no-repeat;
+  background-position: right;
+  padding-right: 1.5em;
 }
 
 .asset-isolated__gradient--bitcoin {
