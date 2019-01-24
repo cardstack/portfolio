@@ -16,6 +16,7 @@
       <section class="asset-embedded__summary">
         <div class="asset-embedded__summary-row" data-test-asset-embedded-balance>
           <span class="asset-embedded__value">
+            &nbsp; {{! reserves height if the balance is loading asynchronously }}
             {{#if content.networkAsset.balance}}
               {{wei-to-ethers content.networkAsset.balance}}
             {{else}}
