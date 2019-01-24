@@ -12,7 +12,7 @@
         {{!-- TO DO: Query wallet, display wallet logo, link to it --}}
         <a href={{cardstack-url "/wallets/demo-wallet"}} class="portfolio-breadcrumbs__link">
           <span
-            style={{css-url "background-image" (or walletLogoHere "/portfolio-common/images/wallet.svg")}}
+            style={{css-url "background-image" (concat "/portfolio-common/images/" (or content.logo "wallet") ".svg")}}
             class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
           />
           <span>Demo Wallet</span>
