@@ -17,6 +17,21 @@ const scenario = new Fixtures({
       'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
     });
 
+    let ethereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+    .withRelated('network', factory.addResource('networks', 'ether')
+      .withAttributes({
+        title: 'Ether',
+        unit: 'ETH',
+        'asset-type': 'ethereum-addresses',
+        'address-field': 'ethereum-address'
+      }));
+  let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
+    .withRelated('network', factory.addResource('networks', 'bitcoin')
+      .withAttributes({
+        title: 'Bitcoin',
+        unit: 'BTC',
+      }));
+
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
       title: 'My Portfolio'
     })
@@ -25,6 +40,10 @@ const scenario = new Fixtures({
           title: 'Test Wallet'
         })
           .withRelated('user', user)
+          .withRelated('assets', [
+            bitcoinAsset,
+            ethereumAsset,
+          ])
       ])
       .withRelated('user', user);
   },
@@ -79,5 +98,26 @@ module('Acceptance | portfolio', function(hooks) {
     assert.equal(currentURL(), '/wallets/test-wallet');
     assert.dom('[data-test-wallet-isolated]').exists();
     assert.dom('[data-test-wallet-isolated-title]').hasText('Test Wallet');
+  });
+
+  test('user sees the currency view of their portfolio', async function(assert) {
+    await visit('/');
+    await login();
+
+    assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
+
+    await click('.portfolio-isolated-filters__currencies');
+
+    assert.equal(currentURL(), '/', 'url doesnt change');
+    assert.dom('[data-test-portfolio-isolated-wallet="0"]').doesNotExist();
+    assert.dom('.portfolio-isolated-section__currency').exists({ count: 2 });
+    assert.dom('[data-test-portfolio-isolated-currency="0"]').hasTextContaining('Bitcoin');
+    assert.dom('[data-test-portfolio-isolated-currency="0"] .currency-totals').hasText('1 Asset');
+    assert.dom('[data-test-portfolio-isolated-currency="1"]').hasTextContaining('Ether');
+    assert.dom('[data-test-portfolio-isolated-currency="1"] .currency-totals').hasText('1 Asset');
+
+    await click('.portfolio-isolated-filters__wallets');
+
+    assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
   });
 });
