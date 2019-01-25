@@ -67,13 +67,11 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   ];
   let trezorWalletAssets = [
     anotherBitcoinAsset,
-    mockedEthereumAsset,
     anotherLitecoinAsset
   ];
 
   if (process.env.JSON_RPC_URL) {
     demoWalletAssets = [realEthereumAsset].concat(demoWalletAssets);
-    trezorWalletAssets = [realEthereumAsset].concat(trezorWalletAssets);
   }
 
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
