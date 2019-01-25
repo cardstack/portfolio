@@ -53,7 +53,9 @@
                 <button class="asset-isolated__currency-switcher__btc {{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
               </div>
               <div class="asset-isolated__chart">
-                {{cardstack-content content=content.assetHistory format="embedded"}}
+                {{#if content.assetHistory}}
+                  {{cardstack-content content=content.assetHistory format="embedded"}}
+                {{/if}}
               </div>
             </div>
 
