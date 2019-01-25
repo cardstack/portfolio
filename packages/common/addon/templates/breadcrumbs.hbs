@@ -19,18 +19,5 @@
         </a>
       </li>
     {{/if}}
-
-    {{#if isTransaction}}
-      <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-isolated-asset>
-        <a
-          href={{cardstack-url assetPath}}
-          class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background {{assetType}}"
-        >
-          {{svg-jar assetType width="22px" height="22px" class="portfolio-breadcrumbs__logo"}}
-          <span class="portfolio-breadcrumbs__asset-type" data-test-portfolio-breadcrumbs-asset-type>{{assetType}}</span>
-          <span data-test-portfolio-breadcrumbs-asset-address>{{abbreviatedAddress}}</span>
-        </a>
-      </li>
-    {{/if}}
   </ul>
 </nav>
