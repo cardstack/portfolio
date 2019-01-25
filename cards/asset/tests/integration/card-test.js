@@ -88,7 +88,7 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-embedded-unit]').hasText('ETH');
     assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7...1fDE');
     assert.dom('[data-test-asset-embedded-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
-    assert.dom('[data-test-asset-embedded-balance]').hasText('0.2009 ETH');
+    assert.dom('[data-test-asset-embedded-balance]').hasTextContaining('0.2009 ETH');
     assert.dom('[data-test-asset-embedded-fiat-value]').hasText('$20.09');
   });
 
