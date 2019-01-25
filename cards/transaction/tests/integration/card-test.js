@@ -110,7 +110,5 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-isolated-fiat]').hasText('≈ $10.10 USD');
     assert.dom('[data-test-portfolio-breadcrumbs-portfolio]').hasText('My Portfolio');
     assert.dom('[data-test-portfolio-breadcrumbs-wallet]').hasText('Demo Wallet');
-    assert.dom('[data-test-portfolio-breadcrumbs-asset-type]').hasText('ether');
-    assert.dom('[data-test-portfolio-breadcrumbs-asset-address]').hasText('0xc3d7...1fde');
   });
 });
