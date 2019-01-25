@@ -88,12 +88,13 @@ jobs:
         - docker network create cardstack
         - docker run -d --rm --network cardstack --name postgres cardstack/pg-test
         - docker run -d --rm --network cardstack --env PGHOST=postgres --env HUB_ENVIRONMENT=test --name portfolio --env PUBLIC_HUB_URL=http://portfolio:3000 --env TEST portfolio
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
-          on:
-            branch: master
+
+      # deploy:
+      #   - provider: script
+      #     skip_cleanup: true
+      #     script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
+      #     on:
+      #       branch: master
 
         # This environment is used to test your own branches. All you have to do
         # is just push a commit that has the `branch` field below set to the name
