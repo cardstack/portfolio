@@ -40,7 +40,8 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
     .withRelated('network', bitcoinNetwork);
 
-  let simpleEthereumAsset = factory.addResource('assets', '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf')
+  // this is an address that has real etheruem history use it when you want to test live ethereum state
+  let realEthereumAsset = factory.addResource('assets', '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf')
     .withRelated('network', ethereumNetwork);
 
   let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
@@ -58,6 +59,23 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   let anotherLitecoinAsset = factory.addResource('assets', '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co')
     .withRelated('network', litecoinNetwork);
 
+  let demoWalletAssets = [
+    mockedEthereumAsset,
+    litecoinAsset,
+    zcashAsset,
+    bitcoinAsset
+  ];
+  let trezorWalletAssets = [
+    anotherBitcoinAsset,
+    mockedEthereumAsset,
+    anotherLitecoinAsset
+  ];
+
+  if (process.env.JSON_RPC_URL) {
+    demoWalletAssets = [realEthereumAsset].concat(demoWalletAssets);
+    trezorWalletAssets = [realEthereumAsset].concat(trezorWalletAssets);
+  }
+
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
     title: 'My Portfolio'
   })
@@ -68,25 +86,14 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
           title: 'Demo Wallet'
         })
         .withRelated('user', user)
-        .withRelated('assets', [
-          mockedEthereumAsset,
-          simpleEthereumAsset,
-          litecoinAsset,
-          zcashAsset,
-          bitcoinAsset
-        ]),
+        .withRelated('assets', demoWalletAssets),
       factory.addResource('wallets', 'trezor-wallet')
         .withAttributes({
           title: 'Trezor Wallet Model T',
           logo: 'trezor-logo'
         })
         .withRelated('user', user)
-        .withRelated('assets', [
-          anotherBitcoinAsset,
-          mockedEthereumAsset,
-          simpleEthereumAsset,
-          anotherLitecoinAsset
-        ])
+        .withRelated('assets', trezorWalletAssets)
   ]);
 }
 
