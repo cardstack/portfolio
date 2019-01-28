@@ -1,23 +1,28 @@
 <nav class="portfolio-breadcrumbs" data-test-portfolio-breadcrumbs>
   <ul class="portfolio-breadcrumbs__list">
-    <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-portfolio>
-      <a href="/" class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background">
-        {{svg-jar "briefcase" width="18px" height="16px" class="portfolio-breadcrumbs__logo"}}
-        <span>My Portfolio</span>
-      </a>
-    </li>
+    {{#if (is-component "cardstack-session")}}
+      {{#cardstack-session as |session|}}
+        {{#if session.isAuthenticated}}
+          <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-portfolio>
+            <a href="/" class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background">
+              {{svg-jar "briefcase" width="18px" height="16px" class="portfolio-breadcrumbs__logo"}}
+              <span>My Portfolio</span>
+            </a>
+          </li>
 
-    {{#if (or isAsset isTransaction)}}
-      <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-wallet>
-        {{!-- TO DO: Query wallet, display wallet logo, link to it --}}
-        <a href={{cardstack-url "/wallets/demo-wallet"}} class="portfolio-breadcrumbs__link">
-          <span
-            style={{css-url "background-image" (concat "/portfolio-common/images/" (or content.logo "wallet") ".svg")}}
-            class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
-          />
-          <span>Demo Wallet</span>
-        </a>
-      </li>
+          {{#if (or isAsset isTransaction)}}
+            <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-wallet>
+              <a href={{cardstack-url wallet}} class="portfolio-breadcrumbs__link">
+                <span
+                  style={{css-url "background-image" (concat "/portfolio-common/images/" (or wallet.logo "wallet") ".svg")}}
+                  class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
+                />
+                <span>{{wallet.title}}</span>
+              </a>
+            </li>
+          {{/if}}
+        {{/if}}
+      {{/cardstack-session}}
     {{/if}}
   </ul>
 </nav>
