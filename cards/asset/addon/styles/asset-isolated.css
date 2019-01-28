@@ -196,13 +196,20 @@
   border-radius: 5px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.35);
 }
+
 .asset-isolated__section--main {
   background-color: var(--portfolio-light-purple);
   color: var(--portfolio-white);
   text-align: center;
 }
+
 .asset-isolated__section--padding {
   padding: 15px 25px 25px;
+}
+
+.asset-isolated__section-logo {
+  vertical-align: middle;
+  margin-right: 6px;
 }
 
 .asset-isolated__section-title {

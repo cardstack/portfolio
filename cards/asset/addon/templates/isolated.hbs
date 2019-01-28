@@ -92,13 +92,17 @@
     </div>
 
     <aside>
-      <section class="asset-isolated__section asset-isolated__section--padding">
-        <h3 class="asset-isolated__section-title bg-icon--wallet">Belongs To</h3>
-        {{!-- TO DO: Query wallet and link to it  --}}
-        <a href={{cardstack-url "/wallets/demo-wallet"}} class="asset-isolated__section-link">
-          Demo Wallet
-        </a>
-      </section>
+      {{#if wallet}}
+        <section class="asset-isolated__section asset-isolated__section--padding">
+          <h3 class="asset-isolated__section-title bg-icon--wallet">Belongs To</h3>
+          <a href={{cardstack-url wallet}} class="asset-isolated__section-link">
+            {{#if wallet.logo}}
+              {{svg-jar wallet.logo width="40px" height="40px" class="asset-isolated__section-logo"}}
+            {{/if}}
+            {{wallet.title}}
+          </a>
+        </section>
+      {{/if}}
 
       <section class="asset-isolated__section">
         <div class="asset-isolated__section--padding">
