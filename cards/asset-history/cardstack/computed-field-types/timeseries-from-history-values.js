@@ -1,4 +1,3 @@
-// const { utils: { fromWei } } = require('web3');
 const { convertCurrency } = require('portfolio-utils');
 
 exports.type = '@cardstack/core-types::object';

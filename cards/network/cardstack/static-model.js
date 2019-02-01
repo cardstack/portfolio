@@ -15,9 +15,6 @@ factory.addResource('content-types', 'networks')
     factory.addResource('fields', 'address-field').withAttributes({
       fieldType: '@cardstack/core-types::string'
     }),
-    factory.addResource('fields', 'balance-field').withAttributes({
-      fieldType: '@cardstack/core-types::string'
-    }),
   ]);
 
   factory.addResource('grants', 'network-grant')
