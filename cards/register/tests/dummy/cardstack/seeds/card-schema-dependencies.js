@@ -4,8 +4,9 @@ const { join } = require('path');
 const cardDir = join(__dirname, '../../../../../');
 const thisCardsSchema = require('../../../../cardstack/static-model')();
 const mockEthereumSchema = require('../../../../../../shared-data/mock-ethereum-schema');
+const mockNetworkSchema = require('../../../../../../shared-data/mock-network-schema');
 
-const cardDependencies = ['user', 'portfolio', 'wallet', 'asset', 'network'];
+const cardDependencies = ['user', 'portfolio', 'wallet', 'asset', 'network', 'crypto-compare', 'transaction' ];
 
 let factory = new JSONAPIFactory();
 for (let cardName of cardDependencies) {
@@ -16,4 +17,4 @@ for (let cardName of cardDependencies) {
 }
   factory.importModels(thisCardsSchema);
 
-module.exports = factory.getModels().concat(mockEthereumSchema);
+module.exports = factory.getModels().concat(mockEthereumSchema, mockNetworkSchema);

@@ -43,13 +43,9 @@ export function convertCurrency(fromCurrency, toCurrency, fromValue, rates) {
   rateCents = rateCents || rate.get('cents');
 
   let currencyDecimalPlaces = currencyCentsDecimalPlaces[toCurrency] || 2;
-  // When we do this for other crypto currencies we should use BigNumber, as those currenies use really small units like satoshi for bitcoin
-  if (fromCurrency !== 'ETH') {
-    return (parseFloat(fromValue) * parseFloat(rateCents) /
-      (Math.pow(10, currencyDecimalPlaces)))
-      .toFixed(displayDecimalPlaces[toCurrency] || 2);
-  }
 
+  // For now we are mocking all the other crypto currencies to work like ethers and use 'wei' as it's denomination.
+  // Eventually we'll need to use a Big Integer library to deal with each currency's unique denominations
   let fromValueAsEth = parseFloat(Web3.utils.fromWei(fromValue, 'ether'));
   rateCents = parseFloat(rateCents);
   let toCurrenyUnits = ((rateCents * fromValueAsEth) / Math.pow(10, currencyDecimalPlaces))

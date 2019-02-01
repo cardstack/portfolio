@@ -29,7 +29,6 @@ factory.addResource('content-types', 'assets')
       ],
       embedded: [
         { field: 'network', format: 'embedded' },
-        { field: 'network-asset', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
@@ -60,6 +59,10 @@ factory.addResource('content-types', 'assets')
     }),
     factory.addResource('computed-fields', 'network-asset').withAttributes({
       'computed-field-type': 'portfolio-asset::network-asset',
+    }),
+    factory.addResource('computed-fields', 'network-balance').withAttributes({
+      'computed-field-type': '@cardstack/core-types::alias',
+      params: { aliasPath: 'network-asset.balance' }
     }),
     factory.addResource('computed-fields', 'asset-history').withAttributes({
       'computed-field-type': '@cardstack/core-types::correlate-by-field',

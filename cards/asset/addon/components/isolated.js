@@ -6,19 +6,12 @@ import layout from '../templates/isolated';
 import { inject as service } from '@ember/service';
 import injectOptional from 'ember-inject-optional';
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
 export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   layout,
-
-  dummyAccount: service(),
   cardstackData: service(),
-  selectedCurrency: service(),
   fastboot: injectOptional.service(),
-
-  currency: readOnly('selectedCurrency.currency'),
 
   chronologicallyDescendingTransactions: computed('content.networkAsset.transactions.[]', function() {
     let transactions = this.get('content.networkAsset.transactions');
@@ -31,6 +24,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     return `https://rinkeby.etherscan.io/address/${this.get('content.formattedAddress')}`;
   }),
 
+  // TODO let's stop doing this after we have query based relationships
   init() {
     this._super();
     if (this.get('fastboot.isFastboot')) {
@@ -54,26 +48,5 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     let models = yield this.cardstackData.query('embedded', query);
     let wallet = models.get('firstObject');
     this.set('wallet', wallet);
-  }),
-
-  assetBalance: computed('content', 'wallet', function() {
-    let balance = this.dummyAccount.balanceFor(this.wallet, {
-      asset: this.content
-    });
-    // Avoid displaying NaN
-    if (balance) {
-      return roundWithPrecision([ balance, 4 ]);
-    }
-  }),
-
-  assetValue: computed('content', 'wallet', 'currency', function() {
-    let assetValue = this.dummyAccount.balanceFor(this.wallet, {
-      asset: this.content,
-      inCurrency: this.currency
-    });
-    // Avoid displaying NaN
-    if (assetValue) {
-      return roundWithPrecision([ assetValue, 2 ]);
-    }
   }),
 });

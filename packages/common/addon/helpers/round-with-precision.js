@@ -1,8 +1,9 @@
 import { helper } from '@ember/component/helper';
 
-export function roundWithPrecision(params) {
-  let [ value, precision=2 ] = params;
+export function roundWithPrecision(value, precision=2) {
   return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
 }
 
-export default helper(roundWithPrecision);
+export default helper(function([value, precision]) {
+  return roundWithPrecision(value, precision);
+});

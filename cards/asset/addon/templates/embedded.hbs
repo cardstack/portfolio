@@ -17,11 +17,7 @@
         <div class="asset-embedded__summary-row" data-test-asset-embedded-balance>
           <span class="asset-embedded__value">
             &nbsp; {{! reserves height if the balance is loading asynchronously }}
-            {{#if content.networkAsset.balance}}
-              {{wei-to-ethers content.networkAsset.balance}}
-            {{else}}
-              {{assetBalance}}
-            {{/if}}
+            {{wei-to-ethers content.networkBalance}}
           </span>
           <span class="asset-embedded__unit" data-test-asset-embedded-unit>{{content.networkUnit}}</span>
           {{!-- Add arrow icon and modal --}}
@@ -31,11 +27,7 @@
               <span>Rate as of {{get (get-rate content.networkUnit 'USD' content.todaysRate) 'gmtDate'}} 0:00 GMT</span>
           --}}
           <span class="asset-embedded__value--secondary" data-test-asset-embedded-fiat-value>
-            {{#if content.networkAsset.balance}}
-              {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
-            {{else}}
-              {{currency-symbol currency}}{{assetValue}}
-            {{/if}}
+            {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkBalance content.todaysRatesLookup.rates}}
           </span>
           <span class="asset-embedded__unit--secondary" data-test-asset-embedded-fiat-currency>{{currency}}</span>
         </div>

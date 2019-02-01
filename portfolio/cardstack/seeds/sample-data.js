@@ -12,29 +12,33 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
       'avatarUrl': '/portfolio-common/images/avatar.png'
     });
 
-  // TODO: add networks to contents/ folder
-
   let bitcoinNetwork = factory.addResource('networks', 'bitcoin')
     .withAttributes({
       title: 'Bitcoin',
       unit: 'BTC',
+      'asset-type': 'mock-addresses',
+      'address-field': 'mock-address',
     });
   let ethereumNetwork = factory.addResource('networks', 'ether')
     .withAttributes({
       title: 'Ether',
       unit: 'ETH',
       'asset-type': 'ethereum-addresses',
-      'address-field': 'ethereum-address'
+      'address-field': 'ethereum-address',
     });
   let litecoinNetwork = factory.addResource('networks', 'litecoin')
     .withAttributes({
       title: 'Litecoin',
       unit: 'LTC',
+      'asset-type': 'mock-addresses',
+      'address-field': 'mock-address',
     });
   let zcashNetwork = factory.addResource('networks', 'zcash')
     .withAttributes({
       title: 'Zcash',
       unit: 'ZEC',
+      'asset-type': 'mock-addresses',
+      'address-field': 'mock-address',
     });
 
   let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
@@ -92,7 +96,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         })
         .withRelated('user', user)
         .withRelated('assets', trezorWalletAssets)
-  ]);
+    ]);
 }
 
 module.exports = factory.getModels();
