@@ -1,11 +1,6 @@
-exports.type = '@cardstack/core-types::has-many';
+const conversions = require('../conversion-map');
 
-const conversions = {
-  BTC: ['USD', 'EUR'],
-  ETH: ['USD', 'EUR'],
-  LTC: ['USD', 'EUR'],
-  ZEC: ['USD', 'EUR'],
-};
+exports.type = '@cardstack/core-types::has-many';
 
 exports.compute = async function(model, { dateField }) {
   if (!dateField) { return; }

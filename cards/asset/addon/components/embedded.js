@@ -12,7 +12,6 @@ import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precisio
 export default Component.extend(AssetBaseMixin, {
   layout,
 
-  dummyAccount: service(),
   cardstackData: service(),
   selectedCurrency: service(),
   fastboot: injectOptional.service(),
@@ -48,24 +47,26 @@ export default Component.extend(AssetBaseMixin, {
     this.set('wallet', wallet);
   }),
 
+  // TODO turn this into server side computed
   assetBalance: computed('content', 'wallet', function() {
-    let balance = this.dummyAccount.balanceFor(this.wallet, {
-      asset: this.content
-    });
-    // Avoid displaying NaN temporarily
-    if (balance) {
-      return roundWithPrecision([ balance, 4 ]);
-    }
+    // let balance = this.dummyAccount.balanceFor(this.wallet, {
+    //   asset: this.content
+    // });
+    // // Avoid displaying NaN temporarily
+    // if (balance) {
+    //   return roundWithPrecision([ balance, 4 ]);
+    // }
   }),
 
+  // TODO turn this into server side computed
   assetValue: computed('content', 'wallet', 'currency', function() {
-    let assetValue = this.dummyAccount.balanceFor(this.wallet, {
-      asset: this.content,
-      inCurrency: this.currency
-    });
-    // Avoid displaying NaN
-    if (assetValue) {
-      return roundWithPrecision([ assetValue, 2 ]);
-    }
+    // let assetValue = this.dummyAccount.balanceFor(this.wallet, {
+    //   asset: this.content,
+    //   inCurrency: this.currency
+    // });
+    // // Avoid displaying NaN
+    // if (assetValue) {
+    //   return roundWithPrecision([ assetValue, 2 ]);
+    // }
   }),
 });

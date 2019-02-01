@@ -1,6 +1,16 @@
 
-const { utils: { BN } } = require('web3');
+const { utils: { BN, fromWei } } = require('web3');
 const { get } = require('lodash');
+
+const currencyCentsDecimalPlaces = {
+  USD: 2,
+  EUR: 2,
+  GBP: 2,
+  CHF: 2,
+  JPY: 0,
+  CNY: 0,
+  BTC: 0,
+};
 
 function updateBalanceFromTransaction(balance, _address, transaction) {
   let address = _address.toLowerCase();
@@ -26,6 +36,51 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
   return balance;
 }
 
+async function convertCurrency(fromCurrency, toCurrency, value, rates) {
+  let balanceInCryptoDenomination = parseFloat(fromWei(value, 'ether')); // this is taking advantage of the fact that all the mock cryptos use wei as their denomination
+  let rateCents = await conversionRate(fromCurrency, toCurrency, rates);
+  let currencyDecimalPlaces = currencyCentsDecimalPlaces[toCurrency] || 2;
+  let toRawCurrenyUnits = (rateCents * balanceInCryptoDenomination) / Math.pow(10, currencyDecimalPlaces);
+  return toRawCurrenyUnits;
+
+}
+
+async function conversionRate(fromCurrency, toCurrency, rates) {
+  if (toCurrency === 'BTC') {
+    let btcToUsdRate = await getRate('BTC', 'USD', rates);
+    let ethToUsdRate = await getRate(fromCurrency, 'USD', rates);
+    if (!ethToUsdRate || !btcToUsdRate) { return; }
+
+    let cryptoToUsdInCents = parseFloat(await ethToUsdRate.getField('cents'));
+    let btcToUsdInCents = parseFloat(await btcToUsdRate.getField('cents'));
+
+    return (cryptoToUsdInCents/btcToUsdInCents) * 100;
+  } else {
+    let cryptoToFiatRate = await getRate(fromCurrency, toCurrency, rates);
+    if (!cryptoToFiatRate) { return; }
+    return await cryptoToFiatRate.getField('cents');
+  }
+}
+
+async function getRate(fromCurrency, toCurrency, rates) {
+  if (!fromCurrency || !toCurrency || !rates) { return; }
+
+  return await find(rates, async r =>
+    await r.getField('from-crypto-currency') === fromCurrency &&
+    await r.getField('to-fiat-currency') === toCurrency);
+}
+
+async function find(list, predicate) {
+  for (let element of list) {
+    if (await predicate(element)) {
+      return element;
+    }
+  }
+}
+
 module.exports = {
+  conversionRate,
+  convertCurrency,
+  currencyCentsDecimalPlaces,
   updateBalanceFromTransaction
 };

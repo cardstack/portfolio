@@ -5,24 +5,26 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
+let precision = {
+  USD: 2,
+  EUR: 2,
+  BTC: 4
+};
 
 export default LiveIsolatedCard.extend({
   layout,
-  dummyAccount: service(),
   selectedCurrency: service(),
   store: service(),
 
   currency: readOnly('selectedCurrency.currency'),
   groupBy: 'wallets',
 
-  accountTotal: computed('wallets.[]', 'currency', function() {
-    let total = this.content.get('wallets').toArray().reduce((sum, wallet) => {
-      let total = this.dummyAccount.balanceFor(wallet, {
-        inCurrency: this.currency
-      });
-      return sum + total;
-    }, 0);
-    return roundWithPrecision([total, 2]);
+  totalBalance: computed('content.totalWalletsBalance', 'currency', function() {
+    let currency = this.get('currency');
+    let balance = this.get('content.totalWalletsBalance');
+    if (!balance) { return; }
+
+    return roundWithPrecision(balance[currency], precision[currency]);
   }),
 
   walletCount: computed('wallets.[]', function () {

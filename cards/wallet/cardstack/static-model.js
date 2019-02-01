@@ -33,6 +33,9 @@ factory.addResource('content-types', 'wallets')
     factory.addResource('fields', 'user').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to',
     }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
+    factory.addResource('computed-fields', 'total-assets-balance').withAttributes({
+      computedFieldType: 'portfolio-wallet::balance-sums',
+    })
   ]);
 
   factory.addResource('grants', 'wallet-self-grant')

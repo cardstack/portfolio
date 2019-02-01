@@ -5,6 +5,7 @@ const cardDir = join(__dirname, '../../cards');
 const portfolioRouter = require('./router');
 const defaultRouter = require('@cardstack/routing/cardstack/default-router');
 const mockEthereumSchema = require('../../shared-data/mock-ethereum-schema');
+const mockNetworkSchema = require('../../shared-data/mock-network-schema');
 
 module.exports = function () {
   let factory = new JSONAPIFactory();
@@ -50,12 +51,10 @@ module.exports = function () {
       'may-read-fields': true,
     });
 
-  if (!process.env.JSON_RPC_URL && process.env.HUB_ENVIRONMENT !== 'production') {
+  if (!process.env.JSON_RPC_URL) {
     factory.importModels(mockEthereumSchema);
-  } else if (!process.env.JSON_RPC_URL) {
-    // dont blow up if ethereum data source is disabled because JSON_RPC_URL is not set
-    factory.addResource('content-types', 'ethereum-addresses');
   }
+  factory.importModels(mockNetworkSchema);
 
   return factory.getModels();
 };
