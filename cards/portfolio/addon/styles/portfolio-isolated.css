@@ -150,12 +150,26 @@
   display: flex;
 }
 
-.currency-totals {
+.currency-totals__summary {
   position: absolute;
   top: 30px;
   right: 30px;
+}
+
+.currency-totals__summary-count {
   color: var(--portfolio-muted-gray);
   font-size: var(--portfolio-xs-font);
+  padding-bottom: 6px;
+  text-align: right;
+}
+.currency-totals__summary-value {
+  color: var(--portfolio-green);
+  font-weight: 700;
+  font-family: var(--portfolio-bold-text);
+  font-size: var(--portfolio-xl-font);
+  letter-spacing: 0.1px;
+  line-height: 1.1;
+  text-align: right;
 }
 
 .currency-title {

@@ -117,9 +117,9 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-wallet="0"]').doesNotExist();
     assert.dom('.portfolio-isolated-section__currency').exists({ count: 2 });
     assert.dom('[data-test-portfolio-isolated-currency="0"]').hasTextContaining('Bitcoin');
-    assert.dom('[data-test-portfolio-isolated-currency="0"] .currency-totals').hasText('1 Asset');
+    assert.dom('[data-test-portfolio-isolated-currency="0"] [data-test-portfolio-isolated-currency-count]').hasText('1 Asset');
     assert.dom('[data-test-portfolio-isolated-currency="1"]').hasTextContaining('Ether');
-    assert.dom('[data-test-portfolio-isolated-currency="1"] .currency-totals').hasText('1 Asset');
+    assert.dom('[data-test-portfolio-isolated-currency="1"] [data-test-portfolio-isolated-currency-count]').hasText('1 Asset');
 
     await click('.portfolio-isolated-filters__wallets');
 

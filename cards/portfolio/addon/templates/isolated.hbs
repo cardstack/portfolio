@@ -35,19 +35,30 @@
     {{#if (eq groupBy 'currency')}}
       {{#if assetsByCurrency}}
         <section class="portfolio-isolated-section">
-          {{#each assetsByCurrency as |currency index|}}
+          {{#each assetsByCurrency as |currencyGroup index|}}
             <section class="portfolio-isolated-section__currency" data-test-portfolio-isolated-currency={{index}}>
               <div class="currency__heading">
-                <span class="currency__logo-background currency__logo-background--{{currency.network.id}}">
-                  {{svg-jar currency.network.id class="currency__logo"}}
+                <span class="currency__logo-background currency__logo-background--{{currencyGroup.network.id}}">
+                  {{svg-jar currencyGroup.network.id class="currency__logo"}}
                 </span>
-                <h3 class="currency-title">{{currency.network.title}}</h3>
+                <h3 class="currency-title">{{currencyGroup.network.title}}</h3>
               </div>
-              <div class="currency-totals">
-                {{currency.assets.length}} Asset{{if (eq currency.assets.length 1) '' 's'}}
+              <div class="currency-totals__summary">
+                <div class="currency-totals__summary-count" data-test-portfolio-isolated-currency-count>
+                  {{currencyGroup.assets.length}} Asset{{if (eq currencyGroup.assets.length 1) '' 's'}}
+                </div>
+                <div class="currency-totals__summary-value">
+                  <button class="portfolio-isolated__info-button">
+                    {{svg-jar "info-icon" width="16px" height="16px"}}
+                  </button>
+                  <span data-test-portfolio-isolated-currency-total-value>
+                    ≈ {{currency-symbol currency}}{{to-fixed (get (get content.balanceByCurrency currencyGroup.network.unit) currency) (get precision currency)}}
+                    {{#if (eq currency 'BTC')}}{{currency}}{{/if}}
+                  </span>
+                </div>
               </div>
               <div class="currency-assets__grid">
-                {{#each currency.assets as |asset|}}
+                {{#each currencyGroup.assets as |asset|}}
                   {{cardstack-content content=asset format="embedded"}}
                 {{/each}}
               </div>

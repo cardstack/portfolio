@@ -2,7 +2,6 @@ import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
 let precision = {
   USD: 2,
@@ -18,6 +17,6 @@ export default Mixin.create({
     let balance = this.get('content.totalAssetsBalance');
     if (!balance) { return; }
 
-    return roundWithPrecision(balance[currency], precision[currency]);
+    return balance[currency].toFixed(precision[currency]);
   })
 });
