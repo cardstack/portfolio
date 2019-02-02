@@ -28,6 +28,10 @@ factory.addResource('content-types', 'assets')
         { field: 'asset-history', format: 'embedded' },
       ],
       embedded: [
+        // please be careful about the fields to include for embedded assets--especially don't
+        // include the network-asset field as the combinatorial explosion on the resulting
+        // portfolio card is pretty gruesome. Consider using a computed alias to hoist any
+        // network-asset fields into the asset instead.
         { field: 'network', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
