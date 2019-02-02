@@ -3,9 +3,8 @@ import layout from '../templates/isolated';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { roundWithPrecision } from 'portfolio-common/helpers/round-with-precision';
 
-let precision = {
+const precision = {
   USD: 2,
   EUR: 2,
   BTC: 4
@@ -13,6 +12,7 @@ let precision = {
 
 export default LiveIsolatedCard.extend({
   layout,
+  precision,
   selectedCurrency: service(),
   store: service(),
 
@@ -24,7 +24,7 @@ export default LiveIsolatedCard.extend({
     let balance = this.get('content.totalWalletsBalance');
     if (!balance) { return; }
 
-    return roundWithPrecision(balance[currency], precision[currency]);
+    return balance[currency].toFixed(precision[currency]);
   }),
 
   walletCount: computed('wallets.[]', function () {

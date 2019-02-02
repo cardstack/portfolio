@@ -35,6 +35,9 @@ factory.addResource('content-types', 'portfolios')
     }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
     factory.addResource('computed-fields', 'total-wallets-balance').withAttributes({
       computedFieldType: 'portfolio-portfolio::balance-sums',
+    }),
+    factory.addResource('computed-fields', 'balance-by-currency').withAttributes({
+      computedFieldType: 'portfolio-portfolio::balance-by-currency',
     })
   ]);
 
