@@ -7,12 +7,14 @@ factory.addResource('content-types', 'portfolios')
       'wallets',
       'wallets.assets',
       'user',
+      'todays-rates-lookup',
       'todays-rates-lookup.rates'
     ],
     fieldsets: {
       isolated: [
         { field: 'wallets', format: 'embedded' },
         { field: 'wallets.assets', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }

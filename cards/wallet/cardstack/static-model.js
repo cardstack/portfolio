@@ -4,15 +4,21 @@ let factory = new JSONAPIFactory();
 factory.addResource('content-types', 'wallets')
   .withAttributes({
     defaultIncludes: [
-      'assets', 'user', 'todays-rates-lookup.rates',
+      'assets',
+      'assets.network-asset',
+      'user',
+      'todays-rates-lookup',
+      'todays-rates-lookup.rates',
     ],
     fieldsets: {
       embedded: [
         { field: 'assets', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ],
       isolated: [
         { field: 'assets', format: 'embedded' },
+        { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
       ]
     }
