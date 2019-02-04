@@ -10,15 +10,6 @@
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
 }
 
-.asset-embedded--a {
-  display: block;
-  text-decoration: none;
-  color: var(--portfolio-white);
-  font-size: var(--portfolio-sm-font);
-  letter-spacing: 0.2px;
-}
-
-/* There's probably a better way to generate these gradients */
 .asset-embedded--bitcoin {
   background: var(--portfolio-bitcoin-gradient);
 }
@@ -32,12 +23,24 @@
   background: var(--portfolio-zcash-gradient);
 }
 
+.asset-embedded__link {
+  display: block;
+  text-decoration: none;
+  color: var(--portfolio-white);
+  font-size: var(--portfolio-sm-font);
+  letter-spacing: 0.2px;
+}
+
+.asset-embedded__wrapper {
+  padding: 20px;
+}
+
 .asset-embedded__header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding-bottom: 20px;
 }
 
 .asset-embedded__title-row {
@@ -60,54 +63,40 @@
   margin-right: 10px;
 }
 
-.asset-embedded__tag {
-  padding: 6px 12px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 5px;
-  color: var(--portfolio-light-purple);
-  font-size: var(--portfolio-xs-font);
-  text-decoration: none;
-}
-
-.asset-embedded__summary {
-  padding: 10px;
+/* Balance summary */
+.asset-embedded__balance {
+  font-family: var(--portfolio-bold-text);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
   text-align: right;
 }
-.asset-embedded__summary span {
-  display: inline-block;
-}
-
-.asset-embedded__summary-row {
-  padding-bottom: 20px;
-  font-family: var(--portfolio-bold-text);
-  font-weight: bold;
-}
-
-.asset-embedded__value {
-  padding: 0 10px;
+.asset-embedded__balance-main {
+  padding-bottom: 10px;
   font-size: 36px;
+  line-height: 1;
 }
-.asset-embedded__value--secondary {
-  padding: 0 10px;
-  font-family: var(--portfolio-bold-text);
+.asset-embedded__balance-main > span {
+  font-size: var(--portfolio-sm-font);
+}
+.asset-embedded__balance-fiat {
+  font-size: var(--portfolio-sm-font);
 }
 
-.asset-embedded__footer {
+.asset-embedded__details {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-
   background-color: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 0 0 5px 5px;
   color: var(--portfolio-light-purple);
+  border-radius: 0 0 5px 5px;
+}
+
+.asset-embedded__details-item {
+  font-weight: 600;
+  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-xs-font);
+  letter-spacing: 0.1px;
+  line-height: 1.5;
 }
-
-.asset-embedded__address {
-  font-family: var(--portfolio-bold-text);
-}
-
