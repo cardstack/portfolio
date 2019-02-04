@@ -79,13 +79,21 @@ module('Acceptance | asset', function (hooks) {
     delete localStorage['cardstack-tools'];
   });
 
-  test('user sees isolated asset card when directly navigating to the URL without logging in', async function(assert) {
-    await visit(`/assets/${address}`);
-    assert.equal(currentURL(this.owner), `/assets/${address}`);
-
+  function testAssetPage(assert) {
     assert.dom('.asset-isolated').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
     assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`)
+  }
+
+  test('user sees isolated asset card when directly navigating to the URL without logging in', async function(assert) {
+    await visit(`/assets/${address}`);
+    assert.equal(currentURL(this.owner), `/assets/${address}`);
+    testAssetPage(assert);
+  });
+
+  test('user sees isolated asset card when using differently cased address', async function(assert) {
+    await visit(`/assets/${address.toLowerCase()}`);
+    testAssetPage(assert);
   });
 
   test('user can navigate to isolated transaction card', async function(assert) {

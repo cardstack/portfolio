@@ -40,7 +40,10 @@ factory.addResource('content-types', 'assets')
   })
   .withRelated('fields', [
     { type: 'computed-fields', id: 'todays-rates-lookup' },
-
+    factory.addResource('computed-fields', 'case-insensitive-id').withAttributes({
+      'computed-field-type': 'portfolio-asset::case-insensitive',
+      params: { field: 'id' }
+    }),
     // TODO use default on create for relationship to ethereum network?
     factory.addResource('fields', 'network').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to'
