@@ -42,25 +42,46 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     });
 
   let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
+    .withAttributes({
+      'case-insensitive-id': '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
+    })
     .withRelated('network', bitcoinNetwork);
 
   // this is an address that has real etheruem history use it when you want to test live ethereum state
   let realEthereumAsset = factory.addResource('assets', '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf')
+    .withAttributes({
+      'case-insensitive-id': '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf'
+    })
     .withRelated('network', ethereumNetwork);
 
   let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+    .withAttributes({
+      'case-insensitive-id': '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE'
+    })
     .withRelated('network', ethereumNetwork);
 
   let litecoinAsset = factory.addResource('assets', 'LXA3i9eEAVDbgDqkThCa4D6BUJ3SEULkEr')
+    .withAttributes({
+      'case-insensitive-id': 'LXA3i9eEAVDbgDqkThCa4D6BUJ3SEULkEr'
+    })
     .withRelated('network', litecoinNetwork);
 
   let zcashAsset = factory.addResource('assets', 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs')
+    .withAttributes({
+      'case-insensitive-id': 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs'
+    })
     .withRelated('network', zcashNetwork);
 
   let anotherBitcoinAsset = factory.addResource('assets', '1FCciasLYWGNApYcS6Lm79y7HY8uJ37hYf')
+    .withAttributes({
+      'case-insensitive-id': '1FCciasLYWGNApYcS6Lm79y7HY8uJ37hYf'
+    })
     .withRelated('network', bitcoinNetwork);
 
   let anotherLitecoinAsset = factory.addResource('assets', '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co')
+    .withAttributes({
+      'case-insensitive-id': '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co'
+    })
     .withRelated('network', litecoinNetwork);
 
   let demoWalletAssets = [

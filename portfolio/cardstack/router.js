@@ -6,7 +6,15 @@ module.exports = [{
       id: { exact: 'portfolio-users' }
     }
   },
-},{
+}, {
+  path: '/assets/:friendly_id',
+  query: {
+    filter: {
+      type: { exact: 'assets' },
+      'case-insensitive-id': { exact: ':friendly_id' }
+    }
+  }
+}, {
   path: '/profile',
   query: {
     filter: {

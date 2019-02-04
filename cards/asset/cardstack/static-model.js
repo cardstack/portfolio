@@ -40,7 +40,9 @@ factory.addResource('content-types', 'assets')
   })
   .withRelated('fields', [
     { type: 'computed-fields', id: 'todays-rates-lookup' },
-
+    factory.addResource('fields', 'case-insensitive-id').withAttributes({
+      fieldType: '@cardstack/core-types::case-insensitive'
+    }),
     // TODO use default on create for relationship to ethereum network?
     factory.addResource('fields', 'network').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to'
