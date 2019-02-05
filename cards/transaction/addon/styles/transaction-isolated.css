@@ -9,6 +9,10 @@
   padding: 25px 30px;
 }
 
+.portfolio-top-header + .transaction-isolated__main {
+  padding-top: 50px;
+}
+
 .transaction-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;

@@ -1,13 +1,14 @@
-<div class="transaction-isolated">
+<div class="transaction-isolated" data-test-transaction-isolated>
   <TopHeader></TopHeader>
   <Breadcrumbs @isTransaction="true"></Breadcrumbs>
+  {{log this}}
 
   <main class="transaction-isolated__main transaction-isolated__grid">
     <div>
       <section class="transaction-isolated__section transaction-isolated__section--main">
         <header class="transaction-isolated__header">
           <h2 class="transaction-isolated__title" data-test-transaction-isolated-title>TX# {{abbreviatedTransactionHash}}</h2>
-          <time class="transaction-isolated__time" datetime="" data-test-transaction-isolated-date>{{date}}</time>
+          <time class="transaction-isolated__time" datetime={{datetime}} data-test-transaction-isolated-date>{{date}}</time>
         </header>
 
         <div class="transaction-isolated__transaction-hash">
@@ -42,10 +43,10 @@
         <div class="transaction-isolated__status" data-test-transaction-isolated-status>
           Status:
           {{#if content.transactionSuccessful}}
-          <span>Successful</span>
-          {{svg-jar "check" class="transaction-isolated__status-icon"}}
+            <span>Successful</span>
+            {{svg-jar "check" class="transaction-isolated__status-icon"}}
           {{else}}
-          <span>Failed</span>
+            <span>Failed</span>
           {{/if}}
         </div>
 

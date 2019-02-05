@@ -80,9 +80,11 @@ module('Acceptance | asset', function (hooks) {
   });
 
   function testAssetPage(assert) {
-    assert.dom('.asset-isolated').exists();
+    assert.dom('[data-test-asset-isolated]').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
-    assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`)
+    assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`);
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   }
 
   test('user sees isolated asset card when directly navigating to the URL without logging in', async function(assert) {
@@ -102,7 +104,7 @@ module('Acceptance | asset', function (hooks) {
     await click('[data-test-asset-isolated-transaction="1"] [data-test-transaction-embedded-link]');
 
     assert.equal(currentURL(this.owner), `/ethereum-transactions/0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572`);
-    assert.dom('.transaction-isolated').exists();
+    assert.dom('[data-test-transaction-isolated]').exists();
   });
 
   test('users currency change is reflected in the URL', async function(assert) {

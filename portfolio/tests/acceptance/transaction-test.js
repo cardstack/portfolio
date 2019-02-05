@@ -42,8 +42,10 @@ module('Acceptance | transaction', function (hooks) {
     await visit(`/ethereum-transactions/${transactionHash}`);
 
     assert.equal(currentURL(), `/ethereum-transactions/${transactionHash}`);
-    assert.dom('.transaction-isolated').exists();
-    // Probably wanna add a few more assertions here after we replace the hard coding
+    assert.dom('[data-test-transaction-isolated]').exists();
+    assert.dom('[data-test-transaction-isolated-title]').hasText('TX# 0x0c0b...f572');
+    assert.dom('[data-test-transaction-isolated-hash]').hasText('0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572');
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
-
 });

@@ -1,4 +1,3 @@
-
 import { module, test } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -54,7 +53,7 @@ async function login() {
   await fillIn('[data-test-login-password]', 'password');
   await click('[data-test-login-button]');
 
-  await waitFor('.portfolio-isolated');
+  await waitFor('[data-test-portfolio-isolated]');
 }
 
 module('Acceptance | portfolio', function(hooks) {
@@ -76,6 +75,8 @@ module('Acceptance | portfolio', function(hooks) {
     await login();
 
     assert.dom('[data-test-portfolio-isolated-title').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
 
   test('user sees the login form when they log out from the portfolio page', async function(assert) {
@@ -92,13 +93,15 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-login-form]').exists();
     assert.dom('[data-test-login-email]').exists();
     assert.dom('[data-test-login-password]').exists();
+    assert.dom('[data-test-portfolio-top-header]').doesNotExist();
+    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
 
   test('user sees isolated wallet card after clicking on the embedded wallet card', async function(assert) {
     await visit('/');
     await login();
 
-    await click('[data-test-wallet-embedded-link]');
+    await click('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-link]');
 
     assert.equal(currentURL(), '/wallets/test-wallet');
     assert.dom('[data-test-wallet-isolated]').exists();
@@ -111,7 +114,7 @@ module('Acceptance | portfolio', function(hooks) {
 
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
 
-    await click('.portfolio-isolated-filters__currencies');
+    await click('[data-test-portfolio-isolated-filters-currencies]');
 
     assert.equal(currentURL(), '/', 'url doesnt change');
     assert.dom('[data-test-portfolio-isolated-wallet="0"]').doesNotExist();
@@ -121,7 +124,7 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-currency="1"]').hasTextContaining('Ether');
     assert.dom('[data-test-portfolio-isolated-currency="1"] [data-test-portfolio-isolated-currency-count]').hasText('1 Asset');
 
-    await click('.portfolio-isolated-filters__wallets');
+    await click('[data-test-portfolio-isolated-filters-wallets]');
 
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
   });

@@ -1,4 +1,4 @@
-<div class="portfolio-isolated">
+<div class="portfolio-isolated" data-test-portfolio-isolated>
   <TopHeader></TopHeader>
 
   <header class="portfolio-isolated__header">
@@ -25,8 +25,16 @@
       </div>
       <ul class="portfolio-isolated-filters">
         <li class="portfolio-isolated-filters__label">Organize by</li>
-        <li><a href="#" {{action 'groupByWallet'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__wallets {{if (eq groupBy 'wallets') 'active'}}">Wallets</a></li>
-        <li><a href="#" {{action 'groupByCurrency'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__currencies {{if (eq groupBy 'currency') 'active'}}">Currencies</a></li>
+        <li>
+          <a href="#" {{action 'groupByWallet'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__wallets {{if (eq groupBy 'wallets') 'active'}}" data-test-portfolio-isolated-filters-wallets>
+            Wallets
+          </a>
+        </li>
+        <li>
+          <a href="#" {{action 'groupByCurrency'}} class="portfolio-isolated-filters__item portfolio-isolated-filters__currencies {{if (eq groupBy 'currency') 'active'}}" data-test-portfolio-isolated-filters-currencies>
+            Currencies
+          </a>
+        </li>
       </ul>
     </div>
   </header>

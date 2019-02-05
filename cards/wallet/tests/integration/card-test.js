@@ -63,10 +63,5 @@ module('Card | wallet', function (hooks) {
     assert.dom('[data-test-wallet-isolated-section-active-count]').hasText('2');
     assert.dom('[data-test-wallet-isolated-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
     assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
-    assert.dom('[data-test-portfolio-top-header]').exists();
-    assert.dom('[data-test-portfolio-breadcrumbs]').exists();
-    assert.dom('[data-test-portfolio-breadcrumbs-portfolio]').hasText('My Portfolio');
-    assert.dom('[data-test-portfolio-breadcrumbs-wallet]').doesNotExist();
-    assert.dom('[data-test-portfolio-breadcrumbs-asset]').doesNotExist();
   });
 });

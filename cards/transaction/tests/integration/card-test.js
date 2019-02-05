@@ -108,7 +108,5 @@ module('Card | transaction', function(hooks) {
     assert.dom('[data-test-transaction-isolated-nonce]').hasText('3');
     assert.dom('[data-test-transaction-isolated-position]').hasText('42');
     assert.dom('[data-test-transaction-isolated-fiat]').hasText('≈ $10.10 USD');
-    assert.dom('[data-test-portfolio-breadcrumbs-portfolio]').hasText('My Portfolio');
-    assert.dom('[data-test-portfolio-breadcrumbs-wallet]').hasText('Demo Wallet');
   });
 });

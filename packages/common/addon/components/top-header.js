@@ -4,6 +4,7 @@ import layout from '../templates/top-header';
 
 export default Component.extend({
   layout,
+  tagName: '',
   router: service(),
 
   transitionToProfile() {
