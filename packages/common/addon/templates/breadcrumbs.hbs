@@ -12,12 +12,12 @@
 
           {{#if (or isAsset isTransaction)}}
             <li class="portfolio-breadcrumbs__list-item">
-              <a href={{cardstack-url wallet}} class="portfolio-breadcrumbs__link" data-test-portfolio-breadcrumbs-wallet-link>
+              <a href={{cardstack-url (or wallet "/wallets/demo-wallet")}} class="portfolio-breadcrumbs__link" data-test-portfolio-breadcrumbs-wallet-link>
                 <span
                   style={{css-url "background-image" (concat "/portfolio-common/images/" (or wallet.logo "wallet") ".svg")}}
                   class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
                 />
-                <span>{{wallet.title}}</span>
+                <span>{{or wallet.title "Demo Wallet"}}</span>
               </a>
             </li>
           {{/if}}

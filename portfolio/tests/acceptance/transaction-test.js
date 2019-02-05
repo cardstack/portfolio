@@ -48,4 +48,6 @@ module('Acceptance | transaction', function (hooks) {
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
+
+  // TODO: add tests when breadcrumbs is not hardcoded on transaction page
 });

@@ -150,6 +150,9 @@ module('Acceptance | wallet', function (hooks) {
     assert.equal(currentURL(), '/assets/0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
     assert.dom('[data-test-asset-isolated]').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').hasText('Demo Wallet');
   });
 
   test('user can navigate to isolated portfolio card after clicking on page header link', async function (assert) {
