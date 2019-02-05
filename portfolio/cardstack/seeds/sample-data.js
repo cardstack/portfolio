@@ -45,7 +45,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withRelated('network', bitcoinNetwork);
 
   // this is an address that has real etheruem history use it when you want to test live ethereum state
-  let realEthereumAsset = factory.addResource('assets', '0x09FBEDDc5f94fA2713CDa75A68457cA8A4527adf')
+  let realEthereumAsset = factory.addResource('assets', '0x6294Ec6903021325978E58304d5E4604F0748685')
     .withRelated('network', ethereumNetwork);
 
   let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')

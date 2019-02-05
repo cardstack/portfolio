@@ -109,7 +109,7 @@ module.exports = declareInjections({
       this._boundEventListeners = true;
       if (!this.assetContentTypes || !this.assetContentTypes.length) { return; }
 
-      this.pgsearchClient.on('add', async (evt) => {
+      this.pgsearchClient.on('add', evt => {
         let { type, doc: { data: resource } } = evt;
         if (!this.assetContentTypes || !this.transactionContentTypes) { return; }
 
@@ -118,8 +118,6 @@ module.exports = declareInjections({
           this._eventProcessingPromise = Promise.resolve(this._eventProcessingPromise)
             .then(() => this.index({ asset:resource }));
         }
-
-        return await this._eventProcessingPromise;
       });
       log.debug(`completed setting up event listeners for asset updates`);
     }
