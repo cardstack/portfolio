@@ -17,6 +17,7 @@
   --portfolio-green: #3aa78f;
   --portfolio-red: #ff0404;
   --portfolio-red-failed: #db3d3d;
+  --portfolio-white-alpha50: rgba(255, 255, 255, .5);
 
   --portfolio-gradient: linear-gradient(90deg, #5e8fff 0%, #9b49ff 100%), #7a6fff;
   --portfolio-bitcoin-gradient: linear-gradient(45deg, #f07a33 20%, #fad15c 100%), #f99838;
