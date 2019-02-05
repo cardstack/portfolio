@@ -5,44 +5,46 @@
   <main class="asset-isolated__main asset-isolated__grid">
     <div>
       <AnimatedContainer>
-        <MovingBox @content={{content}} @class="asset-isolated__section asset-isolated__section--main asset-isolated__gradient--{{networkId}}">
+        <MovingBox @content={{content}} @class="asset-isolated__section asset-isolated__section--main asset-isolated--{{networkId}}">
           <div>
-            <div class="">
-              <header class="asset-isolated__header">
-                <AnimatedContainer class="asset-isolated__title-row">
-                  <MovingItem @content={{content}} @name="logo">
-                    {{svg-jar content.networkId width="36px" height="36px" class="asset-isolated__logo"}}
-                  </MovingItem>
-                  <MovingItem @content={{content}} @name="title">
-
-                    {{! these inline styles make it possible to align the text
-                        correctly throughout animation. Ideally we should
-                        instead refactor the isolated and embedded cards to
-                        have semantically similar markup. There's not really a
-                        good reason to structure the title and logo so
-                        differently on each. }}
-                    <h2 class="asset-isolated__title" data-test-asset-isolated-title>{{content.networkTitle}}</h2>
-                  </MovingItem>
-                </AnimatedContainer>
-              </header>
-              <section class="asset-isolated__summary">
-                <div class="asset-isolated__summary-row" data-test-asset-isolated-balance>
-                  <span class="asset-isolated__value">
-                    {{wei-to-ethers content.networkAsset.balance}}
-                  </span>
-                  <span class="asset-isolated__unit" data-test-asset-isolated-unit>{{content.networkUnit}}</span>
+            <div>
+              <div class="asset-isolated__wrapper">
+                <header class="asset-isolated__header">
+                  <AnimatedContainer class="asset-isolated__title-row">
+                    <MovingItem @content={{content}} @name="logo">
+                      {{svg-jar content.networkId width="36px" height="36px" class="asset-isolated__logo"}}
+                    </MovingItem>
+                    <MovingItem @content={{content}} @name="title">
+                      <h2 class="asset-isolated__title" data-test-asset-isolated-title>{{content.networkTitle}}</h2>
+                    </MovingItem>
+                  </AnimatedContainer>
+                </header>
+                <div class="asset-isolated__balance">
+                  <div class="asset-isolated__balance-main" data-test-asset-isolated-balance>
+                    {{#if content.networkAsset.balance}}
+                      {{wei-to-ethers content.networkAsset.balance}}
+                    {{else}}
+                      {{assetBalance}}
+                    {{/if}}
+                    <span>{{content.networkUnit}}</span>
+                  </div>
+                  <div class="asset-isolated__balance-fiat" data-test-asset-isolated-fiat-value>
+                    {{#if content.networkAsset.balance}}
+                      ≈ {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
+                    {{else}}
+                      ≈ {{currency-symbol currency}}{{assetValue}}
+                    {{/if}}
+                    <span data-test-asset-isolated-currency-name>{{currency}}</span>
+                  </div>
                 </div>
-                <div>
-                  <span class="asset-isolated__value--secondary" data-test-asset-isolated-fiat-value>
-                    {{currency-symbol currency}}{{convert-currency content.networkUnit currency content.networkAsset.balance content.todaysRatesLookup.rates}}
-                  </span>
-                  <span class="asset-isolated__unit--secondary" data-test-asset-isolated-currency-name>{{currency}}</span>
+                <div class="asset-isolated__currency">
+                  <span>View as</span>
+                  <div class="asset-isolated__currency-switcher">
+                    <button class="{{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
+                    <button class="{{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
+                    <button class="{{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
+                  </div>
                 </div>
-              </section>
-              <div class="asset-isolated__currency-switcher">
-                <button class="asset-isolated__currency-switcher__usd {{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
-                <button class="asset-isolated__currency-switcher__eur {{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
-                <button class="asset-isolated__currency-switcher__btc {{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
               </div>
               <div class="asset-isolated__chart">
                 {{#if content.assetHistory}}
@@ -56,7 +58,7 @@
                 <div class="asset-isolated__details">
                   <div class="asset-isolated__details-item" data-test-asset-isolated-address>
                     <h4 class="asset-isolated__details-item-title">Address</h4>
-                    <a href="{{addressLink}}" class="asset-isolated__etherscan-link" target="_blank" rel="noopener" data-test-asset-isolated-etherscan-link>
+                    <a href="{{addressLink}}" class="asset-isolated__details-item-link" target="_blank" rel="noopener" data-test-asset-isolated-etherscan-link>
                       {{content.formattedAddress}}
                     </a>
                   </div>
