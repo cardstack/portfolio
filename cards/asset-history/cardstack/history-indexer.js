@@ -8,7 +8,6 @@ const { updateBalanceFromTransaction } = require('portfolio-utils');
 const DEFAULT_MAX_ASSET_HISTORIES = 1000000;
 
 let indexJobNumber = 0;
-let historyValueNonce = 0;
 
 module.exports = declareInjections({
   controllingBranch: 'hub:controlling-branch',
@@ -249,7 +248,7 @@ function buildHistoryValue({ asset, transaction, timestamp }) {
   timestamp = transactionUnixTime ? transactionUnixTime * 1000 : timestamp;
   let transactionRelationship = transaction ? { type: transaction.type, id: transaction.id } : null;
   return {
-    id: `${asset.id}_${timestamp}_${historyValueNonce++}`,
+    id: `${asset.id}_${timestamp}${transaction ? '_' + transaction.id : ''}`,
     type: 'asset-history-values',
     attributes: { 'timestamp-ms': timestamp },
     relationships: {
