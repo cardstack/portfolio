@@ -99,10 +99,6 @@ module('Card | asset', function (hooks) {
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
     assert.dom('[data-test-asset-isolated-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-fiat-value]').hasText('≈ $20.09 USD');
-    assert.dom('[data-test-portfolio-top-header]').exists();
-    assert.dom('[data-test-portfolio-breadcrumbs-portfolio]').hasText('My Portfolio');
-    assert.dom('[data-test-portfolio-breadcrumbs-wallet]').hasText('Demo Wallet');
-    assert.dom('[data-test-portfolio-breadcrumbs-asset]').doesNotExist();
   });
 
   test('can change currency in isolated format', async function (assert) {

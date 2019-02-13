@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import AssetBaseMixin from '../mixins/asset-base';
 import CurrencyParamsMixin from 'portfolio-common/mixins/currency-params';
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
@@ -35,7 +34,6 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   },
 
   fetchWallet: task(function * () {
-    if (Ember.testing) { return; }
     let query = {
       filter: {
         ['assets.id']: {

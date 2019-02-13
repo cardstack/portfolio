@@ -1,5 +1,4 @@
-
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -122,6 +121,9 @@ module('Acceptance | wallet', function (hooks) {
     await login();
 
     assert.dom('[data-test-wallet-isolated-title]').hasText('Demo Wallet');
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').doesNotExist();
   });
 
   test('user sees the login form when they log out from the portfolio page', async function (assert) {
@@ -134,20 +136,42 @@ module('Acceptance | wallet', function (hooks) {
     assert.dom('[data-test-login-form]').exists();
     assert.dom('[data-test-login-email]').exists();
     assert.dom('[data-test-login-password]').exists();
+    assert.dom('[data-test-portfolio-top-header]').doesNotExist();
+    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
 
   test('user sees isolated asset card after clicking on the embedded asset card', async function (assert) {
     await visit('/wallets/demo-wallet');
     await login();
 
-    await click('.asset-embedded--ether [data-test-asset-embedded-link]')
+    await click('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-link]');
     await animationsSettled();
 
     assert.equal(currentURL(), '/assets/0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
     assert.dom('[data-test-asset-isolated]').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
+    assert.dom('[data-test-portfolio-top-header]').exists();
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').hasText('Demo Wallet');
   });
 
-  skip('TODO user can navigate to isolated portfolio card from their isolated wallet card', async function (/*assert*/) {
+  test('user can navigate to isolated portfolio card after clicking on page header link', async function (assert) {
+    await visit('/wallets/demo-wallet');
+    await login();
+
+    await click('[data-test-portfolio-top-header-title]');
+    await animationsSettled();
+
+    assert.equal(currentURL(), '/');
+  });
+
+  test('user can navigate to isolated portfolio card after clicking on breadcrumb link', async function (assert) {
+    await visit('/wallets/demo-wallet');
+    await login();
+
+    await click('[data-test-portfolio-breadcrumbs-portfolio-link]');
+    await animationsSettled();
+
+    assert.equal(currentURL(), '/');
   });
 });

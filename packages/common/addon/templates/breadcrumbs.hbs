@@ -1,23 +1,28 @@
-<nav class="portfolio-breadcrumbs" data-test-portfolio-breadcrumbs>
-  <ul class="portfolio-breadcrumbs__list">
-    <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-portfolio>
-      <a href="/" class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background">
-        {{svg-jar "briefcase" width="18px" height="16px" class="portfolio-breadcrumbs__logo"}}
-        <span>My Portfolio</span>
-      </a>
-    </li>
+{{#if (is-component "cardstack-session")}}
+  {{#cardstack-session as |session|}}
+    {{#if session.isAuthenticated}}
+      <nav class="portfolio-breadcrumbs" data-test-portfolio-breadcrumbs>
+        <ul class="portfolio-breadcrumbs__list">
+          <li class="portfolio-breadcrumbs__list-item">
+            <a href="/" class="portfolio-breadcrumbs__link portfolio-breadcrumbs__background" data-test-portfolio-breadcrumbs-portfolio-link>
+              {{svg-jar "briefcase" width="18px" height="16px" class="portfolio-breadcrumbs__logo"}}
+              <span>My Portfolio</span>
+            </a>
+          </li>
 
-    {{#if (or isAsset isTransaction)}}
-      <li class="portfolio-breadcrumbs__list-item" data-test-portfolio-breadcrumbs-wallet>
-        {{!-- TO DO: Query wallet, display wallet logo, link to it --}}
-        <a href={{cardstack-url "/wallets/demo-wallet"}} class="portfolio-breadcrumbs__link">
-          <span
-            style={{css-url "background-image" (concat "/portfolio-common/images/" (or content.logo "wallet") ".svg")}}
-            class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
-          />
-          <span>Demo Wallet</span>
-        </a>
-      </li>
+          {{#if (or isAsset isTransaction)}}
+            <li class="portfolio-breadcrumbs__list-item">
+              <a href={{cardstack-url (or wallet "/wallets/demo-wallet")}} class="portfolio-breadcrumbs__link" data-test-portfolio-breadcrumbs-wallet-link>
+                <span
+                  style={{css-url "background-image" (concat "/portfolio-common/images/" (or wallet.logo "wallet") ".svg")}}
+                  class="portfolio-breadcrumbs__logo portfolio-breadcrumbs__logo--wallet"
+                />
+                <span>{{or wallet.title "Demo Wallet"}}</span>
+              </a>
+            </li>
+          {{/if}}
+        </ul>
+      </nav>
     {{/if}}
-  </ul>
-</nav>
+  {{/cardstack-session}}
+{{/if}}
