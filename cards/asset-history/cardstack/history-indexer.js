@@ -1,5 +1,5 @@
 const { declareInjections } = require('@cardstack/di');
-const { get, sortBy } = require('lodash');
+const { get, sortBy, uniqBy } = require('lodash');
 const { utils: { BN } } = require('web3');
 const moment = require('moment-timezone');
 const Session = require('@cardstack/plugin-utils/session');
@@ -13,7 +13,8 @@ module.exports = declareInjections({
   controllingBranch: 'hub:controlling-branch',
   searchers: 'hub:searchers',
   schema: 'hub:current-schema',
-  pgsearchClient: `plugin-client:${require.resolve('@cardstack/pgsearch/client')}`
+  pgsearchClient: `plugin-client:${require.resolve('@cardstack/pgsearch/client')}`,
+  transactionIndex: `plugin-client:${require.resolve('@cardstack/ethereum/cardstack/transaction-index')}`,
 },
 
   class HistoryIndexer {
@@ -21,16 +22,16 @@ module.exports = declareInjections({
       return new this(...args);
     }
 
-    constructor({ pgsearchClient, schema, searchers, controllingBranch }) {
+    constructor({ pgsearchClient, schema, searchers, controllingBranch, transactionIndex }) {
       this.searchers = searchers;
       this.schema = schema;
       this.pgsearchClient = pgsearchClient;
       this.controllingBranch = controllingBranch;
+      this.transactionIndex = transactionIndex;
       this._setupPromise = this._ensureClient();
       this._boundEventListeners = false;
       this._indexingPromise = null; // this is exposed to the tests
       this._eventProcessingPromise = null; // this is exposed to the tests
-      this._startedPromise = new Promise(res => this._hasStartedCallBack = res);
     }
 
     async start({ assetContentTypes, transactionContentTypes, maxAssetHistories, mockNow }) {
@@ -46,16 +47,13 @@ module.exports = declareInjections({
         };
       }
 
-      await this._startAssetHistoryListening();
-
-      this._hasStartedCallBack();
+      this._startListeningForAssetHistory();
       log.debug(`completed history-indexer startup`);
     }
 
     async ensureStarted() {
       log.debug(`ensuring history-indexer has started`);
       await this._setupPromise;
-      await this._startedPromise;
       log.debug(`completed ensuring history-indexer has started`);
     }
 
@@ -75,16 +73,15 @@ module.exports = declareInjections({
       return await this._indexingPromise;
     }
 
-    async _index(opts) {
+    async _index({ lastBlockHeight, asset, mockNow }) {
       await this.ensureStarted();
 
-      if (process.env.HUB_ENVIRONMENT === 'test' && opts.mockNow) {
+      if (process.env.HUB_ENVIRONMENT === 'test' && mockNow) {
         moment.now = function() {
-          return opts.mockNow;
+          return mockNow;
         };
       }
 
-      let { asset } = opts;
       if (asset) {
         let result;
         try {
@@ -94,14 +91,16 @@ module.exports = declareInjections({
         }
         await this._processAsset(result.data, result.included);
       } else {
-        let { transactions=[], assets=[] } = await this._getAssets() || {};
+        let { transactions=[], assets=[] } = await this._getAssets(lastBlockHeight) || {};
         for (asset of assets) {
           await this._processAsset(asset, transactions);
         }
       }
+
+      return this.transactionIndex.blockHeight;
     }
 
-    async _startAssetHistoryListening() {
+    _startListeningForAssetHistory() {
       if (this._boundEventListeners) { return; }
 
       log.debug(`starting indexing event listeners for asset updates`);
@@ -110,7 +109,7 @@ module.exports = declareInjections({
 
       this.pgsearchClient.on('add', evt => {
         let { type, doc: { data: resource } } = evt;
-        if (!this.assetContentTypes || !this.transactionContentTypes) { return; }
+        if (!this.assetContentTypes) { return; }
 
         if (this.assetContentTypes.includes(type)) {
           log.debug(`index add event for asset ${resource.type}/${resource.id} has been detected, triggering asset history indexing for this asset.`);
@@ -131,7 +130,7 @@ module.exports = declareInjections({
       await this._buildAssetHistory({ today, asset, transactions });
     }
 
-    async _getAssets() {
+    async _getAssets(lastBlockHeight) {
       if (!this.assetContentTypes) { return; }
 
       let size = this.maxAssetHistories || DEFAULT_MAX_ASSET_HISTORIES;
@@ -141,47 +140,69 @@ module.exports = declareInjections({
         },
         page: { size }
       });
-      let transactionIds = assets.reduce((cumulativeTransactions, asset) => {
-        return cumulativeTransactions.concat((get(asset, 'relationships.transactions.data') || []).map(i => i.id).filter(i => Boolean(i)));
-      } , []);
-      let { data: transactions } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
-        filter: {
-          type: { exact: this.transactionContentTypes },
-          id: { exact: transactionIds }
-
-        },
-        page: { size }
-      });
+      let assetIds = assets.map(i => i.id);
+      let transactions = [];
+      for (let address of assetIds) {
+        let query = {
+          filter: {
+            or: [{
+              type: { exact: 'ethereum-transactions' },
+              'transaction-to': address.toLowerCase(),
+            }, {
+              type: { exact: 'ethereum-transactions' },
+              'transaction-from': address.toLowerCase(),
+            }]
+          }
+        };
+        if (lastBlockHeight != null) {
+          query.filter.or.forEach(clause => {
+            clause['block-number'] = { range: { gt: lastBlockHeight } };
+          });
+        }
+        let { data:transactionsForAddress } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, query);
+        transactions = transactions.concat(transactionsForAddress);
+      }
 
       return { assets, transactions };
     }
 
     async _buildAssetHistory({ today, asset, transactions }) {
-      let historyValues = await this._buildHistoryValues(today, asset, transactions);
+      let newHistoryValues = await this._buildNewHistoryValues(today, asset, transactions);
 
       let batch = this.pgsearchClient.beginBatch(this.schema, this.searchers);
-      for (let historyValue of historyValues) {
+      for (let historyValue of newHistoryValues) {
         await this._indexResource(batch, historyValue);
       }
 
-      let assetHistory = {
-        type: 'asset-histories',
-        id: asset.id.toLowerCase(),
-        relationships: {
-          asset: { data: { type: asset.type, id: asset.id } },
-          'history-values': {
-            data: historyValues.map(({ id, type }) => {
-              return { type, id };
-            })
+      let assetHistory;
+      try {
+        assetHistory = (await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'asset-histories', asset.id.toLowerCase())).data;
+      } catch (err) {
+        if (err.status !== 404) { throw err; }
+        assetHistory = {
+          type: 'asset-histories',
+          id: asset.id.toLowerCase(),
+          relationships: {
+            asset: { data: { type: asset.type, id: asset.id } },
+            'history-values': { data: [] }
           }
-        }
-      };
+        };
+      }
+      let historyValues = get(assetHistory, 'relationships.history-values.data') || [];
+      historyValues = uniqBy(historyValues.concat(newHistoryValues.map(({type, id}) => {
+        return { type, id };
+      })), ({type, id}) => `${type}/${id}`);
+
+      assetHistory.relationships = assetHistory.relationships || {};
+      assetHistory.relationships['history-values'] = { data: historyValues };
 
       await this._indexResource(batch, assetHistory);
       await batch.done();
     }
 
-    async _buildHistoryValues(today, asset, transactions=[]) {
+    async _buildNewHistoryValues(today, asset, transactions=[]) {
+      // TODO use the asset.relationships.transactions to see if the transactions array includes the
+      // first transactions, in which case we should add an initial 0 data point
       let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
       if (!successfulTransactions || !successfulTransactions.length) { return []; }
 

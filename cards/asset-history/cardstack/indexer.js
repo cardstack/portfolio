@@ -1,4 +1,4 @@
-
+const { isEqual, get } = require('lodash');
 const { declareInjections } = require('@cardstack/di');
 const log = require('@cardstack/logger')('portfolio/asset-history/indexer');
 
@@ -138,12 +138,32 @@ class Updater {
     }];
   }
 
-  async updateContent(meta, hints,/* ops*/) {
+  async updateContent(meta, hints, ops) {
     log.debug(`starting asset history indexing`);
+    let schema = await this.schema();
+    let isSchemaUnchanged;
+    let lastBlockHeight = get(meta, 'lastBlockHeight');
 
-    // TODO we should keep track of the timestamp of the last indexed transaction for each asset so we dont have to re-do work we've already done
-    await this.historyIndexer.index(hints);
+    if (meta) {
+      let { lastSchema } = meta;
+      isSchemaUnchanged = isEqual(lastSchema, schema);
+    }
+
+    if (!isSchemaUnchanged) {
+      await ops.beginReplaceAll();
+      for (let model of schema) {
+        await ops.save(model.type, model.id, { data: model });
+      }
+      await ops.finishReplaceAll();
+    }
+
+    let opts = Object.assign({ lastBlockHeight }, hints);
+    let blockHeight = await this.historyIndexer.index(opts);
 
     log.debug(`ending asset history indexing`);
+    return {
+      lastBlockHeight: blockHeight,
+      lastSchema: schema
+    };
   }
 }
