@@ -96,6 +96,15 @@ module('Acceptance | asset', function (hooks) {
     testAssetPage(assert);
   });
 
+  test('user sees asset history chart', async function(assert) {
+    await visit(`/assets/${address}`);
+
+    assert.dom('.highcharts-root').exists();
+    let yAxisLabel = document.querySelector('.highcharts-yaxis-labels');
+    let valueLabel = yAxisLabel.querySelectorAll('text')[1];
+    assert.dom(valueLabel).hasText('$1.0k');
+  });
+
   test('user can navigate to isolated transaction card', async function(assert) {
     await visit(`/assets/${address}`);
 
