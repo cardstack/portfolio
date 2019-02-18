@@ -28,7 +28,6 @@ module.exports = declareInjections({
       this.pgsearchClient = pgsearchClient;
       this.controllingBranch = controllingBranch;
       this.transactionIndex = transactionIndex;
-      this._setupPromise = this._ensureClient();
       this._boundEventListeners = false;
       this._indexingPromise = null; // this is exposed to the tests
       this._eventProcessingPromise = null; // this is exposed to the tests
@@ -36,7 +35,10 @@ module.exports = declareInjections({
 
     async start({ assetContentTypes, transactionContentTypes, maxAssetHistories, mockNow }) {
       log.debug(`starting history-indexer`);
-      await this._setupPromise;
+
+      log.debug(`waiting for pgsearch client to start`);
+      await this.pgsearchClient.ensureDatabaseSetup();
+      log.debug(`completed pgsearch client startup`);
 
       this.assetContentTypes = assetContentTypes;
       this.transactionContentTypes = transactionContentTypes;
@@ -51,18 +53,6 @@ module.exports = declareInjections({
       log.debug(`completed history-indexer startup`);
     }
 
-    async ensureStarted() {
-      log.debug(`ensuring history-indexer has started`);
-      await this._setupPromise;
-      log.debug(`completed ensuring history-indexer has started`);
-    }
-
-    async _ensureClient() {
-      log.debug(`waiting for pgsearch client to start`);
-      await this.pgsearchClient.ensureDatabaseSetup();
-      log.debug(`completed pgsearch client startup`);
-    }
-
     async index(opts = {}) {
       opts.jobNumber = indexJobNumber++;
       log.debug(`queuing index job for ${JSON.stringify(opts)}`);
@@ -74,8 +64,6 @@ module.exports = declareInjections({
     }
 
     async _index({ lastBlockHeight, asset, mockNow }) {
-      await this.ensureStarted();
-
       if (process.env.HUB_ENVIRONMENT === 'test' && mockNow) {
         moment.now = function() {
           return mockNow;
