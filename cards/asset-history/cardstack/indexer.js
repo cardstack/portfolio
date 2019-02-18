@@ -1,4 +1,4 @@
-const { isEqual/*, get*/ } = require('lodash');
+const { isEqual, get } = require('lodash');
 const { declareInjections } = require('@cardstack/di');
 const log = require('@cardstack/logger')('portfolio/asset-history/indexer');
 
@@ -142,7 +142,7 @@ class Updater {
     log.debug(`starting asset history indexing`);
     let schema = await this.schema();
     let isSchemaUnchanged;
-    // let lastBlockHeight = get(meta, 'lastBlockHeight');
+    let lastBlockHeight = get(meta, 'lastBlockHeight');
 
     if (meta) {
       let { lastSchema } = meta;
@@ -157,12 +157,12 @@ class Updater {
       await ops.finishReplaceAll();
     }
 
-    // let opts = Object.assign({ lastBlockHeight }, hints);
-    // let blockHeight = await this.historyIndexer.index(opts);
+    let opts = Object.assign({ lastBlockHeight }, hints);
+    let blockHeight = await this.historyIndexer.index(opts);
 
     log.debug(`ending asset history indexing`);
     return {
-      // lastBlockHeight: blockHeight,
+      lastBlockHeight: blockHeight,
       lastSchema: schema
     };
   }
