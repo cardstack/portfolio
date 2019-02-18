@@ -44,7 +44,7 @@ const scenario = new Fixtures({
             "gas-price": "5000000000",
             "transaction-hash": "0x0c0b1a4b0ff5fbf2124f122b70b5c752e1289e60f376e13ab51865dee747f572",
             "gas": 90000,
-            "transaction-value": "101000000000000000"
+            "transaction-value": "10010000000000000000"
           }),
         factory.addResource('ethereum-transactions', '0x3252a963fe90697240890b84d2a3fac45b756338027467e2788ad0bb82b1fdc2')
           .withAttributes({
@@ -96,6 +96,15 @@ module('Acceptance | asset', function (hooks) {
   test('user sees isolated asset card when using differently cased address', async function(assert) {
     await visit(`/assets/${address.toLowerCase()}`);
     testAssetPage(assert);
+  });
+
+  test('user sees asset history chart', async function(assert) {
+    await visit(`/assets/${address}`);
+
+    assert.dom('.highcharts-root').exists();
+    let yAxisLabel = document.querySelector('.highcharts-yaxis-labels');
+    let valueLabel = yAxisLabel.querySelectorAll('text')[1];
+    assert.dom(valueLabel).hasText('$1.0k');
   });
 
   test('user can navigate to isolated transaction card', async function(assert) {
