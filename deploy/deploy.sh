@@ -40,9 +40,6 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
 
   export TARGET_ENV="portfolio-$target_env"
 
-  # TODO debugging out of memory issues, remove this
-  export NODE_OPTIONS="--max_old_space_size=4096"
-
   # This needs to be exported because our docker-compose.yml below is interpolating it
   export CONTAINER_REPO=680542703984.dkr.ecr.us-east-1.amazonaws.com/portfolio
 
