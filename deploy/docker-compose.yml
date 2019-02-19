@@ -32,6 +32,7 @@ services:
       - TRAVIS_BRANCH
       - GIT_PRIVATE_KEY
       - GIT_BRANCH_PREFIX
+      - NODE_OPTIONS
 
 networks:
   default:
