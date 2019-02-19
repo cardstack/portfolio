@@ -11,7 +11,6 @@ const depLayerFiles = [ 'cardstack', 'index.js', 'package.json' ];
 const codeLayerFiles = [ 'node-tests' ];
 
 emptyDirSync(context);
-
 copySync(join(root, 'deploy/Dockerfile'), join(context, 'Dockerfile'));
 
 // dep-layer contains things that will trigger a new yarn install (expensive)
