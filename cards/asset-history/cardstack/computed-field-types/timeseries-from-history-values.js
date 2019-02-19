@@ -19,6 +19,7 @@ exports.compute = async function(model, { historyValuesField, fromCurrency, toCu
   if (!Array.isArray(historyValues)) { return []; }
 
   for (let historyValue of historyValues) {
+    if (!historyValue) { continue; }
     let timestamp = await historyValue.getField('timestamp-ms');
     let rates = await historyValue.getRelated('historic-rates');
     let balance = await historyValue.getField('balance');

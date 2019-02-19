@@ -698,10 +698,10 @@
   resolved "https://registry.yarnpkg.com/@cardstack/eslint-config/-/eslint-config-0.13.37.tgz#103de4bb05486c4d7525e781f3bdd4e38c4f97f1"
   integrity sha512-rihcEkpnUo/4mmQX9lTS+LFVswcYcRzWySLBOTyI5oVwhWDs5TUc+Tzvz8esY+9n29bg6zZeYTKf2mgwEs1gEA==
 
-"@cardstack/ethereum@^0.13.37":
-  version "0.13.37"
-  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.37.tgz#303ced94fdd9634dcaa650af24a95e6fae0d6a1a"
-  integrity sha512-toSa2OZTYmDoN/9/kpV6Hy4EfmA/yVu2vnL58ozQiahivEFE5uetlWtBszVHLFZATAts3vN7kLUQEDre4tQXXg==
+"@cardstack/ethereum@^0.13.38":
+  version "0.13.38"
+  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.38.tgz#c98c5969a5813d9a4fe6f58abe9999b21cfe5c19"
+  integrity sha512-r8x2Xo+wKaDYiJYLabb0XXpcU5atLfbbw5jB+b+nogvYHUxjMHUp38KlxZph8f9LBfTu6/slbD1vMwdwL8V8rw==
   dependencies:
     "@cardstack/di" "0.13.37"
     "@cardstack/hub" "0.13.37"
