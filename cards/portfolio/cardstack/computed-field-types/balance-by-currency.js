@@ -17,6 +17,8 @@ exports.compute = async function (model) {
 
   let fromBalances = {};
   for (let wallet of wallets) {
+    if (!wallet) { continue; }
+
     let assets = await wallet.getRelated('assets');
     if (!assets || !assets.length) { continue; }
 
