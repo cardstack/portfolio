@@ -19,6 +19,7 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
                   GITHUB_CLIENT_ID \
                   GITHUB_CLIENT_SECRET \
                   GITHUB_TOKEN \
+                  PROFILE_MEMORY_SEC \
                   JSON_RPC_URL \
                   PUBLIC_HUB_URL \
                   SWARM_CONTROLLER \
