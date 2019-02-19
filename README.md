@@ -48,4 +48,4 @@ $ ember g card name_of_your_card
 
 ## Upgrading Card Dependencies
 
-Note that currently bad things can happen the `@cardstack/*` dependencies get out of sync between the various cards. When upgrading `@cardstack/*` dependencies make sure to use `yarn upgrade --latest --pattern '@cardstack/*'` (or whatever patten is appropriate) in order to upgrade all the @cardstack modules in lock step.
+Note that currently bad things can happen the `@cardstack/*` dependencies get out of sync between the various cards. When upgrading `@cardstack/*` dependencies make sure to use `yarn upgrade-interactive --latest --scope @cardstack` (or whatever patten is appropriate) in order to upgrade all the @cardstack modules in lock step.
