@@ -14,6 +14,8 @@ exports.compute = async function(model) {
   }
 
   for (let wallet of wallets) {
+    if (!wallet) { continue; }
+
     let balances = await wallet.getField('total-assets-balance');
     for (let currency of Object.keys(balances)) {
       results[currency] = (results[currency] || 0) + balances[currency];
