@@ -1,4 +1,5 @@
 
+const log = require('@cardstack/logger')('portfolio/utils');
 const { utils: { BN, fromWei } } = require('web3');
 const { get } = require('lodash');
 
@@ -15,6 +16,7 @@ const currencyCentsDecimalPlaces = {
 function updateBalanceFromTransaction(balance, _address, transaction) {
   let address = _address.toLowerCase();
   let isSuccessfulTxn = get(transaction, 'attributes.transaction-successful');
+  let blockNumber = get(transaction, 'attributes.block-number');
   let from = get(transaction, 'attributes.transaction-from');
   let to = get(transaction, 'attributes.transaction-to');
   let value = get(transaction, 'attributes.transaction-value') || '0';
@@ -25,6 +27,7 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
     let gasCost = (new BN(gasUsed)).mul(new BN(gasPrice));
     balance = balance.sub(new BN(value)).sub(gasCost);
     if (balance.isNeg()) {
+      log.error(`Negative balance for ${address} at block ${blockNumber} using txn ${transaction.id} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`);
       throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
     }
   }
@@ -32,6 +35,7 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
   if (isSuccessfulTxn && to && address === to.toLowerCase()) {
     balance = balance.add(new BN(value));
   }
+  log.debug(`balance for ${address} at block ${blockNumber} using txn ${transaction.id} is ${balance.toString()} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`);
 
   return balance;
 }
