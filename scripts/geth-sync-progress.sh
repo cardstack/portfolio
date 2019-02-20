@@ -18,7 +18,7 @@ do
     printf "${RED}>>> %2d. %-15s does not appear to be running geth.${NORMAL}\n" $INDEX $IP_ADDRESS
   else
     if [ "$(echo $SYNC_STATUS | jq '.result')" = "false" ]; then
-      printf "${GREEN}>>> %2d. %-15s ✔ has completed syncing.${NORMAL}\n" $INDEX $IP_ADDRESS
+      printf "${GREEN}>>> %2d. %-15s ✔  has completed syncing.${NORMAL}\n" $INDEX $IP_ADDRESS
     else
       CURRENT_BLOCK_HEX=$(echo "$SYNC_STATUS" | jq -r '.result.currentBlock')
       HIGHEST_BLOCK_HEX=$(echo "$SYNC_STATUS" | jq -r '.result.highestBlock')
