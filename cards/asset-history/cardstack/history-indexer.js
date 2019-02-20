@@ -204,7 +204,7 @@ module.exports = declareInjections({
       }
       historyValues = sortBy(historyValues, [ 'attributes.timestamp', 'id']);
 
-      log.debug(`deriving balance from history: ${JSON.stringify(historyValues, null, 2)}`);
+      log.trace(`deriving balance from history: ${JSON.stringify(historyValues, null, 2)}`);
       let balance = new BN(0);
       for (let historyValue of historyValues) {
         let transaction;
