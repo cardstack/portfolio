@@ -28,7 +28,7 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
     balance = balance.sub(new BN(value)).sub(gasCost);
     if (balance.isNeg()) {
       log.error(`Negative balance for ${address} at block ${blockNumber} using txn ${transaction.id} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`);
-      throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
+      throw new Error(`ERROR: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
     }
   }
 
