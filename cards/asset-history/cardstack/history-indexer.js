@@ -207,13 +207,14 @@ module.exports = declareInjections({
       }
       historyValues = sortBy(historyValues, [ 'attributes.timestamp', 'id']);
 
+      log.debug(`deriving balance from history: ${JSON.stringify(historyValues, null, 2)}`);
       let balance = new BN(0);
       for (let historyValue of historyValues) {
         let transaction;
         let transactionId = get(historyValue, 'relationships.transaction.data.id');
         let transactionType = get(historyValue, 'relationships.transaction.data.type');
         if (transactionId && transactionType && (transaction = successfulTransactions.find(i => i.id === transactionId && i.type === transactionType))) {
-          balance = updateBalanceFromTransaction(balance, asset.id, transaction);
+          balance = updateBalanceFromTransaction(balance, asset.id, transaction, log);
         }
 
         historyValue.attributes.balance = balance.toString();

@@ -1,5 +1,3 @@
-
-const log = require('@cardstack/logger')('portfolio/utils');
 const { utils: { BN, fromWei } } = require('web3');
 const { get } = require('lodash');
 
@@ -27,15 +25,15 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
     let gasCost = (new BN(gasUsed)).mul(new BN(gasPrice));
     balance = balance.sub(new BN(value)).sub(gasCost);
     if (balance.isNeg()) {
-      log.error(`Negative balance for ${address} at block ${blockNumber} using txn ${transaction.id} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`);
-      throw new Error(`ERROR: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
+      console.log(`Negative balance for ${address} at block ${blockNumber} using txn ${transaction.id} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`); // eslint-disable-line no-console
+      throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
     }
   }
 
   if (isSuccessfulTxn && to && address === to.toLowerCase()) {
     balance = balance.add(new BN(value));
   }
-  log.debug(`balance for ${address} at block ${blockNumber} using txn ${transaction.id} is ${balance.toString()} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`);
+  console.log(`balance for ${address} at block ${blockNumber} using txn ${transaction.id} is ${balance.toString()} with txn value: ${value}, gas price: ${gasPrice}, gas used: ${gasUsed}, is successful txn: ${isSuccessfulTxn}`); // eslint-disable-line no-console
 
   return balance;
 }
