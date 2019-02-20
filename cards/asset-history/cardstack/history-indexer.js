@@ -177,10 +177,7 @@ module.exports = declareInjections({
         };
       }
       let historyValues = get(assetHistory, 'relationships.history-values.data') || [];
-      historyValues = uniqBy(historyValues.concat(newHistoryValues.map(({type, id}) => {
-        return { type, id };
-      })), ({type, id}) => `${type}/${id}`);
-
+      historyValues = uniqBy(historyValues.concat(newHistoryValues.map(({type, id}) => { return { type, id }; })), 'id');
       assetHistory.relationships = assetHistory.relationships || {};
       assetHistory.relationships['history-values'] = { data: historyValues };
 
