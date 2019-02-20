@@ -5810,7 +5810,7 @@ ember-compatibility-helpers@^1.1.1:
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
 
-"ember-composable-helpers@github:DockYard/ember-composable-helpers":
+ember-composable-helpers@DockYard/ember-composable-helpers:
   version "2.1.0"
   resolved "https://codeload.github.com/DockYard/ember-composable-helpers/tar.gz/40a63eea101ee2d4f7593b526dc89b019773e2f5"
   dependencies:
