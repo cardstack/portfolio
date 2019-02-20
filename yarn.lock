@@ -698,10 +698,10 @@
   resolved "https://registry.yarnpkg.com/@cardstack/eslint-config/-/eslint-config-0.13.39.tgz#5ffea9939ed7f8b73eace2adfa84954e5159c976"
   integrity sha512-pd+pKECjqWOBoYsXdBrLrX1kPRMmq2tajxX8qRi3qSEgREdPcl4ptNCWnLksvHqu357FDu4yBxwQs5NaPnlDHQ==
 
-"@cardstack/ethereum@^0.13.40":
-  version "0.13.40"
-  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.40.tgz#e5dd614fb837678116ab6ac5602af38a581e5d39"
-  integrity sha512-9rHvxGFytTOGFSPKol/r3FQz3mzvONndT7Qo8yY9Bn9ixaA8QrYvVtTyxNEVyOR1RGFTWXDnGMNPGioo+VDEIQ==
+"@cardstack/ethereum@^0.13.41":
+  version "0.13.41"
+  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.41.tgz#599c099f8ae242ddbd85f7684f489f9d30f4e8c3"
+  integrity sha512-R2I3aONRv8+Hockq7qUEeCfptrxUag4zUgM+h5qW42rBVIO/w2dXELar6gvnS/tfrM3B7+lROufFmcLfqGEYYw==
   dependencies:
     "@cardstack/di" "0.13.39"
     "@cardstack/hub" "0.13.39"
@@ -5815,7 +5815,7 @@ ember-composable-helpers@DockYard/ember-composable-helpers:
   resolved "https://codeload.github.com/DockYard/ember-composable-helpers/tar.gz/40a63eea101ee2d4f7593b526dc89b019773e2f5"
   dependencies:
     broccoli-funnel "^1.0.1"
-    ember-cli-babel "^7.1.0"
+    ember-cli-babel "^6.6.0"
 
 ember-concurrency@^0.8.14, ember-concurrency@^0.8.17, ember-concurrency@^0.8.19:
   version "0.8.26"
