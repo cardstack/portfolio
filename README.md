@@ -1,6 +1,4 @@
-# portfolio
-
-This repo is the Portfolio Cardstack application
+# Cardstack Portfolio
 
 ![Portfolio Screenshot](https://user-images.githubusercontent.com/61075/53203693-dcda5080-35f7-11e9-9df7-aa2298b7e72a.png)
 
