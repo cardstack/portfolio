@@ -13,9 +13,9 @@ Demo here: https://youtu.be/aFVkEZIRvKw
 
 The Portfolio project requires a full-node geth as it will build a crypto portfolio from arbitrary Ethereum addresses by retrieving transaction receipts from transactions that can live at any block height. When running geth make sure to enable the web socket protocol, as the Cardstack Hub leverages web3.js event subscription. 
 
-The simplest way to use geth is via Docker. Instructions are available here: https://hub.docker.com/r/ethereum/client-go/. Make sure to use a mounted volume with the `-v` option so that you don't lose your chain data when you stop your geth container. You can also use homebrew to install geth if you are using a Mac. Instructions are available here: https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Mac.
+The simplest way to use geth is via Docker. Instructions are available here: https://hub.docker.com/r/ethereum/client-go/. Make sure to use a mounted volume with the `-v` option so that you don't lose your chain data when you stop your geth's docker container. You can also use homebrew to install geth if you are using a Mac. Instructions are available here: https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Mac.
 
-The following is an example of of the command line options to use for running geth locally for the Rinkeby test network in a manner that is compatible with the Portfolio project:
+The following is an example of the command line options to use for running geth locally for the Rinkeby test network in a manner that is compatible with the Portfolio project:
 ```
 $ geth --rinkeby --syncmode "full" \
      --rpc --rpcapi eth,net,web3 --rpcaddr 0.0.0.0 \
@@ -105,7 +105,7 @@ You can run the tests interactively via
 
 ## Creating Cards
 
-You create a new card by running the generator in the portfolio/ directory of the project:
+You create a new card by running the generator in the `portfolio/` directory of the project:
 ```
 $ ember g card name_of_your_card
 ```
