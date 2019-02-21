@@ -24,6 +24,8 @@ $ geth --rinkeby --syncmode "full" \
 ```
 Note that it will take about a day for the geth node to sync on the Rinkeby network since it is a full-node. (Mainnet will take a few days to sync). Infura is also a perfectly valid option, although you may find that the performance is not quite as fast as a locally hosted geth.
 
+Additionally, if you do not wish to run geth, you can also use mocked Ethereum data instead. Instructions around how to manipulate the mocked Ethereum data are described in the sections below.
+
 ## Installation
 
 * `git clone <repository-url>` this repository
