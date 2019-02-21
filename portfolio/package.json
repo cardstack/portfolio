@@ -29,7 +29,7 @@
     "@cardstack/di": "^0.13.39",
     "@cardstack/ephemeral": "^0.13.39",
     "@cardstack/eslint-config": "^0.13.39",
-    "@cardstack/ethereum": "^0.13.42",
+    "@cardstack/ethereum": "^0.13.43",
     "@cardstack/git": "^0.13.39",
     "@cardstack/hub": "^0.13.39",
     "@cardstack/jsonapi": "^0.13.39",
