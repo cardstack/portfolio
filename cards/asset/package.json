@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@cardstack/eslint-config": "^0.13.39",
-    "@cardstack/ethereum": "^0.13.41",
+    "@cardstack/ethereum": "^0.13.42",
     "@cardstack/jsonapi": "^0.13.39",
     "@cardstack/mobiledoc": "^0.13.39",
     "@cardstack/routing": "^0.13.39",
