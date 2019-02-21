@@ -60,8 +60,8 @@ For a list of options use the `--help` option.
 
 #### Ethereum Index CSV Files
 
-_TODO add Rinkeby CSV files and their SHA256 checksums_
-_TODO add Mainnet CSV files and their SHA256 checksums_
+* _TODO add Rinkeby CSV files and their SHA256 checksums_
+* _TODO add Mainnet CSV files and their SHA256 checksums_
 
 ## Running
 
