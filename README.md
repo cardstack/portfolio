@@ -4,10 +4,20 @@
 
 ## Prerequisites
 
-* Geth full-node
-* Docker
+* geth full-node
+* docker
+* node.js (version 8 or greater)
 
-The Portfolio project requires a full-node geth as it will build a crypto portfolio from arbitrary Ethereum addresses by retrieving transaction receipts from transactions that can live at any block height.
+The Portfolio project requires a full-node geth as it will build a crypto portfolio from arbitrary Ethereum addresses by retrieving transaction receipts from transactions that can live at any block height. When running geth make sure to enable the web socket protocol, as the Cardstack Hub leverages web3.js event subscription. 
+
+The following is an example of of the command line options to use for running geth locally for the Rinkeby test network in a manner that is compatible with the Portfolio project:
+```
+$ geth --rinkeby --syncmode "full" \
+     --rpc --rpcapi eth,net,web3 --rpcaddr 0.0.0.0 \
+     --ws --wsaddr 0.0.0.0 --wsorigins '*' --wsapi eth,net,web3 \
+     --cache 4096
+```
+Note that it will take about a day for the geth node to sync on the Rinkeby network since it is a full-node. (Mainnet will take a few days to sync). Infura is also a perfectly valid option, although you may find that the performance is not quite as fast as a locally hosted geth.
 
 ## Installation
 
@@ -15,7 +25,7 @@ The Portfolio project requires a full-node geth as it will build a crypto portfo
 * `cd portfolio`
 * `yarn install` (we use Yarn workspaces, so use Yarn and not NPM)
 
-## Preparing Ethereum Index
+## Preparing the Ethereum Index
 
 The Cardstack Hub maintains a secondary index of the Ethereum blockchain that is a representation of all the transactions in the blockchain using postgres. When the Cardstack hub starts it updates its Ethereum index by populating the index with any new Ethereum transactions since the last time it was running. In the case of the very first time the Cardstack hub starts, this process will take quite awhile. There are a few options for how you can speed this up:
 
@@ -29,7 +39,22 @@ _TODO add Terraform examples_
 
 We have authored a nodejs script that is available in the @cardstack/ethereum module that will assemble an Ethereum Index into your local DB. This script will split the work to assemble the Ethereum index into a configurable number of forked processes. Additionally, we have extracted an already built Ethereum Index into a CSV file, so that you don't have to build the Ethereum Index from the genesis block. Using your favorite postgres client, you can import this CSV into your Ethereum Index, and then use the script for adding the transactions from blocks that were mined after the CSV was generated.
 
-_TODO add script instructions_
+From your portfolio project folder you can execute the following script, where the `--jsonRpcUrl` is the URL of your geth node's web socket interface:
+```
+$ node ./node_modules/@cardstack/ethereum/scripts/build-index.js --jsonRpcUrl=ws://localhost:8546
+```
+Additionally, if you only want to index specific blocks you can add:
+```
+--start=<block number> --end=<block number>
+```
+When `--start` is not specified, the script assumes you want to start at block #0. If `--end` is not specified the script assumes you want to end at the current block.
+
+You may also configure the amount of worker child processes to fork. The default amount of workers is 10. 
+```
+--workerCount=20
+```
+
+For a list of options use the `--help` option.
 
 #### Ethereum Index CSV Files
 
@@ -53,6 +78,14 @@ Alternatively, you can run the Hub and Ember CLI separately with:
 
     yarn start-hub
     yarn start-ember
+
+## Configuring Users, Portfolios, Wallets, and Assets
+
+_TODO Discuss how to use seed data_ 
+
+## Using a Git Data Source
+
+_TODO Discuss how to add a git data source_
 
 ## Testing
 
