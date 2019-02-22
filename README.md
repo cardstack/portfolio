@@ -48,8 +48,10 @@ We have authored a nodejs script that is available in the @cardstack/ethereum mo
 
 From your portfolio project folder you can execute the following script, where the `--jsonRpcUrl` is the URL of your geth node's web socket interface:
 ```
-$ node ./node_modules/@cardstack/ethereum/scripts/build-index.js --jsonRpcUrl=ws://localhost:8546
+$ HUB_ENVIRONMENT=development node ./node_modules/@cardstack/ethereum/scripts/build-index.js --jsonRpcUrl=ws://localhost:8546
 ```
+(Note that this script just uses the `PGHOST`, `PGPORT`, `PGUSER`, and `PGPASSWORD` environment variables to connect to your postgres database.)
+
 Additionally, if you only want to index specific blocks you can add:
 ```
 --start=<block number> --end=<block number>
@@ -65,8 +67,22 @@ For a list of options use the `--help` option.
 
 #### Ethereum Index CSV Files
 
-* _TODO add Rinkeby CSV files and their SHA256 checksums_
+In order to speed up the the process of building your Ethereum Index, we have extracted an already built Ethereum Index into a CSV file. You can use your favorite Postgres client to upload the CSV into your database. 
+
+First you can create the database by executing the script:
+```
+$ HUB_ENVIRONMENT=development node ./node_modules/@cardstack/ethereum/scripts/build-index.js --createDb
+```
+(Note that this script just uses the `PGHOST`, `PGPORT`, `PGUSER`, and `PGPASSWORD` environment variables to connect to your postgres database.)
+
+Then using your Postgres DB client (I like using Postico), you can upload the CSV into the newly created `ethereum_index` database. The CSV files are very large. You may need to use the `split` UNIX command to split up the CSV into smaller chunks based on the what your Postgres client can handle.
+
+We have made the following CSV files available: 
+
+* Rinkeby up to block #3915387 https://cardstack.com/csv/rinkeby_transactions_3915387.csv (8.5GB) SHA-256 Checksum `47a561b12ecc58f8708248b86db6c392c02faf0652fa20d8e5dde4ed74020e62`
 * _TODO add Mainnet CSV files and their SHA256 checksums_
+
+(feel free to open an issue if you need a CSV file that is not listed above)
 
 ## Running
 
