@@ -698,10 +698,10 @@
   resolved "https://registry.yarnpkg.com/@cardstack/eslint-config/-/eslint-config-0.13.39.tgz#5ffea9939ed7f8b73eace2adfa84954e5159c976"
   integrity sha512-pd+pKECjqWOBoYsXdBrLrX1kPRMmq2tajxX8qRi3qSEgREdPcl4ptNCWnLksvHqu357FDu4yBxwQs5NaPnlDHQ==
 
-"@cardstack/ethereum@^0.13.44":
-  version "0.13.44"
-  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.44.tgz#692667ccd4076748001658dbb25e9354a3ba3f25"
-  integrity sha512-B12Fi8ZjYuK3qdyPK8B1fvAtVW0kmfsR2rJRy4phTDq8jeaEoNG97VP0ctI3AmHAJxthtTbuN76lTLNZFHtKDQ==
+"@cardstack/ethereum@^0.13.45":
+  version "0.13.45"
+  resolved "https://registry.yarnpkg.com/@cardstack/ethereum/-/ethereum-0.13.45.tgz#5457653d35a8a4ab0ba53384d94ada0db7904fbd"
+  integrity sha512-U877C0Ak44v0QQZyCkdp6g3ZTzgxjzfphOPSgJEROoy5+t0AhpODJEiL2eI8bGfSq+q3HqNG0RvtsoVjXGewvg==
   dependencies:
     "@cardstack/di" "0.13.39"
     "@cardstack/hub" "0.13.39"
@@ -721,12 +721,12 @@
     semver "^5.6.0"
     web3 "^1.0.0-beta.37"
 
-"@cardstack/git@^0.13.39":
-  version "0.13.39"
-  resolved "https://registry.yarnpkg.com/@cardstack/git/-/git-0.13.39.tgz#078cb32d37ad4d56fa5476905f10306a7b6537bb"
-  integrity sha512-52BpUwjLogel7CjbEFPmV82sFbli1L/R1HSGX1n00QZTAWJ7KF+FOYMp+dQeqsW28aR2BTUQ9p+vdnuV88xccw==
+"@cardstack/git@^0.13.45":
+  version "0.13.45"
+  resolved "https://registry.yarnpkg.com/@cardstack/git/-/git-0.13.45.tgz#59cecc625981d69eac09d5badfbd25733276c44f"
+  integrity sha512-Pn2lxBS0Bb51gIdF7XssYPE6UIr8zFjMRXz7dzGoE3m8/G5mFx4xwioW6Q43CeVuhDV3n/vk7G9fLTzD3HBIMQ==
   dependencies:
-    "@cardstack/gitchain" "0.1.0"
+    "@cardstack/gitchain" "0.1.1"
     "@cardstack/logger" "^0.1.0"
     "@cardstack/plugin-utils" "0.13.39"
     delay "^4.1.0"
@@ -737,10 +737,10 @@
     rimraf "^2.6.2"
     temp "^0.8.3"
 
-"@cardstack/gitchain@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@cardstack/gitchain/-/gitchain-0.1.0.tgz#7fedec2353dc8c15f8e3e209c4d3fb3ab48d53d9"
-  integrity sha512-VtGqsd7twI6l5idk+B6K4DXqR0x9lSz2GzEQRTzJpggG/wCIXgAg19YxTfd0IXnpCaPuJuZrrYlvEvlIeThXVQ==
+"@cardstack/gitchain@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@cardstack/gitchain/-/gitchain-0.1.1.tgz#1144747c17627736bfe0741e44dcad7ad6be16f1"
+  integrity sha512-UAvxjUhBQJsUoBPk7WKRZvhotn0iDFhGDqC3Ur1R5gE1HOlcDSc1S9nDd5cxWq51BB4HDqhBRtctOnqbpn9Yrw==
   dependencies:
     await-delay "^1.0.0"
     aws-sdk "^2.364.0"
