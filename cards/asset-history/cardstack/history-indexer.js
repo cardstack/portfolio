@@ -77,7 +77,9 @@ module.exports = declareInjections({
         } catch (e) {
           if (e.status !== 404) { throw e; }
         }
-        await this._processAsset(result.data, result.included);
+        if (result.data) {
+          await this._processAsset(result.data, result.included);
+        }
       } else {
         let { transactions=[], assets=[] } = await this._getAssets(lastBlockHeight) || {};
         for (asset of assets) {
