@@ -124,7 +124,6 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
     assert.dom('[data-test-portfolio-isolated-wallets-value]').hasText('≈ $20.09');
-    assert.dom('[data-test-wallet-embedded-value]').hasText('≈ $20.09');
     assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
   });
 
