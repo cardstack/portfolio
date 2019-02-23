@@ -19,6 +19,7 @@ matrix:
   fast_finish: true
 
 before_install:
+  - echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/id_rsa && chmod 400 $HOME/.ssh/id_rsa
   - pip install --user awscli
   - aws ecr --region us-east-1 get-login --no-include-email | bash
   - docker network create cardstack
