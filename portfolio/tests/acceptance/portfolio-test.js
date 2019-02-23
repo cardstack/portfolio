@@ -118,6 +118,8 @@ module('Acceptance | portfolio', function(hooks) {
 
     await login();
 
+    await waitFor('[data-test-portfolio-top-header-user]');
+
     assert.dom('[data-test-portfolio-isolated-title').hasText('My Portfolio');
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
