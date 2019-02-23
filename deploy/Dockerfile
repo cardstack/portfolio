@@ -3,6 +3,19 @@ WORKDIR /srv/hub
 
 COPY dep-layer/ ./
 
+# install and configure logrotate to manage
+# our node log files
+RUN apt-get update \
+  && apt-get -y install logrotate \
+  && echo '\
+/srv/hub/logs/node.log {\n\
+  daily\n\
+  missingok\n\
+  create 0660 root root\n\
+  rotate 30\n\
+}'\
+>> /etc/logrotate.conf
+
 # BUILD_ONLY tells nodegit that it must compile itself, as opposed to
 # downloading a prebuilt binary. It's necessary because there is a published
 # binary that _appears_ be compatible with our operating system, but isn't
@@ -29,19 +42,6 @@ destination:\n\
   protocol: tls\n\
 pid_file: /var/run/remote_syslog.pid'\
 > /etc/log_files.yml
-
-# install and configure logrotate to manage
-# our node log files
-RUN apt-get update \
-  && apt-get -y install logrotate \
-  && echo '\
-/srv/hub/logs/node.log {\n\
-  daily\n\
-  missingok\n\
-  create 0660 root root\n\
-  rotate 30\n\
-}'\
->> /etc/logrotate.conf
 
 CMD remote_syslog --hostname "${TARGET_ENV:-unknown_env}_$(hostname)" && yarn start-hub 2>&1 | tee -a /srv/hub/logs/node.log
 

@@ -124,6 +124,11 @@ module('Acceptance | wallet', function (hooks) {
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
     assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').doesNotExist();
+    assert.dom('[data-test-wallet-isolated-count]').hasText('2 Assets');
+    assert.dom('[data-test-wallet-isolated-value]').hasText('≈ $20.09');
+    assert.dom('[data-test-wallet-isolated-section-active-count]').hasText('2');
+    assert.dom('[data-test-wallet-isolated-asset="0"] [data-test-asset-embedded-title]').hasText('Bitcoin');
+    assert.dom('[data-test-wallet-isolated-asset="1"] [data-test-asset-embedded-title]').hasText('Ether');
   });
 
   test('user sees the login form when they log out from the portfolio page', async function (assert) {

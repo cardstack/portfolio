@@ -1,5 +1,5 @@
 import { module } from 'qunit';
 
-// this test has been moved to the acceptance tests
+// these tests have been moved to the acceptance tests, as they require identity
 module('Card | asset-history', function() { });
 
