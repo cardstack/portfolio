@@ -7,8 +7,8 @@ const root = resolve(join(__dirname, '..'));
 const context = join(root, 'deploy/context');
 const specialBranches = [ 'master', 'staging', 'production' ];
 const moduleRootFolders = [ 'cards', 'packages' ];
-const depLayerFiles = [ 'cardstack', 'index.js', 'package.json' ];
-const codeLayerFiles = [ 'node-tests' ];
+const depLayerFiles = [ 'package.json' ];
+const codeLayerFiles = [ 'cardstack', 'index.js', 'commands', 'node-tests' ];
 
 emptyDirSync(context);
 copySync(join(root, 'deploy/Dockerfile'), join(context, 'Dockerfile'));

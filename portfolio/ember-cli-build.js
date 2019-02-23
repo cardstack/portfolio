@@ -1,6 +1,11 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const { WatchedDir } = require('broccoli-source');
+const { readdirSync, existsSync } = require('fs');
+const { join, basename } = require('path');
+const Funnel = require('broccoli-funnel');
+const mergeTrees = require('broccoli-merge-trees');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
@@ -21,6 +26,9 @@ module.exports = function(defaults) {
     'ember-fetch': {
       preferNative: true
     },
+    trees: {
+      tests: testsTree()
+    },
     emberHighCharts: {
       includeHighCharts: false,
       includeHighStock: true
@@ -30,3 +38,24 @@ module.exports = function(defaults) {
 
   return app.toTree();
 };
+
+function allAbsolutePaths(dir) {
+  return readdirSync(dir).map(name => join(dir, name));
+}
+
+function testsTree() {
+  let packageDirs = allAbsolutePaths(join(__dirname, '..', 'cards'))
+    .concat(allAbsolutePaths(join(__dirname, '..', 'packages')));
+
+  let packageTrees = packageDirs.map(dir => {
+    let testsDir = join(dir, 'tests');
+    if (existsSync(testsDir)) {
+      return new Funnel(new WatchedDir(testsDir), {
+        exclude: ['dummy', 'index.html'],
+        destDir: basename(dir)
+      });
+    }
+  }).filter(Boolean);
+
+  return mergeTrees([...packageTrees, new WatchedDir('tests')]);
+}
