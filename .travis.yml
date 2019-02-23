@@ -42,9 +42,7 @@ deploy:
 
   # This environment is used to test your own branches. All you have to do
   # is just push a commit that has the `branch` field below set to the name
-  # of your branch, and update the `if branch IN ()` statement above to make
-  # sure your branch in included in the set of branch names that can have a
-  # deploy stage.
+  # of your branch, and update the `branches` item above.
   #
   - provider: script
     skip_cleanup: true
