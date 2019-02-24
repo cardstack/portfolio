@@ -77,7 +77,7 @@ module.exports = declareInjections({
         } catch (e) {
           if (e.status !== 404) { throw e; }
         }
-        if (result.data) {
+        if (result && result.data) {
           await this._processAsset(result.data, result.included);
         }
       } else {
