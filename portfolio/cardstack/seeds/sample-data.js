@@ -74,7 +74,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     anotherLitecoinAsset
   ];
 
-  if (process.env.JSON_RPC_URL) {
+  if (process.env.JSON_RPC_URLS) {
     demoWalletAssets = [realEthereumAsset].concat(demoWalletAssets);
   }
 

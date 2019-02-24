@@ -23,7 +23,7 @@ services:
       - TEST
       - NODE_OPTIONS
       - PROFILE_MEMORY_SEC
-      - JSON_RPC_URL
+      - JSON_RPC_URLS
       - HUB_ENVIRONMENT
       - PUBLIC_HUB_URL
       - CRYPTO_COMPARE_API_KEY

@@ -1,12 +1,12 @@
 const JSONAPIFactory = require('@cardstack/test-support/jsonapi-factory');
 let factory = new JSONAPIFactory();
 
-if (process.env.JSON_RPC_URL) {
+if (process.env.JSON_RPC_URLS) {
   factory.addResource('data-sources', 'ethereum')
     .withAttributes({
       'source-type': '@cardstack/ethereum',
       params: {
-        jsonRpcUrl: process.env.JSON_RPC_URL,
+        jsonRpcUrls: process.env.JSON_RPC_URLS.split(',').map(i => i.trim()),
         addressIndexing: {
           trackedAddressContentType: 'assets',
           trackedAddressField: 'ethereum-asset-id',
