@@ -11,7 +11,7 @@ const currencyCentsDecimalPlaces = {
   BTC: 0,
 };
 
-function updateBalanceFromTransaction(balance, _address, transaction) {
+function updateBalanceFromTransaction(balance, _address, transaction, log) {
   let address = _address.toLowerCase();
   let isSuccessfulTxn = get(transaction, 'attributes.transaction-successful');
   let from = get(transaction, 'attributes.transaction-from');
@@ -24,7 +24,7 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
     let gasCost = (new BN(gasUsed)).mul(new BN(gasPrice));
     balance = balance.sub(new BN(value)).sub(gasCost);
     if (balance.isNeg()) {
-      throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${transaction.attributes['block-number']} for transaction hash ${transaction.id}. This should never happen and indicates a bug in the historic value logic.`);
+      throw new Error(`Error: the historic balance for address ${from} resulted in a negative balance at block #${get(transaction, 'attributes.block-number')} for transaction hash ${transaction.id} and transaction value ${get(transaction, 'attributes.transaction-value')}. This should never happen and indicates a bug in the historic value logic.`);
     }
   }
 
@@ -32,6 +32,7 @@ function updateBalanceFromTransaction(balance, _address, transaction) {
     balance = balance.add(new BN(value));
   }
 
+  log.trace(`balance for ${address} is ${balance} with transaction ${transaction.id} at block #${get(transaction, 'attributes.block-number')} with transaction value ${get(transaction, 'attributes.transaction-value')}`);
   return balance;
 }
 
