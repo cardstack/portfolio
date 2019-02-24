@@ -15,7 +15,7 @@ factory.addResource('grants', 'asset-history-read')
   });
 
 let models = factory.getModels();
-if (!process.env.JSON_RPC_URL) {
+if (!process.env.JSON_RPC_URLS) {
   models = mockEthereumSchema.concat(models);
 }
 module.exports = function () { return models; };

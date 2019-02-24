@@ -51,7 +51,7 @@ module.exports = function () {
       'may-read-fields': true,
     });
 
-  if (!process.env.JSON_RPC_URL) {
+  if (!process.env.JSON_RPC_URLS) {
     factory.importModels(mockEthereumSchema);
   }
   factory.importModels(mockNetworkSchema);

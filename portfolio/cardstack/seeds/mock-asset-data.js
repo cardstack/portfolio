@@ -1,6 +1,6 @@
 let models = [];
 if (process.env.HUB_ENVIRONMENT === 'development') {
-  if (!process.env.JSON_RPC_URL) {
+  if (!process.env.JSON_RPC_URLS) {
     models = models.concat(require('../../../shared-data/mock-ethereum-data'));
   }
   models = models.concat(
