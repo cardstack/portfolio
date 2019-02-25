@@ -107,6 +107,32 @@ Alternatively, you can run the Hub and Ember CLI separately with:
     yarn start-hub
     yarn start-ember
 
+### Environment Variables:
+
+#### `HUB_ENVIRONMENT`
+The `HUB_ENVIRONMENT` environment variable is used to tell the Cardstack hub which environment it is running within. The possible values are `development`, `test`, and `production`. Generally the `development` environment is used for doing development on your local machine. The `test` environment is used for running the automated tests. The `production` environment is used for running a hosted application.
+
+#### `JSON_RPC_URLS`
+Use the environment variable `JSON_RPC_URLS` to specify a comma separated list of geth web socket URL's to use for the Portfolio application. If this environment variable is not used, then the mock Ethereum data will be used instead.
+
+#### `CRYPTO_COMPARE_API_KEY`
+Use the environment variable `CRYPTO_COMPARE_API_KEY` to specify your crypto compare API key in order to get live and historical crypto conversion dates. If this environment variable is not used, then a randomish number is substituted instead that hovers around $100 USD for 1 unit of crypto currency. (When `HUB_ENVIRONMENT=test` then exactly $100 USD is used, as random numbers dont make for good tests.)
+
+#### `GIT_REPO`
+Use the environment variable `GIT_REPO` to specify the git data source SSH URL. Note that this is only used when `HUB_ENVIRONMENT=production` is also specified. If this variable is not used, then the ephemeral data source will be used instead.
+
+#### `GIT_PRIVATE_KEY`
+Use the environment variable `GIT_PRIVATE_KEY` to specify the private key for the SSH user used in the `GIT_REPO` environment variable. Note that this value will have newlines within it. Please see https://github.com/cardstack/cardstack/blob/master/packages/git/README.md for more details around specying this environment variable.
+
+#### `GIT_BRANCH_PREFIX`
+Use the environment variable `GIT_BRANCH_PREFIX` when you wish to use a branch other than `master` for your git data source. The value of `GIT_BRANCH_PREFIX` will be prepended to the string `master` when deriving the name of the branch to use for reading and writing documents to the git data source.
+
+#### `LOG_LEVELS`
+Use the environment variable `LOG_LEVELS` to adjust the logging on the Cardstack hub process. More information around how to use this can be found here: https://github.com/cardstack/logger
+
+#### Postgres
+The standard Postgres environment variables `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, etc are supported. You can control the postgres instance that the Cardstack hub uses by setting these environment variables.
+
 ## Configuring Users, Portfolios, Wallets, and Assets
 
 The Cardstack Hub can connected to many different types of data sources. Some data sources are read-only (like the Ethereum data source, Crypto Compare data source, and the asset history data sources) and others are writable for holding content types that are controlled by the hub, including users, portfolios, wallets, and asset content types. The way we have arranged our writable data sources for the Portfolio project is to use an "ephemeral" data source when the Portfolio application is running with `HUB_ENVIRONMENT=development` environment variable and to use a git data source when the Portfolio application is running with the `HUB_ENVIRONMENT=production` environment variable. By default, cardstack applications run with the `HUB_ENVIRONMENT=development` environment variable.
