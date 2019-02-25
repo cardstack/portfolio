@@ -25,6 +25,7 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
                   SWARM_CONTROLLER \
                   LOG_LEVELS \
                   GIT_PRIVATE_KEY \
+                  GIT_REPO \
                   GIT_BRANCH_PREFIX \
                   CRYPTO_COMPARE_API_KEY \
                   CARDSTACK_SESSIONS_KEY; do

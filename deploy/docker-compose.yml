@@ -31,6 +31,7 @@ services:
       - INITIAL_DATA_DIR
       - TRAVIS_BRANCH
       - GIT_PRIVATE_KEY
+      - GIT_REPO
       - GIT_BRANCH_PREFIX
 
 networks:
