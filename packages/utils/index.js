@@ -32,7 +32,7 @@ function updateBalanceFromTransaction(balance, _address, transaction, log) {
     balance = balance.add(new BN(value));
   }
 
-  log.trace(`balance for ${address} is ${balance} with transaction ${transaction.id} at block #${get(transaction, 'attributes.block-number')} with transaction value ${get(transaction, 'attributes.transaction-value')}`);
+  log && log.trace(`balance for ${address} is ${balance} with transaction ${transaction.id} at block #${get(transaction, 'attributes.block-number')} with transaction value ${get(transaction, 'attributes.transaction-value')}`);
   return balance;
 }
 
