@@ -69,7 +69,12 @@ For a list of options use the `--help` option.
 
 In order to speed up the the process of building your Ethereum Index, we have extracted an already built Ethereum Index into a CSV file. You can use your favorite Postgres client to upload the CSV into your database. 
 
-First you can create the database by executing the script:
+First make sure your DB is running. From the instructions in the "Running" section below, run:
+```
+yarn start-prereqs
+```
+
+Then you can create the database by executing the script:
 ```
 $ HUB_ENVIRONMENT=development node ./node_modules/@cardstack/ethereum/scripts/build-index.js --createDb
 ```
