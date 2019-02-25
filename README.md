@@ -159,7 +159,9 @@ The current state of the Portfolio app allows users to the registered (albeit we
 
 ## Mocking Ethereum
 
-_TODO describe how to mock Ethereum transactions_
+When developing Portfolio in your local development environment, it is oftentimes preferable to be able to mock Ethereum data so that you can replicate a precise situation, or create an automated test, or make it easy for people to contribute that don't have the ability to run a geth node.
+
+Within the `shared-data/mock-ethereum-data.js` is an `ethereum-addresses` document and a series of `ethereum-transactions` that would normally be generated from the Cardstack Ethereum data source as it indexes blocks and tracked addresses. You can tailor the `ethereum-addresses` and `ethereum-transactions` documents at will in order to replicate various scenarios for testing and development.
 
 ## Testing
 
