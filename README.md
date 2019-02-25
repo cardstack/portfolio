@@ -128,6 +128,7 @@ Documents that reside in a git data source leverage the JSON:API specification (
 
 ![Git data source screenshot](https://user-images.githubusercontent.com/61075/53369044-44561000-3918-11e9-836c-466bff85b4f0.png)
 
+### User Interface Updates Coming...
 The current state of the Portfolio app allows users to the registered (albeit we haven't yet implemented email verification https://github.com/cardstack/portfolio/issues/112) and a portfolio to be created to newly registered users. However, users cannot yet add wallets nor assets from the user interface. This is TBD functionality https://github.com/cardstack/portfolio/issues/114 and https://github.com/cardstack/portfolio/issues/24. When using the ephemeral data source, this means that you need to configure users, wallets, portfolios, and assets from the seeds. When using the git data source, you must configure portfolios, wallets, and assets by adding those content types to your git repo (users can just be registered via the UI).
 
 ## Mocking Ethereum
