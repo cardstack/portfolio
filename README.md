@@ -104,11 +104,26 @@ Alternatively, you can run the Hub and Ember CLI separately with:
 
 ## Configuring Users, Portfolios, Wallets, and Assets
 
-_TODO Discuss how to use seed data_ 
+The Cardstack Hub can connected to many different types of data sources. Some data sources are read-only (like the Ethereum data source, Crypto Compare data source, and the asset history data sources) and others are writable for holding content types that are controlled by the hub, including users, portfolios, wallets, and asset content types. The way we have arranged our writable data sources for the Portfolio project is to use an "ephemeral" data source when the Portfolio application is running with `HUB_ENVIRONMENT=development` environment variable and to use a git data source when the Portfolio application is running with the `HUB_ENVIRONMENT=production` environment variable. By default, cardstack applications run with the `HUB_ENVIRONMENT=development` environment variable.
 
-## Using a Git Data Source
+### Ephemeral Data Source
+The ephemeral data source is a hub data source that is most often used for testing or for running in a local development environment. This data source persists documents only for as long as the cardstack hub backend is running. When the cardstack hub backend is restarted, the documents contained in the ephemeral datastore is erased--hence the term "ephemeral". By default this is the data source that the Portfolio application uses when run in your local development environment, as it requires no special setup to use, and it resets to its initial state when you restart the hub (which makes it wonderful for testing). The ephemeral data source uses what we call "seeds" to initialize its initial state. It is these seeds that we use for setting up users, portfolios, wallets, and assets in the local development environment.
 
-_TODO Discuss how to add a git data source_
+#### Seeds
+_TODO describe how to configure data in seeds_
+
+### Git Data Source
+The git data source is used when the `HUB_ENVIRONMENT=production` environment variable is set. In this scenario, the hub will write and read users, portfolios, wallets, and assets content types from the configured git repository. This repository can be a git repository that is hosted by GitHub or another git hosting provider, or a git repository that is hosted privately in the VPC that the Cardstack Hub is running from. 
+
+To use a git data source, in addition to specifying the `HUB_ENVIRONMENT=production` environment variable, you will also need to specify the SSH URL of the git repo in the `GIT_REPO` environment var (e.g. `GIT_REPO=git@github.com:cardstack/portfolio-data.git`), and you will need to specify the private key for the user in the SSH URL of the git repo in the `GIT_PRIVATE_KEY` environment variable. (Due to the need to preserve line breaks in the private key, this may be a little tricky, see https://github.com/cardstack/cardstack/blob/master/packages/git/README.md for more details). The hub will use the `master` branch of the specified repo to read and write content. If you want to have the hub use a different branch, you can specify `GIT_BRANCH_PREFIX` environment variable for a prefix to apply to the `master` branch, e.g. `GIT_BRANCH_PREFIX=staging-` will cause the hub to read and write content to the `staging-master` branch instead.
+
+_TODO describe how to configure data in git repo_
+
+The current state of the Portfolio app allows users to the registered (albeit we haven't yet implemented email verification https://github.com/cardstack/portfolio/issues/112) and a portfolio to be created to newly registered users. However, users cannot yet add wallets nor assets from the user interface. This is TBD functionality https://github.com/cardstack/portfolio/issues/114 and https://github.com/cardstack/portfolio/issues/24. When using the ephemeral data source, this means that you need to configure users, wallets, portfolios, and assets from the seeds. When using the git data source, you must configure portfolios, wallets, and assets by adding those content types to your git repo (users can just be registered via the UI).
+
+## Mocking Ethereum
+
+_TODO describe how to mock Ethereum transactions_
 
 ## Testing
 
