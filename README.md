@@ -110,7 +110,7 @@ Alternatively, you can run the Hub and Ember CLI separately with:
 ### Environment Variables:
 
 #### `HUB_ENVIRONMENT`
-The `HUB_ENVIRONMENT` environment variable is used to tell the Cardstack hub which environment it is running within. The possible values are `development`, `test`, and `production`. Generally the `development` environment is used for doing development on your local machine. The `test` environment is used for running the automated tests. The `production` environment is used for running a hosted application.
+The `HUB_ENVIRONMENT` environment variable is used to tell the Cardstack hub which environment it is running within. The possible values are `development`, `test`, and `production`. Generally the `development` environment is used for doing development on your local machine. The `test` environment is used for running the automated tests. The `production` environment is used for running a hosted application. If this environment variable is not specified, then the `HUB_ENVIRONMENT=development` is assumed.
 
 #### `JSON_RPC_URLS`
 Use the environment variable `JSON_RPC_URLS` to specify a comma separated list of geth web socket URL's to use for the Portfolio application. If this environment variable is not used, then the mock Ethereum data will be used instead.
