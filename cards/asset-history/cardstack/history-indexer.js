@@ -110,14 +110,14 @@ module.exports = declareInjections({
       log.debug(`completed setting up event listeners for asset updates`);
     }
 
-    async _processAsset(asset, includedTransactions) {
+    async _processAsset(asset, includedNewTransactions) {
       if (get(asset, 'meta.loadingTransactions')) { return; }
       if (get(asset, 'meta.abortLoadingBlockheight')) { return; }
 
       const today = moment().utc().format('YYYY-MM-DD');
-      let transactions = getTransactionsFromAssetIncludeds(asset, includedTransactions);
+      let newTransactions = getTransactionsFromAssetIncludeds(asset, includedNewTransactions);
 
-      await this._buildAssetHistory({ today, asset, transactions });
+      await this._buildAssetHistory({ today, asset, newTransactions });
     }
 
     async _getAssets(lastBlockHeight) {
@@ -156,8 +156,28 @@ module.exports = declareInjections({
       return { assets, transactions };
     }
 
-    async _buildAssetHistory({ today, asset, transactions }) {
-      let newHistoryValues = await this._buildNewHistoryValues(today, asset, transactions);
+    async _getFirstSuccessfulTransaction(address) {
+      let { data: [ transaction ] } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+        filter: {
+          or: [{
+            type: { exact: 'ethereum-transactions' },
+            'transaction-to': address.toLowerCase(),
+            'transaction-successful': { exact: true }
+          }, {
+            type: { exact: 'ethereum-transactions' },
+            'transaction-from': address.toLowerCase(),
+            'transaction-successful': { exact: true }
+          }]
+        },
+        page: { size: 1 },
+        sort: 'timestamp'
+      });
+
+      return transaction;
+    }
+
+    async _buildAssetHistory({ today, asset, newTransactions }) {
+      let newHistoryValues = await this._buildNewHistoryValues(today, asset, await this._getFirstSuccessfulTransaction(asset.id), newTransactions);
 
       let batch = this.pgsearchClient.beginBatch(this.schema, this.searchers);
       for (let historyValue of newHistoryValues) {
@@ -187,21 +207,19 @@ module.exports = declareInjections({
       await batch.done();
     }
 
-    async _buildNewHistoryValues(today, asset, transactions=[]) {
-      // TODO use the asset.relationships.transactions to see if the transactions array includes the
-      // first transactions, in which case we should add an initial 0 data point
-      let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
-      if (!successfulTransactions || !successfulTransactions.length) { return []; }
+    async _buildNewHistoryValues(today, asset, firstSuccessfulTransaction, newTransactions=[]) {
+      if (!firstSuccessfulTransaction) { return []; }
 
       let historyValues = [];
-      let historyStartDate = moment(successfulTransactions[0].attributes.timestamp, 'X').utc().startOf('day');
+      let historyStartDate = moment(firstSuccessfulTransaction.attributes.timestamp, 'X').utc().startOf('day');
       let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(historyStartDate, 'days');
+      let successfulNewTransactions = newTransactions.filter(txn => get(txn, 'attributes.transaction-successful'));
 
       for (let i = 0; i <= daysOfHistory; i++) {
         let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
         historyValues.push(buildHistoryValue({ asset, timestamp }));
       }
-      for (let transaction of successfulTransactions) {
+      for (let transaction of successfulNewTransactions) {
         historyValues.push(buildHistoryValue({ asset, transaction }));
       }
       historyValues = sortBy(historyValues, [ 'attributes.timestamp', 'id']);
@@ -212,7 +230,7 @@ module.exports = declareInjections({
         let transaction;
         let transactionId = get(historyValue, 'relationships.transaction.data.id');
         let transactionType = get(historyValue, 'relationships.transaction.data.type');
-        if (transactionId && transactionType && (transaction = successfulTransactions.find(i => i.id === transactionId && i.type === transactionType))) {
+        if (transactionId && transactionType && (transaction = successfulNewTransactions.find(i => i.id === transactionId && i.type === transactionType))) {
           balance = updateBalanceFromTransaction(balance, asset.id, transaction, log);
         }
 

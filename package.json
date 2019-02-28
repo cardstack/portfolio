@@ -9,8 +9,8 @@
     "node": ">= 8"
   },
   "devDependencies": {
-    "@cardstack/eslint-config": "^0.13.39",
-    "@cardstack/test-support": "^0.13.39",
+    "@cardstack/eslint-config": "^0.13.48",
+    "@cardstack/test-support": "^0.13.48",
     "eslint": "^5.9.0",
     "eslint-plugin-ember": "^6.0.1",
     "eslint-plugin-mocha": "^5.2.0",
