@@ -191,7 +191,11 @@ module.exports = declareInjections({
       // TODO use the asset.relationships.transactions to see if the transactions array includes the
       // first transactions, in which case we should add an initial 0 data point
       let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
-      if (!successfulTransactions || !successfulTransactions.length) { return []; }
+      if (!successfulTransactions || !successfulTransactions.length) {
+        // in this case we need to return history values for each day between the last indexed history value and today that
+        // all have the same balance as the last indexed history value
+        return [];
+      }
 
       let historyValues = [];
       let historyStartDate = moment(successfulTransactions[0].attributes.timestamp, 'X').utc().startOf('day');
