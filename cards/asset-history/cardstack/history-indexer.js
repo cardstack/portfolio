@@ -177,7 +177,7 @@ module.exports = declareInjections({
     }
 
     async _buildAssetHistory({ today, asset, newTransactions }) {
-      let newHistoryValues = await this._buildNewHistoryValues(today, asset, await this._getFirstSuccessfulTransaction(asset.id), newTransactions);
+      let newHistoryValues = await this._buildNewHistoryValues(today, asset, newTransactions);
 
       let batch = this.pgsearchClient.beginBatch(this.schema, this.searchers);
       for (let historyValue of newHistoryValues) {
@@ -207,22 +207,36 @@ module.exports = declareInjections({
       await batch.done();
     }
 
-    async _buildNewHistoryValues(today, asset, firstSuccessfulTransaction, newTransactions=[]) {
+    async _buildNewHistoryValues(today, asset, newTransactions=[]) {
+      let firstSuccessfulTransaction = await this._getFirstSuccessfulTransaction(asset.id);
       if (!firstSuccessfulTransaction) { return []; }
 
+      let size = this.maxAssetHistories || DEFAULT_MAX_ASSET_HISTORIES;
+      let { data:indexedHistoryValues } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+        filter: {
+          type: { exact: 'asset-history-values'},
+          'asset.id': { exact: asset.id.toLowerCase() }
+        },
+        page: { size },
+        sort: 'timestamp-ms'
+      });
+      let indexedHistoryValuesIds = indexedHistoryValues.map(i => i.id);
+      let startTimestamp = indexedHistoryValues.length ? get(indexedHistoryValues[indexedHistoryValues.length - 1], 'attributes.timestamp-ms') / 1000 :
+                                                         get(firstSuccessfulTransaction, 'attributes.timestamp');
+
       let historyValues = [];
-      let historyStartDate = moment(firstSuccessfulTransaction.attributes.timestamp, 'X').utc().startOf('day');
-      let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(historyStartDate, 'days');
+      let startDate = moment(startTimestamp, 'X').utc().startOf('day');
+      let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(startDate, 'days');
       let successfulNewTransactions = newTransactions.filter(txn => get(txn, 'attributes.transaction-successful'));
 
       for (let i = 0; i <= daysOfHistory; i++) {
-        let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
+        let timestamp = moment(startDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
         historyValues.push(buildHistoryValue({ asset, timestamp }));
       }
       for (let transaction of successfulNewTransactions) {
         historyValues.push(buildHistoryValue({ asset, transaction }));
       }
-      historyValues = sortBy(historyValues, [ 'attributes.timestamp', 'id']);
+      historyValues = uniqBy(indexedHistoryValues.concat(sortBy(historyValues, [ 'attributes.timestamp', 'id'])), 'id');
 
       log.trace(`deriving balance from history: ${JSON.stringify(historyValues, null, 2)}`);
       let balance = new BN(0);
@@ -236,6 +250,8 @@ module.exports = declareInjections({
 
         historyValue.attributes.balance = balance.toString();
       }
+      historyValues.filter(i => !indexedHistoryValuesIds.includes(i.id));
+
       return historyValues;
     }
 
