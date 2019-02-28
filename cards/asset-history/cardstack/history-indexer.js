@@ -188,20 +188,38 @@ module.exports = declareInjections({
     }
 
     async _buildNewHistoryValues(today, asset, transactions=[]) {
-      // TODO use the asset.relationships.transactions to see if the transactions array includes the
-      // first transactions, in which case we should add an initial 0 data point
       let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
+      let { data: [lastIndexedHistoryValue] } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+        filter: {
+          type: { exact: 'asset-history-values' },
+          'asset.id': { exact: asset.id.toLowerCase() }
+        },
+        page: { size: 1 },
+        sort: '-timestamp-ms'
+      });
+
       if (!successfulTransactions || !successfulTransactions.length) {
         // in this case we need to return history values for each day between the last indexed history value and today that
         // all have the same balance as the last indexed history value
-        return [];
+        if (!lastIndexedHistoryValue) { return []; }
+
+        let lastIndexedDate = moment(get(lastIndexedHistoryValue, 'attributes.timestamp-ms'), 'x').utc().startOf('day');
+        let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(lastIndexedDate, 'days');
+        let balance = get(lastIndexedHistoryValue, 'attributes.balance');
+
+        let newHistoryValues = [];
+        for (let i = 1; i <= daysOfHistory; i++) {
+          let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
+          newHistoryValues.push(buildHistoryValue({ asset, timestamp, balance }));
+        }
+        return newHistoryValues;
       }
 
       let historyValues = [];
       let historyStartDate = moment(successfulTransactions[0].attributes.timestamp, 'X').utc().startOf('day');
       let daysOfHistory = moment(today, 'YYYY-MM-DD').utc().diff(historyStartDate, 'days');
 
-      for (let i = 0; i <= daysOfHistory; i++) {
+      for (let i = lastIndexedHistoryValue ? 1 : 0; i <= daysOfHistory; i++) {
         let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
         historyValues.push(buildHistoryValue({ asset, timestamp }));
       }
@@ -256,11 +274,11 @@ function getTransactionsFromAssetIncludeds(asset, included=[]) {
   return results;
 }
 
-function buildHistoryValue({ asset, transaction, timestamp }) {
+function buildHistoryValue({ asset, transaction, timestamp, balance }) {
   let transactionUnixTime = get(transaction, 'attributes.timestamp');
   timestamp = transactionUnixTime ? transactionUnixTime * 1000 : timestamp;
   let transactionRelationship = transaction ? { type: transaction.type, id: transaction.id } : null;
-  return {
+  let historyValue = {
     id: `${asset.id}_${timestamp}${transaction ? '_' + transaction.id : ''}`,
     type: 'asset-history-values',
     attributes: { 'timestamp-ms': timestamp },
@@ -269,4 +287,8 @@ function buildHistoryValue({ asset, transaction, timestamp }) {
       transaction: { data: transactionRelationship }
     }
   };
+  if (balance != null) {
+    historyValue.attributes.balance = balance;
+  }
+  return historyValue;
 }
