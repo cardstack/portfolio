@@ -221,8 +221,7 @@ module.exports = declareInjections({
         sort: 'timestamp-ms'
       });
       let indexedHistoryValuesIds = indexedHistoryValues.map(i => i.id);
-      let startTimestamp = indexedHistoryValues.length ? get(indexedHistoryValues[indexedHistoryValues.length - 1], 'attributes.timestamp-ms') / 1000 :
-                                                         get(firstSuccessfulTransaction, 'attributes.timestamp');
+      let startTimestamp = get(firstSuccessfulTransaction, 'attributes.timestamp');
 
       let historyValues = [];
       let startDate = moment(startTimestamp, 'X').utc().startOf('day');
@@ -236,7 +235,7 @@ module.exports = declareInjections({
       for (let transaction of successfulNewTransactions) {
         historyValues.push(buildHistoryValue({ asset, transaction }));
       }
-      historyValues = uniqBy(indexedHistoryValues.concat(sortBy(historyValues, [ 'attributes.timestamp', 'id'])), 'id');
+      historyValues = sortBy(uniqBy(indexedHistoryValues.concat(historyValues), 'id'), [ 'attributes.timestamp', 'id' ]);
 
       log.trace(`deriving balance from history: ${JSON.stringify(historyValues, null, 2)}`);
       let balance = new BN(0);
