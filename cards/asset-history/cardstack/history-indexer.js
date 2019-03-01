@@ -209,7 +209,7 @@ module.exports = declareInjections({
 
         let newHistoryValues = [];
         for (let i = 1; i <= daysOfHistory; i++) {
-          let timestamp = moment(historyStartDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
+          let timestamp = moment(lastIndexedDate, 'YYYY-MM-DD').utc().startOf('day').add(i, 'day').valueOf();
           newHistoryValues.push(buildHistoryValue({ asset, timestamp, balance }));
         }
         return newHistoryValues;
