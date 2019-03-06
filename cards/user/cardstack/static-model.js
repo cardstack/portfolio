@@ -7,6 +7,7 @@ factory.addResource('content-types', 'portfolio-users')
       fieldType: '@cardstack/core-types::case-insensitive'
     }),
     factory.addResource('fields', 'password-hash').withAttributes({
+      editorOptions: { hideFromEditor: true },
       fieldType: '@cardstack/core-types::string'
     }),
     factory.addResource('fields', 'name').withAttributes({
