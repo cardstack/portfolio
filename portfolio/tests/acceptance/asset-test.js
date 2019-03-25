@@ -101,6 +101,7 @@ module('Acceptance | asset', function (hooks) {
   test('user sees asset history chart', async function(assert) {
     await visit(`/assets/${address}`);
 
+    await new Promise(res => setTimeout(() => res(), 2000)); // need to give highcharts a moment to render
     assert.dom('.highcharts-root').exists();
     let yAxisLabel = document.querySelector('.highcharts-yaxis-labels');
     let valueLabel = yAxisLabel.querySelectorAll('text')[1];
