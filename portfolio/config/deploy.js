@@ -2,7 +2,7 @@
 
 let sha = process.env.TRAVIS_COMMIT && process.env.TRAVIS_COMMIT.substring(0,8);
 let targetName = process.env.TARGET_NAME;
-let webhookURL = process.env.SLACK_WEB_HOOK;
+let webhookURL = process.env.WEBHOOK_URL;
 
 module.exports = function(deployTarget) {
 
