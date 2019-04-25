@@ -33,6 +33,7 @@ services:
       - GIT_PRIVATE_KEY
       - GIT_REPO
       - GIT_BRANCH_PREFIX
+      - WEBHOOK_URL
 
 networks:
   default:

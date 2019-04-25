@@ -2,6 +2,7 @@
 
 let sha = process.env.TRAVIS_COMMIT && process.env.TRAVIS_COMMIT.substring(0,8);
 let targetName = process.env.TARGET_NAME;
+let webhookURL = process.env.SLACK_WEB_HOOK;
 
 module.exports = function(deployTarget) {
 
@@ -58,7 +59,7 @@ module.exports = function(deployTarget) {
   // TODO add production target once it's setup
 
   ENV.slack = {
-    webhookURL: 'https://hooks.slack.com/services/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',
+    webhookURL,
     didDeploy: null,
     didActivate: function() {
       return function(slack) {

@@ -34,7 +34,7 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
   done
 
   #env agnostic env vars
-  for variable in TRAVIS_BRANCH ; do
+  for variable in TRAVIS_BRANCH WEBHOOK_URL; do
       command="export ${variable}=\$${variable}"
       eval $command
   done
