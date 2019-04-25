@@ -70,6 +70,7 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
             --env AWS_ACCESS_KEY_ID=$EMBER_DEPLOY_AWS_ACCESS_KEY_ID \
             --env TRAVIS_COMMIT \
             --env TARGET_NAME \
+            --env WEBHOOK_URL \
             --workdir /srv/hub/portfolio \
             tests ./node_modules/.bin/ember deploy $target_env --verbose
 fi
