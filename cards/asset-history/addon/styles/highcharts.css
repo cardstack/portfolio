@@ -1,6 +1,5 @@
  .highcharts-container {
-  --portfolio-chart-regular-text: "Open Sans Regular";
-  --portfolio-chart-bold-text: "Open Sans Bold";
+  --portfolio-chart-font-family: "Open Sans";
   --portfolio-chart-font-size: 14px;
   --portfolio-chart-sm-font: 12px;
   --portfolio-chart-light: #fff;
@@ -17,7 +16,7 @@
   z-index: 0;
   /* #1072 */
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: var(--portfolio-chart-regular-text), "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+  font-family: var(--portfolio-chart-font-family), "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
   font-size: var(--portfolio-chart-font-size);
 }
 
@@ -32,7 +31,6 @@
 
 .highcharts-strong {
   font-weight: bold;
-  font-family: var(--portfolio-chart-bold-text);
 }
 
 .highcharts-emphasized {
@@ -102,8 +100,7 @@
   fill: var(--portfolio-chart-light);
   cursor: default;
   font-size: var(--portfolio-chart-sm-font);
-  font-weight: 700;
-  font-family: var(--portfolio-chart-bold-text);
+  font-weight: bold;
 }
 
 .highcharts-grid-line {
@@ -301,7 +298,6 @@ g.highcharts-series,
 .highcharts-data-label {
   font-size: var(--portfolio-chart-sm-font);
   font-weight: bold;
-  font-family: var(--portfolio-chart-bold-text);
 }
 
 .highcharts-data-label-box {
@@ -483,9 +479,9 @@ g.highcharts-series,
 }
 
 .highcharts-loading-inner {
-  font-weight: bold;
   position: relative;
   top: 45%;
+  font-weight: bold;
 }
 
 /* Plot bands and polar pane backgrounds */
@@ -653,7 +649,6 @@ g.highcharts-series,
 .highcharts-button text {
   fill: var(--portfolio-chart-light);
   font-weight: bold;
-  font-family: var(--portfolio-chart-bold-text);
 }
 
 .highcharts-button-hover {
@@ -666,7 +661,6 @@ g.highcharts-series,
 .highcharts-button-hover text {
   fill: var(--portfolio-chart-hover-dark);
   font-weight: bold;
-  font-family: var(--portfolio-chart-bold-text);
 }
 
 .highcharts-button-pressed {
@@ -677,7 +671,6 @@ g.highcharts-series,
 .highcharts-button-pressed text {
   fill: #000;
   font-weight: bold;
-  font-family: var(--portfolio-chart-bold-text);
 }
 
 .highcharts-button-disabled text {
@@ -859,9 +852,9 @@ text.highcharts-drilldown-data-label,
 
 /* No-data module */
 .highcharts-no-data text {
-  font-weight: bold;
-  font-size: 12px;
   fill: #666666;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 /* Drag-panes module */

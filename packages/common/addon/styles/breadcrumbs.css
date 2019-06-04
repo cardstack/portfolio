@@ -35,9 +35,8 @@
   border-radius: 5px;
   background-color: var(--portfolio-white);
   color: var(--portfolio-black);
-  font-weight: 600;
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-sm-font);
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1.3;
   text-decoration: none;

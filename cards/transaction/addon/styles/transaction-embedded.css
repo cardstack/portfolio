@@ -23,13 +23,11 @@
 
 .transaction-embedded__title {
   margin: 0;
-  font-family: var(--portfolio-semibold-text);
   font-weight: 600;
 }
 
 .transaction-embedded__datetime {
   color: var(--portfolio-light-purple);
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-xs-font);
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -96,7 +94,7 @@
 }
 
 .transaction-embedded__amount {
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
 }
 .transaction-embedded__amount--fiat {
   color: var(--portfolio-muted-gray);
@@ -108,7 +106,7 @@
 }
 
 .transaction-embedded__address {
-  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
 }
 
 .transaction-embedded__status {
@@ -120,8 +118,8 @@
 
   border-radius: 5px;
   color: var(--portfolio-white);
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-xs-font);
+  font-weight: 600;
 }
 .transaction-embedded__status.transaction-successful {
   background-color: var(--portfolio-green);

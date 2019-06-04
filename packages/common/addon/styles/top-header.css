@@ -29,9 +29,8 @@
 .portfolio-top-header__title {
   margin: 0;
   padding: 5px;
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-sm-font);
+  font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.4;
   text-transform: uppercase;
@@ -55,9 +54,8 @@
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.5);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-sm-font);
+  font-weight: bold;
   letter-spacing: 0.2px;
   line-height: 1.5;
 }
@@ -95,8 +93,7 @@
   width: 35px;
   color: var(--portfolio-purple-gray);
   background-color: var(--portfolio-light-gray);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
   line-height: 1;
   text-transform: uppercase;
 }
