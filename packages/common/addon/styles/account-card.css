@@ -12,9 +12,8 @@
   padding: 15px 0;
   padding-left: 50px;
   color: var(--portfolio-white);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.4;
   text-transform: uppercase;

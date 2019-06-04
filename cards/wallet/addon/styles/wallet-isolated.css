@@ -47,9 +47,8 @@
 .wallet-isolated__title {
   margin: 0;
   /* padding-bottom: 6px; */
-  font-weight: 400;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: normal;
   letter-spacing: 0.2px;
   line-height: 1;
 }
@@ -84,9 +83,8 @@
 }
 .wallet-isolated__summary-value {
   color: var(--portfolio-green);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: bold;
   letter-spacing: 0.1px;
   line-height: 1.1;
   text-align: right;
@@ -99,9 +97,8 @@
 .wallet-isolated-section__title {
   display: inline-block;
   margin: 0;
-  font-weight: 400;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-med-font);
+  font-weight: normal;
   letter-spacing: 0.18px;
   line-height: 1.1;
 }

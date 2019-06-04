@@ -52,8 +52,8 @@
 
 .asset-embedded__title {
   margin: 0;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-med-font);
+  font-weight: bold;
   letter-spacing: 0.2px;
   line-height: 1.1;
   text-transform: uppercase;
@@ -65,7 +65,7 @@
 
 /* Balance summary */
 .asset-embedded__balance {
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.5;
   text-align: right;
@@ -94,9 +94,8 @@
 }
 
 .asset-embedded__details-item {
-  font-weight: 600;
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-xs-font);
+  font-weight: 600;
   letter-spacing: 0.1px;
   line-height: 1.5;
 }

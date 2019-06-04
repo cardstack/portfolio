@@ -54,8 +54,8 @@
 
 .asset-isolated__title {
   margin: 0;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-med-font);
+  font-weight: bold;
   letter-spacing: 0.2px;
   line-height: 1.1;
   text-transform: uppercase;
@@ -68,7 +68,7 @@
 /* Balance summary */
 .asset-isolated__balance {
   padding-bottom: 25px;
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.5;
 }
@@ -89,9 +89,8 @@
 /* Currency switcher buttons */
 .asset-isolated__currency > span {
   margin-left: -50px;
-  font-weight: 600;
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-xs-font);
+  font-weight: 600;
 }
 .asset-isolated__currency-switcher {
   display: inline-flex;
@@ -103,9 +102,8 @@
   background: none;
   border: 1px solid var(--portfolio-white);
   color: var(--portfolio-white);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-xs-font);
+  font-weight: bold;
   text-align: center;
 }
 .asset-isolated__currency-switcher > button:first-child {
@@ -150,9 +148,8 @@
   border-radius: 0 0 5px 5px;
 }
 .asset-isolated__details-item {
-  font-weight: 600;
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-sm-font);
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1.5;
 }
@@ -165,7 +162,6 @@
 .asset-isolated__details-item-title {
   margin: 0;
   color: var(--portfolio-light-purple);
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-sm-font);
   font-weight: normal;
   letter-spacing: 0;
@@ -176,7 +172,7 @@
   text-decoration: none;
   color: var(--portfolio-black);
   font-size: var(--portfolio-med-font);
-  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
   letter-spacing: 0.7px;
   line-height: 1.2;
   word-wrap: break-word;
@@ -220,7 +216,6 @@
   margin: 0;
   margin-bottom: 15px;
   padding: 10px 0;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-med-font);
   font-weight: normal;
   letter-spacing: 0;
@@ -264,7 +259,6 @@
   border-radius: 0 0 5px 5px;
   border-top: 1px solid var(--portfolio-border-gray);
   color: var(--portfolio-muted-gray);
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xs-font);
   line-height: 1.2;
   letter-spacing: 0.2px;

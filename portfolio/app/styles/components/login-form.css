@@ -11,9 +11,8 @@
 
 .login-form__title {
   margin: 0;
-  font-weight: 400;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: normal;
   letter-spacing: -0.1px;
   text-align: center;
 }
@@ -77,8 +76,6 @@
   border-radius: 5px;
   background-color: var(--portfolio-dark-purple);
   color: var(--portfolio-white);
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-sm-font);
 }
 .login-form__button:hover,
 .login-form__button:focus {

@@ -36,7 +36,6 @@
 
 .transaction-isolated__time {
   color: var(--portfolio-light-purple);
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-sm-font);
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -70,7 +69,7 @@
   display: block;
   color: var(--portfolio-black);
   font-size: var(--portfolio-med-font);
-  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
   letter-spacing: 0.7px;
   text-align: center;
   line-height: 19px;
@@ -85,8 +84,7 @@
 
 .transaction-isolated__amount {
   padding: 50px 0;
-  font-family: var(--portfolio-bold-text);
-  font-weight: 700;
+  font-weight: bold;
   letter-spacing: 0.2px;
   text-align: center;
 }
@@ -124,9 +122,8 @@
 }
 .transaction-isolated__address > dd {
   margin: 0;
-  font-family: var(--portfolio-semibold-text);
   font-size: var(--portfolio-med-font);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.7px;
   word-wrap: break-word;
   word-break: break-all;
@@ -137,7 +134,7 @@
   border-radius: 5px;
   background-color: var(--portfolio-green);
   color: var(--portfolio-white);
-  font-family: var(--portfolio-semibold-text);
+  font-weight: 600;
   font-size: var(--portfolio-sm-font);
 }
 .transaction-isolated__status-icon {
@@ -183,7 +180,6 @@
   margin: 0;
   margin-bottom: 15px;
   padding: 10px 0;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-med-font);
   font-weight: normal;
   letter-spacing: 0;
@@ -227,7 +223,6 @@
   border-radius: 0 0 5px 5px;
   border-top: 1px solid var(--portfolio-border-gray);
   color: var(--portfolio-muted-gray);
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xs-font);
   line-height: 1.2;
   letter-spacing: 0.2px;

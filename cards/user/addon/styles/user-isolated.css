@@ -19,9 +19,8 @@
 
 .user-isolated__title {
   margin: 0;
-  font-weight: 400;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: normal;
   letter-spacing: -0.1px;
 }
 .user-isolated__title > svg {
@@ -53,8 +52,7 @@
   position: absolute;
   width: calc(100% - 60px);
   margin: 0;
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
   text-align: center;
 }
 .user-isolated__message--error {
@@ -100,9 +98,8 @@
   align-items: center;
   color: var(--portfolio-purple-gray);
   background-color: var(--portfolio-light-gray);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: 40px;
+  font-weight: bold;
   line-height: 1;
 }
 .user-isolated__picture-avatar--default > svg {
@@ -119,8 +116,6 @@
   background: var(--portfolio-white);
   border: 1px solid var(--portfolio-border-gray);
   border-radius: 5px;
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-sm-font);
   color: var(--portfolio-red);
 }
 
@@ -159,10 +154,10 @@
   font-size: var(--portfolio-med-font);
 }
 .user-isolated__display-button {
-  border: none;
-  background: none;
   align-self: flex-start;
   padding: 15px;
+  background: none;
+  border: none;
 }
 .user-isolated__display-button > svg {
   fill: var(--portfolio-muted-gray);
@@ -211,8 +206,6 @@
   border-radius: 5px;
   background-color: var(--portfolio-dark-purple);
   color: var(--portfolio-white);
-  font-family: var(--portfolio-regular-text);
-  font-size: var(--portfolio-sm-font);
 }
 .user-isolated__button + .user-isolated__button {
   margin-left: 20px;

@@ -26,9 +26,8 @@
   margin: 0;
   padding: 10px 0;
   color: var(--portfolio-white);
-  font-weight: normal;
-  font-family: var(--portfolio-regular-text);
   font-size: 32px;
+  font-weight: normal;
   letter-spacing: -0.2px;
   line-height: 1.1;
 }
@@ -53,9 +52,8 @@
   padding-bottom: 6px;
 }
 .portfolio-isolated__summary-value {
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: bold;
   letter-spacing: 0.1px;
   line-height: 1.1;
   text-align: right;
@@ -97,7 +95,6 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: var(--portfolio-med-font);
   text-align: center;
-  color: var(--portfolio-muted-gray);
   text-decoration: none;
 }
 .portfolio-isolated-filters__item.active,
@@ -105,8 +102,7 @@
 .portfolio-isolated-filters__item:focus {
   border-color: var(--portfolio-white);
   color: var(--portfolio-white);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
+  font-weight: bold;
   cursor: pointer;
   user-select: none;
 }
@@ -121,7 +117,6 @@
 .portfolio-isolated__main-title {
   margin: 0;
   padding-bottom: 25px;
-  font-family: var(--portfolio-regular-text);
   font-size: var(--portfolio-med-font);
   font-weight: normal;
   letter-spacing: -0.1px;
@@ -164,9 +159,8 @@
 }
 .currency-totals__summary-value {
   color: var(--portfolio-green);
-  font-weight: 700;
-  font-family: var(--portfolio-bold-text);
   font-size: var(--portfolio-xl-font);
+  font-weight: bold;
   letter-spacing: 0.1px;
   line-height: 1.1;
   text-align: right;
@@ -174,8 +168,7 @@
 
 .currency-title {
   margin: 0;
-  font-weight: 400;
-  font-family: var(--portfolio-regular-text);
+  font-weight: normal;
   font-size: var(--portfolio-xl-font);
   letter-spacing: 0.2px;
   line-height: 1;
