@@ -44,6 +44,20 @@ factory.addResource('content-types', 'wallets')
     })
   ]);
 
+  factory.addResource('grants', 'wallet-global-grant')
+    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+    .withRelated('types', [
+      { type: 'content-types', id: 'wallets' },
+    ])
+    .withAttributes({
+      'may-read-resource': true,
+      'may-read-fields': true,
+      'may-create-resource': false,
+      'may-update-resource': false,
+      'may-delete-resource': false,
+      'may-write-fields': false,
+    });
+
   factory.addResource('grants', 'wallet-self-grant')
     .withRelated('who', [{ type: 'fields', id: 'user' }])
     .withRelated('types', [

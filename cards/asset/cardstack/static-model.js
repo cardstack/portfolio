@@ -68,8 +68,7 @@ factory.addResource('content-types', 'assets')
       'computed-field-type': 'portfolio-asset::network-asset',
     }),
     factory.addResource('computed-fields', 'network-balance').withAttributes({
-      'computed-field-type': '@cardstack/core-types::alias',
-      params: { aliasPath: 'network-asset.balance' }
+      'computed-field-type': 'portfolio-asset::network-balance'
     }),
     factory.addResource('computed-fields', 'asset-history').withAttributes({
       'computed-field-type': '@cardstack/core-types::correlate-by-field',

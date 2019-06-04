@@ -11,7 +11,7 @@ const scenario = new Fixtures({
       });
 
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
-      title: 'My Portfolio'
+      title: 'My Cardfolio'
     }).withRelated('user', factory.addResource('portfolio-users', 'test-user').withAttributes({
       name: 'Hassan Abdel-Rahman',
       'email-address': 'hassan@example.com',

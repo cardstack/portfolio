@@ -107,7 +107,7 @@ describe('portfolio-register', function () {
       });
 
       expect(portfolios.length).to.equal(1);
-      expect(portfolios[0]).to.have.deep.property('attributes.title', 'My Portfolio');
+      expect(portfolios[0]).to.have.deep.property('attributes.title', 'My Cardfolio');
       expect(portfolios[0].relationships.wallets.data).to.eql([]);
     });
 

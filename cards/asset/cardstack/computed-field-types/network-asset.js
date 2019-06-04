@@ -7,7 +7,7 @@ exports.compute = async function(model) {
   let type = await network.getField('asset-type');
   if (!type) { return; }
 
-  let id = (await model.getField('id')).toLowerCase();
+  let id = model.id.toLowerCase().split('_')[0];
 
   return { type, id };
 };

@@ -122,7 +122,7 @@ module.exports = declareInjections({
             await this.writers.create(Session.INTERNAL_PRIVILEGED, 'portfolios', {
               data: {
                 type: 'portfolios',
-                attributes: { title: 'My Portfolio' },
+                attributes: { title: 'My Cardfolio' },
                 relationships: {
                   wallets: { data: [] },
                   user: { data: { type, id } }

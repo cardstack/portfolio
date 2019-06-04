@@ -1,4 +1,4 @@
-exports.type = '@cardstack/core-types::integer';
+exports.type = '@cardstack/core-types::string';
 
 exports.compute = async function(model) {
   let network = await model.getRelated('network');
@@ -6,14 +6,17 @@ exports.compute = async function(model) {
 
   if (!network || !asset) { return; }
 
+  let tokenSymbol = (await network.getField('unit')).toLowerCase();
+
+
   let contentType = await network.getField('asset-type');
   if (!contentType) { return; }
 
   if (['ethereum-addresses', 'mock-addresses'].includes(contentType)) {
-    let transactions = await asset.getRelated('transactions');
-    if (!transactions || !transactions.length) { return; }
-
-    return await transactions[transactions.length - 1].getField('timestamp');
+    return (await asset.getField('balance'));
   }
 
+  if (contentType === `${tokenSymbol}-token-balance-ofs`) {
+    return (await asset.getField('mapping-number-value'));
+  }
 };

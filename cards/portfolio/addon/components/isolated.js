@@ -1,7 +1,9 @@
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 import { computed } from '@ember/object';
-import { readOnly, equal, sort } from '@ember/object/computed';
+import { equal, sort, not } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { task, waitForProperty } from 'ember-concurrency';
 
 const OVERVIEW = {
   title: 'overview',
@@ -29,10 +31,10 @@ const SORTINGOPTIONS = [
 
 export default LiveIsolatedCard.extend({
   layout,
+  store: service(),
+  web3: service(),
+  erc20: service(),
   isDismissed: false,
-  // TODO: need to access network names within the given wallet. using the first wallet for now
-  network: readOnly('content.wallets.[].firstObject'),
-  assets: readOnly('network.assets.[]'),
   activeSection: OVERVIEW,
   isOverviewActive: equal('activeSection.title', 'overview'),
   isAssetsSection: equal('activeSection.title', 'assets'),
@@ -42,6 +44,75 @@ export default LiveIsolatedCard.extend({
   selected: DEFAULTSORT,
   sortedAssets: sort('assets.[]', 'sortAssetsByBalance'),
   sortBy: 'networkBalance',
+  metamaskWallet: null,
+  assets: computed('content.wallets.[].network.assets.[]', function() {
+    return this.store.peekAll('asset');
+  }),
+  loadingAssets: true,
+  isWeb3Loaded: not('web3.isLoading'),
+
+  async init() {
+    this._super(arguments);
+
+    if (this.web3.provider && this.web3.provider.isMetaMask) {
+      await this.getMetamaskWallet.perform();
+    }
+
+    this.set('loadingAssets', false);
+  },
+
+  getMetamaskWallet: task(function * () {
+    yield waitForProperty(this, 'isWeb3Loaded');
+
+    let address = this.web3.address;
+    let metamaskWallet = yield this.store.findRecord('wallet', 'metamask-wallet');
+
+    this.set('metamaskWallet', metamaskWallet);
+
+    yield this.getAssetsForWallet.perform(address);
+
+    this.content.get('wallets').pushObject(this.get('metamaskWallet'));
+
+    yield this.content.save();
+  }),
+
+  getAssetsForWallet: task(function * (address) {
+    yield this.addAssetToWallet.perform(address, 'ether');
+
+    for (let token of this.erc20.tokens()) {
+      let tokenName = token.symbol.toLowerCase();
+      let balanceOf;
+
+      try {
+        balanceOf = yield this.store.findRecord(`${tokenName}-token-balance-of`, address.toLowerCase());
+      } catch (e) {
+        return;
+      }
+
+      if (balanceOf) {
+        yield this.addAssetToWallet.perform(`${address}_${tokenName}-token`, tokenName);
+      }
+    }
+  }),
+
+  addAssetToWallet: task(function * (assetId, networkId) {
+    let asset;
+    let network = yield this.store.findRecord('network', networkId);
+
+    try {
+      asset = yield this.store.findRecord('asset', assetId);
+    } catch (e) {
+      asset = this.store.createRecord('asset', {
+        id: assetId,
+        network,
+        todaysRatesLookup: this.content.todaysRatesLookup
+      });
+
+      yield asset.save();
+    }
+
+    this.get('metamaskWallet.assets').pushObject(asset);
+  }),
 
   isAscending: computed('selected', function() {
     let selection = this.selected;
