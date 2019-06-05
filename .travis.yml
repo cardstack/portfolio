@@ -40,15 +40,11 @@ deploy:
     on:
       branch: master
 
-  # This environment is used to test your own branches. All you have to do
-  # is just push a commit that has the `branch` field below set to the name
-  # of your branch, and update the `branches` item above.
-  #
   - provider: script
     skip_cleanup: true
-    script: TARGET_NAME='sandbox-portfolio.stack.cards' deploy/deploy.sh sandbox $TRAVIS_BRANCH
+    script: TARGET_NAME='staging-rinkeby-cardfolio.stack.cards' deploy/deploy.sh staging_rinkeby $TRAVIS_BRANCH
     on:
-      branch: my_feature_branch
+      branch: master
 
 notifications:
   email: false
