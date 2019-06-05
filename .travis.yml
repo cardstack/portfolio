@@ -10,7 +10,7 @@ branches:
   only:
   - master
     # make sure to include any branches you want to deploy to sandbox env here as well
-  - my_feature_branch
+  - staging-rinkeby
 
 services:
   - docker
@@ -39,6 +39,12 @@ deploy:
     script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
     on:
       branch: master
+
+  - provider: script
+    skip_cleanup: true
+    script: TARGET_NAME='staging-rinkeby-cardfolio.stack.cards' deploy/deploy.sh staging_rinkeby $TRAVIS_BRANCH
+    on:
+      branch: staging-rinkeby
 
 notifications:
   email: false
