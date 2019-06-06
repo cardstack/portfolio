@@ -9,8 +9,6 @@ dist: trusty
 branches:
   only:
   - master
-    # make sure to include any branches you want to deploy to sandbox env here as well
-  - staging-rinkeby
 
 services:
   - docker
@@ -44,7 +42,7 @@ deploy:
     skip_cleanup: true
     script: TARGET_NAME='staging-rinkeby-cardfolio.stack.cards' deploy/deploy.sh staging_rinkeby $TRAVIS_BRANCH
     on:
-      branch: staging-rinkeby
+      branch: master
 
 notifications:
   email: false

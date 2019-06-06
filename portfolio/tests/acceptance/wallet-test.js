@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, /*test,*/ skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
