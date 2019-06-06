@@ -40,11 +40,5 @@ deploy:
     on:
       branch: master
 
-  - provider: script
-    skip_cleanup: true
-    script: TARGET_NAME='staging-rinkeby-cardfolio.stack.cards' deploy/deploy.sh staging_rinkeby $TRAVIS_BRANCH
-    on:
-      branch: master
-
 notifications:
   email: false
