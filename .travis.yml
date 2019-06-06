@@ -9,6 +9,7 @@ dist: trusty
 branches:
   only:
   - master
+  - staging-rinkeby
 
 services:
   - docker
@@ -42,7 +43,7 @@ deploy:
     skip_cleanup: true
     script: TARGET_NAME='staging-rinkeby-cardfolio.stack.cards' deploy/deploy.sh staging_rinkeby $TRAVIS_BRANCH
     on:
-      branch: master
+      branch: staging-rinkeby
 
 notifications:
   email: false
