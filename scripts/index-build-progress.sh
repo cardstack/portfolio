@@ -12,7 +12,7 @@ do
 
   if [ ! -z "$IS_COMPLETE" ]; then
     echo ">>> ${INDEX}. ${GREEN}✔ ${IP_ADDRESS} has completed indexing successfully${NORMAL}"
-  elif [ ! -z "${FAILED}"]; then
+  elif [ ! -z "${FAILED}" ]; then
     echo ">>> ${INDEX}. ${RED}x ${IP_ADDRESS} has failed indexing.${NORMAL}"
   else
     echo ">>> ${INDEX}. ${IP_ADDRESS} has not yet completed indexing."

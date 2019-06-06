@@ -49,11 +49,11 @@ module.exports = function(deployTarget) {
     ENV.cloudfront.distribution = 'E1CIK0HN4J83GC';
   }
 
-  if (deployTarget === 'sandbox') {
+  if (deployTarget === 'staging_rinkeby') {
     ENV.build.environment = 'production';
-    ENV.s3Assets.bucket = ENV.s3Pages.bucket = 'sandbox-portfolio-web';
+    ENV.s3Assets.bucket = ENV.s3Pages.bucket = 'staging-rinkeby-cardfolio-web';
     ENV.s3Assets.region = ENV.s3Pages.region = 'us-east-1';
-    ENV.cloudfront.distribution = 'E3CSIGW8EYWIKN';
+    ENV.cloudfront.distribution = 'EEW2IKOFKMVX4';
   }
 
   // TODO add production target once it's setup
