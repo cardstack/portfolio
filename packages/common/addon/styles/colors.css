@@ -66,4 +66,5 @@
 
   --cardfolio-purple-gradient: linear-gradient(45deg, #3023ae 0%, #c86dd7 100%), #834bc4;
   --cardfolio-box-shadow: rgba(0, 0, 0, 0.5);
+  --portfolio-grey-ether-gradient: linear-gradient(135deg, #aaaab1 0%,#fff 50%, #aaaab1 100%);
 }

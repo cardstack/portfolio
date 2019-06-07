@@ -14,7 +14,7 @@
   background: var(--portfolio-bitcoin-gradient);
 }
 .asset-embedded--ether {
-  background: var(--portfolio-ether-gradient);
+  background: var(--portfolio-grey-ether-gradient);
 }
 .asset-embedded--litecoin {
   background: var(--portfolio-litecoin-gradient);
@@ -26,13 +26,13 @@
 .asset-embedded__link {
   display: block;
   text-decoration: none;
-  color: var(--portfolio-white);
+  color: var(--portfolio-black);
   font-size: var(--portfolio-sm-font);
   letter-spacing: 0.2px;
 }
 
 .asset-embedded__wrapper {
-  padding: 20px;
+  padding: 5px; 
 }
 
 .asset-embedded__header {
@@ -52,34 +52,58 @@
 
 .asset-embedded__title {
   margin: 0;
-  font-size: var(--portfolio-med-font);
+  font-size: var(--portfolio-xs-font);
   font-weight: bold;
   letter-spacing: 0.2px;
   line-height: 1.1;
   text-transform: uppercase;
+  margin-right: 20px;
+  align-self: center-start;
 }
 
 .asset-embedded__logo {
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.asset-embedded__address {
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-xs-font);
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  line-height: 1.5;
+  flex-shrink: 3;
+  max-width: 150px;
+  word-wrap: break-word;
 }
 
 /* Balance summary */
 .asset-embedded__balance {
-  font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.5;
-  text-align: right;
+  margin-left: 20px;
 }
+.asset-embedded__balance > .asset-embedded__balance-title {
+  color: var(--portfolio-muted-gray);
+  font-size: var(--portfolio-xs-font);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  text-align: left;
+}
+
 .asset-embedded__balance-main {
   padding-bottom: 10px;
   font-size: 36px;
   line-height: 1;
+  text-align: left;
 }
 .asset-embedded__balance-main > span {
   font-size: var(--portfolio-sm-font);
 }
 .asset-embedded__balance-fiat {
   font-size: var(--portfolio-sm-font);
+  text-align: left;
+  font-weight: 600;
 }
 
 .asset-embedded__details {
@@ -98,4 +122,9 @@
   font-weight: 600;
   letter-spacing: 0.1px;
   line-height: 1.5;
+}
+
+.asset-embedded__balance-threedots {
+  color: var(--portfolio-muted-gray);
+  text-align: right;
 }
