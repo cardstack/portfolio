@@ -37,7 +37,7 @@ class AddMockTransaction {
 
       let fromModel, toModel;
       try {
-        fromModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', fromAddress.toLowerCase());
+        fromModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'local-hub', 'ethereum-addresses', fromAddress.toLowerCase());
       } catch (e) {
         if (e.status !== 404) {
           ctxt.status = 400;
@@ -46,7 +46,7 @@ class AddMockTransaction {
       }
       if (toAddress) {
         try {
-          toModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', toAddress.toLowerCase());
+          toModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'local-hub', 'ethereum-addresses', toAddress.toLowerCase());
         } catch (e) {
           if (e.status !== 404) {
             ctxt.status = 400;
