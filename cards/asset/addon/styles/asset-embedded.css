@@ -41,13 +41,14 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
+  padding-top: 20px;
 }
 
 .asset-embedded__title-row {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .asset-embedded__title {
@@ -55,7 +56,7 @@
   font-size: var(--portfolio-xs-font);
   font-weight: bold;
   letter-spacing: 0.2px;
-  line-height: 1.1;
+  line-height: 1.5;
   text-transform: uppercase;
   margin-right: 20px;
   align-self: center-start;
@@ -74,6 +75,7 @@
   flex-shrink: 3;
   max-width: 150px;
   word-wrap: break-word;
+  margin: 0;
 }
 
 /* Balance summary */
