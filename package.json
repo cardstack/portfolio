@@ -34,7 +34,7 @@
     "test": "mocha ./node-test-runner.js --timeout 10000 && cd portfolio && node ./node_modules/.bin/ember test",
     "card-tests": "cd portfolio && node ./node_modules/.bin/ember test",
     "node-tests": "mocha ./node-test-runner.js --timeout 10000",
-    "lint": "eslint . --cache"
+    "lint": "eslint . --cache --parser espree"
   },
   "workspaces": [
     "cards/*",

@@ -18,7 +18,7 @@ export default Service.extend({
 
     try {
       yield this.get('session').authenticate('authenticator:cardstack', this.get('source'), { email, password });
-    } catch(err) {
+    } catch (err) {
       message = err.message;
     }
 
