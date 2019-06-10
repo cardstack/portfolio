@@ -10,7 +10,7 @@ const cardDir = join(__dirname, '../../');
 let factory, env, writers, searchers, sessions, user, network;
 
 async function createAsset(attributes={}) {
-  let { data: asset } = await writers.create('master', env.session, 'assets', {
+  let { data: asset } = await writers.create(env.session, 'assets', {
     data: {
       type: 'assets',
       attributes,
@@ -66,7 +66,7 @@ describe('assets', function () {
     it('allows anonymous read of an asset', async function () {
       let { id, type } = await createAsset();
 
-      let result = await searchers.getFromControllingBranch(null,  type, id);
+      let result = await searchers.get(null, 'local-hub', type, id);
       let { data, included } = result;
 
       expect(data).to.have.deep.property('relationships.network.data.id', network.id);
@@ -80,7 +80,7 @@ describe('assets', function () {
     it('does not allow anonymous create of an asset', async function () {
       let error;
       try {
-        await writers.create('master', null, 'assets', {
+        await writers.create(null, 'assets', {
           data: {
             type: 'assets',
             relationships: {
@@ -95,7 +95,7 @@ describe('assets', function () {
     });
 
     it('allows a user to create an asset', async function () {
-      let { data, included } = await writers.create('master', sessions.create(user.type, user.id), 'assets', {
+      let { data, included } = await writers.create(sessions.create(user.type, user.id), 'assets', {
         data: {
           type: 'assets',
           relationships: {
@@ -119,7 +119,7 @@ describe('assets', function () {
 
       let error;
       try {
-        await writers.update('master', sessions.create(user.type, user.id), type, id, {
+        await writers.update(sessions.create(user.type, user.id), type, id, {
           data: asset
         });
       } catch (e) {
@@ -133,7 +133,7 @@ describe('assets', function () {
 
       let error;
       try {
-        await writers.delete('master', sessions.create(user.type, user.id), version, type, id);
+        await writers.delete(sessions.create(user.type, user.id), version, type, id);
       } catch (e) {
         error = e;
       }

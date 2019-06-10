@@ -5,12 +5,7 @@ const moment = require('moment-timezone');
 
 module.exports = declareInjections({
   searchers: 'hub:searchers',
-  controllingBranch: 'hub:controlling-branch'
 }, class CryptoCompareIndexer {
-
-  async branches() {
-    return [this.controllingBranch.name];
-  }
 
   async beginUpdate() {
     return new Updater(this.searchers, this.dataSource.id, this.toFiatCurrencies, this.fromCryptoCurrencies);
@@ -40,7 +35,7 @@ class Updater {
     for (let fromCurrency of this.fromCryptoCurrencies) {
       for (let toCurrency of this.toFiatCurrencies) {
         let id = `${fromCurrency}_${toCurrency}_${today}`;
-        await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'crypto-compares', id);
+        await this.searchers.get(Session.INTERNAL_PRIVILEGED, 'local-hub', 'crypto-compares', id);
         rates.push({ type: 'crypto-compares', id });
       }
     }

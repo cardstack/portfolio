@@ -4,13 +4,8 @@ const log = require('@cardstack/logger')('portfolio/asset-history/indexer');
 
 module.exports = declareInjections({
   searchers: 'hub:searchers',
-  controllingBranch: 'hub:controlling-branch',
   historyIndexer: `plugin-services:${require.resolve('./history-indexer')}`
 }, class AssetHistoryIndexer {
-
-    async branches() {
-      return [this.controllingBranch.name];
-    }
 
     async beginUpdate() {
       await this.historyIndexer.start({

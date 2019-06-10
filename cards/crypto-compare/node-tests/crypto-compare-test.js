@@ -69,7 +69,7 @@ describe('crypto-compare', function () {
     it('creates a crypto-compare-current-rates/today resource when the indexers update', async function() {
       const today = now.format('YYYY-MM-DD');
 
-      let { data, included } = await searchers.get(env.session, 'master', 'crypto-compare-current-rates', 'today');
+      let { data, included } = await searchers.get(env.session, 'local-hub', 'crypto-compare-current-rates', 'today');
 
       let rates = data.relationships.rates.data;
       expect(rates).to.have.deep.members([
@@ -95,7 +95,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=USD&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_USD_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: 'crypto-compares',
           'from-crypto-currency': { exact: 'BTC' },
@@ -119,7 +119,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'BTC',
@@ -143,7 +143,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=ETH&tsym=USD&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, ETH_USD_1514764800);
 
-      let { data: result } = await searchers.get(env.session, 'master', 'crypto-compares', 'ETH_USD_2018-01-01');
+      let { data: result } = await searchers.get(env.session, 'local-hub', 'crypto-compares', 'ETH_USD_2018-01-01');
 
       expect(result).to.have.property('id', 'ETH_USD_2018-01-01')
       expect(result).to.have.property('type', 'crypto-compares');
@@ -161,7 +161,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=ETH&tsym=EUR&toTs=${expectedTimestamp}&api_key=TEST_KEY`)
         .reply(200, ETH_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'ETH',
@@ -185,12 +185,12 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=ETH&tsym=USD&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, ETH_USD_1514764800);
 
-      await searchers.get(env.session, 'master', 'crypto-compares', 'ETH_USD_2018-01-01');
+      await searchers.get(env.session, 'local-hub', 'crypto-compares', 'ETH_USD_2018-01-01');
 
       await sleep(5000);
 
       // expect this to not throw error since nock instantiates only 1 interceptor for the crypto compare HTTP request
-      await searchers.get(env.session, 'master', 'crypto-compares', 'ETH_USD_2018-01-01');
+      await searchers.get(env.session, 'local-hub', 'crypto-compares', 'ETH_USD_2018-01-01');
     });
 
     it('does not retrieve non-supported crypto currency', async function() {
@@ -198,7 +198,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'XRP',
@@ -210,7 +210,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'XRP_USD_2018-01-01');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'XRP_USD_2018-01-01');
       } catch (e) {
         error = e;
       }
@@ -222,7 +222,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'BTC',
@@ -234,7 +234,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'BTC_GBP_2018-01-01');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'BTC_GBP_2018-01-01');
       } catch (e) {
         error = e;
       }
@@ -248,7 +248,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=${todayAsTimestamp}&api_key=TEST_KEY`)
         .reply(200, ETH_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'BTC',
@@ -260,7 +260,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', `BTC_EUR_${tomorrow}`);
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', `BTC_EUR_${tomorrow}`);
       } catch (e) {
         error = e;
       }
@@ -272,7 +272,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'BTC',
@@ -284,7 +284,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'BTC_EUR_not-a-date');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'BTC_EUR_not-a-date');
       } catch (e) {
         error = e;
       }
@@ -296,7 +296,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'from-crypto-currency': 'BTC',
@@ -307,7 +307,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'BTC_2018-01-01');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'BTC_2018-01-01');
       } catch (e) {
         error = e;
       }
@@ -319,7 +319,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'to-fiat-currency': 'EUR',
@@ -330,7 +330,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'EUR_2018-01-01');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'EUR_2018-01-01');
       } catch (e) {
         error = e;
       }
@@ -342,7 +342,7 @@ describe('crypto-compare', function () {
         .get(`${cryptoComparePath}?fsym=BTC&tsym=EUR&toTs=1514764800&api_key=TEST_KEY`)
         .reply(200, BTC_EUR_1514764800);
 
-      let { data: results } = await searchers.search(env.session, 'master', {
+      let { data: results } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'crypto-compares' },
           'to-fiat-currency': 'EUR',
@@ -353,7 +353,7 @@ describe('crypto-compare', function () {
 
       let error;
       try {
-        await searchers.get(env.session, 'master', 'crypto-compares', 'BTC_EUR');
+        await searchers.get(env.session, 'local-hub', 'crypto-compares', 'BTC_EUR');
       } catch (e) {
         error = e;
       }

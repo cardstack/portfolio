@@ -15,7 +15,7 @@ let factory, env, searchers, request;
 
 async function createUser(email, password = 'my secrets', name = 'Van Gogh') {
   let writers = env.lookup('hub:writers');
-  let { data: user } = await writers.create('master', env.session, 'portfolio-users', {
+  let { data: user } = await writers.create(env.session, 'portfolio-users', {
     data: {
       type: 'portfolio-users',
       attributes: {
@@ -71,7 +71,7 @@ describe('portfolio-register', function () {
       });
       expect(response).hasStatus(200);
 
-      let { data: users } = await searchers.search(env.session, 'master', {
+      let { data: users } = await searchers.search(env.session, {
         filter: { type: { exact: 'portfolio-users' } }
       })
 
@@ -94,11 +94,11 @@ describe('portfolio-register', function () {
         }
       });
 
-      let { data: [ { id, type } ] } = await searchers.search(env.session, 'master', {
+      let { data: [ { id, type } ] } = await searchers.search(env.session, {
         filter: { type: { exact: 'portfolio-users' } }
       });
 
-      let { data: portfolios } = await searchers.search(env.session, 'master', {
+      let { data: portfolios } = await searchers.search(env.session, {
         filter: {
           type: { exact: 'portfolios' },
           'user.id': { exact: id },

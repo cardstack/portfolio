@@ -13,7 +13,7 @@ let factory, env, searchers, sessions, request;
 
 async function createUser(email, password="my secrets", name="Van Gogh") {
   let writers = env.lookup('hub:writers');
-  let { data: user } = await writers.create('master', env.session, 'portfolio-users', {
+  let { data: user } = await writers.create(env.session, 'portfolio-users', {
     data: {
       type: 'portfolio-users',
       attributes: {
@@ -58,7 +58,7 @@ describe('portfolio-users', function () {
 
       let error;
       try {
-        await searchers.getFromControllingBranch(vanGoghSession, hassan.type, hassan.id);
+        await searchers.get(vanGoghSession, 'local-hub', hassan.type, hassan.id);
       } catch (e) {
         error = e;
       }
@@ -69,7 +69,7 @@ describe('portfolio-users', function () {
     it('does not expose password-hash when getting a user', async function () {
       let { id, type } = await createUser('hassan@example.com', 'abc123');
       let session = sessions.create(type, id);
-      let { data: self } = await searchers.getFromControllingBranch(session, type, id);
+      let { data: self } = await searchers.get(session, 'local-hub', type, id);
 
       expect(self.attributes).to.not.have.property('password-hash');
     });

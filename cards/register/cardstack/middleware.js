@@ -20,7 +20,6 @@ function addCorsHeaders(response) {
 module.exports = declareInjections({
   writers: 'hub:writers',
   searchers: 'hub:searchers',
-  controllingBranch: 'hub:controlling-branch',
   sessions: 'hub:sessions'
 },
 
@@ -40,7 +39,6 @@ module.exports = declareInjections({
     }
 
     _register() {
-      const branch = this.controllingBranch.name;
       return route.post(`/${prefix}`, compose([
         koaJSONBody({ limit: '1mb' }),
         async (ctxt) => {
@@ -91,7 +89,7 @@ module.exports = declareInjections({
               return;
             }
 
-            let { data: existingUsers } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, branch, {
+            let { data: existingUsers } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, {
               filter: {
                 type: { exact: 'portfolio-users' },
                 'email-address': { exact: email }
@@ -111,7 +109,7 @@ module.exports = declareInjections({
 
             let hash = await hashPassword(password);
 
-            let { data: { id, type } } = await this.writers.create(branch, Session.INTERNAL_PRIVILEGED, 'portfolio-users', {
+            let { data: { id, type } } = await this.writers.create(Session.INTERNAL_PRIVILEGED, 'portfolio-users', {
               data: {
                 type: 'portfolio-users',
                 attributes: {
@@ -121,7 +119,7 @@ module.exports = declareInjections({
                 }
               }
             });
-            await this.writers.create(branch, Session.INTERNAL_PRIVILEGED, 'portfolios', {
+            await this.writers.create(Session.INTERNAL_PRIVILEGED, 'portfolios', {
               data: {
                 type: 'portfolios',
                 attributes: { title: 'My Portfolio' },
@@ -133,7 +131,7 @@ module.exports = declareInjections({
             });
 
             let userSession = this.sessions.create(type, id);
-            let readAuthorizedUser = await this.searchers.getFromControllingBranch(userSession, type, id);
+            let readAuthorizedUser = await this.searchers.get(userSession, 'local-hub', type, id);
 
             ctxt.status = 200;
             ctxt.body = readAuthorizedUser;

@@ -15,7 +15,7 @@ let factory, env, searchers, request, auth;
 
 async function createUser(email, password = 'my secrets', name = 'Van Gogh') {
   let writers = env.lookup('hub:writers');
-  let { data: user } = await writers.create('master', env.session, 'portfolio-users', {
+  let { data: user } = await writers.create(env.session, 'portfolio-users', {
     data: {
       type: 'portfolio-users',
       attributes: {
@@ -77,7 +77,7 @@ describe('portfolio-users', function () {
 
       expect(response).hasStatus(200);
 
-      let { data: user } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: user } = await searchers.get(env.session, 'local-hub', type, id);
       expect(await comparePassword('password2', user.attributes['password-hash'])).to.equal(true);
     });
 
@@ -103,7 +103,7 @@ describe('portfolio-users', function () {
       });
 
       expect(user).to.have.deep.property('attributes.name', 'Hassan');
-      user = (await searchers.getFromControllingBranch(env.session, type, id)).data;
+      user = (await searchers.get(env.session, 'local-hub', type, id)).data;
 
       expect(user).to.have.deep.property('attributes.name', 'Hassan');
     });
@@ -118,7 +118,7 @@ describe('portfolio-users', function () {
       });
 
       expect(user).to.have.deep.property('attributes.email-address', 'vangogh@example.com');
-      user = (await searchers.getFromControllingBranch(env.session, type, id)).data;
+      user = (await searchers.get(env.session, 'local-hub', type, id)).data;
 
       expect(user).to.have.deep.property('attributes.email-address', 'vangogh@example.com');
     });
@@ -133,7 +133,7 @@ describe('portfolio-users', function () {
       });
 
       expect(user).to.have.deep.property('attributes.email-address', 'hassan@example.com');
-      user = (await searchers.getFromControllingBranch(env.session, type, id)).data;
+      user = (await searchers.get(env.session, 'local-hub', type, id)).data;
 
       expect(user).to.have.deep.property('attributes.email-address', 'hassan@example.com');
     });
@@ -186,7 +186,7 @@ describe('portfolio-users', function () {
 
     it('does not change password when supplied current password does not match existing current password', async function () {
       let { token, user: { id, type } } = await createUser('hassan@example.com', 'password1');
-      let { data: { attributes: { 'password-hash': hash } } } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: { attributes: { 'password-hash': hash } } } = await searchers.get(env.session, 'local-hub', type, id);
       let response = await request.post('/update-profile').set('authorization', `Bearer ${token}`).send({
         data: {
           type, id,
@@ -202,13 +202,13 @@ describe('portfolio-users', function () {
         detail: "The provided current-password does not match the current password"
       });
 
-      let { data: user } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: user } = await searchers.get(env.session, 'local-hub', type, id);
       expect(hash).to.equal(user.attributes['password-hash']);
     });
 
     it('does not change password when new password is too short', async function () {
       let { token, user: { id, type } } = await createUser('hassan@example.com', 'password1');
-      let { data: { attributes: { 'password-hash': hash } } } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: { attributes: { 'password-hash': hash } } } = await searchers.get(env.session, 'local-hub', type, id);
       let response = await request.post('/update-profile').set('authorization', `Bearer ${token}`).send({
         data: {
           type, id,
@@ -224,7 +224,7 @@ describe('portfolio-users', function () {
         detail: `The provided new password is less than 8 characters`
       });
 
-      let { data: user } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: user } = await searchers.get(env.session, 'local-hub', type, id);
       expect(hash).to.equal(user.attributes['password-hash']);
     });
 
@@ -245,7 +245,7 @@ describe('portfolio-users', function () {
         detail: "A user with this email address already exists"
       });
 
-      let { data: user } = await searchers.getFromControllingBranch(env.session, type, id);
+      let { data: user } = await searchers.get(env.session, 'local-hub', type, id);
       expect(user).to.have.deep.property('attributes.email-address', 'hassan@example.com');
     });
   });

@@ -11,7 +11,7 @@ let factory, env, writers, searchers, sessions, user1, user2;
 
 async function createWallet(user, attributes={}) {
   let { id, type } = user;
-  let { data: wallet } = await writers.create('master', env.session, 'wallets', {
+  let { data: wallet } = await writers.create(env.session, 'wallets', {
     data: {
       type: 'wallets',
       attributes,
@@ -54,7 +54,7 @@ describe('wallets', function () {
   describe('grants', function () {
     it('allows user to view their wallet', async function () {
       let { id, type } = await createWallet(user1, { title: 'title' });
-      let result = await searchers.getFromControllingBranch(sessions.create(user1.type, user1.id), type, id);
+      let result = await searchers.get(sessions.create(user1.type, user1.id), 'local-hub', type, id);
       let { data, included } = result;
 
       expect(data).to.have.deep.property('attributes.title', 'title');
@@ -73,7 +73,7 @@ describe('wallets', function () {
 
       let error;
       try {
-        await searchers.getFromControllingBranch(sessions.create(user2.type, user2.id), type, id);
+        await searchers.get(sessions.create(user2.type, user2.id), 'local-hub', type, id);
       } catch (e) {
         error = e;
       }
@@ -87,11 +87,11 @@ describe('wallets', function () {
 
       wallet.attributes.title = 'updated title';
 
-      await writers.update('master', sessions.create(user1.type, user1.id), type, id, {
+      await writers.update(sessions.create(user1.type, user1.id), type, id, {
         data: wallet
       });
 
-      let result = await searchers.getFromControllingBranch(env.session, type, id);
+      let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result).to.have.deep.property('data.attributes.title', 'updated title');
     });
 
@@ -103,7 +103,7 @@ describe('wallets', function () {
 
       let error;
       try {
-        await writers.update('master', sessions.create(user2.type, user2.id), type, id, {
+        await writers.update(sessions.create(user2.type, user2.id), type, id, {
           data: wallet
         });
       } catch (e) {
@@ -121,7 +121,7 @@ describe('wallets', function () {
 
       let error;
       try {
-        await writers.update('master', sessions.create(user1.type, user1.id), type, id, {
+        await writers.update(sessions.create(user1.type, user1.id), type, id, {
           data: wallet
         });
       } catch (e) {
@@ -129,12 +129,12 @@ describe('wallets', function () {
       }
       expect(error.status).to.equal(404);
 
-      let result = await searchers.getFromControllingBranch(env.session, type, id);
+      let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result.data.relationships.user.data).to.eql({ type: user1.type, id: user1.id });
     });
 
     it('allows a user to create their wallet', async function() {
-      let result = await writers.create('master', sessions.create(user1.type, user1.id), 'wallets', {
+      let result = await writers.create(sessions.create(user1.type, user1.id), 'wallets', {
         data: {
           type: 'wallets',
           attributes: { title: 'title' },
@@ -159,7 +159,7 @@ describe('wallets', function () {
     it('does not allow a user to create someone elses wallet', async function() {
       let error;
       try {
-        await writers.create('master', sessions.create(user1.type, user1.id), 'wallets', {
+        await writers.create(sessions.create(user1.type, user1.id), 'wallets', {
           data: {
             type: 'wallets',
             attributes: { title: 'title' },
@@ -177,11 +177,11 @@ describe('wallets', function () {
     it('allows a user to delete a their wallet', async function() {
       let { id, type, meta: { version } } = await createWallet(user1, { title: 'title' });
 
-      await writers.delete('master', sessions.create(user1.type, user1.id), version, type, id);
+      await writers.delete(sessions.create(user1.type, user1.id), version, type, id);
 
       let error;
       try {
-        await searchers.getFromControllingBranch('master', env.session, type, id);
+        await searchers.get(env.session, 'local-hub', type, id);
       } catch (e) {
         error = e;
       }
@@ -193,7 +193,7 @@ describe('wallets', function () {
 
       let error;
       try {
-        await writers.delete('master', sessions.create(user2.type, user2.id), version, type, id);
+        await writers.delete(sessions.create(user2.type, user2.id), version, type, id);
       } catch (e) {
         error = e;
       }

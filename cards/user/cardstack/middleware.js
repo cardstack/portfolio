@@ -20,7 +20,6 @@ function addCorsHeaders(response) {
 module.exports = declareInjections({
   writers: 'hub:writers',
   searchers: 'hub:searchers',
-  controllingBranch: 'hub:controlling-branch',
 },
 
   class PortfolioProfileUpdate {
@@ -43,7 +42,6 @@ module.exports = declareInjections({
     }
 
     _updateProfile() {
-      const branch = this.controllingBranch.name;
       return route.post(`/${prefix}`, compose([
         koaJSONBody({ limit: '1mb' }),
         async (ctxt) => {
@@ -63,7 +61,7 @@ module.exports = declareInjections({
               return;
             }
 
-            let { data: user } = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, session.type, session.id);
+            let { data: user } = await this.searchers.get(Session.INTERNAL_PRIVILEGED, 'local-hub', session.type, session.id);
             let { attributes: { 'password-hash': hash } } = user;
 
             let currentPassword = get(ctxt, 'request.body.data.attributes.current-password');
@@ -97,7 +95,7 @@ module.exports = declareInjections({
 
             let email = get(ctxt, 'request.body.data.attributes.email-address');
             if (email) {
-              let { data: existingEmails } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, branch, {
+              let { data: existingEmails } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, {
                 filter: {
                   type: { exact: 'portfolio-users' },
                   'email-address': { exact: email }
@@ -122,8 +120,8 @@ module.exports = declareInjections({
             let name = get(ctxt, 'request.body.data.attributes.name');
             user.attributes.name = name ? name : user.attributes.name;
 
-            let { data: { id, type } } = await this.writers.update(branch, Session.INTERNAL_PRIVILEGED, 'portfolio-users', user.id, { data: user });
-            let readAuthorizedUser = await this.searchers.getFromControllingBranch(session, type, id);
+            let { data: { id, type } } = await this.writers.update(Session.INTERNAL_PRIVILEGED, 'portfolio-users', user.id, { data: user });
+            let readAuthorizedUser = await this.searchers.get(session, 'local-hub', type, id);
 
             ctxt.status = 200;
             ctxt.body = readAuthorizedUser;
