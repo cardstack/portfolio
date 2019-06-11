@@ -48,6 +48,17 @@ describe('assets', function () {
         unit: 'BTC',
       });
 
+    factory.addResource('data-sources', 'asset-history')
+      .withAttributes({
+        sourceType: 'portfolio-asset-history',
+        params: {
+          assetContentTypes: ['ethereum-addresses'],
+          transactionContentTypes: ['ethereum-transactions'],
+          maxAssetHistories: 100,
+          // mockNow: moment(today, 'YYYY-MM-DD').utc().valueOf()
+        }
+      });
+
     user = factory.addResource('portfolio-users').withAttributes({
       'email-address': 'portfolio-user@example.com'
     });
