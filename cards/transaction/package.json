@@ -21,7 +21,7 @@
   "dependencies": {
     "@cardstack/rendering": "^0.14.10",
     "babel-preset-env": "^1.7.0",
-    "ember-auto-import": "^1.2.10",
+    "ember-auto-import": "^1.4.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-moment-shim": "^3.7.1",

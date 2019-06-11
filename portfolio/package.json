@@ -24,6 +24,9 @@
     "test": "ember test",
     "node-tests": "HUB_ENVIRONMENT=test mocha ../node-test-runner.js --timeout 10000"
   },
+  "resolutions": {
+    "ember-auto-import": "1.4.0"
+  },
   "devDependencies": {
     "@cardstack/authentication": "^0.14.10",
     "@cardstack/di": "^0.14.10",
