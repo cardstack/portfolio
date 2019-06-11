@@ -16,7 +16,7 @@
     "eslint": "^5.9.0",
     "eslint-plugin-ember": "^6.0.1",
     "eslint-plugin-mocha": "^5.2.0",
-    "eslint-plugin-node": "^8.0.0", 
+    "eslint-plugin-node": "^8.0.0",
     "glob": "^7.1.1",
     "mocha": "^4.0.1",
     "portfolio-utils": "*",
@@ -31,9 +31,9 @@
     "start": "cd portfolio && node ./node_modules/.bin/ember serve",
     "start-hub": "cd portfolio && ember hub:start",
     "start-ember": "cd portfolio && HUB_URL=http://localhost:3000 node ./node_modules/.bin/ember s",
-    "test": "mocha ./node-test-runner.js --timeout 10000 && cd portfolio && node ./node_modules/.bin/ember test",
-    "card-tests": "cd portfolio && node ./node_modules/.bin/ember test",
-    "node-tests": "mocha ./node-test-runner.js --timeout 10000",
+    "test": "HUB_ENVIRONMENT=test mocha ./node-test-runner.js --timeout 10000 && cd portfolio && node ./node_modules/.bin/ember test",
+    "card-tests": "HUB_ENVIRONMENT=test cd portfolio && node ./node_modules/.bin/ember test",
+    "node-tests": "HUB_ENVIRONMENT=test mocha ./node-test-runner.js --timeout 10000",
     "lint": "eslint . --cache --parser espree"
   },
   "workspaces": [

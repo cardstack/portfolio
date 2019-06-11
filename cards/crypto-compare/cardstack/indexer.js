@@ -43,7 +43,7 @@ class Updater {
     await ops.save('crypto-compare-current-rates', 'today', {
       data: {
         id: 'today',
-        types: 'crypto-compare-current-rates',
+        type: 'crypto-compare-current-rates',
         relationships: { rates: { data: rates } }
       }
     });
