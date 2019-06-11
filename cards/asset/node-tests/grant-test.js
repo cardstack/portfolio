@@ -55,7 +55,6 @@ describe('assets', function () {
           assetContentTypes: ['ethereum-addresses'],
           transactionContentTypes: ['ethereum-transactions'],
           maxAssetHistories: 100,
-          // mockNow: moment(today, 'YYYY-MM-DD').utc().valueOf()
         }
       });
 
