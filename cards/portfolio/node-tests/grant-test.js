@@ -11,7 +11,7 @@ let factory, env, writers, searchers, sessions, user1, user2;
 
 async function createPortfolio(user, attributes={}) {
   let { id, type } = user;
-  let { data: portfolio } = await writers.create('master', env.session, 'portfolios', {
+  let { data: portfolio } = await writers.create(env.session, 'portfolios', {
     data: {
       type: 'portfolios',
       attributes,
@@ -55,7 +55,7 @@ describe('portfolios', function () {
   describe('grants', function () {
     it('allows user to view their portfolio', async function () {
       let { id, type } = await createPortfolio(user1, { title: 'title' });
-      let result = await searchers.getFromControllingBranch(sessions.create(user1.type, user1.id), type, id);
+      let result = await searchers.get(sessions.create(user1.type, user1.id), 'local-hub', type, id);
       let { data, included } = result;
 
       expect(data).to.have.deep.property('attributes.title', 'title');
@@ -74,7 +74,7 @@ describe('portfolios', function () {
 
       let error;
       try {
-        await searchers.getFromControllingBranch(sessions.create(user2.type, user2.id), type, id);
+        await searchers.get(sessions.create(user2.type, user2.id), 'local-hub', type, id);
       } catch (e) {
         error = e;
       }
@@ -85,18 +85,18 @@ describe('portfolios', function () {
     it('allows a user to update their portfolio`s title and wallets fields', async function() {
       let portfolio = await createPortfolio(user1, { title: 'title' });
       let { id, type } = portfolio;
-      let { data: wallet } = await writers.create('master', env.session, 'wallets', {
+      let { data: wallet } = await writers.create(env.session, 'wallets', {
         data: { type: 'wallets' }
       });
 
       portfolio.attributes.title = 'updated title';
       portfolio.relationships.wallets.data = [ { type: wallet.type, id: wallet.id }];
 
-      await writers.update('master', sessions.create(user1.type, user1.id), type, id, {
+      await writers.update(sessions.create(user1.type, user1.id), type, id, {
         data: portfolio
       });
 
-      let result = await searchers.getFromControllingBranch(env.session, type, id);
+      let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result).to.have.deep.property('data.attributes.title', 'updated title');
       expect(result.data.relationships.wallets.data).to.eql([ { type: wallet.type, id: wallet.id }]);
     });
@@ -104,7 +104,7 @@ describe('portfolios', function () {
     it('does not allow a user to update another user`s portfolio', async function() {
       let portfolio = await createPortfolio(user1, { title: 'title' });
       let { id, type } = portfolio;
-      let { data: wallet } = await writers.create('master', env.session, 'wallets', {
+      let { data: wallet } = await writers.create(env.session, 'wallets', {
         data: { type: 'wallets' }
       });
 
@@ -113,7 +113,7 @@ describe('portfolios', function () {
 
       let error;
       try {
-        await writers.update('master', sessions.create(user2.type, user2.id), type, id, {
+        await writers.update(sessions.create(user2.type, user2.id), type, id, {
           data: portfolio
         });
       } catch (e) {
@@ -131,7 +131,7 @@ describe('portfolios', function () {
 
       let error;
       try {
-        await writers.update('master', sessions.create(user1.type, user1.id), type, id, {
+        await writers.update(sessions.create(user1.type, user1.id), type, id, {
           data: portfolio
         });
       } catch (e) {
@@ -139,14 +139,14 @@ describe('portfolios', function () {
       }
       expect(error.status).to.equal(404);
 
-      let result = await searchers.getFromControllingBranch(env.session, type, id);
+      let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result.data.relationships.user.data).to.eql({ type: user1.type, id: user1.id });
     });
 
     it('does not allow a user to create their portfolio', async function() {
       let error;
       try {
-        await writers.create('master', sessions.create(user1.type, user1.id), 'portfolios', {
+        await writers.create(sessions.create(user1.type, user1.id), 'portfolios', {
           data: {
             type: 'portfolios',
             attributes: { title: 'title' },
@@ -167,7 +167,7 @@ describe('portfolios', function () {
 
       let error;
       try {
-        await writers.delete('master', sessions.create(user1.type, user1.id), version, type, id);
+        await writers.delete(sessions.create(user1.type, user1.id), version, type, id);
       } catch (e) {
         error = e;
       }

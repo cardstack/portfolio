@@ -32,6 +32,18 @@ module.exports = function(defaults) {
     emberHighCharts: {
       includeHighCharts: false,
       includeHighStock: true
+    },
+    autoImport: {
+      webpack: {
+        node: {
+          vm: true,
+          crypto: true,
+          http: true,
+          https: true,
+          os: true,
+          stream: true,
+        }
+      }
     }
   });
 

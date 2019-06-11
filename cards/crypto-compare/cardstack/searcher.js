@@ -21,7 +21,7 @@ module.exports = declareInjections({
 },
 
 class CryptoCompareSearcher {
-  async get(session, branch, type, id, next) {
+  async get(session, type, id, next) {
     let result = await next();
     if (result) {
       return result;
@@ -32,7 +32,7 @@ class CryptoCompareSearcher {
     }
   }
 
-  async search(session, branch, query, next) {
+  async search(session, query, next) {
     if (get(query, 'filter.type') === 'crypto-compares' ||
       get(query, 'filter.type.exact') === 'crypto-compares') {
       return await this._lookupRateByQuery(query);
@@ -53,7 +53,7 @@ class CryptoCompareSearcher {
 
     let rate;
     try {
-      rate = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'crypto-compares', id);
+      rate = await this.searchers.get(Session.INTERNAL_PRIVILEGED, 'local-hub', 'crypto-compares', id);
     } catch (err) {
       if (err.status !== 404) { throw err; }
     }

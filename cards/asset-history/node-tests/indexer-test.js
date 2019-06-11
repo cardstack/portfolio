@@ -23,19 +23,19 @@ async function waitForIndexingEvents() {
 }
 
 async function addTransaction(assetId, transaction) {
-  let { data: { id, type } } = await writers.create('master', env.session, 'ethereum-transactions', {
+  let { data: { id, type } } = await writers.create(env.session, 'ethereum-transactions', {
     data: {
       id: transaction['transaction-hash'],
       type: 'ethereum-transactions',
       attributes: transaction
     }
   })
-  let { data: address } = await searchers.getFromControllingBranch(env.session, 'ethereum-addresses', assetId.toLowerCase());
+  let { data: address } = await searchers.get(env.session, 'local-hub', 'ethereum-addresses', assetId.toLowerCase());
   address.relationships.transactions = address.relationships.transactions || {};
   address.relationships.transactions.data = address.relationships.transactions.data || [];
   address.relationships.transactions.data.push({ type, id });
 
-  await writers.update('master', env.session, 'ethereum-addresses', assetId.toLowerCase(), {
+  await writers.update(env.session, 'ethereum-addresses', assetId.toLowerCase(), {
     data: address
   });
   await waitForIndexingEvents();
@@ -224,7 +224,7 @@ describe('asset-histories', function () {
       });
 
       it('creates asset history when an asset exists', async function () {
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response, today);
       });
 
@@ -244,7 +244,7 @@ describe('asset-histories', function () {
           "transaction-value": "100000000000000000"
         });
 
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response, today, 1);
 
         let { included, data } = response;
@@ -270,7 +270,7 @@ describe('asset-histories', function () {
       it('creates asset history for an asset that has no transactions', async function () {
         await waitForIndexingEvents();
 
-        let { data } = await searchers.getFromControllingBranch(env.session, 'asset-histories', assetWithoutTxns.toLowerCase());
+        let { data } = await searchers.get(env.session, 'local-hub', 'asset-histories', assetWithoutTxns.toLowerCase());
         expect(data.relationships.asset.data).to.eql({ type: 'ethereum-addresses', id: assetWithoutTxns.toLowerCase() });
 
         expect(data.relationships['history-values'].data).to.eql([]);
@@ -305,7 +305,7 @@ describe('asset-histories', function () {
           "transaction-value": "100000000000000000"
         });
 
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response, today, 2);
 
         let { included, data } = response;
@@ -359,7 +359,7 @@ describe('asset-histories', function () {
           "transaction-value": "0"
         });
 
-        let { included, data } = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let { included, data } = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
         let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
@@ -380,7 +380,7 @@ describe('asset-histories', function () {
           "transaction-value": "0"
         });
 
-        let { included, data } = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let { included, data } = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
         let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
@@ -402,7 +402,7 @@ describe('asset-histories', function () {
           "transaction-value": "700000000000000"
         });
 
-        let { included, data } = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let { included, data } = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         let orderedHistoryValuesIds = data.relationships['history-values'].data.map(i => i.id);
         let historyValueWithNewTxn = included.find(i => i.type === 'asset-history-values' && i.id === orderedHistoryValuesIds[orderedHistoryValuesIds.length - 1]);
 
@@ -425,7 +425,7 @@ describe('asset-histories', function () {
           "transaction-value": "100000000000000000"
         });
 
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response);
 
         let { included, data } = response;
@@ -506,7 +506,7 @@ describe('asset-histories', function () {
             mockNow: moment(today, 'YYYY-MM-DD').utc().add(1, 'day').valueOf()
           }
         });
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response, '2019-01-21');
       });
 
@@ -517,7 +517,7 @@ describe('asset-histories', function () {
             mockNow: moment(today, 'YYYY-MM-DD').utc().add(2, 'day').valueOf()
           }
         });
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response, '2019-01-22');
       });
 
@@ -529,7 +529,7 @@ describe('asset-histories', function () {
           }
         });
 
-        let response = await searchers.getFromControllingBranch(env.session, 'asset-histories', address.toLowerCase());
+        let response = await searchers.get(env.session, 'local-hub', 'asset-histories', address.toLowerCase());
         assertSeedTransactionsInAssetHistory(response);
       });
     });

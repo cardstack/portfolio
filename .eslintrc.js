@@ -10,6 +10,7 @@ module.exports = Object.assign({}, browserBase, {
       'cards/*/schema.js',
       'cards/*/samples.js',
       'cards/*/cardstack/**/*.js',
+      'portfolio/*/cardstack/**/*.js',
       'deploy/build.js',
       'deploy/card-test-linter.js',
       'shared-data/*.js'

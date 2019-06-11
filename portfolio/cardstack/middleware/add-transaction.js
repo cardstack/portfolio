@@ -37,7 +37,7 @@ class AddMockTransaction {
 
       let fromModel, toModel;
       try {
-        fromModel = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', fromAddress.toLowerCase());
+        fromModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'local-hub', 'ethereum-addresses', fromAddress.toLowerCase());
       } catch (e) {
         if (e.status !== 404) {
           ctxt.status = 400;
@@ -46,7 +46,7 @@ class AddMockTransaction {
       }
       if (toAddress) {
         try {
-          toModel = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', toAddress.toLowerCase());
+          toModel = await this.searchers.search(Session.INTERNAL_PRIVILEGED, 'local-hub', 'ethereum-addresses', toAddress.toLowerCase());
         } catch (e) {
           if (e.status !== 404) {
             ctxt.status = 400;
@@ -60,7 +60,7 @@ class AddMockTransaction {
         return;
       }
 
-      let transaction = await this.writers.create('master', Session.INTERNAL_PRIVILEGED, 'ethereum-transactions', {
+      let transaction = await this.writers.create(Session.INTERNAL_PRIVILEGED, 'ethereum-transactions', {
         data: {
           id: txnHash,
           type: 'ethereum-transactions',
@@ -76,7 +76,7 @@ class AddMockTransaction {
         let balance = transactionModels
           .reduce((cumulativeBalance, txn) => updateBalanceFromTransaction(cumulativeBalance, fromAddress.toLowerCase(), txn), new BN(0));
         fromModel.data.attributes.balance = balance.toString();
-        await this.writers.update('master', Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', fromAddress.toLowerCase(), fromModel);
+        await this.writers.update(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', fromAddress.toLowerCase(), fromModel);
       }
       if (toModel) {
         let transactions = get(toModel, 'data.relationships.transactions.data') || [];
@@ -86,7 +86,7 @@ class AddMockTransaction {
         let balance = transactionModels
           .reduce((cumulativeBalance, txn) => updateBalanceFromTransaction(cumulativeBalance, toAddress.toLowerCase(), txn), new BN(0));
         toModel.data.attributes.balance = balance.toString();
-        await this.writers.update('master', Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', toAddress.toLowerCase(), toModel);
+        await this.writers.update(Session.INTERNAL_PRIVILEGED, 'ethereum-addresses', toAddress.toLowerCase(), toModel);
       }
 
       ctxt.status = 201;

@@ -10,7 +10,6 @@ const DEFAULT_MAX_ASSET_HISTORIES = 1000000;
 let indexJobNumber = 0;
 
 module.exports = declareInjections({
-  controllingBranch: 'hub:controlling-branch',
   searchers: 'hub:searchers',
   schema: 'hub:current-schema',
   pgsearchClient: `plugin-client:${require.resolve('@cardstack/pgsearch/client')}`,
@@ -22,11 +21,10 @@ module.exports = declareInjections({
       return new this(...args);
     }
 
-    constructor({ pgsearchClient, schema, searchers, controllingBranch, transactionIndex }) {
+    constructor({ pgsearchClient, schema, searchers, transactionIndex }) {
       this.searchers = searchers;
       this.schema = schema;
       this.pgsearchClient = pgsearchClient;
-      this.controllingBranch = controllingBranch;
       this.transactionIndex = transactionIndex;
       this._boundEventListeners = false;
       this._indexingPromise = null; // this is exposed to the tests
@@ -73,7 +71,7 @@ module.exports = declareInjections({
       if (asset) {
         let result;
         try {
-          result = await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, asset.type, asset.id, ['transactions']);
+          result = await this.searchers.get(Session.INTERNAL_PRIVILEGED, 'local-hub', asset.type, asset.id, ['transactions']);
         } catch (e) {
           if (e.status !== 404) { throw e; }
         }
@@ -124,7 +122,7 @@ module.exports = declareInjections({
       if (!this.assetContentTypes) { return; }
 
       let size = this.maxAssetHistories || DEFAULT_MAX_ASSET_HISTORIES;
-      let { data: assets } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+      let { data: assets } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, {
         filter: {
           type: { exact: this.assetContentTypes }
         },
@@ -149,7 +147,7 @@ module.exports = declareInjections({
             clause['block-number'] = { range: { gt: lastBlockHeight } };
           });
         }
-        let { data:transactionsForAddress } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, query);
+        let { data:transactionsForAddress } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, query);
         transactions = transactions.concat(transactionsForAddress);
       }
 
@@ -166,7 +164,7 @@ module.exports = declareInjections({
 
       let assetHistory;
       try {
-        assetHistory = (await this.searchers.getFromControllingBranch(Session.INTERNAL_PRIVILEGED, 'asset-histories', asset.id.toLowerCase())).data;
+        assetHistory = (await this.searchers.get(Session.INTERNAL_PRIVILEGED, 'local-hub', 'asset-histories', asset.id.toLowerCase())).data;
       } catch (err) {
         if (err.status !== 404) { throw err; }
         assetHistory = {
@@ -189,7 +187,7 @@ module.exports = declareInjections({
 
     async _buildNewHistoryValues(today, asset, transactions=[]) {
       let successfulTransactions = transactions.filter(txn => get(txn, 'attributes.transaction-successful'));
-      let { data: [lastIndexedHistoryValue] } = await this.searchers.searchFromControllingBranch(Session.INTERNAL_PRIVILEGED, {
+      let { data: [lastIndexedHistoryValue] } = await this.searchers.search(Session.INTERNAL_PRIVILEGED, {
         filter: {
           type: { exact: 'asset-history-values' },
           'asset.id': { exact: asset.id.toLowerCase() }
@@ -250,13 +248,12 @@ module.exports = declareInjections({
 
     async _createDocumentContext(record) {
       let { id, type } = record;
-      let schema = await this.schema.forControllingBranch();
+      let schema = await this.schema.getSchema();
       let contentType = schema.types.get(type);
       let sourceId = contentType.dataSource.id;
       return this.searchers.createDocumentContext({
         id,
         type,
-        branch: this.controllingBranch.name,
         schema,
         sourceId,
         upstreamDoc: { data: record }

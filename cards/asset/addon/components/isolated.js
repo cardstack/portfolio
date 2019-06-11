@@ -44,7 +44,9 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     };
 
     let models = yield this.cardstackData.query('embedded', query);
-    let wallet = models.get('firstObject');
-    this.set('wallet', wallet);
-  }),
+    if (models.get('length')) {
+      let wallet = models.get('firstObject');
+      this.set('wallet', wallet);
+    }
+  }).drop(),
 });
