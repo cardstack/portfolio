@@ -39,6 +39,7 @@
     "@cardstack/routing": "^0.13.51",
     "@cardstack/test-support": "^0.13.51",
     "@cardstack/tools": "^0.13.51",
+    "@cardstack/ui-components": "^0.1.5",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "babel-preset-env": "^1.7.0",

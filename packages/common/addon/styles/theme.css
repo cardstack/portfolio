@@ -1,0 +1,34 @@
+:root {
+  --cs-root-font-family: "Open Sans", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cs-root-font-size: var(--cardfolio-sm-font);
+  --cs-root-line-height: 1.3;
+  --cs-root-letter-spacing: 0;
+  --cs-root-color: var(--cardfolio-black);
+  --cs-root-border-radius: var(--cardfolio-border-radius);
+  --cs-root-border-color: var(--portfolio-border-gray);
+  --cs-root-background-color: var(--cardfolio-light-background);
+  --cs-root-background-hover: var(--cardfolio-hover-dark);
+}
+
+.cardfolio-button-dark {
+  --theme-cta-padding: 1em;
+  --theme-cta-font-size: var(--cardfolio-sm-font);
+  --theme-cta-border-radius: 5px;
+  --theme-cta-background-color: var(--cardfolio-dark-purple-op80);
+  --theme-cta-color: var(--cardfolio-white);
+  --theme-secondary-cta-color: var(--theme-cta-background-color);
+  --theme-cta-hover-background-color: var(--cardfolio-hover-dark);
+  --theme-cta-disabled-background-color: var(--cardfolio-dark-purple-op10);
+  --theme-cta-disabled-color: var(--cardfolio-dark-purple-op20);
+}
+
+.cardfolio-button-light {
+  --theme-cta-padding: 1em 2em;
+  --theme-cta-font-size: var(--cardfolio-med-font);
+  --theme-cta-font-weight: normal;
+  --theme-cta-border-radius: 5px;
+  --theme-cta-background-color: var(--cardfolio-white);
+  --theme-cta-color: var(--cardfolio-black);
+  --theme-cta-hover-background-color: var(--cardfolio-hover);
+  --theme-cta-box-shadow: 0 2px 4px 0 var(--cardfolio-box-shadow);
+}

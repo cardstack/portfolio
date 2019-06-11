@@ -37,22 +37,22 @@
                 </label>
               </div>
               <div class="login-form__button-row">
-                <button
-                  type="submit"
-                  class="login-form__button {{if (not canLogin) "disabled"}}"
-                  disabled={{not canLogin}}
+                <Cta
+                  @type="submit"
+                  @label="Log In"
+                  @disabled={{not canLogin}}
+                  @variant="primary"
+                  @theme="cardfolio-button-dark"
                   data-test-login-button
-                >
-                  Log In
-                </button>
+                />
                 <span class="login-form__button-or">OR</span>
-                <button
-                  {{action transitionToRegister}}
-                  class="login-form__button login-form__button--create"
+                <Cta
+                  @onclick={{action transitionToRegister}}
+                  @label="Create Account"
+                  @variant="secondary"
+                  @theme="cardfolio-button-dark"
                   data-test-registration-page-link
-                >
-                  Create Account
-                </button>
+                />
               </div>
             </form>
           {{/password-login}}
