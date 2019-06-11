@@ -6,7 +6,7 @@ const thisCardsSchema = require('../../../../cardstack/static-model')();
 const mockEthereumSchema = require('../../../../../../shared-data/mock-ethereum-schema');
 const mockNetworkSchema = require('../../../../../../shared-data/mock-network-schema');
 
-const cardDependencies = ['network', 'crypto-compare', 'asset-history', 'transaction'];
+const cardDependencies = ['user', 'wallet', 'network', 'crypto-compare', 'asset-history', 'transaction'];
 
 let factory = new JSONAPIFactory();
 for (let cardName of cardDependencies) {
