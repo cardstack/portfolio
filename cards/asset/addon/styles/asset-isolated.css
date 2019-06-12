@@ -26,6 +26,10 @@
   padding-top: 50px;
 }
 
+.asset-isolated-details-title {
+  font-size: var(--portfolio-med-font);
+}
+
 .asset-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -54,15 +58,26 @@
 
 .asset-isolated__title {
   margin: 0;
-  font-size: var(--portfolio-med-font);
-  font-weight: bold;
+  font-size: var(--portfolio-lg-font);
+  font-weight: 600;
   letter-spacing: 0.2px;
   line-height: 1.1;
-  text-transform: uppercase;
+  margin-left: 5px;
 }
 
 .asset-isolated__logo {
   margin-right: 10px;
+}
+
+.asset-isolated_currency_and_balance_row {
+  display: flex;
+  flex-direction: row nowrap;
+  align-content: flex-start;
+  justify-content: space-between;
+}
+
+.asset-isolated_currency_and_balance_row > .asset-isolated__balance-fiat{
+  padding-top: 5px;
 }
 
 /* Balance summary */
@@ -88,7 +103,6 @@
 
 /* Currency switcher buttons */
 .asset-isolated__currency > span {
-  margin-left: -50px;
   font-size: var(--portfolio-xs-font);
   font-weight: 600;
 }
