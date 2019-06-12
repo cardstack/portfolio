@@ -1,9 +1,17 @@
 :root {
-  --portfolio-xs-font: 12px;
-  --portfolio-sm-font: 14px;
-  --portfolio-med-font: 16px;
-  --portfolio-lg-font: 18px;
-  --portfolio-xl-font: 20px;
+  /* TODO: Switching to using "cardfolio" as the prefix.
+     Remove "portfolio" prefixed names when ready. */
+  --portfolio-xs-font: var(--cardfolio-xs-font);
+  --portfolio-sm-font: var(--cardfolio-sm-font);
+  --portfolio-med-font: var(--cardfolio-med-font);
+  --portfolio-lg-font: var(--cardfolio-lg-font);
+  --portfolio-xl-font: var(--cardfolio-xl-font);
+
+  --cardfolio-xs-font: 12px;
+  --cardfolio-sm-font: 14px;
+  --cardfolio-med-font: 16px;
+  --cardfolio-lg-font: 18px;
+  --cardfolio-xl-font: 20px;
 }
 
 @font-face {

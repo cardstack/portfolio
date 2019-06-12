@@ -117,14 +117,35 @@ module('Acceptance | portfolio', function(hooks) {
     assert.equal(currentURL(), '/');
 
     await login();
-
     await waitFor('[data-test-portfolio-top-header-user]');
 
-    assert.dom('[data-test-portfolio-isolated-title').hasText('My Portfolio');
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
-    assert.dom('[data-test-portfolio-isolated-wallets-value]').hasText('≈ $20.09');
-    assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
+    assert.dom('[data-test-portfolio-isolated-side-nav]').exists();
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1)').hasText('Show All');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').hasClass('active');
+    assert.dom('[data-test-portfolio-isolated-intro]').exists();
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('My Cardfolio');
+    assert.dom('[data-test-portfolio-isolated-register-button]').doesNotExist();
+    assert.dom('[data-test-portfolio-section="memberships"] h2').hasText('Memberships');
+    assert.dom('[data-test-portfolio-section="assets"] h2').hasText('Assets');
+    assert.dom('[data-test-portfolio-section="assets"] h3').hasText('Test Wallet');
+    assert.dom('[data-test-portfolio-asset]').exists({ count: 2 });
+    assert.dom('[data-test-portfolio-asset="1"]').containsText('Ether');
+  });
+
+  test('user can dismiss the welcome message box', async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await login();
+    await waitFor('[data-test-portfolio-isolated-intro]');
+
+    assert.dom('[data-test-portfolio-isolated-intro]').exists();
+    assert.dom('[data-test-portfolio-isolated-intro] h2').hasText('Welcome to your Personalized Wallet');
+
+    await click('[data-test-portfolio-isolated-intro] button');
+    assert.dom('[data-test-portfolio-isolated-intro]').doesNotExist();
   });
 
   test('user sees the login form when they log out from the portfolio page', async function(assert) {
@@ -141,39 +162,31 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-login-form]').exists();
     assert.dom('[data-test-login-email]').exists();
     assert.dom('[data-test-login-password]').exists();
-    assert.dom('[data-test-portfolio-top-header]').doesNotExist();
-    assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
   });
 
-  test('user sees isolated wallet card after clicking on the embedded wallet card', async function(assert) {
+  test('user filter sections using sidebar navigation', async function(assert) {
     await visit('/');
+    assert.equal(currentURL(), '/');
+
     await login();
+    await waitFor('[data-test-portfolio-isolated-side-nav]');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').hasClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-section]').exists({ count: 2 });
 
-    await click('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-link]');
+    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a');
+    assert.dom('[data-test-portfolio-section]').exists({ count: 1 });
+    assert.dom('[data-test-portfolio-section] h2').hasText('Memberships');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').hasClass('active');
 
-    assert.equal(currentURL(), '/wallets/test-wallet');
-    assert.dom('[data-test-wallet-isolated]').exists();
-    assert.dom('[data-test-wallet-isolated-title]').hasText('Test Wallet');
-  });
+    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(3) a');
+    assert.dom('[data-test-portfolio-section]').exists({ count: 1 });
+    assert.dom('[data-test-portfolio-section] h2').hasText('Assets');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(3) a').hasClass('active');
 
-  test('user sees the currency view of their portfolio', async function(assert) {
-    await visit('/');
-    await login();
-
-    assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
-
-    await click('[data-test-portfolio-isolated-filters-currencies]');
-
-    assert.equal(currentURL(), '/', 'url doesnt change');
-    assert.dom('[data-test-portfolio-isolated-wallet="0"]').doesNotExist();
-    assert.dom('.portfolio-isolated-section__currency').exists({ count: 2 });
-    assert.dom('[data-test-portfolio-isolated-currency="0"]').hasTextContaining('Bitcoin');
-    assert.dom('[data-test-portfolio-isolated-currency="0"] [data-test-portfolio-isolated-currency-count]').hasText('1 Asset');
-    assert.dom('[data-test-portfolio-isolated-currency="1"]').hasTextContaining('Ether');
-    assert.dom('[data-test-portfolio-isolated-currency="1"] [data-test-portfolio-isolated-currency-count]').hasText('1 Asset');
-
-    await click('[data-test-portfolio-isolated-filters-wallets]');
-
-    assert.dom('[data-test-portfolio-isolated-wallet="0"] [data-test-wallet-embedded-title]').hasText('Test Wallet');
+    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a');
+    assert.dom('[data-test-portfolio-section]').exists({ count: 2 });
   });
 });
