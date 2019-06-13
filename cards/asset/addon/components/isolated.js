@@ -9,6 +9,8 @@ import { task } from 'ember-concurrency';
 
 export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   layout,
+  currencies: [{name: 'USD'}, {name: 'EUR'}, {name: 'BTC'}],
+  selectedSymbol: {name: 'USD'},
   cardstackData: service(),
   fastboot: injectOptional.service(),
 
@@ -50,3 +52,5 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     }
   }).drop(),
 });
+
+

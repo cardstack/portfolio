@@ -78,6 +78,7 @@
 
 .asset-isolated_currency_and_balance_row > .asset-isolated__balance-fiat{
   padding-top: 5px;
+  width: 150px;
 }
 
 /* Balance summary */
@@ -107,18 +108,22 @@
   font-weight: 600;
 }
 .asset-isolated__currency-switcher {
-  display: inline-flex;
+  display: flex;
   margin: 0 auto;
   padding-left: 6px;
+  width: 400px;
+  color: black;
 }
+
 .asset-isolated__currency-switcher > button {
   padding: 5px 10px;
-  background: none;
+  background: whitesmoke;
   border: 1px solid var(--portfolio-white);
-  color: var(--portfolio-white);
+  color: var(--portfolio-black);
   font-size: var(--portfolio-xs-font);
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
+  display: inline-block;
 }
 .asset-isolated__currency-switcher > button:first-child {
   border-top-left-radius: 15px;
@@ -127,6 +132,7 @@
 .asset-isolated__currency-switcher > button:last-child {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  height:30px;
 }
 .asset-isolated__currency-switcher > button + button {
   border-left: none;
