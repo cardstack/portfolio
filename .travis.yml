@@ -32,12 +32,13 @@ script:
   - docker run --rm --network cardstack --env PGHOST=postgres --env CI --env HUB_ENVIRONMENT=test --env TARGET_ENV="travis-$TRAVIS_BUILD_NUMBER"  tests
 
 deploy:
+  # disabling deploys to demo env
   # This is the demo env--we'll need to rename it...
-  - provider: script
-    skip_cleanup: true
-    script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
-    on:
-      branch: master
+  # - provider: script
+  #   skip_cleanup: true
+  #   script: TARGET_NAME='staging-portfolio.stack.cards' deploy/deploy.sh staging $TRAVIS_BRANCH
+  #   on:
+  #     branch: master
 
   - provider: script
     skip_cleanup: true
