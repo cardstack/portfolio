@@ -42,9 +42,9 @@
               <div class="row asset-isolated_currency_and_balance_row">
                 <div class="asset-isolated__currency">
                   <div class="asset-isolated__currency-switcher row">
-                    <button class="asset-isolated-currenct-display-tag">View Data As</button>
+                    <button class="asset-isolated-currency-display-tag" disabled=true>View Data As</button>
                     <Dropdown class="asset-isolated-currency-switch-dropdown" @options={{this.currencies}} @label='' @selected={{this.selectedSymbol}} style='height:28px; width:100px; padding-top:30px'/>
-                    <button class="asset-isolated-currenct-switch-button" {{action setCurrency this.selectedSymbol.name}}>Switch</button>
+                    <button class="asset-isolated-currency-switch-button" {{action setCurrency this.selectedSymbol.name}}>Switch</button>
                     {{!--<button class="{{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
                     <button class="{{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
                     <button class="{{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
@@ -57,7 +57,7 @@
                     {{else}}
                       Balance  {{currency-symbol currency}}{{assetValue}}
                     {{/if}}
-                    <span data-test-asset-isolated-currency-name>{{currency}}</span>
+                    <span data-test-asset-isolated-currency-name><b>{{currency}}</b></span>
                 </div>
               </div>
               </div>

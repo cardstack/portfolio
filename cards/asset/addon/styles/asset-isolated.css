@@ -6,7 +6,8 @@
   background: var(--portfolio-bitcoin-gradient);
 }
 .asset-isolated--ether {
-  background: var(--portfolio-ether-gradient);
+  /*background: var(--portfolio-ether-gradient);*/
+  background: red;
 }
 .asset-isolated--litecoin {
   background: var(--portfolio-litecoin-gradient);
@@ -39,6 +40,7 @@
 
 .asset-isolated__wrapper {
   padding: 25px 20px;
+  background: var(--portfolio-white);
 }
 
 .asset-isolated__header {
@@ -67,6 +69,26 @@
 
 .asset-isolated__logo {
   margin-right: 10px;
+}
+
+.asset-isolated-embedded-asset, .asset-isolated__wrapper {
+  position: -webkit-sticky; 
+  position: sticky;
+}
+
+.asset-isolated__section--main {
+  z-index: -2;
+}
+
+.asset-isolated-embedded-asset {
+  top: 0;
+  min-height: 50px;
+  z-index: 5;
+}
+
+.asset-isolated__wrapper {
+  top: 180px;
+  z-index: 2;
 }
 
 .asset-isolated_currency_and_balance_row {
@@ -138,17 +160,10 @@
   border-left: none;
 }
 .asset-isolated__currency-switcher > button.active,
-.asset-isolated__currency-switcher > button.active:hover,
-.asset-isolated__currency-switcher > button:focus {
+.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:hover,
+.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:focus {
   outline: none;
-  background-color: var(--portfolio-white);
-  color: var(--portfolio-dark-purple);
-  cursor: pointer;
-  user-select: none;
-}
-.asset-isolated__currency-switcher > button:hover {
-  outline: none;
-  background-color: var(--portfolio-white-alpha50);
+  background-color: var(--portfolio-black);
   color: var(--portfolio-white);
   cursor: pointer;
   user-select: none;
@@ -218,8 +233,8 @@
 }
 
 .asset-isolated__section--main {
-  background-color: var(--portfolio-light-purple);
-  color: var(--portfolio-white);
+  /*background-color: var(--portfolio-light-purple);*/
+  color: var(--portfolio-black);
   text-align: center;
 }
 

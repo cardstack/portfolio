@@ -49,6 +49,8 @@
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
+  align-self: strech;
+  flex-grow: 10;
 }
 
 .asset-embedded__title {
@@ -76,6 +78,7 @@
   max-width: 150px;
   word-wrap: break-word;
   margin: 0;
+  margin-left: auto;
 }
 
 /* Balance summary */

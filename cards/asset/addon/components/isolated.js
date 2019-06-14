@@ -51,6 +51,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
       this.set('wallet', wallet);
     }
   }).drop(),
+
 });
 
 
