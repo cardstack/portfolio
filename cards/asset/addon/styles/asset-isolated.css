@@ -160,8 +160,7 @@
   border-left: none;
 }
 .asset-isolated__currency-switcher > button.active,
-.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:hover,
-.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:focus {
+.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:hover {
   outline: none;
   background-color: var(--portfolio-black);
   color: var(--portfolio-white);
