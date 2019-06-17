@@ -3,7 +3,7 @@
   height: 100%;
   margin: 0;
   padding: 50px 25px 100px;
-  background-color: var(--portfolio-purple);
+  background-color: var(--cardfolio-dark-background);
 }
 
 .portfolio-account-card__title {
@@ -11,8 +11,8 @@
   margin: 0 auto 50px;
   padding: 15px 0;
   padding-left: 50px;
-  color: var(--portfolio-white);
-  font-size: var(--portfolio-xl-font);
+  color: var(--cardfolio-white);
+  font-size: var(--cardfolio-xl-font);
   font-weight: bold;
   letter-spacing: 0.3px;
   line-height: 1.4;

@@ -1,27 +1,67 @@
 :root {
-  --portfolio-white: #fff;
-  --portfolio-black: #000;
+  /* TODO: Switching to using "cardfolio" as the prefix.
+     Remove "portfolio" prefixed names when ready. */
+  --portfolio-white: var(--cardfolio-white);
+  --portfolio-black: var(--cardfolio-black);
   --portfolio-off-white: #fafafa;
   --portfolio-highlight-gray: #f8f8f8;
   --portfolio-light-gray: #f2f2f4;
-  --portfolio-border-gray: #e5e5e9;
+  --portfolio-border-gray: var(--cardfolio-border-color);
   --portfolio-darker-border-gray: #ccccd5;
   --portfolio-border-highlight-gray: #7f7f7f;
   --portfolio-muted-gray: #757575;
   --portfolio-purple-gray: #9999ab;
   --portfolio-light-purple: #676680;
   --portfolio-purple: #343356;
-  --portfolio-highlight-purple: #4d4c6d;
-  --portfolio-dark-purple: #1b1942;
-  --portfolio-deep-purple: #01002c;
-  --portfolio-green: #3aa78f;
-  --portfolio-red: #ff0404;
-  --portfolio-red-failed: #db3d3d;
-  --portfolio-white-alpha50: rgba(255, 255, 255, .5);
+  --portfolio-highlight-purple: var(--cardfolio-hover);
+  --portfolio-dark-purple: var(--cardfolio-dark-purple);
+  --portfolio-green: var(--cardfolio-forest-green);
+  --portfolio-red: var(--cardfolio-blatant-red);
+  --portfolio-red-failed: var(--cardfolio-blatant-red);
+  --portfolio-white-alpha50: var(--cardfolio-white-op50);
 
+
+  --cardfolio-gradient: linear-gradient(160deg, #6638ff 20%, #37eb77 120%), #508dbf;
   --portfolio-gradient: linear-gradient(90deg, #5e8fff 0%, #9b49ff 100%), #7a6fff;
   --portfolio-bitcoin-gradient: linear-gradient(45deg, #f07a33 20%, #fad15c 100%), #f99838;
   --portfolio-ether-gradient: linear-gradient(45deg, #003bff 20%, #00ccae 100%), #003bff;
   --portfolio-litecoin-gradient: linear-gradient(45deg, #3a27b0 20%, #ac60d0 100%), #7545c0;
   --portfolio-zcash-gradient: linear-gradient(45deg, #881fa3 20%, #e30726 100%), #bc125d;
+
+
+  /* New color palette! */
+  --cardfolio-light-background: var(--cardfolio-dark-purple-op10);
+  --cardfolio-dark-background: #151529;
+  --cardfolio-hover-dark: #202037;
+  --cardfolio-hover: #252440;
+  --cardfolio-border-color: var(--cardfolio-white-op10);
+
+  --cardfolio-dark-purple: #01002c;
+  --cardfolio-dark-purple-op90: rgba(1, 0, 44, 0.9);
+  --cardfolio-dark-purple-op80: rgba(1, 0, 44, 0.8);
+  --cardfolio-dark-purple-op70: rgba(1, 0, 44, 0.7);
+  --cardfolio-dark-purple-op60: rgba(1, 0, 44, 0.6);
+  --cardfolio-dark-purple-op50: rgba(1, 0, 44, 0.5);
+  --cardfolio-dark-purple-op40: rgba(1, 0, 44, 0.4);
+  --cardfolio-dark-purple-op30: rgba(1, 0, 44, 0.3);
+  --cardfolio-dark-purple-op20: rgba(1, 0, 44, 0.2);
+  --cardfolio-dark-purple-op10: rgba(1, 0, 44, 0.1);
+
+  --cardfolio-purple: #bd10e0;
+  --cardfolio-purple-op95: rgba(189, 16, 224, 0.95);
+  --cardfolio-purple-op90: rgba(189, 16, 224, 0.9);
+  --cardfolio-purple-op80: rgba(189, 16, 224, 0.8);
+
+  --cardfolio-black: #000;
+  --cardfolio-white: #fff;
+  --cardfolio-white-op10: rgba(255, 255, 255, 0.1);
+  --cardfolio-white-op50: rgba(255, 255, 255, 0.5);
+  --cardfolio-white-op60: rgba(255, 255, 255, 0.6);
+  --cardfolio-blatant-red: #ff0000;
+  --cardfolio-light-blue: #00ebe5;
+  --cardfolio-light-green: #37eb77;
+  --cardfolio-forest-green: #3aa78f;
+
+  --cardfolio-purple-gradient: linear-gradient(45deg, #3023ae 0%, #c86dd7 100%), #834bc4;
+  --cardfolio-box-shadow: rgba(0, 0, 0, 0.5);
 }
