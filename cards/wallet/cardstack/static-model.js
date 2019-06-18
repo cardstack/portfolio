@@ -9,17 +9,20 @@ factory.addResource('content-types', 'wallets')
       'user',
       'todays-rates-lookup',
       'todays-rates-lookup.rates',
+      'token-balances'
     ],
     fieldsets: {
       embedded: [
         { field: 'assets', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
+        { field: 'token-balances', format: 'embedded' },
       ],
       isolated: [
         { field: 'assets', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
+        { field: 'token-balances', format: 'embedded' },
       ]
     }
   })
@@ -36,6 +39,9 @@ factory.addResource('content-types', 'wallets')
       fieldType: '@cardstack/core-types::has-many',
       editorComponent: 'field-editors/dropdown-multi-select-editor'
     }).withRelated('related-types', [{ type: 'content-types', id: 'assets' }]),
+    factory.addResource('computed-fields', 'token-balances').withAttributes({
+      'computed-field-type': 'portfolio-wallet::token-balances'
+    }),
     factory.addResource('fields', 'user').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to',
     }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
@@ -52,10 +58,10 @@ factory.addResource('content-types', 'wallets')
     .withAttributes({
       'may-read-resource': true,
       'may-read-fields': true,
-      'may-create-resource': false,
-      'may-update-resource': false,
+      'may-create-resource': true,
+      'may-update-resource': true,
       'may-delete-resource': false,
-      'may-write-fields': false,
+      'may-write-fields': true,
     });
 
   factory.addResource('grants', 'wallet-self-grant')

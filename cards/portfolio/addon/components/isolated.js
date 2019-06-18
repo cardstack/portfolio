@@ -34,6 +34,7 @@ export default LiveIsolatedCard.extend({
   store: service(),
   web3: service(),
   erc20: service(),
+  cardstackData: service(),
   isDismissed: false,
   activeSection: OVERVIEW,
   isOverviewActive: equal('activeSection.title', 'overview'),
@@ -65,34 +66,30 @@ export default LiveIsolatedCard.extend({
     yield waitForProperty(this, 'isWeb3Loaded');
 
     let address = this.web3.address;
-    let metamaskWallet = yield this.store.findRecord('wallet', 'metamask-wallet');
+    let metamaskWallet;
+    try {
+      metamaskWallet = yield this.store.findRecord('wallet', `metamask-${address}`);
+    } catch (e) {
+      metamaskWallet = this.store.createRecord('wallet', {
+        id: `metamask-${address}`,
+        title: 'Metamast Wallet'
+      });
 
-    this.set('metamaskWallet', metamaskWallet);
+      yield metamaskWallet.save();
+      this.set('metamaskWallet', metamaskWallet);
 
-    yield this.getAssetsForWallet.perform(address);
+      yield this.addAssetToWallet.perform(address, 'ether');
 
-    this.content.get('wallets').pushObject(this.get('metamaskWallet'));
+      let tokenBalances = yield metamaskWallet.tokenBalances;
+      let tokenNames = tokenBalances.toArray().map(balance => balance.type.split('-')[0]);
+
+      yield this.addTokensToWallet.perform(address, tokenNames);
+    }
+
+
+    this.content.get('wallets').pushObject(metamaskWallet);
 
     yield this.content.save();
-  }),
-
-  getAssetsForWallet: task(function * (address) {
-    yield this.addAssetToWallet.perform(address, 'ether');
-
-    for (let token of this.erc20.tokens()) {
-      let tokenName = token.symbol.toLowerCase();
-      let balanceOf;
-
-      try {
-        balanceOf = yield this.store.findRecord(`${tokenName}-token-balance-of`, address.toLowerCase());
-      } catch (e) {
-        return;
-      }
-
-      if (balanceOf) {
-        yield this.addAssetToWallet.perform(`${address}_${tokenName}-token`, tokenName);
-      }
-    }
   }),
 
   addAssetToWallet: task(function * (assetId, networkId) {
@@ -104,14 +101,55 @@ export default LiveIsolatedCard.extend({
     } catch (e) {
       asset = this.store.createRecord('asset', {
         id: assetId,
-        network,
-        todaysRatesLookup: this.content.todaysRatesLookup
+        network
       });
 
       yield asset.save();
     }
 
     this.get('metamaskWallet.assets').pushObject(asset);
+  }),
+
+  addTokensToWallet: task(function * (address, tokenNames) {
+    let adapter = this.store.adapterFor('asset');
+
+    let data = tokenNames.map(token => {
+      return {
+        type: 'assets',
+        id: `${address}_${token}-token`,
+        relationships: {
+          network: { data: { type: 'networks', id: token } }
+        }
+      }
+    });
+
+    let response = yield fetch(`${adapter.host}/token-assets`, {
+      method: 'POST',
+      headers: {
+        "content-type": 'application/vnd.api+json'
+      },
+      body: JSON.stringify({ data })
+    });
+
+    let body = yield response.json();
+
+    if (response.status === 200) {
+      this.store.pushPayload('asset', body);
+
+      let assetIds = tokenNames.map(token => `${address}_${token}-token`);
+      let query = {
+        filter: {
+          type: { exact: 'assets' },
+          id: { exact: assetIds }
+        }
+      };
+
+      let assets = yield this.cardstackData.query('embedded', query);
+      let metamaskWallet = this.get('metamaskWallet');
+
+      metamaskWallet.get('assets').pushObjects(assets);
+      yield metamaskWallet.save();
+    }
   }),
 
   isAscending: computed('selected', function() {

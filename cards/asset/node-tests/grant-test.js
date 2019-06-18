@@ -34,6 +34,7 @@ describe('assets', function () {
     }
 
     factory.addResource('content-types', 'ethereum-addresses');
+    factory.addResource('content-types', 'sample-token-balance-ofs');
 
     network = factory.addResource('networks', 'ether')
       .withAttributes({

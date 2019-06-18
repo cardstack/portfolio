@@ -65,8 +65,8 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     .withRelated('network', ethereumNetwork);
 
   // these are rinkeby addresses with erc20 tokens
-  let realCardTokenAsset = factory.addResource('assets', '0x51fd7d6b0509e32e4798a2ca047181d7af9eb0c9_card-token')
-    .withRelated('network', tokenNetworks['CARD']);
+  // let realCardTokenAsset = factory.addResource('assets', '0x51fd7d6b0509e32e4798a2ca047181d7af9eb0c9_card-token')
+  //   .withRelated('network', tokenNetworks['CARD']);
   let realDaiTokenAsset = factory.addResource('assets', '0x1E65F71b024937b988fdba09814d60049e0Fc59d_dai-token')
     .withRelated('network', tokenNetworks['DAI']);
   let realUsdtTokenAsset = factory.addResource('assets', '0x7294A9533945d4Dfb00e99Eb941225831Cb86F5D_usdt-token')
@@ -99,7 +99,7 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
   ];
 
   if (process.env.JSON_RPC_URLS) {
-    demoWalletAssets = [realEthereumAsset, realCardTokenAsset, realDaiTokenAsset, realUsdtTokenAsset].concat(demoWalletAssets);
+    demoWalletAssets = [realEthereumAsset, realDaiTokenAsset, realUsdtTokenAsset].concat(demoWalletAssets);
   }
 
   factory.addResource('portfolios', 'test-portfolio').withAttributes({
@@ -121,13 +121,6 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         .withRelated('user', user)
         .withRelated('assets', trezorWalletAssets)
     ]);
-
-  factory.addResource('wallets', 'metamask-wallet')
-    .withAttributes({
-      title: 'MetaMask Wallet',
-      logo: 'metamask-logo'
-    })
-    .withRelated('assets', []);
 }
 
 module.exports = factory.getModels();

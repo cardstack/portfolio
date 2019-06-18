@@ -8,7 +8,6 @@ exports.compute = async function(model) {
 
   let tokenSymbol = (await network.getField('unit')).toLowerCase();
 
-
   let contentType = await network.getField('asset-type');
   if (!contentType) { return; }
 
