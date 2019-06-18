@@ -1,5 +1,6 @@
 /* Grid Settings */
 .portfolio-isolated {
+  --cardfolio-border-color: var(--cardfolio-white-op10);
   --grid-nav-max-width: 170px;
   --grid-main-max-width: calc(var(--cardfolio-content-max-width) - var(--cardfolio-grid-gap) - var(--grid-nav-max-width));
 
@@ -194,9 +195,9 @@
   justify-content: flex-end;
   align-items: center;
 
-  padding: 0;
-  border-bottom: 1px solid var(--cardfolio-white-op80);
-  border-top: 1px solid var(--cardfolio-white-op80);
+  padding: var(--cardfolio-padding) 0;
+  border-bottom: 1px solid var(--cardfolio-border-color);
+  border-top: 1px solid var(--cardfolio-border-color);
 }
 
 .assets-filter-bar .ember-power-select-clear-btn {
@@ -226,9 +227,10 @@
 }
 
 .assets-filter-bar--icon {
-  fill: var(--cardfolio-white-op50);
+  fill: var(--cardfolio-white-op30);
 }
 
+.assets-filter-bar--button.active > .assets-filter-bar--icon,
 .assets-filter-bar--button:hover > .assets-filter-bar--icon {
   fill: var(--cardfolio-white);
 }
@@ -244,7 +246,7 @@
 
 .network-section--title {
   margin: 0;
-  color: var(--cardfolio-white-op60);
+  color: var(--cardfolio-white);
   font-size: var(--cardfolio-med-font);
   font-weight: normal;
   letter-spacing: 0;
@@ -252,12 +254,41 @@
   text-transform: capitalize;
 }
 
+.network-section--items {
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
 .network-section--grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--grid-card-item));
   grid-gap: var(--cardfolio-grid-gap);
+}
 
-  margin: 0;
-  padding-left: 0;
-  list-style-type: none;
+.network-section--list {
+  display: table;
+  width: 100%;
+}
+
+.network-section--list li {
+  display: table-row;
+}
+
+.network-section--list li > span {
+  display: table-cell;
+  vertical-align: middle;
+  padding: var(--cardfolio-padding) 0;
+  border-bottom: 1px solid var(--cardfolio-border-color);
+  text-align: left;
+}
+
+.list-view--title,
+.list-view--currency {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.list-view--network-title {
+  text-transform: uppercase;
 }

@@ -6,7 +6,7 @@
   --portfolio-off-white: #fafafa;
   --portfolio-highlight-gray: #f8f8f8;
   --portfolio-light-gray: #f2f2f4;
-  --portfolio-border-gray: var(--cardfolio-border-color);
+  --portfolio-border-gray: #e5e5e9;
   --portfolio-darker-border-gray: #ccccd5;
   --portfolio-border-highlight-gray: #7f7f7f;
   --portfolio-muted-gray: #757575;
@@ -56,6 +56,7 @@
   --cardfolio-black: #000;
   --cardfolio-white: #fff;
   --cardfolio-white-op10: rgba(255, 255, 255, 0.1);
+  --cardfolio-white-op30: rgba(255, 255, 255, 0.3);
   --cardfolio-white-op50: rgba(255, 255, 255, 0.5);
   --cardfolio-white-op60: rgba(255, 255, 255, 0.6);
   --cardfolio-blatant-red: #ff0000;

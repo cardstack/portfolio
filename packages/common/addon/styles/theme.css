@@ -5,7 +5,7 @@
   --cs-root-letter-spacing: 0;
   --cs-root-color: var(--cardfolio-black);
   --cs-root-border-radius: var(--cardfolio-border-radius);
-  --cs-root-border-color: var(--portfolio-border-gray);
+  --cs-root-border-color: var(--cardfolio-border-color);
   --cs-root-background-color: var(--cardfolio-light-background);
   --cs-root-background-hover: var(--cardfolio-hover-dark);
   --cs-root-input-height: 30px;
@@ -15,6 +15,7 @@
 .cardfolio-dropdown {
   --cs-dropdown-text-box-height: 30px;
   --cs-dropdown-color: var(--cardfolio-white);
+  --cs-dropdown-border-color: var(--cardfolio-white-op10);
   --cs-dropdown-background-color: var(--cardfolio-light-purple-background);
   --cs-dropdown-background-hover: var(--cardfolio-hover-dark);
   --cs-dropdown-label-color: var(--cardfolio-white);

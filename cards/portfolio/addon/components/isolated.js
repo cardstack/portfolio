@@ -37,6 +37,7 @@ export default LiveIsolatedCard.extend({
   isOverviewActive: equal('activeSection.title', 'overview'),
   isAssetsSection: equal('activeSection.title', 'assets'),
   displaySections: SECTIONS,
+  isListView: false,
   sortingOptions: SORTINGOPTIONS,
   selected: DEFAULTSORT,
   sortedAssets: sort('assets.[]', 'sortAssetsByBalance'),
@@ -63,6 +64,14 @@ export default LiveIsolatedCard.extend({
         return this.set('activeSection', OVERVIEW);
       }
       this.set('activeSection', section);
+    },
+
+    setListView() {
+      this.set('isListView', true);
+    },
+
+    unsetListView() {
+      this.set('isListView', false);
     },
 
     dismiss() {

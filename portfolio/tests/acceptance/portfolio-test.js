@@ -208,6 +208,32 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-network-asset-count]').hasText('2 Assets');
   });
 
+  test('user can toggle between grid view and list view', async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await login();
+    await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
+    await waitFor('[data-test-portfolio-isolated-network-section]');
+
+    assert.dom('[data-test-network-section-items]').hasClass('network-section--grid');
+    assert.dom('[data-test-grid-view-button]').hasClass('active');
+    assert.dom('[data-test-list-view-button]').doesNotHaveClass('active');
+    assert.dom('[data-test-list-view-title]').doesNotExist();
+
+    await click('[data-test-list-view-button]');
+
+    assert.dom('[data-test-network-section-items]').hasClass('network-section--list');
+    assert.dom('[data-test-list-view-button]').hasClass('active');
+    assert.dom('[data-test-grid-view-button]').doesNotHaveClass('active');
+    assert.dom('[data-test-list-view-title]').hasAnyText();
+
+    await click('[data-test-grid-view-button]');
+
+    assert.dom('[data-test-network-section-items]').hasClass('network-section--grid');
+    assert.dom('[data-test-list-view-title]').doesNotExist();
+  });
+
   test('user can sort assets by balance in descending and ascending order', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
