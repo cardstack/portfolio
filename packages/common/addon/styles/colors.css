@@ -31,6 +31,7 @@
 
   /* New color palette! */
   --cardfolio-light-background: var(--cardfolio-dark-purple-op10);
+  --cardfolio-light-purple-background: #31314a;
   --cardfolio-dark-background: #151529;
   --cardfolio-hover-dark: #202037;
   --cardfolio-hover: #252440;

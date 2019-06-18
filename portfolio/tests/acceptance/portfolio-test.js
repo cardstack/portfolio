@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
+import { clickTrigger } from 'ember-power-select/test-support/helpers'
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
 
@@ -125,13 +126,13 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1)').hasText('Show All');
     assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').hasClass('active');
     assert.dom('[data-test-portfolio-isolated-intro]').exists();
-    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('My Cardfolio');
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('overview');
     assert.dom('[data-test-portfolio-isolated-register-button]').doesNotExist();
-    assert.dom('[data-test-portfolio-section="memberships"] h2').hasText('Memberships');
-    assert.dom('[data-test-portfolio-section="assets"] h2').hasText('Assets');
-    assert.dom('[data-test-portfolio-section="assets"] h3').hasText('Test Wallet');
+    assert.dom('[data-test-portfolio-section="memberships"] h2').hasText('Most Active memberships');
+    assert.dom('[data-test-portfolio-section="assets"] h2').hasText('Most Active assets');
+    assert.dom('[data-test-portfolio-section="assets"] h3').hasText('Ethereum Mainnet');
     assert.dom('[data-test-portfolio-asset]').exists({ count: 2 });
-    assert.dom('[data-test-portfolio-asset="1"]').containsText('Ether');
+    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
   });
 
   test('user can dismiss the welcome message box', async function(assert) {
@@ -164,29 +165,68 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-login-password]').exists();
   });
 
-  test('user filter sections using sidebar navigation', async function(assert) {
+  test('user can filter sections using sidebar navigation', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
     await login();
     await waitFor('[data-test-portfolio-isolated-side-nav]');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').hasClass('active');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav-item="show-all"]').hasClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav-item="assets"]').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('overview');
     assert.dom('[data-test-portfolio-section]').exists({ count: 2 });
 
-    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a');
-    assert.dom('[data-test-portfolio-section]').exists({ count: 1 });
-    assert.dom('[data-test-portfolio-section] h2').hasText('Memberships');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a').doesNotHaveClass('active');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').hasClass('active');
+    await click('[data-test-portfolio-isolated-side-nav-item="memberships"]');
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('memberships');
+    assert.dom('[data-test-portfolio-section]').doesNotExist();
+    assert.dom('[data-test-portfolio-isolated-side-nav-item="show-all"]').doesNotHaveClass('active');
+    assert.dom('[data-test-portfolio-isolated-side-nav-item="memberships"]').hasClass('active');
 
-    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(3) a');
-    assert.dom('[data-test-portfolio-section]').exists({ count: 1 });
-    assert.dom('[data-test-portfolio-section] h2').hasText('Assets');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(2) a').doesNotHaveClass('active');
-    assert.dom('[data-test-portfolio-isolated-side-nav] li:nth-of-type(3) a').hasClass('active');
+    await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
+    assert.dom('[data-test-portfolio-isolated-side-nav-item="assets"]').hasClass('active');
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('assets');
+    assert.dom('[data-test-portfolio-section]').doesNotExist();
 
-    await click('[data-test-portfolio-isolated-side-nav] li:nth-of-type(1) a');
+    await click('[data-test-portfolio-isolated-side-nav-item="show-all"]');
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('overview');
     assert.dom('[data-test-portfolio-section]').exists({ count: 2 });
+  });
+
+  test('asset-only view renders', async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await login();
+    await waitFor('[data-test-portfolio-isolated-side-nav]');
+    await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
+
+    assert.dom('[data-test-portfolio-isolated-header] h1').hasText('assets');
+    assert.dom('[data-test-portfolio-isolated-filter-bar]').exists();
+    assert.dom('[data-test-portfolio-isolated-total-assets]').hasText('Showing 2 Assets');
+    assert.dom('[data-test-portfolio-isolated-network-section]').exists({ count: 1 });
+    assert.dom('[data-test-portfolio-isolated-network-title]').hasText('Ethereum Mainnet');
+    assert.dom('[data-test-portfolio-isolated-network-asset-count]').hasText('2 Assets');
+  });
+
+  test('user can sort assets by balance in descending and ascending order', async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+
+    await login();
+    await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
+    await waitFor('[data-test-portfolio-isolated-filter-bar]');
+
+    assert.dom('.ember-power-select-selected-item').hasText('Balance (Descending)');
+    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
+
+    await clickTrigger('.cs-component-dropdown');
+    await click('[data-option-index="1"]');
+    assert.dom('.ember-power-select-selected-item').hasText('Balance (Ascending)');
+    assert.dom('[data-test-portfolio-asset="0"]').containsText('Bitcoin');
+
+    await clickTrigger('.cs-component-dropdown');
+    await click('[data-option-index="0"]');
+    assert.dom('.ember-power-select-selected-item').hasText('Balance (Descending)');
+    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
   });
 });
