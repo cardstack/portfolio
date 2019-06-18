@@ -216,21 +216,21 @@ module('Acceptance | portfolio', function(hooks) {
     await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
     await waitFor('[data-test-portfolio-isolated-network-section]');
 
-    assert.dom('[data-test-network-section-items]').hasClass('network-section--grid');
+    assert.dom('[data-test-network-section-grid]').doesNotHaveClass('network-section--list');
     assert.dom('[data-test-grid-view-button]').hasClass('active');
     assert.dom('[data-test-list-view-button]').doesNotHaveClass('active');
     assert.dom('[data-test-list-view-title]').doesNotExist();
 
     await click('[data-test-list-view-button]');
 
-    assert.dom('[data-test-network-section-items]').hasClass('network-section--list');
+    assert.dom('[data-test-network-section-grid]').hasClass('network-section--list');
     assert.dom('[data-test-list-view-button]').hasClass('active');
     assert.dom('[data-test-grid-view-button]').doesNotHaveClass('active');
     assert.dom('[data-test-list-view-title]').hasAnyText();
 
     await click('[data-test-grid-view-button]');
 
-    assert.dom('[data-test-network-section-items]').hasClass('network-section--grid');
+    assert.dom('[data-test-network-section-grid]').doesNotHaveClass('network-section--list');
     assert.dom('[data-test-list-view-title]').doesNotExist();
   });
 

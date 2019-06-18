@@ -43,7 +43,7 @@ export default LiveIsolatedCard.extend({
   sortedAssets: sort('assets.[]', 'sortAssetsByBalance'),
   sortBy: 'networkBalance',
 
-  ascending: computed('selected', function() {
+  isAscending: computed('selected', function() {
     let selection = this.selected;
 
     if (!selection || selection.id === 'descending') {
@@ -53,8 +53,8 @@ export default LiveIsolatedCard.extend({
     return true;
   }),
 
-  sortAssetsByBalance: computed('sortBy', 'ascending', function() {
-    let sortOrder = this.ascending ? 'asc' : 'desc';
+  sortAssetsByBalance: computed('sortBy', 'isAscending', function() {
+    let sortOrder = this.isAscending ? 'asc' : 'desc';
     return [ `${this.get('sortBy')}:${sortOrder}` ];
   }),
 

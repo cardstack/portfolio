@@ -1,11 +1,11 @@
 /* Grid Settings */
 .portfolio-isolated {
   --cardfolio-border-color: var(--cardfolio-white-op10);
-  --grid-nav-max-width: 170px;
-  --grid-main-max-width: calc(var(--cardfolio-content-max-width) - var(--cardfolio-grid-gap) - var(--grid-nav-max-width));
+  --grid-nav-width: 170px;
+  --grid-main-max-width: calc(var(--cardfolio-content-max-width) - var(--cardfolio-grid-gap) - var(--grid-nav-width));
 
   display: grid;
-  grid-template-columns: minmax(min-content, var(--grid-nav-max-width)) minmax(min-content, var(--grid-main-max-width));
+  grid-template-columns: var(--grid-nav-width) minmax(min-content, var(--grid-main-max-width));
   grid-auto-rows: min-content;
   grid-column-gap: var(--cardfolio-grid-gap);
   grid-row-gap: var(--cardfolio-row-gap);
@@ -254,41 +254,50 @@
   text-transform: capitalize;
 }
 
-.network-section--items {
+.network-section--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--grid-card-item));
+  grid-gap: var(--cardfolio-grid-gap);
+
   margin: 0;
   padding-left: 0;
   list-style-type: none;
 }
 
-.network-section--grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, var(--grid-card-item));
-  grid-gap: var(--cardfolio-grid-gap);
-}
-
 .network-section--list {
-  display: table;
-  width: 100%;
+  grid-template-columns: 100%;
+  grid-gap: 0;
 }
 
 .network-section--list li {
-  display: table-row;
+  width: 100%;
 }
 
-.network-section--list li > span {
-  display: table-cell;
-  vertical-align: middle;
-  padding: var(--cardfolio-padding) 0;
-  border-bottom: 1px solid var(--cardfolio-border-color);
-  text-align: left;
+.network-section--list .asset-embedded {
+  background: none;
+  border-radius: 0;
+  box-shadow: 0 1px 1px 0 var(--cardfolio-border-color);
 }
 
-.list-view--title,
-.list-view--currency {
-  font-weight: bold;
-  text-transform: uppercase;
+.network-section--list .asset-embedded__wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
-.list-view--network-title {
-  text-transform: uppercase;
+.network-section--list .asset-embedded__wrapper {
+  padding-bottom: 0;
+}
+
+.network-section--list .asset-embedded__balance {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.network-section--list footer {
+  height: 0;
+  padding: 0;
+  background-color: transparent;
+  visibility: hidden;
 }

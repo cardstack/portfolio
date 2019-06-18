@@ -105,22 +105,44 @@
         <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
       </header>
 
-      <ul class="network-section--items network-section--{{if isListView "list"}}" data-test-network-section-items>
-        {{#each sortedAssets as |asset index|}}
-          <li data-test-portfolio-asset={{index}}>
-            {{#if isListView}}
-              <span>{{svg-jar asset.networkId width="22px" height="22px" class="list-view--icon"}}</span>
-              <span class="list-view--title" data-test-list-view-title>{{asset.networkTitle}}</span>
-              <span>{{asset.formattedAddress}}</span>
-              <span class="list-view--network-title">MAINNET</span>
-              <span>15.938377382920 <span class="list-view--currency">ETH</span></span>
-              <span>3.993.70 <span class="list-view--currency">USD</span></span>
-            {{else}}
+
+    {{#if isAscending}}
+      {{#if isListView}}
+        <ul class="network-section--grid network-section--list" data-test-network-section-grid>
+          {{#each sortedAssets as |asset index|}}
+            <li data-test-portfolio-asset={{index}}>
               {{cardstack-content content=asset format="embedded"}}
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <ul class="network-section--grid" data-test-network-section-grid>
+          {{#each sortedAssets as |asset index|}}
+            <li data-test-portfolio-asset={{index}}>
+              {{cardstack-content content=asset format="embedded"}}
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{else}}
+      {{#if isListView}}
+        <ul class="network-section--grid network-section--list" data-test-network-section-grid>
+          {{#each sortedAssets as |asset index|}}
+            <li data-test-portfolio-asset={{index}}>
+              {{cardstack-content content=asset format="embedded"}}
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <ul class="network-section--grid" data-test-network-section-grid>
+          {{#each sortedAssets as |asset index|}}
+            <li data-test-portfolio-asset={{index}}>
+              {{cardstack-content content=asset format="embedded"}}
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{/if}}
     </section>
   {{/if}}
 </main>
