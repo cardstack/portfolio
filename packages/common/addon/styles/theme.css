@@ -1,0 +1,46 @@
+:root {
+  --cs-root-font-family: "Open Sans", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cs-root-font-size: var(--cardfolio-sm-font);
+  --cs-root-line-height: 1.3;
+  --cs-root-letter-spacing: 0;
+  --cs-root-color: var(--cardfolio-black);
+  --cs-root-border-radius: var(--cardfolio-border-radius);
+  --cs-root-border-color: var(--portfolio-border-gray);
+  --cs-root-background-color: var(--cardfolio-light-background);
+  --cs-root-background-hover: var(--cardfolio-hover-dark);
+  --cs-root-input-height: 30px;
+  --cs-root-label-color: var(--cardfolio-white);
+}
+
+.cardfolio-dropdown {
+  --cs-dropdown-text-box-height: 30px;
+  --cs-dropdown-color: var(--cardfolio-white);
+  --cs-dropdown-background-color: var(--cardfolio-light-purple-background);
+  --cs-dropdown-background-hover: var(--cardfolio-hover-dark);
+  --cs-dropdown-label-color: var(--cardfolio-white);
+  --cs-dropdown-current-option: var(--cardfolio-hover-dark);
+}
+
+.cardfolio-dropdown.cs-component-dropdown {
+  min-width: 220px;
+}
+
+.cardfolio-dropdown .cs-component-dropdown__container {
+  bottom: 0;
+}
+
+.cardfolio-dropdown .ember-basic-dropdown-trigger {
+  min-height: auto;
+  margin: 0;
+  padding: 0 1em;
+  background-color: transparent;
+  line-height: 1.75;
+}
+
+.cardfolio-dropdown .cs-component-dropdown .cs-component-dropdown--label {
+  border-bottom: none;
+}
+
+.cardfolio-dropdown .ember-power-select-option[aria-selected="true"] {
+  background-color: var(--cardfolio-light-blue);
+}

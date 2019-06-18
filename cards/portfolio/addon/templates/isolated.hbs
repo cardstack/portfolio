@@ -2,92 +2,115 @@
 <main class="portfolio-isolated" data-test-portfolio-isolated>
   <nav class="portfolio-isolated--side-nav" data-test-portfolio-isolated-side-nav>
     <ul class="portfolio-isolated--side-nav-list">
-      {{!-- TODO: Scroll animation and link nav items --}}
       <li>
-        <a href="#" {{action "displayAll"}} class="portfolio-isolated--side-nav--link {{if (eq displayGroup "all") "active"}}">
-          {{svg-jar "home" width="18px" height="18px" class="portfolio-isolated--side-nav--icon"}}
-          Show All
-        </a>
+          <a href="#"
+             onclick={{action "setActiveSection" null}}
+             class="portfolio-isolated--side-nav--link {{if isOverviewActive "active"}}"
+             data-test-portfolio-isolated-side-nav-item="show-all">
+            {{svg-jar "home" width="18px" height="18px" class="portfolio-isolated--side-nav--icon"}}
+            Show All
+          </a>
       </li>
-      <li>
-        <a href="#" {{action "displayMemberships"}} class="portfolio-isolated--side-nav--link {{if (eq displayGroup "memberships") "active"}}">
-          {{svg-jar "memberships" width="18px" height="18px" class="portfolio-isolated--side-nav--icon"}}
-          Memberships
-        </a>
-      </li>
-      <li>
-        <a href="#" {{action "displayAssets"}} class="portfolio-isolated--side-nav--link {{if (eq displayGroup "assets") "active"}}">
-          {{svg-jar "assets" width="18px" height="18px" class="portfolio-isolated--side-nav--icon"}}
-          Assets
-        </a>
-      </li>
+      {{#each displaySections as |displaySection|}}
+        <li>
+          <a href="#"
+             onclick={{action "setActiveSection" displaySection}}
+             class="portfolio-isolated--side-nav--link {{if (eq activeSection.title displaySection.title) "active"}}"
+             data-test-portfolio-isolated-side-nav-item={{displaySection.title}}>
+            {{svg-jar displaySection.title width="18px" height="18px" class="portfolio-isolated--side-nav--icon"}}
+            {{displaySection.title}}
+          </a>
+        </li>
+      {{/each}}
     </ul>
   </nav>
 
   <header class="portfolio-isolated--header portfolio-isolated--grid-header" data-test-portfolio-isolated-header>
-    <h1 class="portfolio-isolated--title">My Cardfolio</h1>
-    <h2 class="portfolio-isolated--sub-title">Credentials, Memberships & Tracked Assets</h2>
+    <h1 class="portfolio-isolated--title">
+      {{svg-jar "wallet" width="36px" height="36px" class="portfolio-isolated--icon"}}
+      {{activeSection.title}}
+    </h1>
+    <h2 class="portfolio-isolated--sub-title">{{activeSection.description}}</h2>
   </header>
 
-  {{!-- TODO: Need copy --}}
-  {{#unless isDismissed}}
-    <section class="portfolio-isolated-intro" data-test-portfolio-isolated-intro>
-      {{svg-jar "cardstack-logo" width="42px" height="42px" class="portfolio-isolated-intro--icon"}}
-      <h2 class="portfolio-isolated-intro--title">Welcome to your Personalized Wallet</h2>
-      <p class="portfolio-isolated-intro--copy">
-        You can register to view credentials, memberships and tracked assets across all your sites.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed scelerisque ex, sed
-        elementum lorem. Phasellus sit amet ipsum in tellus vestibulum tincidunt. Etiam rhoncus,
-        orci quis elementum pulvinar, leo lectus feugiat ligula.
-      </p>
-      <button onclick={{action "dismiss"}} class="portfolio-isolated-intro--button">
-        Dismiss
-        {{svg-jar "close" width="10px" height="10px" class="portfolio-isolated-intro--button-icon"}}
-      </button>
-    </section>
-  {{/unless}}
-
-  {{#unless (eq displayGroup "assets")}}
-    <section id="memberships" class="portfolio-section" data-test-portfolio-section="memberships">
-      <header class="portfolio-section--header">
-        <h2 class="portfolio-section--title">
-          {{svg-jar "memberships" width="26px" height="26px" class="portfolio-section--icon"}}
-          Memberships
-        </h2>
-      </header>
-      <section class="portfolio-subsection">
-        <ul class="portfolio-subsection--grid">
-          {{!-- TODO: Add membership cards --}}
-          Coming Soon
-        </ul>
+  {{#if isOverviewActive}}
+    {{!-- TODO: Need copy --}}
+    {{#unless isDismissed}}
+      <section class="portfolio-isolated-intro" data-test-portfolio-isolated-intro>
+        {{svg-jar "cardstack-logo" width="42px" height="42px" class="portfolio-isolated-intro--icon"}}
+        <h2 class="portfolio-isolated-intro--title">Welcome to your Personalized Wallet</h2>
+        <p class="portfolio-isolated-intro--copy">
+          You can register to view credentials, memberships and tracked assets across all your sites.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed scelerisque ex, sed
+          elementum lorem. Phasellus sit amet ipsum in tellus vestibulum tincidunt. Etiam rhoncus,
+          orci quis elementum pulvinar, leo lectus feugiat ligula.
+        </p>
+        <button onclick={{action "dismiss"}} class="portfolio-isolated-intro--button">
+          Dismiss
+          {{svg-jar "close" width="10px" height="10px" class="portfolio-isolated-intro--button-icon"}}
+        </button>
       </section>
-    </section>
-  {{/unless}}
+    {{/unless}}
 
-  {{#unless (eq displayGroup "memberships")}}
-    <section id="assets" class="portfolio-section" data-test-portfolio-section="assets">
-      <header class="portfolio-section--header">
-        <h2 class="portfolio-section--title">
-          {{svg-jar "assets" width="26px" height="26px" class="portfolio-section--icon"}}
-          Assets
-        </h2>
+    {{#each displaySections as |displayGroup|}}
+      <section class="portfolio-section" data-test-portfolio-section={{displayGroup.title}}>
+        <header class="portfolio-section--header">
+          <h2 class="portfolio-section--title">
+            {{svg-jar displayGroup.title width="26px" height="26px" class="portfolio-section--icon"}}
+            Most Active {{displayGroup.title}}
+          </h2>
+          {{!-- TODO: LINK --}}
+          <button class="portfolio-section--view-all" onclick={{action "setActiveSection" displayGroup}}>
+            View All {{displayGroup.title}}
+          </button>
+        </header>
+        {{#if (eq displayGroup.title "assets")}}
+          <section class="network-section" data-test-network-section>
+            <header class="network-section--header">
+              {{!-- TODO: Display network title --}}
+              <h3 class="network-section--title">Ethereum Mainnet</h3>
+            </header>
+            <ul class="network-section--grid">
+              {{#each sortedAssets as |asset index|}}
+                <li data-test-portfolio-asset={{index}}>
+                  {{cardstack-content content=asset format="embedded"}}
+                </li>
+              {{/each}}
+            </ul>
+          </section>
+        {{else}}
+          Coming Soon
+        {{/if}}
+      </section>
+    {{/each}}
+  {{else if isAssetsSection}}
+    <div class="assets-filter-bar" data-test-portfolio-isolated-filter-bar>
+      <div class="assets-filter-bar--count" data-test-portfolio-isolated-total-assets>Showing {{assets.length}} Assets</div>
+      {{!-- <label class="assets-filter-bar--label">Filter By</label> --}}
+      {{!-- <Dropdown @label="Select an option" @theme="cardfolio-dropdown" /> --}}
+      <label class="assets-filter-bar--label">Sort By</label>
+      <Dropdown @options={{sortingOptions}} @selected={{selected}} @theme="cardfolio-dropdown" @label="" />
+      <button class="assets-filter-bar--button" aria-label="List view">
+        {{svg-jar "list" width="26px" height="26px" class="assets-filter-bar--icon"}}
+      </button>
+      <button class="assets-filter-bar--button" aria-label="Grid view">
+        {{svg-jar "grid" width="26px" height="26px" class="assets-filter-bar--icon"}}
+      </button>
+    </div>
+
+    <section class="network-section" data-test-portfolio-isolated-network-section>
+      <header class="network-section--header">
+        {{!-- TODO: Display network title --}}
+        <h3 class="network-section--title" data-test-portfolio-isolated-network-title>Ethereum Mainnet</h3>
+        <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
       </header>
-      {{#each content.wallets as |wallet|}}
-        <section class="portfolio-subsection">
-          <header class="portfolio-subsection--header">
-            {{!-- TODO: Use network title --}}
-            <h3 class="portfolio-subsection--title">{{wallet.title}}</h3>
-          </header>
-          <ul class="portfolio-subsection--grid">
-            {{!-- TODO: Use actual asset --}}
-            {{#each wallet.assets as |asset index|}}
-              <li data-test-portfolio-asset={{index}}>
-                {{cardstack-content content=asset format="embedded"}}
-              </li>
-            {{/each}}
-          </ul>
-        </section>
-      {{/each}}
+      <ul class="network-section--grid">
+        {{#each sortedAssets as |asset index|}}
+          <li data-test-portfolio-asset={{index}}>
+            {{cardstack-content content=asset format="embedded"}}
+          </li>
+        {{/each}}
+      </ul>
     </section>
-  {{/unless}}
+  {{/if}}
 </main>
