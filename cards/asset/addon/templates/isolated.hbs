@@ -43,7 +43,7 @@
                 <div class="asset-isolated__currency">
                   <div class="asset-isolated__currency-switcher row">
                     <Dropdown class="asset-isolated-currency-switch-dropdown" @options={{this.currencies}} @label='' @selected={{this.selectedSymbol}}
-                    @changeAction={{action setCurrencyDropDown}} style='width:210px;'/>
+                    @handleChange={{action setCurrencyDropDown}} style='width:210px;'/>
                     {{!--<button class="{{if (eq currency 'USD') 'active'}}" {{action setCurrency 'USD'}} data-test-asset-isolated-usd-button>USD</button>
                     <button class="{{if (eq currency 'EUR') 'active'}}" {{action setCurrency 'EUR'}} data-test-asset-isolated-eur-button>EUR</button>
                     <button class="{{if (eq currency 'BTC') 'active'}}" {{action setCurrency 'BTC'}} data-test-asset-isolated-btc-button>BTC</button>
