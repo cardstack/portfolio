@@ -54,7 +54,6 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     }
   }).drop(),
   setCurrencyDropDown(selectedSymbol){
-    console.log(selectedSymbol);
     this.set('selectedSymbol', selectedSymbol);
     this.setCurrency(selectedSymbol.currency);
   }
