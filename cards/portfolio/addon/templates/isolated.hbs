@@ -70,13 +70,7 @@
               {{!-- TODO: Display network title --}}
               <h3 class="network-section--title">Ethereum Mainnet</h3>
             </header>
-            <ul class="network-section--items network-section--grid">
-              {{#each sortedAssets as |asset index|}}
-                <li data-test-portfolio-asset={{index}}>
-                  {{cardstack-content content=asset format="embedded"}}
-                </li>
-              {{/each}}
-            </ul>
+            <GridDisplay @contents={{sortedAssets}} />
           </section>
         {{else}}
           Coming Soon
@@ -105,44 +99,19 @@
         <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
       </header>
 
-
-    {{#if isAscending}}
-      {{#if isListView}}
-        <ul class="network-section--grid network-section--list" data-test-network-section-grid>
-          {{#each sortedAssets as |asset index|}}
-            <li data-test-portfolio-asset={{index}}>
-              {{cardstack-content content=asset format="embedded"}}
-            </li>
-          {{/each}}
-        </ul>
+      {{#if isAscending}}
+        {{#if isListView}}
+          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+        {{else}}
+          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+        {{/if}}
       {{else}}
-        <ul class="network-section--grid" data-test-network-section-grid>
-          {{#each sortedAssets as |asset index|}}
-            <li data-test-portfolio-asset={{index}}>
-              {{cardstack-content content=asset format="embedded"}}
-            </li>
-          {{/each}}
-        </ul>
+        {{#if isListView}}
+          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+        {{else}}
+          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+        {{/if}}
       {{/if}}
-    {{else}}
-      {{#if isListView}}
-        <ul class="network-section--grid network-section--list" data-test-network-section-grid>
-          {{#each sortedAssets as |asset index|}}
-            <li data-test-portfolio-asset={{index}}>
-              {{cardstack-content content=asset format="embedded"}}
-            </li>
-          {{/each}}
-        </ul>
-      {{else}}
-        <ul class="network-section--grid" data-test-network-section-grid>
-          {{#each sortedAssets as |asset index|}}
-            <li data-test-portfolio-asset={{index}}>
-              {{cardstack-content content=asset format="embedded"}}
-            </li>
-          {{/each}}
-        </ul>
-      {{/if}}
-    {{/if}}
     </section>
   {{/if}}
 </main>

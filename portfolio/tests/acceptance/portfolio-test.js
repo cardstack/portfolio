@@ -131,8 +131,8 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-section="memberships"] h2').hasText('Most Active memberships');
     assert.dom('[data-test-portfolio-section="assets"] h2').hasText('Most Active assets');
     assert.dom('[data-test-portfolio-section="assets"] h3').hasText('Ethereum Mainnet');
-    assert.dom('[data-test-portfolio-asset]').exists({ count: 2 });
-    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
+    assert.dom('[data-test-grid-display-item]').exists({ count: 2 });
+    assert.dom('[data-test-grid-display-item="0"]').containsText('Ether');
   });
 
   test('user can dismiss the welcome message box', async function(assert) {
@@ -219,19 +219,17 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-network-section-grid]').doesNotHaveClass('network-section--list');
     assert.dom('[data-test-grid-view-button]').hasClass('active');
     assert.dom('[data-test-list-view-button]').doesNotHaveClass('active');
-    assert.dom('[data-test-list-view-title]').doesNotExist();
 
     await click('[data-test-list-view-button]');
 
+    assert.dom('[data-test-network-section-grid]').hasClass('grid-display--list-view');
     assert.dom('[data-test-network-section-grid]').hasClass('network-section--list');
     assert.dom('[data-test-list-view-button]').hasClass('active');
     assert.dom('[data-test-grid-view-button]').doesNotHaveClass('active');
-    assert.dom('[data-test-list-view-title]').hasAnyText();
 
     await click('[data-test-grid-view-button]');
 
     assert.dom('[data-test-network-section-grid]').doesNotHaveClass('network-section--list');
-    assert.dom('[data-test-list-view-title]').doesNotExist();
   });
 
   test('user can sort assets by balance in descending and ascending order', async function(assert) {
@@ -243,16 +241,16 @@ module('Acceptance | portfolio', function(hooks) {
     await waitFor('[data-test-portfolio-isolated-filter-bar]');
 
     assert.dom('.ember-power-select-selected-item').hasText('Balance (Descending)');
-    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
+    assert.dom('[data-test-grid-display-item="0"]').containsText('Ether');
 
     await clickTrigger('.cs-component-dropdown');
     await click('[data-option-index="1"]');
     assert.dom('.ember-power-select-selected-item').hasText('Balance (Ascending)');
-    assert.dom('[data-test-portfolio-asset="0"]').containsText('Bitcoin');
+    assert.dom('[data-test-grid-display-item="0"]').containsText('Bitcoin');
 
     await clickTrigger('.cs-component-dropdown');
     await click('[data-option-index="0"]');
     assert.dom('.ember-power-select-selected-item').hasText('Balance (Descending)');
-    assert.dom('[data-test-portfolio-asset="0"]').containsText('Ether');
+    assert.dom('[data-test-grid-display-item="0"]').containsText('Ether');
   });
 });

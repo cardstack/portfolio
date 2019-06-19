@@ -1,0 +1,7 @@
+<ul class="grid-display {{if isListView "grid-display--list-view"}}" data-test-grid-display ...attributes>
+  {{#each contents as |content index|}}
+    <li data-test-grid-display-item={{index}}>
+      {{cardstack-content content=content format="embedded"}}
+    </li>
+  {{/each}}
+</ul>

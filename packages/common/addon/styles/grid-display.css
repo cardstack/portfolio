@@ -1,0 +1,21 @@
+.grid-display {
+  --grid-item-width: 283px;
+  --grid-gap: var(--cardfolio-grid-gap);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--grid-item-width));
+  grid-gap: var(--grid-gap);
+
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.grid-display--list-view {
+  grid-template-columns: 100%;
+  grid-gap: 0;
+}
+
+.grid-display--list-view li {
+  width: 100%;
+}
