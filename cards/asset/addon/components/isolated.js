@@ -12,7 +12,6 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   currencies: Object.freeze([{name: 'View details as USD', currency: 'USD'}, 
                 {name: 'View details as EUR', currency: 'EUR'}, 
                 {name: 'View details as BTC', currency: 'BTC'}]),
-  selectedSymbol:{name: 'View details as USD', currency: 'USD'},
   cardstackData: service(),
   fastboot: injectOptional.service(),
 
