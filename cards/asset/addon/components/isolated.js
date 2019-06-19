@@ -9,9 +9,9 @@ import { task } from 'ember-concurrency';
 
 export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
   layout,
-  currencies: [{name: 'View details as USD', currency: 'USD'}, 
+  currencies: Object.freeze([{name: 'View details as USD', currency: 'USD'}, 
                 {name: 'View details as EUR', currency: 'EUR'}, 
-                {name: 'View details as BTC', currency: 'BTC'}],
+                {name: 'View details as BTC', currency: 'BTC'}]),
   selectedSymbol:{name: 'View details as USD', currency: 'USD'},
   cardstackData: service(),
   fastboot: injectOptional.service(),
@@ -35,6 +35,7 @@ export default LiveIsolatedCard.extend(AssetBaseMixin, CurrencyParamsMixin, {
     } else {
       this.fetchWallet.perform();
     }
+    this.set('selectedSymbol', {name: 'View details as USD', currency: 'USD'})
   },
 
   fetchWallet: task(function * () {
