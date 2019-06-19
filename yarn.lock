@@ -1132,7 +1132,7 @@
     postcss-cssnext "^2.10.0"
     postcss-import "^9.1.0"
 
-"@cardstack/ui-components@^0.1.6":
+"@cardstack/ui-components@^0.1.5", "@cardstack/ui-components@^0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@cardstack/ui-components/-/ui-components-0.1.6.tgz#40d1da62a48f6c1b0d1ff9f0d1c4d1cc9703ccf9"
   integrity sha512-US6QdZVU6Xlh3uoFsvNbWRJxeS6xySj+SsZRD1mnLRhmICqAHPy1xQKQXHh1vddCK1bkHy7OVVHiKPLGSFmcWA==
