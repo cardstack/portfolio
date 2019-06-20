@@ -6,7 +6,7 @@ import MockWeb3Service from '../helpers/mock-web3-service';
 import MockErc20Service from '../helpers/mock-erc20-service';
 import { run } from '@ember/runloop';
 
-const metamaskWalletAddress = '0xabcde';
+const metamaskWalletAddress = '0x56789';
 
 const scenario = new Fixtures({
   create(factory) {
@@ -21,14 +21,13 @@ const scenario = new Fixtures({
       'password-hash': "cb917855077883ac511f3d8c2610e72cccb12672cb56adc21cfde27865c0da57:675c2dc63b36aa0e3625e9490eb260ca" // hash for string "password"
     });
 
-    factory.addResource('assets', metamaskWalletAddress)
-    .withRelated('network', factory.addResource('networks', 'ether')
+    factory.addResource('networks', 'ether')
       .withAttributes({
         title: 'Ether',
         unit: 'ETH',
         'asset-type': 'ethereum-addresses',
         'address-field': 'ethereum-address'
-      }));
+      })
 
     factory.addResource('ethereum-addresses', metamaskWalletAddress)
       .withAttributes({
@@ -39,25 +38,18 @@ const scenario = new Fixtures({
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
       title: 'My Cardfolio'
     })
-      .withRelated('wallets', [
-        factory.addResource('wallets', 'metamask-wallet').withAttributes({
-          title: 'MetaMask Wallet',
-          logo: 'metamask-logo'
-        })
-          .withRelated('user', user)
-      ])
       .withRelated('user', user);
 
-    factory.addResource('sample-token-balance-ofs', metamaskWalletAddress).withAttributes({
+    factory.addResource('card-token-balance-ofs', metamaskWalletAddress).withAttributes({
       "ethereum-address": metamaskWalletAddress,
       "mapping-number-value": "53824000000000000000"
     });
 
-    factory.addResource('networks', 'sample')
+    factory.addResource('networks', 'card')
       .withAttributes({
-        title: 'Sample Token',
-        unit: 'SAMPLE',
-        'asset-type': 'sample-token-balance-ofs'
+        title: 'Cardstack Token',
+        unit: 'CARD',
+        'asset-type': 'card-token-balance-ofs'
       });
 
   },
@@ -100,10 +92,10 @@ module('Acceptance | metamask', function(hooks) {
     await waitFor('[data-test-network-section]');
 
     assert.dom('[data-test-portfolio-isolated-header] h1').hasText('overview');
-    assert.dom('[data-test-portfolio-asset="0"] header').hasText('Sample Token');
-    assert.dom('[data-test-portfolio-asset="0"] [data-test-asset-embedded-balance]').hasTextContaining('53.8240 SAMPLE');
-    assert.dom('[data-test-portfolio-asset="1"] header').hasText('Ether');
-    assert.dom('[data-test-portfolio-asset="1"] [data-test-asset-embedded-fiat-value]').hasText('≈ $20.09 USD');
-    assert.dom('[data-test-portfolio-asset="1"] [data-test-asset-embedded-balance]').hasTextContaining('0.2009 ETH');
+    assert.dom('[data-test-grid-display-item="0"] [data-test-asset-embedded-title]').hasText('Cardstack Token');
+    assert.dom('[data-test-grid-display-item="0"] [data-test-asset-embedded-balance]').hasTextContaining('53.8240 CARD');
+    assert.dom('[data-test-grid-display-item="1"] [data-test-asset-embedded-title]').hasText('Ether');
+    assert.dom('[data-test-grid-display-item="1"] [data-test-asset-embedded-fiat-value]').hasText('≈ $20.09 USD');
+    assert.dom('[data-test-grid-display-item="1"] [data-test-asset-embedded-balance]').hasTextContaining('0.2009 ETH');
   });
 });

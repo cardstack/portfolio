@@ -8,21 +8,18 @@ factory.addResource('content-types', 'wallets')
       'assets.network-asset',
       'user',
       'todays-rates-lookup',
-      'todays-rates-lookup.rates',
-      'token-balances'
+      'todays-rates-lookup.rates'
     ],
     fieldsets: {
       embedded: [
         { field: 'assets', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
-        { field: 'token-balances', format: 'embedded' },
       ],
       isolated: [
         { field: 'assets', format: 'embedded' },
         { field: 'todays-rates-lookup', format: 'embedded' },
         { field: 'todays-rates-lookup.rates', format: 'embedded' },
-        { field: 'token-balances', format: 'embedded' },
       ]
     }
   })
@@ -39,9 +36,6 @@ factory.addResource('content-types', 'wallets')
       fieldType: '@cardstack/core-types::has-many',
       editorComponent: 'field-editors/dropdown-multi-select-editor'
     }).withRelated('related-types', [{ type: 'content-types', id: 'assets' }]),
-    factory.addResource('computed-fields', 'token-balances').withAttributes({
-      'computed-field-type': 'portfolio-wallet::token-balances'
-    }),
     factory.addResource('fields', 'user').withAttributes({
       fieldType: '@cardstack/core-types::belongs-to',
     }).withRelated('related-types', [{ type: 'content-types', id: 'portfolio-users' }]),
