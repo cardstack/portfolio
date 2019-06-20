@@ -1,10 +1,11 @@
 /* Grid Settings */
 .portfolio-isolated {
-  --grid-nav-max-width: 170px;
-  --grid-main-max-width: calc(var(--cardfolio-content-max-width) - var(--cardfolio-grid-gap) - var(--grid-nav-max-width));
+  --cardfolio-border-color: var(--cardfolio-white-op10);
+  --grid-nav-width: 170px;
+  --grid-main-max-width: calc(var(--cardfolio-content-max-width) - var(--cardfolio-grid-gap) - var(--grid-nav-width));
 
   display: grid;
-  grid-template-columns: minmax(min-content, var(--grid-nav-max-width)) minmax(min-content, var(--grid-main-max-width));
+  grid-template-columns: var(--grid-nav-width) minmax(min-content, var(--grid-main-max-width));
   grid-auto-rows: min-content;
   grid-column-gap: var(--cardfolio-grid-gap);
   grid-row-gap: var(--cardfolio-row-gap);
@@ -25,8 +26,6 @@
 
 /* Styles */
 .portfolio-isolated {
-  --grid-card-item: 283px;
-
   height: 100%;
   min-height: 100vh;
   padding: var(--cardfolio-padding);
@@ -194,9 +193,9 @@
   justify-content: flex-end;
   align-items: center;
 
-  padding: 0;
-  border-bottom: 1px solid var(--cardfolio-white-op80);
-  border-top: 1px solid var(--cardfolio-white-op80);
+  padding: var(--cardfolio-padding) 0;
+  border-bottom: 1px solid var(--cardfolio-border-color);
+  border-top: 1px solid var(--cardfolio-border-color);
 }
 
 .assets-filter-bar .ember-power-select-clear-btn {
@@ -226,9 +225,10 @@
 }
 
 .assets-filter-bar--icon {
-  fill: var(--cardfolio-white-op50);
+  fill: var(--cardfolio-white-op30);
 }
 
+.assets-filter-bar--button.active > .assets-filter-bar--icon,
 .assets-filter-bar--button:hover > .assets-filter-bar--icon {
   fill: var(--cardfolio-white);
 }
@@ -244,7 +244,7 @@
 
 .network-section--title {
   margin: 0;
-  color: var(--cardfolio-white-op60);
+  color: var(--cardfolio-white);
   font-size: var(--cardfolio-med-font);
   font-weight: normal;
   letter-spacing: 0;
@@ -252,12 +252,38 @@
   text-transform: capitalize;
 }
 
-.network-section--grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, var(--grid-card-item));
-  grid-gap: var(--cardfolio-grid-gap);
 
-  margin: 0;
-  padding-left: 0;
-  list-style-type: none;
+/* List View for embedded asset card */
+.network-section--list .asset-embedded {
+  background: none;
+  border-radius: 0;
+  box-shadow: 0 1px 1px 0 var(--cardfolio-border-color);
+}
+
+.network-section--list .asset-embedded__wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0;
+}
+
+/* .network-section--list .asset-embedded__balance-main {
+  font-size: var(--cardfolio-med-font);
+}
+
+.network-section--list .asset-embedded__balance-fiat {
+  font-size: var(--cardfolio-med-font);
+} */
+
+.network-section--list .asset-embedded__balance {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.network-section--list footer {
+  height: 0;
+  padding: 0;
+  background-color: transparent;
+  visibility: hidden;
 }

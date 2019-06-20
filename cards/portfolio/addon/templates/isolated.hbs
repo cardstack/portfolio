@@ -70,13 +70,7 @@
               {{!-- TODO: Display network title --}}
               <h3 class="network-section--title">Ethereum Mainnet</h3>
             </header>
-            <ul class="network-section--grid">
-              {{#each sortedAssets as |asset index|}}
-                <li data-test-portfolio-asset={{index}}>
-                  {{cardstack-content content=asset format="embedded"}}
-                </li>
-              {{/each}}
-            </ul>
+            <GridDisplay @contents={{sortedAssets}} />
           </section>
         {{else}}
           Coming Soon
@@ -90,10 +84,10 @@
       {{!-- <Dropdown @label="Select an option" @theme="cardfolio-dropdown" /> --}}
       <label class="assets-filter-bar--label">Sort By</label>
       <Dropdown @options={{sortingOptions}} @selected={{selected}} @theme="cardfolio-dropdown" @label="" />
-      <button class="assets-filter-bar--button" aria-label="List view">
+      <button onclick={{action "setListView"}} class="assets-filter-bar--button {{if isListView "active"}}" aria-label="List view" data-test-list-view-button>
         {{svg-jar "list" width="26px" height="26px" class="assets-filter-bar--icon"}}
       </button>
-      <button class="assets-filter-bar--button" aria-label="Grid view">
+      <button onclick={{action "unsetListView"}} class="assets-filter-bar--button {{if (not isListView) "active"}}" aria-label="Grid view" data-test-grid-view-button>
         {{svg-jar "grid" width="26px" height="26px" class="assets-filter-bar--icon"}}
       </button>
     </div>
@@ -104,13 +98,20 @@
         <h3 class="network-section--title" data-test-portfolio-isolated-network-title>Ethereum Mainnet</h3>
         <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
       </header>
-      <ul class="network-section--grid">
-        {{#each sortedAssets as |asset index|}}
-          <li data-test-portfolio-asset={{index}}>
-            {{cardstack-content content=asset format="embedded"}}
-          </li>
-        {{/each}}
-      </ul>
+
+      {{#if isAscending}}
+        {{#if isListView}}
+          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+        {{else}}
+          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+        {{/if}}
+      {{else}}
+        {{#if isListView}}
+          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+        {{else}}
+          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+        {{/if}}
+      {{/if}}
     </section>
   {{/if}}
 </main>
