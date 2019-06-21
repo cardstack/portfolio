@@ -8,7 +8,7 @@ factory.addResource('content-types', 'wallets')
       'assets.network-asset',
       'user',
       'todays-rates-lookup',
-      'todays-rates-lookup.rates',
+      'todays-rates-lookup.rates'
     ],
     fieldsets: {
       embedded: [
@@ -43,6 +43,20 @@ factory.addResource('content-types', 'wallets')
       computedFieldType: 'portfolio-wallet::balance-sums',
     })
   ]);
+
+  factory.addResource('grants', 'wallet-global-grant')
+    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
+    .withRelated('types', [
+      { type: 'content-types', id: 'wallets' },
+    ])
+    .withAttributes({
+      'may-read-resource': true,
+      'may-read-fields': true,
+      'may-create-resource': true,
+      'may-update-resource': true,
+      'may-delete-resource': false,
+      'may-write-fields': true,
+    });
 
   factory.addResource('grants', 'wallet-self-grant')
     .withRelated('who', [{ type: 'fields', id: 'user' }])

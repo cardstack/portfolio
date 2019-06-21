@@ -11,6 +11,26 @@ const currencyCentsDecimalPlaces = {
   BTC: 0,
 };
 
+// These are on rinkeby, eventually we'll need to deal with mainnet
+let erc20Tokens = [
+  {
+    name: 'Cardstack Token',
+    symbol: 'CARD',
+    contractAddress: '0x031Dda7900C5D1B480EB84a374E6cb5b3466A15F'
+  },
+  {
+    name: 'DAI Token',
+    symbol: 'DAI',
+    contractAddress: '0x5077696357b065D36a9564da24193ae69a7687D3'
+  },
+  {
+    name: 'USD Token',
+    symbol: 'USDT',
+    contractAddress: '0x4C644e38A7F4e6017f8501dd6049591bD1B64ee1'
+  }
+];
+
+
 function updateBalanceFromTransaction(balance, _address, transaction, log) {
   let address = _address.toLowerCase();
   let isSuccessfulTxn = get(transaction, 'attributes.transaction-successful');
@@ -79,6 +99,7 @@ async function find(list, predicate) {
 }
 
 module.exports = {
+  erc20Tokens,
   conversionRate,
   convertCurrency,
   currencyCentsDecimalPlaces,

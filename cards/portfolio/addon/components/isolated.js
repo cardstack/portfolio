@@ -1,7 +1,9 @@
 import LiveIsolatedCard from 'portfolio-common/components/live-isolated-card';
 import layout from '../templates/isolated';
 import { computed } from '@ember/object';
-import { readOnly, equal, sort } from '@ember/object/computed';
+import { equal, sort, not } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { task, waitForProperty } from 'ember-concurrency';
 
 const OVERVIEW = {
   title: 'overview',
@@ -29,10 +31,11 @@ const SORTINGOPTIONS = [
 
 export default LiveIsolatedCard.extend({
   layout,
+  store: service(),
+  web3: service(),
+  erc20: service(),
+  cardstackData: service(),
   isDismissed: false,
-  // TODO: need to access network names within the given wallet. using the first wallet for now
-  network: readOnly('content.wallets.[].firstObject'),
-  assets: readOnly('network.assets.[]'),
   activeSection: OVERVIEW,
   isOverviewActive: equal('activeSection.title', 'overview'),
   isAssetsSection: equal('activeSection.title', 'assets'),
@@ -42,6 +45,58 @@ export default LiveIsolatedCard.extend({
   selected: DEFAULTSORT,
   sortedAssets: sort('assets.[]', 'sortAssetsByBalance'),
   sortBy: 'networkBalance',
+  metamaskWallet: null,
+  assets: computed('content.wallets.[].network.assets.[]', function() {
+    return this.store.peekAll('asset');
+  }),
+  loadingAssets: true,
+  isWeb3Loaded: not('web3.isLoading'),
+
+  async init() {
+    this._super(arguments);
+
+    if (this.web3.provider && this.web3.provider.isMetaMask) {
+      await this.getMetamaskWallet.perform();
+    }
+
+    this.set('loadingAssets', false);
+  },
+
+  getMetamaskWallet: task(function * () {
+    yield waitForProperty(this, 'isWeb3Loaded');
+
+    let address = this.web3.address;
+    let metamaskWallet;
+    try {
+      metamaskWallet = yield this.store.findRecord('wallet', `${address}`);
+    } catch (e) {
+      yield this.createWalletAndAssets.perform(address);
+
+      metamaskWallet = yield this.store.findRecord('wallet', `${address}`);
+    }
+
+    this.content.get('wallets').pushObject(metamaskWallet);
+
+    yield this.content.save();
+  }),
+
+  createWalletAndAssets: task(function * (address) {
+    let adapter = this.store.adapterFor('asset');
+
+    let response = yield fetch(`${adapter.host}/create-wallet/${address}`, {
+      method: 'POST',
+      headers: {
+        "content-type": 'application/vnd.api+json'
+      },
+      body: ""
+    });
+
+    let body = yield response.json();
+
+    if (response.status === 200) {
+      this.store.pushPayload('asset', body);
+    }
+  }),
 
   isAscending: computed('selected', function() {
     let selection = this.selected;

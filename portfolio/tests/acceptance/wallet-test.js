@@ -33,7 +33,7 @@ const scenario = new Fixtures({
         }));
 
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
-      title: 'My Portfolio'
+      title: 'My Cardfolio'
     })
       .withRelated('wallets', [
         factory.addResource('wallets', 'demo-wallet').withAttributes({
@@ -123,7 +123,7 @@ module('Acceptance | wallet', function (hooks) {
 
     assert.dom('[data-test-wallet-isolated-title]').hasText('Demo Wallet');
     assert.dom('[data-test-portfolio-top-header]').exists();
-    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Cardfolio');
     assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').doesNotExist();
     assert.dom('[data-test-wallet-isolated-count]').hasText('2 Assets');
     assert.dom('[data-test-wallet-isolated-value]').hasText('≈ $20.09');
@@ -157,7 +157,7 @@ module('Acceptance | wallet', function (hooks) {
     assert.dom('[data-test-asset-isolated]').exists();
     assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
     assert.dom('[data-test-portfolio-top-header]').exists();
-    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Portfolio');
+    assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Cardfolio');
     assert.dom('[data-test-portfolio-breadcrumbs-wallet-link]').hasText('Demo Wallet');
   });
 

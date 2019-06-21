@@ -65,13 +65,15 @@
           </button>
         </header>
         {{#if (eq displayGroup.title "assets")}}
-          <section class="network-section" data-test-network-section>
-            <header class="network-section--header">
-              {{!-- TODO: Display network title --}}
-              <h3 class="network-section--title">Ethereum Mainnet</h3>
-            </header>
-            <GridDisplay @contents={{sortedAssets}} />
-          </section>
+          {{#unless loadingAssets}}
+            <section class="network-section" data-test-network-section>
+              <header class="network-section--header">
+                {{!-- TODO: Display network title --}}
+                <h3 class="network-section--title">Ethereum Mainnet</h3>
+              </header>
+              <GridDisplay @contents={{sortedAssets}} />
+            </section>
+          {{/unless}}
         {{else}}
           Coming Soon
         {{/if}}
@@ -92,26 +94,28 @@
       </button>
     </div>
 
-    <section class="network-section" data-test-portfolio-isolated-network-section>
-      <header class="network-section--header">
-        {{!-- TODO: Display network title --}}
-        <h3 class="network-section--title" data-test-portfolio-isolated-network-title>Ethereum Mainnet</h3>
-        <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
-      </header>
+    {{#unless loadingAssets}}
+      <section class="network-section" data-test-portfolio-isolated-network-section>
+        <header class="network-section--header">
+          {{!-- TODO: Display network title --}}
+          <h3 class="network-section--title" data-test-portfolio-isolated-network-title>Ethereum Mainnet</h3>
+          <span data-test-portfolio-isolated-network-asset-count>{{assets.length}} Assets</span>
+        </header>
 
-      {{#if isAscending}}
-        {{#if isListView}}
-          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+        {{#if isAscending}}
+          {{#if isListView}}
+            <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+          {{else}}
+            <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+          {{/if}}
         {{else}}
-          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+          {{#if isListView}}
+            <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
+          {{else}}
+            <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
+          {{/if}}
         {{/if}}
-      {{else}}
-        {{#if isListView}}
-          <GridDisplay @contents={{sortedAssets}} @isListView="true" class="network-section--list" data-test-network-section-grid />
-        {{else}}
-          <GridDisplay @contents={{sortedAssets}} data-test-network-section-grid />
-        {{/if}}
-      {{/if}}
-    </section>
+      </section>
+    {{/unless}}
   {{/if}}
 </main>

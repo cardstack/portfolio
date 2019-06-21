@@ -24,6 +24,8 @@
     "ember-inflector": "^3.0.0",
     "ember-inject-optional": "^0.1.0",
     "ember-svg-jar": "^1.2.2",
+    "lodash": "^4.17.11",
+    "portfolio-utils": "*",
     "web3": "^1.0.0-beta.37"
   },
   "devDependencies": {

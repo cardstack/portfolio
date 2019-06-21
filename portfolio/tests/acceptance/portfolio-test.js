@@ -33,7 +33,7 @@ const scenario = new Fixtures({
       }));
 
     factory.addResource('portfolios', 'test-portfolio').withAttributes({
-      title: 'My Portfolio'
+      title: 'My Cardfolio'
     })
       .withRelated('wallets', [
         factory.addResource('wallets', 'test-wallet').withAttributes({
@@ -98,7 +98,7 @@ async function login() {
   await fillIn('[data-test-login-password]', 'password');
   await click('[data-test-login-button]');
 
-  await waitFor('[data-test-portfolio-isolated]');
+  await waitFor('[data-test-portfolio-isolated]', { timeout: 5000 }); // not sure why the timeout needs to be so high
 }
 
 module('Acceptance | portfolio', function(hooks) {
