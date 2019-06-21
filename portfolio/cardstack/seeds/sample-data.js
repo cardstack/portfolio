@@ -57,56 +57,49 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     tokenNetworks[tokenSymbol] = network;
   }
 
-  let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
-    .withRelated('network', bitcoinNetwork);
+  let defaultWallets = [];
 
-  // this is an address that has real etheruem history use it when you want to test live ethereum state
-  let realEthereumAsset = factory.addResource('assets', '0x6294Ec6903021325978E58304d5E4604F0748685')
-    .withRelated('network', ethereumNetwork);
+  if (!process.env.JSON_RPC_URLS) {
+    let bitcoinAsset = factory.addResource('assets', '1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX')
+      .withRelated('network', bitcoinNetwork);
 
-  // these are rinkeby addresses with erc20 tokens
-  // let realCardTokenAsset = factory.addResource('assets', '0x51fd7d6b0509e32e4798a2ca047181d7af9eb0c9_card-token')
-  //   .withRelated('network', tokenNetworks['CARD']);
-  let realDaiTokenAsset = factory.addResource('assets', '0x1E65F71b024937b988fdba09814d60049e0Fc59d_dai-token')
-    .withRelated('network', tokenNetworks['DAI']);
-  let realUsdtTokenAsset = factory.addResource('assets', '0x7294A9533945d4Dfb00e99Eb941225831Cb86F5D_usdt-token')
-    .withRelated('network', tokenNetworks['USDT']);
+    // this is an address that has real etheruem history use it when you want to test live ethereum state
+    factory.addResource('assets', '0x6294Ec6903021325978E58304d5E4604F0748685')
+      .withRelated('network', ethereumNetwork);
 
-  let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
-    .withRelated('network', ethereumNetwork);
+    // these are rinkeby addresses with erc20 tokens
+    factory.addResource('assets', '0x1E65F71b024937b988fdba09814d60049e0Fc59d_dai-token')
+      .withRelated('network', tokenNetworks['DAI']);
+    factory.addResource('assets', '0x7294A9533945d4Dfb00e99Eb941225831Cb86F5D_usdt-token')
+      .withRelated('network', tokenNetworks['USDT']);
 
-  let litecoinAsset = factory.addResource('assets', 'LXA3i9eEAVDbgDqkThCa4D6BUJ3SEULkEr')
-    .withRelated('network', litecoinNetwork);
+    let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
+      .withRelated('network', ethereumNetwork);
 
-  let zcashAsset = factory.addResource('assets', 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs')
-    .withRelated('network', zcashNetwork);
+    let litecoinAsset = factory.addResource('assets', 'LXA3i9eEAVDbgDqkThCa4D6BUJ3SEULkEr')
+      .withRelated('network', litecoinNetwork);
 
-  let anotherBitcoinAsset = factory.addResource('assets', '1FCciasLYWGNApYcS6Lm79y7HY8uJ37hYf')
-    .withRelated('network', bitcoinNetwork);
+    let zcashAsset = factory.addResource('assets', 't1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs')
+      .withRelated('network', zcashNetwork);
 
-  let anotherLitecoinAsset = factory.addResource('assets', '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co')
-    .withRelated('network', litecoinNetwork);
+    let anotherBitcoinAsset = factory.addResource('assets', '1FCciasLYWGNApYcS6Lm79y7HY8uJ37hYf')
+      .withRelated('network', bitcoinNetwork);
 
-  let demoWalletAssets = [
-    mockedEthereumAsset,
-    litecoinAsset,
-    zcashAsset,
-    bitcoinAsset
-  ];
-  let trezorWalletAssets = [
-    anotherBitcoinAsset,
-    anotherLitecoinAsset
-  ];
+    let anotherLitecoinAsset = factory.addResource('assets', '36qBQrnsCQmiVU6aZaCkZLKr3kzwDbE8co')
+      .withRelated('network', litecoinNetwork);
 
-  if (process.env.JSON_RPC_URLS) {
-    demoWalletAssets = [realEthereumAsset, realDaiTokenAsset, realUsdtTokenAsset].concat(demoWalletAssets);
-  }
+    let demoWalletAssets = [
+      mockedEthereumAsset,
+      litecoinAsset,
+      zcashAsset,
+      bitcoinAsset
+    ];
+    let trezorWalletAssets = [
+      anotherBitcoinAsset,
+      anotherLitecoinAsset
+    ];
 
-  factory.addResource('portfolios', 'test-portfolio').withAttributes({
-    title: 'My Cardfolio'
-  })
-    .withRelated('user', user)
-    .withRelated('wallets', [
+    defaultWallets = [
       factory.addResource('wallets', 'demo-wallet')
         .withAttributes({
           title: 'Demo Wallet'
@@ -120,7 +113,14 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
         })
         .withRelated('user', user)
         .withRelated('assets', trezorWalletAssets)
-    ]);
+    ];
+  }
+
+  factory.addResource('portfolios', 'test-portfolio').withAttributes({
+    title: 'My Cardfolio'
+  })
+    .withRelated('user', user)
+    .withRelated('wallets', defaultWallets);
 }
 
 module.exports = factory.getModels();

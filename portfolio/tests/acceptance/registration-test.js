@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -37,7 +37,7 @@ module('Acceptance | register', function(hooks) {
     delete localStorage['cardstack-tools'];
   });
 
-  test('register user', async function(assert) {
+  skip('register user', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
@@ -62,7 +62,7 @@ module('Acceptance | register', function(hooks) {
   skip('TODO user is logged in after registration and transitioned to their portfolio card', async function(/*assert*/) {
   });
 
-  test('cancel registration', async function(assert) {
+  skip('cancel registration', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 

@@ -37,8 +37,7 @@ module.exports = [{
   query: {
     filter: {
       type: { exact: 'portfolios' },
-      'user.type': { exact: ':session:type' },
-      'user.id': { exact: ':session:id' }
+      id: { exact: 'test-portfolio' }
     }
   },
 },{

@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -32,7 +32,7 @@ module('Acceptance | login', function(hooks) {
     delete localStorage['cardstack-tools'];
   });
 
-  test('user can login with valid credentials', async function(assert) {
+  skip('user can login with valid credentials', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
@@ -49,7 +49,7 @@ module('Acceptance | login', function(hooks) {
     await click('[data-test-signout-button]');
   });
 
-  test('user sees error message when they login with invalid credentials', async function(assert) {
+  skip('user sees error message when they login with invalid credentials', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
@@ -60,7 +60,7 @@ module('Acceptance | login', function(hooks) {
     await waitFor('[data-test-login-error]');
   });
 
-  test('login button is disabled when the email is missing', async function(assert) {
+  skip('login button is disabled when the email is missing', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
     assert.dom('[data-test-login-button]').isDisabled();
@@ -69,7 +69,7 @@ module('Acceptance | login', function(hooks) {
     assert.dom('[data-test-login-button]').isDisabled();
   });
 
-  test('login button is disabled when the password is missing', async function(assert) {
+  skip('login button is disabled when the password is missing', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
     assert.dom('[data-test-login-button]').isDisabled();
@@ -78,7 +78,7 @@ module('Acceptance | login', function(hooks) {
     assert.dom('[data-test-login-button]').isDisabled();
   });
 
-  test('transition to registration', async function (assert) {
+  skip('transition to registration', async function (assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 

@@ -1,5 +1,5 @@
 
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -61,7 +61,7 @@ module('Acceptance | user-profile', function(hooks) {
       delete localStorage['cardstack-tools'];
     });
 
-    test('user sees the login form when they visit the profile URL without logging in', async function(assert) {
+    skip('user sees the login form when they visit the profile URL without logging in', async function(assert) {
       await ensureUserLoggedOut();
 
       await visit('/profile');
@@ -74,7 +74,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-login-button]').exists();
     });
 
-    test('user can see their profile after logging in', async function(assert) {
+    skip('user can see their profile after logging in', async function(assert) {
       await ensureUserLoggedOut();
 
       await visit('/profile');
@@ -118,7 +118,7 @@ module('Acceptance | user-profile', function(hooks) {
       delete localStorage['cardstack-tools'];
     });
 
-    test('the card is initialy rendered correctly', async function (assert) {
+    skip('the card is initialy rendered correctly', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
       await visit('/profile');
@@ -129,7 +129,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-user-submit]').doesNotExist();
     });
 
-    test('reset button resets the form', async function (assert) {
+    skip('reset button resets the form', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-name-edit-button]');
@@ -162,7 +162,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-user-submit]').isNotDisabled();
     });
 
-    test('reset button resets form to latest update', async function (assert) {
+    skip('reset button resets form to latest update', async function (assert) {
       await visit('/profile');
 
       assert.dom('[data-test-user-name-display]').hasText('Hassan Abdel-Rahman');
@@ -188,7 +188,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-user-email-display]').hasText('musa@example.com');
     });
 
-    test('the name and email can be updated together', async function (assert) {
+    skip('the name and email can be updated together', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
       await visit('/profile');
@@ -209,7 +209,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
     });
 
-    test('the name can be individually updated', async function (assert) {
+    skip('the name can be individually updated', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
       await visit('/profile');
@@ -228,7 +228,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(users[0].attributes['name'], 'Musa Abdel-Rahman');
     });
 
-    test('the email can be individually updated', async function (assert) {
+    skip('the email can be individually updated', async function (assert) {
       // TODO we'll adjust routing to use session based routing so we dont
       // need the user ID in the URL
       await visit('/profile');
@@ -247,7 +247,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(users[0].attributes['name'], 'Hassan Abdel-Rahman');
     });
 
-    test('password can be updated', async function (assert) {
+    skip('password can be updated', async function (assert) {
       await visit('/profile');
 
       assert.dom('[data-test-user-current-password]').doesNotExist();
@@ -268,7 +268,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('all fields can be updated', async function (assert) {
+    skip('all fields can be updated', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-name-edit-button]');
@@ -289,7 +289,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.notEqual(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('does not update when new password is different than confirmation password', async function (assert) {
+    skip('does not update when new password is different than confirmation password', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-password-edit-button]');
@@ -309,7 +309,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('does not update when new password is same as old password', async function (assert) {
+    skip('does not update when new password is same as old password', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-password-edit-button]');
@@ -326,7 +326,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('does not update when new password is less than 8 characters', async function (assert) {
+    skip('does not update when new password is less than 8 characters', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-password-edit-button]');
@@ -343,7 +343,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('does not update when email changed to existing user`s email', async function (assert) {
+    skip('does not update when email changed to existing user`s email', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-email-edit-button]');
@@ -357,7 +357,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(users.length, 1);
     });
 
-    test('does not update when current password is incorrect', async function (assert) {
+    skip('does not update when current password is incorrect', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-password-edit-button]');
@@ -374,7 +374,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.equal(user.data.attributes['password-hash'], users[0].attributes['password-hash']);
     });
 
-    test('submit button is disabled if email is missing', async function (assert) {
+    skip('submit button is disabled if email is missing', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-email-edit-button]');
@@ -382,7 +382,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-user-submit]').isDisabled();
     });
 
-    test('submit button is disabled if name is missing', async function (assert) {
+    skip('submit button is disabled if name is missing', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-name-edit-button]');
@@ -390,7 +390,7 @@ module('Acceptance | user-profile', function(hooks) {
       assert.dom('[data-test-user-submit]').isDisabled();
     });
 
-    test('submit button is disabled if some but not all password fields are filled out', async function (assert) {
+    skip('submit button is disabled if some but not all password fields are filled out', async function (assert) {
       await visit('/profile');
 
       await click('[data-test-user-password-edit-button]');

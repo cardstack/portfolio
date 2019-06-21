@@ -41,8 +41,8 @@ factory.addResource('content-types', 'portfolios')
     })
   ]);
 
-  factory.addResource('grants', 'portfolio-self-grant')
-    .withRelated('who', [{ type: 'fields', id: 'user' }])
+  factory.addResource('grants', 'portfolio-global-grant')
+    .withRelated('who', [{ type: 'groups', id: 'everyone' }])
     .withRelated('types', [
       { type: 'content-types', id: 'portfolios' },
     ])

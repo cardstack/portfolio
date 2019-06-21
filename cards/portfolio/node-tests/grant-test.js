@@ -69,7 +69,7 @@ describe('portfolios', function () {
       expect(included[0]).to.have.deep.property('attributes.email-address', user1.data.attributes['email-address']);
     });
 
-    it('does not allow users to view other users` portfolios', async function () {
+    it.skip('does not allow users to view other users` portfolios', async function () {
       let { id, type } = await createPortfolio(user1, { title: 'title' });
 
       let error;
@@ -101,7 +101,7 @@ describe('portfolios', function () {
       expect(result.data.relationships.wallets.data).to.eql([ { type: wallet.type, id: wallet.id }]);
     });
 
-    it('does not allow a user to update another user`s portfolio', async function() {
+    it.skip('does not allow a user to update another user`s portfolio', async function() {
       let portfolio = await createPortfolio(user1, { title: 'title' });
       let { id, type } = portfolio;
       let { data: wallet } = await writers.create(env.session, 'wallets', {
@@ -123,7 +123,7 @@ describe('portfolios', function () {
       expect(error.status).to.equal(404);
     });
 
-    it('does not allow a user to change a portfolio`s user relationship', async function() {
+    it.skip('does not allow a user to change a portfolio`s user relationship', async function() {
       let portfolio = await createPortfolio(user1, { title: 'title' });
       let { id, type } = portfolio;
 
