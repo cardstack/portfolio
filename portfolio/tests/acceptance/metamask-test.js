@@ -83,6 +83,7 @@ module('Acceptance | metamask', function(hooks) {
 
     assert.dom('[data-test-portfolio-isolated-header] h1').hasText('overview');
     assert.dom('[data-test-grid-display-item="0"] [data-test-asset-embedded-title]').hasText('Cardstack Token');
+    assert.dom('[data-test-grid-display-item="0"] [data-test-asset-embedded-fiat-value]').hasText('≈ $5382.40 USD');
     assert.dom('[data-test-grid-display-item="0"] [data-test-asset-embedded-balance]').hasTextContaining('53.8240 CARD');
     assert.dom('[data-test-grid-display-item="1"] [data-test-asset-embedded-title]').hasText('Ether');
     assert.dom('[data-test-grid-display-item="1"] [data-test-asset-embedded-fiat-value]').hasText('≈ $20.09 USD');
