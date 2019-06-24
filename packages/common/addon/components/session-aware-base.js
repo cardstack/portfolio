@@ -3,9 +3,8 @@ import { readOnly } from '@ember/object/computed';
 import injectOptional from 'ember-inject-optional';
 
 export default Component.extend({
-  cardstackSession: injectOptional.service(),
   fastboot: injectOptional.service(),
 
-  isAuthenticated: readOnly('cardstackSession.isAuthenticated'),
+  isAuthenticated: true,
   isFastBoot: readOnly('fastboot.isFastBoot')
 });

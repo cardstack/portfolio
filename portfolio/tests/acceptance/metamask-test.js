@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
+import { visit, currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
 import MockWeb3Service from '../helpers/mock-web3-service';
@@ -55,14 +55,6 @@ const scenario = new Fixtures({
   },
 });
 
-async function login() {
-  await fillIn('[data-test-login-email]', 'hassan@example.com');
-  await fillIn('[data-test-login-password]', 'password');
-  await click('[data-test-login-button]');
-
-  await waitFor('[data-test-portfolio-isolated]');
-}
-
 module('Acceptance | metamask', function(hooks) {
   setupApplicationTest(hooks);
   scenario.setupTest(hooks);
@@ -86,8 +78,6 @@ module('Acceptance | metamask', function(hooks) {
   test('user sees metamask wallet information if they have metamask extension installed', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
-
-    await login();
 
     await waitFor('[data-test-network-section]');
 

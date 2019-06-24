@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, fillIn, waitFor } from '@ember/test-helpers';
+import { visit, currentURL, click, waitFor } from '@ember/test-helpers';
 import { clickTrigger } from 'ember-power-select/test-support/helpers'
 import { setupApplicationTest } from 'ember-qunit';
 import Fixtures from '@cardstack/test-support/fixtures';
@@ -93,14 +93,6 @@ const scenario = new Fixtures({
   },
 });
 
-async function login() {
-  await fillIn('[data-test-login-email]', 'hassan@example.com');
-  await fillIn('[data-test-login-password]', 'password');
-  await click('[data-test-login-button]');
-
-  await waitFor('[data-test-portfolio-isolated]', { timeout: 5000 }); // not sure why the timeout needs to be so high
-}
-
 module('Acceptance | portfolio', function(hooks) {
   setupApplicationTest(hooks);
   scenario.setupTest(hooks);
@@ -113,12 +105,9 @@ module('Acceptance | portfolio', function(hooks) {
     delete localStorage['cardstack-tools'];
   });
 
-  test('user sees their portfolio after they login from the index route', async function(assert) {
+  test('user sees their portfolio', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
-
-    await login();
-    await waitFor('[data-test-portfolio-top-header-user]');
 
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
@@ -139,7 +128,6 @@ module('Acceptance | portfolio', function(hooks) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
-    await login();
     await waitFor('[data-test-portfolio-isolated-intro]');
 
     assert.dom('[data-test-portfolio-isolated-intro]').exists();
@@ -149,27 +137,10 @@ module('Acceptance | portfolio', function(hooks) {
     assert.dom('[data-test-portfolio-isolated-intro]').doesNotExist();
   });
 
-  test('user sees the login form when they log out from the portfolio page', async function(assert) {
-    await visit('/');
-    await login();
-
-    await waitFor('[data-test-portfolio-top-header-user]');
-    await click('[data-test-portfolio-top-header-user]');
-
-    assert.equal(currentURL(), '/profile');
-    await click('[data-test-signout-button]');
-
-    assert.equal(currentURL(), '/');
-    assert.dom('[data-test-login-form]').exists();
-    assert.dom('[data-test-login-email]').exists();
-    assert.dom('[data-test-login-password]').exists();
-  });
-
   test('user can filter sections using sidebar navigation', async function(assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
-    await login();
     await waitFor('[data-test-portfolio-isolated-side-nav]');
     assert.dom('[data-test-portfolio-isolated-side-nav-item="show-all"]').hasClass('active');
     assert.dom('[data-test-portfolio-isolated-side-nav-item="assets"]').doesNotHaveClass('active');
@@ -196,7 +167,6 @@ module('Acceptance | portfolio', function(hooks) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
-    await login();
     await waitFor('[data-test-portfolio-isolated-side-nav]');
     await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
 
@@ -212,7 +182,6 @@ module('Acceptance | portfolio', function(hooks) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
-    await login();
     await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
     await waitFor('[data-test-portfolio-isolated-network-section]');
 
@@ -236,7 +205,6 @@ module('Acceptance | portfolio', function(hooks) {
     await visit('/');
     assert.equal(currentURL(), '/');
 
-    await login();
     await click('[data-test-portfolio-isolated-side-nav-item="assets"]');
     await waitFor('[data-test-portfolio-isolated-filter-bar]');
 

@@ -119,8 +119,6 @@ module('Acceptance | wallet', function (hooks) {
     await visit('/wallets/demo-wallet');
     assert.equal(currentURL(), '/wallets/demo-wallet');
 
-    await login();
-
     assert.dom('[data-test-wallet-isolated-title]').hasText('Demo Wallet');
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs-portfolio-link]').hasText('My Cardfolio');
