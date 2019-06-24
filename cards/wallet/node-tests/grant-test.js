@@ -68,19 +68,6 @@ describe('wallets', function () {
       expect(includedUsers[0]).to.have.deep.property('attributes.email-address', user1.data.attributes['email-address']);
     });
 
-    it.skip('does not allow users to view other users wallets', async function () {
-      let { id, type } = await createWallet(user1, { title: 'title' });
-
-      let error;
-      try {
-        await searchers.get(sessions.create(user2.type, user2.id), 'local-hub', type, id);
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error.status).to.equal(404);
-    });
-
     it('allows a user to update their wallets attributes', async function() {
       let wallet = await createWallet(user1, { title: 'title' });
       let { id, type } = wallet;
@@ -93,44 +80,6 @@ describe('wallets', function () {
 
       let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result).to.have.deep.property('data.attributes.title', 'updated title');
-    });
-
-    it.skip('does not allow a user to update another user wallet', async function() {
-      let wallet = await createWallet(user1, { title: 'title' });
-      let { id, type } = wallet;
-
-      wallet.attributes.title = 'updated title';
-
-      let error;
-      try {
-        await writers.update(sessions.create(user2.type, user2.id), type, id, {
-          data: wallet
-        });
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error.status).to.equal(404);
-    });
-
-    it.skip('does not allow a user to change their wallet user relationship', async function() {
-      let wallet = await createWallet(user1, { title: 'title' });
-      let { id, type } = wallet;
-
-      wallet.relationships.user.data = { type: user2.type, id: user2.id };
-
-      let error;
-      try {
-        await writers.update(sessions.create(user1.type, user1.id), type, id, {
-          data: wallet
-        });
-      } catch (e) {
-        error = e;
-      }
-      expect(error.status).to.equal(404);
-
-      let result = await searchers.get(env.session, 'local-hub', type, id);
-      expect(result.data.relationships.user.data).to.eql({ type: user1.type, id: user1.id });
     });
 
     it('allows a user to create their wallet', async function() {
@@ -154,24 +103,6 @@ describe('wallets', function () {
       expect(includedUsers.length).to.equal(1);
       expect(includedUsers[0]).to.have.property('id', user1.id);
       expect(includedUsers[0]).to.have.deep.property('attributes.email-address', user1.data.attributes['email-address']);
-    });
-
-    it.skip('does not allow a user to create someone elses wallet', async function() {
-      let error;
-      try {
-        await writers.create(sessions.create(user1.type, user1.id), 'wallets', {
-          data: {
-            type: 'wallets',
-            attributes: { title: 'title' },
-            relationships: {
-              user: { data: { type: user2.type, id: user2.id } }
-            }
-          }
-        });
-      } catch (e) {
-        error = e;
-      }
-      expect(error.status).to.equal(404);
     });
 
     it('allows a user to delete a their wallet', async function() {

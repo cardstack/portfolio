@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, waitFor } from '@ember/test-helpers';
 import { clickTrigger } from 'ember-power-select/test-support/helpers'
 import { setupApplicationTest } from 'ember-qunit';
@@ -135,21 +135,6 @@ module('Acceptance | portfolio', function(hooks) {
 
     await click('[data-test-portfolio-isolated-intro] button');
     assert.dom('[data-test-portfolio-isolated-intro]').doesNotExist();
-  });
-
-  skip('user sees the login form when they log out from the portfolio page', async function(assert) {
-    await visit('/');
-
-    await waitFor('[data-test-portfolio-top-header-user]');
-    await click('[data-test-portfolio-top-header-user]');
-
-    assert.equal(currentURL(), '/profile');
-    await click('[data-test-signout-button]');
-
-    assert.equal(currentURL(), '/');
-    assert.dom('[data-test-login-form]').exists();
-    assert.dom('[data-test-login-email]').exists();
-    assert.dom('[data-test-login-password]').exists();
   });
 
   test('user can filter sections using sidebar navigation', async function(assert) {

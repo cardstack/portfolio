@@ -7,7 +7,7 @@ const { join } = require('path');
 const { readdirSync, existsSync } = require('fs');
 const cardDir = join(__dirname, '../../');
 
-let factory, env, writers, searchers, sessions, user1, user2;
+let factory, env, writers, searchers, sessions, user1;
 
 async function createPortfolio(user, attributes={}) {
   let { id, type } = user;
@@ -38,9 +38,6 @@ describe('portfolios', function () {
     user1 = factory.addResource('portfolio-users').withAttributes({
       'email-address': 'portfolio-user@example.com'
     });
-    user2 = factory.addResource('portfolio-users').withAttributes({
-      'email-address': 'another-portfolio-user@example.com'
-    });
 
     env = await createDefaultEnvironment(`${__dirname}/..`, factory.getModels());
     searchers = env.lookup('hub:searchers');
@@ -69,19 +66,6 @@ describe('portfolios', function () {
       expect(included[0]).to.have.deep.property('attributes.email-address', user1.data.attributes['email-address']);
     });
 
-    it.skip('does not allow users to view other users` portfolios', async function () {
-      let { id, type } = await createPortfolio(user1, { title: 'title' });
-
-      let error;
-      try {
-        await searchers.get(sessions.create(user2.type, user2.id), 'local-hub', type, id);
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error.status).to.equal(404);
-    });
-
     it('allows a user to update their portfolio`s title and wallets fields', async function() {
       let portfolio = await createPortfolio(user1, { title: 'title' });
       let { id, type } = portfolio;
@@ -99,48 +83,6 @@ describe('portfolios', function () {
       let result = await searchers.get(env.session, 'local-hub', type, id);
       expect(result).to.have.deep.property('data.attributes.title', 'updated title');
       expect(result.data.relationships.wallets.data).to.eql([ { type: wallet.type, id: wallet.id }]);
-    });
-
-    it.skip('does not allow a user to update another user`s portfolio', async function() {
-      let portfolio = await createPortfolio(user1, { title: 'title' });
-      let { id, type } = portfolio;
-      let { data: wallet } = await writers.create(env.session, 'wallets', {
-        data: { type: 'wallets' }
-      });
-
-      portfolio.attributes.title = 'updated title';
-      portfolio.relationships.wallets.data = [ { type: wallet.type, id: wallet.id }];
-
-      let error;
-      try {
-        await writers.update(sessions.create(user2.type, user2.id), type, id, {
-          data: portfolio
-        });
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error.status).to.equal(404);
-    });
-
-    it.skip('does not allow a user to change a portfolio`s user relationship', async function() {
-      let portfolio = await createPortfolio(user1, { title: 'title' });
-      let { id, type } = portfolio;
-
-      portfolio.relationships.user.data = { type: user2.type, id: user2.id };
-
-      let error;
-      try {
-        await writers.update(sessions.create(user1.type, user1.id), type, id, {
-          data: portfolio
-        });
-      } catch (e) {
-        error = e;
-      }
-      expect(error.status).to.equal(404);
-
-      let result = await searchers.get(env.session, 'local-hub', type, id);
-      expect(result.data.relationships.user.data).to.eql({ type: user1.type, id: user1.id });
     });
 
     it('does not allow a user to create their portfolio', async function() {
