@@ -9,7 +9,7 @@ Demo here: https://youtu.be/aFVkEZIRvKw
 
 * geth full-node
 * docker
-* node.js (version 8 or greater)
+* node.js (version 8-10 only)
 
 The Portfolio project requires a full-node geth as it will build a crypto portfolio from arbitrary Ethereum addresses by retrieving transaction receipts from transactions that can live at any block height. When running geth make sure to enable the web socket protocol, as the Cardstack Hub leverages web3.js event subscription. 
 
