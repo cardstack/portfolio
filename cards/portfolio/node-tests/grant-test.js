@@ -85,25 +85,6 @@ describe('portfolios', function () {
       expect(result.data.relationships.wallets.data).to.eql([ { type: wallet.type, id: wallet.id }]);
     });
 
-    it('does not allow a user to create their portfolio', async function() {
-      let error;
-      try {
-        await writers.create(sessions.create(user1.type, user1.id), 'portfolios', {
-          data: {
-            type: 'portfolios',
-            attributes: { title: 'title' },
-            relationships: {
-              wallets: { data: [] },
-              user: { data: { type: user1.type, id: user1.id } }
-            }
-          }
-        });
-      } catch (e) {
-        error = e;
-      }
-      expect(error.status).to.equal(401);
-    });
-
     it('does not allow a user to delete a their portfolio', async function() {
       let { id, type, meta: { version } } = await createPortfolio(user1, { title: 'title' });
 

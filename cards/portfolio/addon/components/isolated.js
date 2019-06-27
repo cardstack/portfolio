@@ -56,16 +56,33 @@ export default LiveIsolatedCard.extend({
     this._super(arguments);
 
     if (this.web3.provider && this.web3.provider.isMetaMask) {
-      await this.getMetamaskWallet.perform();
+      await waitForProperty(this, 'isWeb3Loaded');
+      let address = this.web3.address;
+      await this.getPortfolio.perform(address);
     }
 
     this.set('loadingAssets', false);
   },
 
-  getMetamaskWallet: task(function * () {
-    yield waitForProperty(this, 'isWeb3Loaded');
+  getPortfolio: task(function * (address) {
+    let portfolio;
+    try {
+      portfolio = yield this.store.findRecord('portfolio', `${address}`);
+    } catch (e) {
+      portfolio = this.store.createRecord('portfolio', {
+        id: address,
+        title: 'My Portfolio'
+      });
 
-    let address = this.web3.address;
+      yield portfolio.save();
+    }
+
+    this.set('content', portfolio);
+
+    yield this.getMetamaskWallet.perform(address);
+  }),
+
+  getMetamaskWallet: task(function * (address) {
     let metamaskWallet;
     try {
       metamaskWallet = yield this.store.findRecord('wallet', `${address}`);
