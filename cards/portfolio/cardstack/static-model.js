@@ -50,6 +50,7 @@ factory.addResource('content-types', 'portfolios')
       'may-read-resource': true,
       'may-read-fields': true,
       'may-update-resource': true,
+      'may-create-resource': true,
       'may-write-fields': true,
     });
 
