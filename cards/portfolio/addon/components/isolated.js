@@ -46,8 +46,8 @@ export default LiveIsolatedCard.extend({
   sortedAssets: sort('assets.[]', 'sortAssetsByBalance'),
   sortBy: 'networkBalance',
   metamaskWallet: null,
-  assets: computed('content.wallets.[].network.assets.[]', function() {
-    return this.store.peekAll('asset');
+  assets: computed('content.wallets.[].assets.[]', function() {
+    return this.get('content.wallets.firstObject.assets');
   }),
   loadingAssets: true,
   isWeb3Loaded: not('web3.isLoading'),
