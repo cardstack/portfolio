@@ -57,6 +57,7 @@
   letter-spacing: 0.2px;
   line-height: 1.1;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .asset-embedded__logo {
