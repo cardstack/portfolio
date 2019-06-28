@@ -67,12 +67,6 @@ if (process.env.HUB_ENVIRONMENT === 'development') {
     factory.addResource('assets', '0x6294Ec6903021325978E58304d5E4604F0748685')
       .withRelated('network', ethereumNetwork);
 
-    // these are rinkeby addresses with erc20 tokens
-    factory.addResource('assets', '0x1E65F71b024937b988fdba09814d60049e0Fc59d_dai-token')
-      .withRelated('network', tokenNetworks['DAI']);
-    factory.addResource('assets', '0x7294A9533945d4Dfb00e99Eb941225831Cb86F5D_usdt-token')
-      .withRelated('network', tokenNetworks['USDT']);
-
     let mockedEthereumAsset = factory.addResource('assets', '0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE')
       .withRelated('network', ethereumNetwork);
 
