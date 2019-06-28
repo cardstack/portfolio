@@ -85,7 +85,7 @@ module('Card | asset', function (hooks) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="embedded"}}`);
     assert.dom('[data-test-asset-embedded-link]').hasAttribute('href', `/assets/${address}`)
     assert.dom('[data-test-asset-embedded-title]').hasText('Ether');
-    assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7...1fDE');
+    assert.dom('[data-test-asset-embedded-address]').hasText('0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE');
     assert.dom('[data-test-asset-embedded-last-active]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-embedded-balance]').hasTextContaining('0.2009 ETH');
     assert.dom('[data-test-asset-embedded-fiat-value]').hasText('≈ $20.09 USD');
@@ -93,7 +93,7 @@ module('Card | asset', function (hooks) {
 
   test('isolated format renders', async function (assert) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="isolated"}}`);
-    assert.dom('[data-test-asset-isolated-title]').hasText('Ether');
+    assert.dom('[data-test-asset-isolated-title]').hasText('Details');
     assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`);
     assert.dom('[data-test-asset-isolated-established-date]').hasAnyText(); // testing timezone sensitive dates is notoriously difficult in CI
     assert.dom('[data-test-asset-isolated-num-transactions]').hasText('Transactions 2');
@@ -104,15 +104,18 @@ module('Card | asset', function (hooks) {
   test('can change currency in isolated format', async function (assert) {
     await render(hbs`{{cardstack-card-test "asset" "0xC3D7FcFb69D168e9339ed18869B506c3B0F51fDE" format="isolated"}}`);
 
-    await click('[data-test-asset-isolated-eur-button]');
+    await click('.ember-power-select-trigger');
+    await click('.ember-power-select-option:nth-of-type(1)');
 
     assert.dom('[data-test-asset-isolated-fiat-value]').hasText('≈ €20.09 EUR');
 
-    await click('[data-test-asset-isolated-btc-button]');
+    await click('.ember-power-select-trigger');
+    await click('.ember-power-select-option:nth-of-type(2)');
 
     assert.dom('[data-test-asset-isolated-fiat-value]').hasText('≈ 0.2009 BTC');
 
-    await click('[data-test-asset-isolated-usd-button]');
+    await click('.ember-power-select-trigger');
+    await click('.ember-power-select-option:nth-of-type(0)');
 
     assert.dom('[data-test-asset-isolated-fiat-value]').hasText('≈ $20.09 USD');
   });
