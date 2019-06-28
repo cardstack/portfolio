@@ -81,7 +81,7 @@ module('Acceptance | asset', function (hooks) {
 
   function testAssetPage(assert) {
     assert.dom('[data-test-asset-isolated]').exists();
-    assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Ether');
+    assert.dom('[data-test-asset-isolated-title]').hasTextContaining('Details');
     assert.dom('[data-test-asset-isolated-address]').hasText(`Address ${address}`);
     assert.dom('[data-test-portfolio-top-header]').exists();
     assert.dom('[data-test-portfolio-breadcrumbs]').doesNotExist();
@@ -122,12 +122,14 @@ module('Acceptance | asset', function (hooks) {
 
     assert.dom('[data-test-asset-isolated-currency-name').hasText('USD');
 
-    await click('[data-test-asset-isolated-eur-button]');
+    await click('.ember-power-select-trigger');
+    await click('.ember-power-select-option:nth-of-type(1)');
 
     assert.dom('[data-test-asset-isolated-currency-name').hasText('EUR');
     assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=EUR`);
 
-    await click('[data-test-asset-isolated-btc-button]');
+    await click('.ember-power-select-trigger');
+    await click('.ember-power-select-option:nth-of-type(2)');
 
     assert.dom('[data-test-asset-isolated-currency-name').hasText('BTC');
     assert.equal(currentURL(this.owner), `/assets/${address}?assets[currency]=BTC`);

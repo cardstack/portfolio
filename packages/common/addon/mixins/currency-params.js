@@ -42,5 +42,5 @@ export default Mixin.create({
         setParam('currency', currency);
       }
     }
-  }
+  } 
 });

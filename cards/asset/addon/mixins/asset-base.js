@@ -26,4 +26,10 @@ export default Mixin.create({
 
     return moment.unix(timestamp).format('MMM D,YYYY')
   }),
+  twoLineAddress: computed('content.formattedAddress', function() {
+    let address = this.get('content.formattedAddress');
+    if (!address) { return; }
+
+    return `${address.slice(0,address.length/2)}\n${address.slice(-address.length/2)}`;
+  }),
 });

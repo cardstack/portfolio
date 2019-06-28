@@ -11,6 +11,7 @@
   "devDependencies": {
     "@cardstack/eslint-config": "^0.14.16",
     "@cardstack/test-support": "^0.14.16",
+    "@cardstack/ui-components": "^0.1.5",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.9.0",

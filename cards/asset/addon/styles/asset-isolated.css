@@ -6,7 +6,8 @@
   background: var(--portfolio-bitcoin-gradient);
 }
 .asset-isolated--ether {
-  background: var(--portfolio-ether-gradient);
+  /*background: var(--portfolio-ether-gradient);*/
+  background: red;
 }
 .asset-isolated--litecoin {
   background: var(--portfolio-litecoin-gradient);
@@ -26,6 +27,10 @@
   padding-top: 50px;
 }
 
+.asset-isolated-details-title {
+  font-size: var(--portfolio-med-font);
+}
+
 .asset-isolated__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -35,6 +40,7 @@
 
 .asset-isolated__wrapper {
   padding: 25px 20px;
+  background: var(--portfolio-white);
 }
 
 .asset-isolated__header {
@@ -54,15 +60,47 @@
 
 .asset-isolated__title {
   margin: 0;
-  font-size: var(--portfolio-med-font);
-  font-weight: bold;
+  font-size: var(--portfolio-lg-font);
+  font-weight: 600;
   letter-spacing: 0.2px;
   line-height: 1.1;
-  text-transform: uppercase;
+  margin-left: 5px;
 }
 
 .asset-isolated__logo {
   margin-right: 10px;
+}
+
+.asset-isolated-embedded-asset, .asset-isolated__wrapper {
+  position: -webkit-sticky; 
+  position: sticky;
+}
+
+.asset-isolated__section--main {
+  z-index: -2;
+}
+
+.asset-isolated-embedded-asset {
+  top: 0;
+  min-height: 50px;
+  z-index: 5;
+}
+
+.asset-isolated__wrapper {
+  top: 180px;
+  z-index: 2;
+}
+
+.asset-isolated_currency_and_balance_row {
+  display: flex;
+  flex-direction: row nowrap;
+  align-content: flex-start;
+  justify-content: space-between;
+}
+
+.asset-isolated_currency_and_balance_row > .asset-isolated__balance-fiat{
+  padding-top: 15px;
+  width: 150px;
 }
 
 /* Balance summary */
@@ -88,23 +126,26 @@
 
 /* Currency switcher buttons */
 .asset-isolated__currency > span {
-  margin-left: -50px;
   font-size: var(--portfolio-xs-font);
   font-weight: 600;
 }
 .asset-isolated__currency-switcher {
-  display: inline-flex;
+  display: flex;
   margin: 0 auto;
   padding-left: 6px;
+  width: 400px;
+  color: black;
 }
+
 .asset-isolated__currency-switcher > button {
   padding: 5px 10px;
-  background: none;
+  background: whitesmoke;
   border: 1px solid var(--portfolio-white);
-  color: var(--portfolio-white);
+  color: var(--portfolio-black);
   font-size: var(--portfolio-xs-font);
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
+  display: inline-block;
 }
 .asset-isolated__currency-switcher > button:first-child {
   border-top-left-radius: 15px;
@@ -113,22 +154,15 @@
 .asset-isolated__currency-switcher > button:last-child {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  height:30px;
 }
 .asset-isolated__currency-switcher > button + button {
   border-left: none;
 }
 .asset-isolated__currency-switcher > button.active,
-.asset-isolated__currency-switcher > button.active:hover,
-.asset-isolated__currency-switcher > button:focus {
+.asset-isolated__currency-switcher > .asset-isolated-currency-switch-button:hover {
   outline: none;
-  background-color: var(--portfolio-white);
-  color: var(--portfolio-dark-purple);
-  cursor: pointer;
-  user-select: none;
-}
-.asset-isolated__currency-switcher > button:hover {
-  outline: none;
-  background-color: var(--portfolio-white-alpha50);
+  background-color: var(--portfolio-black);
   color: var(--portfolio-white);
   cursor: pointer;
   user-select: none;
@@ -198,8 +232,8 @@
 }
 
 .asset-isolated__section--main {
-  background-color: var(--portfolio-light-purple);
-  color: var(--portfolio-white);
+  /*background-color: var(--portfolio-light-purple);*/
+  color: var(--portfolio-black);
   text-align: center;
 }
 
